@@ -19,6 +19,7 @@ import ContactPage from "@/pages/ContactPage"
 import TeamPage from "@/pages/TeamPage"
 import GalleryPage from "@/pages/GalleryPage"
 import CareersPage from "@/pages/CareersPage"
+import DashboardPage from "@/pages/DashboardPage"
 
 function App() {
   useEffect(() => {
@@ -63,6 +64,7 @@ function App() {
             <Route path="/team" element={<TeamPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/careers" element={<CareersPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
           </Routes>
         </div>
 

@@ -1,14 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+
+const contactSchema = z.object({
+  fullName: z.string().min(2, "Full name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(10, "Phone number is required"),
+  company: z.string().optional(),
+  subject: z.string().min(2, "Subject is required"),
+  message: z.string().min(10, "Message is too short"),
+});
+
+type ContactFormValues = z.infer<typeof contactSchema>;
 
 export default function ContactPage() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Contact form submitted");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+  });
+
+  const onSubmit = async (data: ContactFormValues) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, "contact_submissions"), {
+        ...data,
+        createdAt: serverTimestamp(),
+      });
+      toast.success("Message sent successfully!");
+      reset();
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -72,37 +113,54 @@ export default function ContactPage() {
             <h2 className="text-2xl font-bold text-neutral-800 mb-6">
               Send a Message
             </h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4">
                 <LabelInputContainer>
-                  <Label htmlFor="firstname">First name</Label>
-                  <Input id="firstname" placeholder="John" type="text" required />
+                  <Label htmlFor="fullName">Full name</Label>
+                  <Input id="fullName" placeholder="John Doe" type="text" {...register("fullName")} />
+                  {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
                 </LabelInputContainer>
                 <LabelInputContainer>
-                  <Label htmlFor="lastname">Last name</Label>
-                  <Input id="lastname" placeholder="Doe" type="text" required />
+                  <Label htmlFor="phone">Phone</Label>
+                  <Input id="phone" placeholder="+1 (555) 000-0000" type="tel" {...register("phone")} />
+                  {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+                </LabelInputContainer>
+              </div>
+              <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4">
+                <LabelInputContainer>
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input id="email" placeholder="john@example.com" type="email" {...register("email")} />
+                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+                </LabelInputContainer>
+                <LabelInputContainer>
+                  <Label htmlFor="company">Company (Optional)</Label>
+                  <Input id="company" placeholder="Your Company Ltd" type="text" {...register("company")} />
                 </LabelInputContainer>
               </div>
               <LabelInputContainer className="mb-4">
-                <Label htmlFor="email">Email Address</Label>
-                <Input id="email" placeholder="john@example.com" type="email" required />
-              </LabelInputContainer>
-              <LabelInputContainer className="mb-4">
-                <Label htmlFor="company">Company (Optional)</Label>
-                <Input id="company" placeholder="Your Company Ltd" type="text" />
+                <Label htmlFor="subject">Subject</Label>
+                <Input id="subject" placeholder="Project Inquiry" type="text" {...register("subject")} />
+                {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject.message}</p>}
               </LabelInputContainer>
               <LabelInputContainer className="mb-8">
                 <Label htmlFor="message">Message</Label>
-                {/* We use input here for style consistency as provided by the user's component, though textarea is better */}
-                <Input id="message" placeholder="Tell us about your project..." type="text" className="h-24" required />
+                <Input id="message" placeholder="Tell us about your project..." type="text" className="h-24" {...register("message")} />
+                {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>}
               </LabelInputContainer>
 
               <button
-                className="group/btn relative block h-12 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
+                className="group/btn relative block h-12 w-full flex items-center justify-center rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] disabled:opacity-70 disabled:cursor-not-allowed"
                 type="submit"
+                disabled={isSubmitting}
               >
-                Send Message &rarr;
-                <BottomGradient />
+                {isSubmitting ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <>
+                    Send Message &rarr;
+                    <BottomGradient />
+                  </>
+                )}
               </button>
             </form>
           </motion.div>

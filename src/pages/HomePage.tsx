@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
 import HeroScrollDemo from "@/components/container-scroll-animation-demo"
+import { ImagesBadge } from "@/components/ui/images-badge"
 import Testimonials from "@/components/site/Testimonials"
+import ThreeDMarqueeDemo from "@/components/3d-marquee-demo"
 import FeaturesSectionDemo from "@/components/ui/features-section-demo-3"
 import StatsCounter from "@/components/site/StatsCounter"
 import { ArrowRight, Code, Layout, Smartphone, ShoppingCart, ShoppingBag } from "lucide-react"
@@ -29,6 +31,23 @@ export default function HomePage() {
   return (
     <main>
       <HeroScrollDemo />
+      
+      <div className="flex w-full items-center justify-center pb-20 -mt-10 relative z-20">
+        <ImagesBadge
+          text="Explore Our Web & App Solutions"
+          images={[
+            "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=300",
+            "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=300",
+            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=300",
+          ]}
+          folderSize={{ width: 48, height: 36 }}
+          teaserImageSize={{ width: 40, height: 28 }}
+          hoverImageSize={{ width: 140, height: 108 }}
+          hoverTranslateY={-110}
+          hoverSpread={50}
+        />
+      </div>
+
       <StatsCounter />
       
       {/* Mini About Section */}
@@ -238,6 +257,7 @@ export default function HomePage() {
       </section>
 
 
+      <ThreeDMarqueeDemo />
       <Testimonials />
 
     </main>
