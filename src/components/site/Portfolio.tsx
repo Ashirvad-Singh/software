@@ -26,32 +26,32 @@ const StickyProjectCard = ({
   const scale = useTransform(progress, range, [1, targetScale])
 
   return (
-    <div ref={container} className="sticky top-0 flex items-center justify-center min-h-screen">
+    <div ref={container} className="sticky top-0 flex flex-col items-center justify-start min-h-screen pt-24 md:pt-32">
       <motion.div
         style={{
           scale,
-          top: `calc(5vh + ${i * 25}px)`,
+          top: `${i * 25}px`, // Just stacking offset, the base offset is handled by container padding
         }}
-        className="relative flex flex-col md:flex-row w-[90vw] max-w-5xl h-[500px] md:h-[600px] origin-top overflow-hidden rounded-3xl border border-border/50 bg-secondary/20 shadow-2xl backdrop-blur-sm"
+        className="relative flex flex-col md:flex-row w-[90vw] max-w-5xl h-[550px] md:h-[600px] origin-top overflow-hidden rounded-3xl border border-border/50 bg-secondary/20 shadow-2xl backdrop-blur-sm mt-8 md:mt-0"
       >
-        <div className="w-full md:w-1/2 h-1/2 md:h-full relative overflow-hidden">
+        <div className="w-full md:w-1/2 h-[40%] md:h-full relative overflow-hidden">
           <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent md:bg-gradient-to-r" />
         </div>
         
-        <div className="w-full md:w-1/2 h-1/2 md:h-full p-8 md:p-12 flex flex-col justify-center bg-background/95">
-          <div className="flex flex-wrap gap-2 mb-4">
+        <div className="w-full md:w-1/2 h-[60%] md:h-full p-5 sm:p-8 md:p-12 flex flex-col justify-center bg-background/95">
+          <div className="flex flex-wrap gap-1.5 md:gap-2 mb-2 sm:mb-4">
             {project.tags.map(tag => (
               <span key={tag} className="px-3 py-1 bg-secondary rounded-full text-xs font-medium border border-border/50">
                 {tag}
               </span>
             ))}
           </div>
-          <h4 className="text-3xl md:text-5xl font-bold mb-4">{project.title}</h4>
-          <p className="text-primary font-medium mb-6 text-lg">{project.result}</p>
-          <p className="text-muted-foreground line-clamp-3 mb-8">{project.challenge}</p>
+          <h4 className="text-2xl md:text-5xl font-bold mb-2 md:mb-4 line-clamp-1 md:line-clamp-none">{project.title}</h4>
+          <p className="text-primary font-medium mb-3 md:mb-6 text-sm md:text-lg">{project.result}</p>
+          <p className="text-muted-foreground line-clamp-2 md:line-clamp-3 mb-4 md:mb-8 text-xs md:text-base">{project.challenge}</p>
           
-          <Link to={`/work/${project.slug}`} className="inline-flex items-center text-sm font-bold uppercase tracking-wider hover:text-primary transition-colors mt-auto">
+          <Link to={`/work/${project.slug}`} className="inline-flex items-center text-xs md:text-sm font-bold uppercase tracking-wider hover:text-primary transition-colors mt-auto pt-2 border-t border-border/30 md:border-none md:pt-0">
             View Case Study <ArrowRight className="ml-2 w-5 h-5" />
           </Link>
         </div>
@@ -145,7 +145,7 @@ export default function Portfolio() {
 
         {/* Featured Projects (Sticky Scroll) */}
         {activeTab === "All" && (
-          <div ref={containerRef} className="relative w-full pb-[10vh] mt-10">
+          <div ref={containerRef} className="relative w-full pb-[10vh] mt-4 md:mt-8">
             {featuredProjects.map((project, i) => {
               const targetScale = 1 - ((featuredProjects.length - i - 1) * 0.05);
               return (

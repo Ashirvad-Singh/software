@@ -16,7 +16,7 @@ export default function AboutSection() {
         </motion.h2>
         <p className="font-bold text-3xl md:text-5xl dark:text-white text-black mb-6 tracking-tight">
           Delivering Excellence{" "}
-          <span className="text-primary">
+          <span className="text-primary inline-block whitespace-nowrap">
             {"Worldwide".split("").map((word, idx) => (
               <motion.span
                 key={idx}
