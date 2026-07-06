@@ -23,12 +23,12 @@ export default function HeroModern() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-sky-100 border border-sky-200 text-sky-800 font-bold text-sm shadow-sm">
-              <span className="relative flex h-3.5 w-3.5">
+            <div className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 rounded-full bg-sky-100 border border-sky-200 text-sky-800 font-bold text-xs sm:text-sm shadow-sm text-center max-w-[90%] md:max-w-none mx-auto leading-relaxed md:leading-normal">
+              <span className="relative flex h-3 w-3 md:h-3.5 md:w-3.5 flex-shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-50"></span>
-                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-sky-600 border-[2.5px] border-sky-200"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 md:h-3.5 md:w-3.5 bg-sky-600 border-[2.5px] border-sky-200"></span>
               </span>
-              New! We build AI-powered Web & Mobile Applications
+              <span>New! We build AI-powered Web & Mobile Applications</span>
             </div>
           </motion.div>
 
@@ -46,7 +46,7 @@ export default function HeroModern() {
                 },
               },
             }}
-            className="text-5xl md:text-[5.5rem] font-bold tracking-tight text-neutral-900 mb-6 leading-[1.1]"
+            className="text-4xl sm:text-5xl md:text-[5.5rem] font-bold tracking-tight text-neutral-900 mb-6 leading-[1.2] md:leading-[1.1]"
           >
             {/* Line 1 */}
             <span className="block">
@@ -64,7 +64,7 @@ export default function HeroModern() {
             </span>
             {/* Line 2 */}
             <span className="block mt-2">
-              <span className="relative inline-block px-4 py-1">
+              <span className="relative inline-block px-2 sm:px-4 py-1">
                 <motion.span
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
@@ -93,7 +93,7 @@ export default function HeroModern() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-neutral-500 mb-10 max-w-2xl leading-relaxed font-medium"
+            className="text-base sm:text-lg md:text-xl text-neutral-500 mb-8 md:mb-10 max-w-2xl mx-auto px-4 md:px-0 leading-relaxed font-medium"
           >
             We architect scalable, future-proof web and mobile apps. Focus on what matters - growing your business.
           </motion.p>
