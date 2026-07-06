@@ -3,7 +3,7 @@ import { Menu as MenuIcon, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Link, useLocation } from "react-router-dom"
 import { HoveredLink, Menu } from "@/components/ui/navbar-menu"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
@@ -13,6 +13,7 @@ const navLinks = [
   { name: "Process", href: "/process" },
   { name: "About", href: "/about" },
   { name: "Team", href: "/team" },
+  { name: "Blog", href: "/blog" },
   { name: "Careers", href: "/careers" },
   { name: "Gallery", href: "/gallery" },
 ]
@@ -20,15 +21,30 @@ const navLinks = [
 export default function Navbar({ className }: { className?: string }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const location = useLocation()
+  
+  const { scrollY } = useScroll()
+  const [hidden, setHidden] = useState(false)
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0
+    if (latest > previous && latest > 150) {
+      setHidden(true)
+    } else {
+      setHidden(false)
+    }
+  })
 
   return (
     <>
-      <div className={cn("fixed top-4 inset-x-0 max-w-5xl mx-auto z-50 flex items-center justify-between px-4 md:px-0", className)}>
-        
-        {/* Logo */}
-        <Link to="/" className="text-xl md:text-2xl font-bold tracking-tighter hidden md:block">
-          Adat Soft<span className="text-primary">.</span>
-        </Link>
+      <motion.div 
+        variants={{
+          visible: { y: 0 },
+          hidden: { y: "-150%" },
+        }}
+        animate={hidden ? "hidden" : "visible"}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
+        className={cn("fixed top-4 inset-x-0 max-w-7xl mx-auto z-50 flex items-center justify-center px-4 md:px-0 w-full", className)}
+      >
         
         {/* Mobile Logo & Toggle */}
         <div className="md:hidden flex items-center justify-between w-full bg-white/80 backdrop-blur-md px-6 py-3 rounded-full border border-neutral-200 shadow-sm">
@@ -40,29 +56,36 @@ export default function Navbar({ className }: { className?: string }) {
           </button>
         </div>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-max">
+        {/* Desktop Navbar (Pill) */}
+        <div className="hidden md:block w-full px-4">
           <Menu setActive={() => {}}>
-            <div className="flex items-center space-x-6 text-sm font-medium">
-              <HoveredLink href="/">Home</HoveredLink>
-              <HoveredLink href="/services">Services</HoveredLink>
-              <HoveredLink href="/work">Work</HoveredLink>
-              <HoveredLink href="/process">Process</HoveredLink>
-              <HoveredLink href="/about">About</HoveredLink>
-              <HoveredLink href="/team">Team</HoveredLink>
-              <HoveredLink href="/careers">Careers</HoveredLink>
-              <HoveredLink href="/gallery">Gallery</HoveredLink>
+            <div className="flex items-center justify-between w-full">
+              {/* Logo */}
+              <Link to="/" className="text-2xl font-bold tracking-tighter mr-8">
+                Adat Soft<span className="text-primary">.</span>
+              </Link>
+              
+              {/* Links */}
+              <div className="flex items-center justify-center space-x-4 lg:space-x-8 text-sm font-medium flex-1">
+                {navLinks.map((link) => (
+                  <HoveredLink 
+                    key={link.name} 
+                    href={link.href}
+                    active={location.pathname === link.href || (link.href !== "/" && location.pathname.startsWith(link.href))}
+                  >
+                    {link.name}
+                  </HoveredLink>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <Button size="sm" className="rounded-full px-6 py-5 ml-8" asChild>
+                <Link to="/contact">Get a Quote</Link>
+              </Button>
             </div>
           </Menu>
         </div>
-
-        {/* Desktop CTA */}
-        <div className="hidden md:block">
-          <Button size="sm" className="rounded-full px-6 py-5" asChild>
-            <Link to="/contact">Get a Quote</Link>
-          </Button>
-        </div>
-      </div>
+      </motion.div>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>

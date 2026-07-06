@@ -5,41 +5,57 @@ import Testimonials from "@/components/site/Testimonials";
 import ThreeDMarqueeDemo from "@/components/3d-marquee-demo";
 import FeaturesSectionDemo from "@/components/ui/features-section-demo-3";
 import StatsCounter from "@/components/site/StatsCounter";
-import {
-  ArrowRight,
-  Code,
-  Layout,
-  Smartphone,
-  ShoppingCart,
-  ShoppingBag,
-} from "lucide-react";
+import { FloatingShapes } from "@/components/ui/floating-shapes";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import WorldMap from "@/components/ui/world-map";
 import { motion } from "framer-motion";
-import {
-  IconBrandReact,
-  IconBrandNextjs,
-  IconBrandVue,
-  IconBrandTailwind,
-  IconBrandTypescript,
-  IconBrandFlutter,
-  IconBrandSwift,
-  IconBrandKotlin,
-  IconBrandAws,
-  IconBrandDocker,
-  IconBrandFirebase,
-  IconBrandNodejs,
-  IconBrandWordpress,
-  IconBrandWix,
-  IconBrandWebflow,
-} from "@tabler/icons-react";
+import { useState, useEffect } from "react";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import * as TablerIcons from "@tabler/icons-react";
+import * as LucideIcons from "lucide-react";
 
 export default function HomePage() {
+  const [techCategories, setTechCategories] = useState<any[]>([]);
+  const [loadingTech, setLoadingTech] = useState(true);
+
+  useEffect(() => {
+    const fetchTechStack = async () => {
+      try {
+        const q = query(collection(db, "tech_stack"), orderBy("createdAt", "asc"));
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setTechCategories(data);
+      } catch (error) {
+        console.error("Error fetching tech stack:", error);
+      } finally {
+        setLoadingTech(false);
+      }
+    };
+    fetchTechStack();
+  }, []);
+
+  const getThemeColors = (color: string) => {
+    switch (color) {
+      case "blue": return { bg: "from-blue-50", text: "text-blue-500", groupHoverText: "group-hover:text-blue-500" };
+      case "purple": return { bg: "from-purple-50", text: "text-purple-500", groupHoverText: "group-hover:text-purple-500" };
+      case "orange": return { bg: "from-orange-50", text: "text-orange-500", groupHoverText: "group-hover:text-orange-500" };
+      case "green": return { bg: "from-green-50", text: "text-green-500", groupHoverText: "group-hover:text-green-500" };
+      default: return { bg: "from-gray-50", text: "text-gray-500", groupHoverText: "group-hover:text-gray-500" };
+    }
+  };
+
+  const renderCategoryIcon = (iconName: string, textClass: string) => {
+    const IconComponent = (LucideIcons as any)[iconName] || LucideIcons.Code;
+    return <IconComponent className={`w-7 h-7 ${textClass}`} />;
+  };
+
   return (
     <main>
       <HeroScrollDemo />
 
-      <div className="flex w-full items-center justify-center pb-20 -mt-10 relative z-20">
+      <div className="flex w-full items-center justify-center pb-20 -mt-32 relative z-20">
         <ImagesBadge
           text="Explore Our Web & App Solutions"
           images={[
@@ -58,8 +74,9 @@ export default function HomePage() {
       <StatsCounter />
 
       {/* Mini About Section */}
-      <section className="py-24 bg-neutral-50">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
+      <section className="py-24 bg-neutral-50 relative overflow-hidden">
+        <FloatingShapes />
+        <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -92,11 +109,7 @@ export default function HomePage() {
               dots={[
                 {
                   start: { lat: 28.6139, lng: 77.209, label: "New Delhi (HQ)" },
-                  end: {
-                    lat: 34.0522,
-                    lng: -118.2437,
-                    label: "Los Angeles, USA",
-                  },
+                  end: { lat: 34.0522, lng: -118.2437, label: "Los Angeles, USA" },
                 },
                 {
                   start: { lat: 28.6139, lng: 77.209 },
@@ -108,11 +121,7 @@ export default function HomePage() {
                 },
                 {
                   start: { lat: 28.6139, lng: 77.209 },
-                  end: {
-                    lat: -33.8688,
-                    lng: 151.2093,
-                    label: "Sydney, Australia",
-                  },
+                  end: { lat: -33.8688, lng: 151.2093, label: "Sydney, Australia" },
                 },
                 {
                   start: { lat: 28.6139, lng: 77.209 },
@@ -144,9 +153,9 @@ export default function HomePage() {
 
       <FeaturesSectionDemo />
       <ThreeDMarqueeDemo />
-      {/* Advanced Tech Stack Section (Light Mode) */}
+      
+      {/* Advanced Tech Stack Section (Dynamic) */}
       <section className="py-32 relative overflow-hidden bg-white border-t border-neutral-100">
-        {/* SVG Grid Background */}
         <div
           className="absolute inset-0 pointer-events-none opacity-[0.03]"
           style={{
@@ -155,8 +164,8 @@ export default function HomePage() {
           }}
         ></div>
 
-        {/* Soft Linear Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 via-white to-white pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 via-white to-white pointer-events-none z-0"></div>
+        <FloatingShapes />
 
         <div className="container mx-auto px-4 max-w-7xl relative z-10">
           <motion.div
@@ -179,200 +188,56 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            {/* Frontend Architecture */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="group relative p-8 md:p-10 rounded-[2rem] bg-white border border-neutral-200 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-neutral-50 border border-neutral-100 flex items-center justify-center mb-8 group-hover:bg-white group-hover:shadow-sm transition-all">
-                  <Code className="w-7 h-7 text-blue-500" />
+          {loadingTech ? (
+             <div className="flex justify-center items-center py-20">
+               <Loader2 className="w-8 h-8 animate-spin text-primary" />
+             </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {techCategories.length === 0 ? (
+                <div className="col-span-full text-center text-neutral-500 py-12">
+                  No tech stack added yet. Add from Dashboard.
                 </div>
-                <h4 className="text-2xl font-bold mb-2 text-neutral-900">
-                  Frontend Architecture
-                </h4>
-                <p className="text-neutral-500 mb-10 text-sm leading-relaxed">
-                  Crafting lightning-fast, reactive, and accessible user
-                  interfaces that engage and convert.
-                </p>
+              ) : techCategories.map((category, idx) => {
+                const theme = getThemeColors(category.themeColor);
+                return (
+                  <motion.div
+                    key={category.id || idx}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.5, delay: idx * 0.1 }}
+                    className="group relative p-8 md:p-10 rounded-[2rem] bg-white border border-neutral-200 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 overflow-hidden"
+                  >
+                    <div className={`absolute inset-0 bg-gradient-to-br ${theme.bg} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
 
-                <div className="grid grid-cols-3 gap-4">
-                  <AdvancedTechBadge
-                    icon={IconBrandReact}
-                    name="React"
-                    hoverColor="group-hover:text-[#61DAFB]"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandNextjs}
-                    name="Next.js"
-                    hoverColor="group-hover:text-black"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandVue}
-                    name="Vue.js"
-                    hoverColor="group-hover:text-[#4FC08D]"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandTailwind}
-                    name="Tailwind"
-                    hoverColor="group-hover:text-[#06B6D4]"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandTypescript}
-                    name="TypeScript"
-                    hoverColor="group-hover:text-[#3178C6]"
-                  />
-                </div>
-              </div>
-            </motion.div>
+                    <div className="relative z-10">
+                      <div className="w-14 h-14 rounded-2xl bg-neutral-50 border border-neutral-100 flex items-center justify-center mb-8 group-hover:bg-white group-hover:shadow-sm transition-all">
+                        {renderCategoryIcon(category.categoryIcon, theme.text)}
+                      </div>
+                      <h4 className="text-2xl font-bold mb-2 text-neutral-900">
+                        {category.title}
+                      </h4>
+                      <p className="text-neutral-500 mb-10 text-sm leading-relaxed">
+                        {category.description}
+                      </p>
 
-            {/* Mobile Ecosystem */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="group relative p-8 md:p-10 rounded-[2rem] bg-white border border-neutral-200 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-neutral-50 border border-neutral-100 flex items-center justify-center mb-8 group-hover:bg-white group-hover:shadow-sm transition-all">
-                  <Smartphone className="w-7 h-7 text-purple-500" />
-                </div>
-                <h4 className="text-2xl font-bold mb-2 text-neutral-900">
-                  Mobile Ecosystem
-                </h4>
-                <p className="text-neutral-500 mb-10 text-sm leading-relaxed">
-                  Building native-grade iOS and Android experiences from a
-                  single robust codebase.
-                </p>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <AdvancedTechBadge
-                    icon={IconBrandFlutter}
-                    name="Flutter"
-                    hoverColor="group-hover:text-[#02569B]"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandReact}
-                    name="React Native"
-                    hoverColor="group-hover:text-[#61DAFB]"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandSwift}
-                    name="Swift"
-                    hoverColor="group-hover:text-[#F05138]"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandKotlin}
-                    name="Kotlin"
-                    hoverColor="group-hover:text-[#7F52FF]"
-                  />
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Cloud & Infrastructure */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="group relative p-8 md:p-10 rounded-[2rem] bg-white border border-neutral-200 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-neutral-50 border border-neutral-100 flex items-center justify-center mb-8 group-hover:bg-white group-hover:shadow-sm transition-all">
-                  <Layout className="w-7 h-7 text-orange-500" />
-                </div>
-                <h4 className="text-2xl font-bold mb-2 text-neutral-900">
-                  Cloud & Backend
-                </h4>
-                <p className="text-neutral-500 mb-10 text-sm leading-relaxed">
-                  Architecting secure, auto-scaling backend infrastructure that
-                  handles millions of requests.
-                </p>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <AdvancedTechBadge
-                    icon={IconBrandAws}
-                    name="AWS"
-                    hoverColor="group-hover:text-[#FF9900]"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandDocker}
-                    name="Docker"
-                    hoverColor="group-hover:text-[#2496ED]"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandFirebase}
-                    name="Firebase"
-                    hoverColor="group-hover:text-[#FFCA28]"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandNodejs}
-                    name="Node.js"
-                    hoverColor="group-hover:text-[#339933]"
-                  />
-                </div>
-              </div>
-            </motion.div>
-
-            {/* CMS & E-Commerce */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="group relative p-8 md:p-10 rounded-[2rem] bg-white border border-neutral-200 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-neutral-50 border border-neutral-100 flex items-center justify-center mb-8 group-hover:bg-white group-hover:shadow-sm transition-all">
-                  <ShoppingCart className="w-7 h-7 text-green-500" />
-                </div>
-                <h4 className="text-2xl font-bold mb-2 text-neutral-900">
-                  CMS & E-Commerce
-                </h4>
-                <p className="text-neutral-500 mb-10 text-sm leading-relaxed">
-                  Empowering businesses with robust content management and
-                  highly scalable online storefronts.
-                </p>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <AdvancedTechBadge
-                    icon={IconBrandWordpress}
-                    name="WordPress"
-                    hoverColor="group-hover:text-[#21759B]"
-                  />
-                  <AdvancedTechBadge
-                    icon={ShoppingBag}
-                    name="Shopify"
-                    hoverColor="group-hover:text-[#95BF47]"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandWix}
-                    name="Wix"
-                    hoverColor="group-hover:text-black"
-                  />
-                  <AdvancedTechBadge
-                    icon={IconBrandWebflow}
-                    name="Webflow"
-                    hoverColor="group-hover:text-[#4353FF]"
-                  />
-                </div>
-              </div>
-            </motion.div>
-          </div>
+                      <div className="grid grid-cols-3 gap-4">
+                        {category.technologies?.map((tech: any, tIdx: number) => (
+                          <AdvancedTechBadge
+                            key={tIdx}
+                            iconUrl={tech.iconUrl}
+                            name={tech.name}
+                            hoverColor={theme.groupHoverText}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
@@ -382,23 +247,30 @@ export default function HomePage() {
 }
 
 function AdvancedTechBadge({
-  icon: Icon,
+  iconUrl,
   name,
   hoverColor,
 }: {
-  icon: any;
+  iconUrl: string;
   name: string;
   hoverColor: string;
 }) {
+  const isImage = iconUrl?.startsWith("http") || iconUrl?.startsWith("data:");
+  const IconComponent = !isImage ? (TablerIcons as any)[iconUrl] || TablerIcons.IconCode : null;
+
   return (
     <div
       className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-neutral-50/50 border border-neutral-100 hover:bg-white hover:shadow-sm hover:border-primary/30 transition-all duration-300 cursor-pointer group`}
     >
-      <Icon
-        className={`w-8 h-8 text-neutral-400 transition-colors duration-300 ${hoverColor} group-hover:scale-110`}
-        stroke={1.5}
-      />
-      <span className="text-[11px] font-medium text-neutral-500 group-hover:text-neutral-900 transition-colors uppercase tracking-wider">
+      {isImage ? (
+        <img src={iconUrl} alt={name} className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-110" />
+      ) : (
+        <IconComponent
+          className={`w-8 h-8 text-neutral-400 transition-colors duration-300 ${hoverColor} group-hover:scale-110`}
+          stroke={1.5}
+        />
+      )}
+      <span className="text-[11px] font-medium text-neutral-500 group-hover:text-neutral-900 transition-colors uppercase tracking-wider text-center">
         {name}
       </span>
     </div>

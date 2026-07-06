@@ -1,9 +1,11 @@
-import { useMemo, useRef } from "react"
+import { useMemo, useRef, useState, useEffect } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Text, OrbitControls } from "@react-three/drei"
 import * as THREE from "three"
+import { collection, getDocs, query } from "firebase/firestore"
+import { db } from "@/lib/firebase"
 
-const techStack = [
+const staticTechStack = [
   "React", "Next.js", "TypeScript", "Tailwind", "Node.js",
   "MongoDB", "PostgreSQL", "Firebase", "Flutter", "React Native",
   "AWS", "Docker", "Figma", "GraphQL", "REST API",
@@ -33,7 +35,7 @@ function Word({ children, position, ...props }: any) {
   )
 }
 
-function Cloud({ count = 8, radius = 20 }) {
+function Cloud({ count = 8, radius = 20, wordsList = staticTechStack }: { count?: number, radius?: number, wordsList?: string[] }) {
   const words = useMemo(() => {
     const temp = []
     const spherical = new THREE.Spherical()
@@ -43,16 +45,16 @@ function Cloud({ count = 8, radius = 20 }) {
     
     for (let i = 1; i < count + 1; i++) {
       for (let j = 0; j < count; j++) {
-        if (itemIndex >= techStack.length) itemIndex = 0 // loop text
+        if (itemIndex >= wordsList.length) itemIndex = 0 // loop text
         temp.push([
           new THREE.Vector3().setFromSpherical(spherical.set(radius, phiSpan * i, thetaSpan * j)),
-          techStack[itemIndex]
+          wordsList[itemIndex]
         ])
         itemIndex++
       }
     }
     return temp
-  }, [count, radius])
+  }, [count, radius, wordsList])
 
   const groupRef = useRef<any>(null)
   useFrame((_state, delta) => {
@@ -74,12 +76,29 @@ function Cloud({ count = 8, radius = 20 }) {
 }
 
 export default function TechSphere() {
+  const [techStack, setTechStack] = useState<string[]>(staticTechStack)
+
+  useEffect(() => {
+    const fetchTechStack = async () => {
+      try {
+        const snapshot = await getDocs(query(collection(db, "tech_stack")))
+        const data = snapshot.docs.map(doc => doc.data().name)
+        if (data.length > 0) {
+          setTechStack(data)
+        }
+      } catch (error) {
+        console.error("Error fetching tech stack:", error)
+      }
+    }
+    fetchTechStack()
+  }, [])
+
   return (
     <div className="w-full h-full min-h-[400px]">
       <Canvas camera={{ position: [0, 0, 35], fov: 90 }}>
         <fog attach="fog" args={['#09090b', 0, 80]} />
         <ambientLight intensity={1} />
-        <Cloud count={4} radius={18} />
+        <Cloud count={4} radius={18} wordsList={techStack} />
         <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
       </Canvas>
     </div>

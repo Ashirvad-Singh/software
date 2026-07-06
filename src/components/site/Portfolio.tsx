@@ -1,74 +1,106 @@
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useRef, useEffect } from "react"
+import { collection, getDocs, query, orderBy } from "firebase/firestore"
+import { db } from "@/lib/firebase"
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { ExternalLink, ArrowRight } from "lucide-react"
-
-const projects = [
-  {
-    id: 1,
-    title: "Global FinTech Platform",
-    category: "Web",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000",
-    tags: ["React", "Node.js", "PostgreSQL"],
-    result: "Increased transaction volume by 150%",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "Healthcare Booking App",
-    category: "App",
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1000",
-    tags: ["Flutter", "Firebase"],
-    result: "10k+ active daily users",
-    featured: true,
-  },
-  {
-    id: 3,
-    title: "Luxury Fashion Store",
-    category: "E-commerce",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000",
-    tags: ["Shopify", "Tailwind CSS"],
-    result: "30% higher conversion rate",
-    featured: false,
-  },
-  {
-    id: 4,
-    title: "Logistics Dashboard",
-    category: "Web",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1000",
-    tags: ["Vue.js", "Express"],
-    result: "Optimized route planning",
-    featured: false,
-  },
-  {
-    id: 5,
-    title: "Fitness Tracker App",
-    category: "App",
-    image: "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&q=80&w=1000",
-    tags: ["React Native", "Redux"],
-    result: "4.8/5 App Store Rating",
-    featured: false,
-  },
-  {
-    id: 6,
-    title: "B2B SaaS Portal",
-    category: "Web",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1000",
-    tags: ["Next.js", "Prisma"],
-    result: "$2M+ processed monthly",
-    featured: false,
-  },
-]
+import { projects } from "@/data/projects"
+import type { Project } from "@/data/projects"
+import { Link } from "react-router-dom"
 
 const categories = ["All", "Web", "App", "E-commerce"]
 
+const StickyProjectCard = ({
+  project,
+  i,
+  progress,
+  range,
+  targetScale,
+}: {
+  project: Project
+  i: number
+  progress: any
+  range: [number, number]
+  targetScale: number
+}) => {
+  const container = useRef<HTMLDivElement>(null)
+  const scale = useTransform(progress, range, [1, targetScale])
+
+  return (
+    <div ref={container} className="sticky top-0 flex items-center justify-center min-h-screen">
+      <motion.div
+        style={{
+          scale,
+          top: `calc(5vh + ${i * 25}px)`,
+        }}
+        className="relative flex flex-col md:flex-row w-[90vw] max-w-5xl h-[500px] md:h-[600px] origin-top overflow-hidden rounded-3xl border border-border/50 bg-secondary/20 shadow-2xl backdrop-blur-sm"
+      >
+        <div className="w-full md:w-1/2 h-1/2 md:h-full relative overflow-hidden">
+          <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent md:bg-gradient-to-r" />
+        </div>
+        
+        <div className="w-full md:w-1/2 h-1/2 md:h-full p-8 md:p-12 flex flex-col justify-center bg-background/95">
+          <div className="flex flex-wrap gap-2 mb-4">
+            {project.tags.map(tag => (
+              <span key={tag} className="px-3 py-1 bg-secondary rounded-full text-xs font-medium border border-border/50">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <h4 className="text-3xl md:text-5xl font-bold mb-4">{project.title}</h4>
+          <p className="text-primary font-medium mb-6 text-lg">{project.result}</p>
+          <p className="text-muted-foreground line-clamp-3 mb-8">{project.challenge}</p>
+          
+          <Link to={`/work/${project.slug}`} className="inline-flex items-center text-sm font-bold uppercase tracking-wider hover:text-primary transition-colors mt-auto">
+            View Case Study <ArrowRight className="ml-2 w-5 h-5" />
+          </Link>
+        </div>
+      </motion.div>
+    </div>
+  )
+}
+
 export default function Portfolio() {
   const [activeTab, setActiveTab] = useState("All")
+  const [dbProjects, setDbProjects] = useState<any[]>([])
 
-  const filteredProjects = projects.filter(
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map(doc => {
+          const docData = doc.data();
+          const tags = docData.tags ? docData.tags.split(',').map((t: string) => t.trim()) : [];
+          return { id: doc.id, ...docData, tags };
+        });
+        
+        if (data.length > 0) {
+          setDbProjects(data);
+        } else {
+          setDbProjects(projects);
+        }
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+        setDbProjects(projects);
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  const displayProjects = dbProjects.length > 0 ? dbProjects : projects;
+
+  const filteredProjects = displayProjects.filter(
     (project) => activeTab === "All" || project.category === activeTab
   )
 
-  const featuredProjects = projects.filter(p => p.featured)
+  const featuredProjects = displayProjects.filter(p => p.featured)
+  const containerRef = useRef<HTMLDivElement>(null)
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  })
 
   return (
     <section id="work" className="py-24 bg-background">
@@ -111,42 +143,22 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Featured Projects (Only show on 'All' tab) */}
+        {/* Featured Projects (Sticky Scroll) */}
         {activeTab === "All" && (
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            {featuredProjects.map((project, index) => (
-              <motion.div
-                key={`featured-${project.id}`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="group relative rounded-2xl overflow-hidden border border-border/50 bg-secondary/20 aspect-[4/3] md:aspect-auto md:h-[500px]"
-              >
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+          <div ref={containerRef} className="relative w-full pb-[10vh] mt-10">
+            {featuredProjects.map((project, i) => {
+              const targetScale = 1 - ((featuredProjects.length - i - 1) * 0.05);
+              return (
+                <StickyProjectCard
+                  key={`featured-${project.id}`}
+                  project={project}
+                  i={i}
+                  progress={scrollYProgress}
+                  range={[i * (1 / featuredProjects.length), 1]}
+                  targetScale={targetScale}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
-                
-                <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map(tag => (
-                      <span key={tag} className="px-3 py-1 bg-background/50 backdrop-blur-md rounded-full text-xs font-medium border border-border/50">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <h4 className="text-3xl font-bold mb-2">{project.title}</h4>
-                  <p className="text-primary font-medium mb-6">{project.result}</p>
-                  
-                  <a href="#" className="inline-flex items-center text-sm font-bold uppercase tracking-wider hover:text-primary transition-colors">
-                    View Case Study <ArrowRight className="ml-2 w-4 h-4" />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
+              )
+            })}
           </div>
         )}
 
@@ -170,19 +182,21 @@ export default function Portfolio() {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
                   />
                   <div className="absolute inset-0 bg-background/20 group-hover:bg-transparent transition-colors duration-300" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <Link to={`/work/${project.slug}`} className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                     <div className="bg-background/80 backdrop-blur-sm p-3 rounded-full">
                       <ExternalLink className="w-6 h-6 text-primary" />
                     </div>
-                  </div>
+                  </Link>
                 </div>
                 <div className="p-6">
                   <div className="text-xs text-primary font-bold tracking-widest uppercase mb-2">
                     {project.category}
                   </div>
-                  <h4 className="text-xl font-bold mb-2">{project.title}</h4>
+                  <Link to={`/work/${project.slug}`} className="hover:text-primary transition-colors">
+                    <h4 className="text-xl font-bold mb-2">{project.title}</h4>
+                  </Link>
                   <div className="flex flex-wrap gap-2">
-                    {project.tags.slice(0,2).map(tag => (
+                    {project.tags.slice(0,2).map((tag: string) => (
                       <span key={tag} className="text-sm text-muted-foreground bg-secondary px-2 py-0.5 rounded-md">
                         {tag}
                       </span>

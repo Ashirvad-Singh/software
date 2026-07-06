@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const transition = {
   type: "spring" as const,
@@ -109,12 +110,18 @@ export const ProductItem = ({
   );
 };
 
-export const HoveredLink = ({ children, href, className, ...rest }: any) => {
+export const HoveredLink = ({ children, href, className, active, ...rest }: any) => {
   return (
     <Link
       to={href}
       {...rest}
-      className={className || "text-neutral-700 dark:text-neutral-200 hover:text-black "}
+      className={cn(
+        "transition-colors",
+        active 
+          ? "text-primary font-bold" 
+          : "text-neutral-700 dark:text-neutral-200 hover:text-primary dark:hover:text-white",
+        className
+      )}
     >
       {children}
     </Link>

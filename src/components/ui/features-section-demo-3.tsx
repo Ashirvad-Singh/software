@@ -2,43 +2,52 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import createGlobe from "cobe";
-import { useEffect, useRef } from "react";
+import { services as staticServices } from "@/data/services";
+import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { motion } from "framer-motion";
 import { IconDeviceDesktopAnalytics } from "@tabler/icons-react";
 
 export default function FeaturesSectionDemo() {
-  const features = [
-    {
-      title: "Custom App Development",
-      description:
-        "We build scalable, high-performance mobile applications tailored to your business needs.",
-      skeleton: <SkeletonOne />,
-      className:
-        "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
-    },
-    {
-      title: "Modern UI/UX Design",
-      description:
-        "Engage your users with stunning, intuitive, and modern user interfaces.",
-      skeleton: <SkeletonTwo />,
-      className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
-    },
-    {
-      title: "Data-Driven Insights",
-      description:
-        "Understand your users better with integrated analytics and performance tracking.",
-      skeleton: <SkeletonThree />,
-      className:
-        "col-span-1 lg:col-span-3 lg:border-r  dark:border-neutral-800",
-    },
-    {
-      title: "Global Cloud Deployment",
-      description:
-        "Deploy your applications globally with blazing fast cloud infrastructure ensuring 99.9% uptime.",
-      skeleton: <SkeletonFour />,
-      className: "col-span-1 lg:col-span-3 border-b lg:border-none",
-    },
-  ];
+  const [dbServices, setDbServices] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const q = query(collection(db, "services"), orderBy("createdAt", "desc"));
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        if (data.length > 0) {
+          setDbServices(data);
+        } else {
+          setDbServices(staticServices);
+        }
+      } catch (error) {
+        console.error("Error fetching services:", error);
+        setDbServices(staticServices);
+      }
+    };
+    fetchServices();
+  }, []);
+
+  const displayServices = dbServices.length > 0 ? dbServices : staticServices;
+
+  const features = displayServices.map((service, index) => {
+    const skeletons = [<SkeletonOne />, <SkeletonTwo />, <SkeletonThree />, <SkeletonFour />];
+    const classes = [
+      "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800 group/feature cursor-pointer",
+      "border-b col-span-1 lg:col-span-2 dark:border-neutral-800 group/feature cursor-pointer",
+      "col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800 group/feature cursor-pointer",
+      "col-span-1 lg:col-span-3 border-b lg:border-none group/feature cursor-pointer",
+    ];
+    return {
+      ...service,
+      skeleton: skeletons[index % skeletons.length],
+      className: classes[index % classes.length],
+    };
+  });
   return (
     <section id="services" className="relative z-20 mx-auto max-w-7xl py-24 bg-transparent">
       <div className="px-8">
@@ -76,9 +85,13 @@ export default function FeaturesSectionDemo() {
         <div className="mt-12 grid grid-cols-1 rounded-md lg:grid-cols-6 xl:border border-neutral-200">
           {features.map((feature, idx) => (
             <FeatureCard key={feature.title} className={feature.className} delay={idx * 0.1}>
+              <Link to={`/services/${feature.slug}`} className="absolute inset-0 z-50"></Link>
               <FeatureTitle>{feature.title}</FeatureTitle>
               <FeatureDescription>{feature.description}</FeatureDescription>
               <div className="h-full w-full">{feature.skeleton}</div>
+              <div className="absolute top-8 right-8 opacity-0 group-hover/feature:opacity-100 transition-opacity z-40">
+                <span className="bg-primary text-primary-foreground text-xs px-3 py-1 rounded-full font-medium">Read More</span>
+              </div>
             </FeatureCard>
           ))}
         </div>
