@@ -69,7 +69,7 @@ export default function ProjectDetailPage() {
   }
 
   return (
-    <main className="pt-24 pb-20">
+    <main className="pt-32 md:pt-40 pb-20">
       <div className="container mx-auto px-4 max-w-5xl">
         <Link to="/work" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8">
           <ArrowLeft className="w-4 h-4 mr-2" />

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import HeroScrollDemo from "@/components/container-scroll-animation-demo";
+import HeroModern from "@/components/site/HeroModern";
 import { ImagesBadge } from "@/components/ui/images-badge";
 import Testimonials from "@/components/site/Testimonials";
 import ThreeDMarqueeDemo from "@/components/3d-marquee-demo";
@@ -53,7 +53,7 @@ export default function HomePage() {
 
   return (
     <main>
-      <HeroScrollDemo />
+      <HeroModern />
 
       <div className="flex w-full items-center justify-center pb-20 -mt-32 relative z-20">
         <ImagesBadge

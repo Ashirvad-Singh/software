@@ -43,7 +43,7 @@ export default function GalleryPage() {
   }, []);
 
   return (
-    <main className="pt-24 min-h-screen bg-background">
+    <main className="pt-32 md:pt-40 min-h-screen bg-background">
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}

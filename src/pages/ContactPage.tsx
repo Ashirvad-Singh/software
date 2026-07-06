@@ -4,8 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { Mail, Phone, MapPin, Loader2 } from "lucide-react";
+import { Mail, Phone, MapPin, Loader2, ArrowRight } from "lucide-react";
+import { IconBrandTwitter, IconBrandLinkedin, IconBrandInstagram } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
@@ -53,132 +55,161 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="pt-32 pb-24 min-h-screen bg-background">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
-          
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+    <main className="pt-32 md:pt-40 pb-24 min-h-screen relative overflow-hidden bg-white">
+      {/* Background Dots */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-[0.03] z-0"
+        style={{
+          backgroundImage: "radial-gradient(#000 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      ></div>
+
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        
+        {/* Header Text */}
+        <div className="text-center mb-16">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-neutral-900"
           >
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">Let's build something amazing</h1>
-            <p className="text-lg text-muted-foreground mb-12 max-w-md">
-              Have a web or mobile app project in mind? We'd love to hear about it. Fill out the form and our team will get back to you within 24 hours.
-            </p>
+            Get in touch
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-lg text-neutral-500 max-w-2xl mx-auto"
+          >
+            Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions.
+          </motion.p>
+        </div>
 
-            <div className="space-y-8">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-primary/10 rounded-xl text-primary">
-                  <Mail className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-1">Email Us</h3>
-                  <p className="text-muted-foreground">hello@adatsoft.com</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-primary/10 rounded-xl text-primary">
-                  <Phone className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-1">Call Us</h3>
-                  <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                </div>
-              </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-neutral-100 overflow-hidden flex flex-col lg:flex-row"
+        >
+          
+          {/* Left Dark Side - Contact Info */}
+          <div className="lg:w-2/5 bg-gradient-to-br from-sky-500 to-sky-700 p-10 md:p-14 text-white relative overflow-hidden flex flex-col justify-between">
+            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-sky-300/30 blur-3xl pointer-events-none"></div>
+            
+            <div className="relative z-10">
+              <h3 className="text-3xl font-semibold mb-4 tracking-tight">Contact Information</h3>
+              <p className="text-sky-100 mb-12 text-sm leading-relaxed">Fill up the form and our Team will get back to you within 24 hours.</p>
 
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-primary/10 rounded-xl text-primary">
-                  <MapPin className="w-6 h-6" />
+              <div className="space-y-8">
+                <div className="flex items-center gap-4 group cursor-pointer">
+                  <div className="p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <span className="text-sky-100 hover:text-white transition-colors">+1 (555) 123-4567</span>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-1">Visit Us</h3>
-                  <p className="text-muted-foreground">123 Tech Lane, Silicon Valley<br/>CA 94043, USA</p>
+                <div className="flex items-center gap-4 group cursor-pointer">
+                  <div className="p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <span className="text-sky-100 hover:text-white transition-colors">hello@adatsoft.com</span>
+                </div>
+                <div className="flex items-center gap-4 group cursor-pointer">
+                  <div className="p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <span className="text-sky-100 leading-relaxed group-hover:text-white transition-colors">
+                    123 Tech Lane, Silicon Valley<br/>CA 94043, USA
+                  </span>
                 </div>
               </div>
             </div>
-          </motion.div>
 
-          {/* Form */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="shadow-input w-full rounded-2xl bg-white p-6 md:p-8 border border-neutral-100 shadow-xl"
-          >
-            <h2 className="text-2xl font-bold text-neutral-800 mb-6">
-              Send a Message
-            </h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4">
+            <div className="mt-16 pt-8 border-t border-white/10 relative z-10">
+              <p className="text-xs text-sky-200 font-medium tracking-wider uppercase mb-4">Follow us</p>
+              <div className="flex gap-4">
+                {[
+                  { name: 'Twitter', icon: IconBrandTwitter },
+                  { name: 'LinkedIn', icon: IconBrandLinkedin },
+                  { name: 'Instagram', icon: IconBrandInstagram }
+                ].map(social => (
+                  <div key={social.name} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-sky-100 hover:bg-white hover:text-sky-600 transition-all cursor-pointer">
+                    <social.icon className="w-4 h-4" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right White Side - Form */}
+          <div className="lg:w-3/5 p-10 md:p-14 bg-sky-50 relative">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <LabelInputContainer>
-                  <Label htmlFor="fullName">Full name</Label>
-                  <Input id="fullName" placeholder="John Doe" type="text" {...register("fullName")} />
+                  <Label htmlFor="fullName" className="text-neutral-600 font-medium">First & Last Name</Label>
+                  <Input id="fullName" placeholder="John Doe" type="text" {...register("fullName")} className="bg-neutral-50/50" />
                   {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
                 </LabelInputContainer>
+
                 <LabelInputContainer>
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input id="phone" placeholder="+1 (555) 000-0000" type="tel" {...register("phone")} />
+                  <Label htmlFor="phone" className="text-neutral-600 font-medium">Phone Number</Label>
+                  <Input id="phone" placeholder="+1 (555) 000-0000" type="tel" {...register("phone")} className="bg-neutral-50/50" />
                   {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
                 </LabelInputContainer>
               </div>
-              <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4">
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <LabelInputContainer>
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" placeholder="john@example.com" type="email" {...register("email")} />
+                  <Label htmlFor="email" className="text-neutral-600 font-medium">Email Address</Label>
+                  <Input id="email" placeholder="john@example.com" type="email" {...register("email")} className="bg-neutral-50/50" />
                   {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                 </LabelInputContainer>
+
                 <LabelInputContainer>
-                  <Label htmlFor="company">Company (Optional)</Label>
-                  <Input id="company" placeholder="Your Company Ltd" type="text" {...register("company")} />
+                  <Label htmlFor="company" className="text-neutral-600 font-medium">Company Name (Optional)</Label>
+                  <Input id="company" placeholder="Your Company Ltd" type="text" {...register("company")} className="bg-neutral-50/50" />
                 </LabelInputContainer>
               </div>
-              <LabelInputContainer className="mb-4">
-                <Label htmlFor="subject">Subject</Label>
-                <Input id="subject" placeholder="Project Inquiry" type="text" {...register("subject")} />
+
+              <LabelInputContainer>
+                <Label htmlFor="subject" className="text-neutral-600 font-medium">Subject</Label>
+                <Input id="subject" placeholder="What is this regarding?" type="text" {...register("subject")} className="bg-neutral-50/50" />
                 {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject.message}</p>}
               </LabelInputContainer>
-              <LabelInputContainer className="mb-8">
-                <Label htmlFor="message">Message</Label>
-                <Input id="message" placeholder="Tell us about your project..." type="text" className="h-24" {...register("message")} />
+
+              <LabelInputContainer>
+                <Label htmlFor="message" className="text-neutral-600 font-medium">Message</Label>
+                <Textarea id="message" placeholder="Write your message here..." className="h-32 bg-neutral-50/50" {...register("message")} />
                 {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>}
               </LabelInputContainer>
 
-              <button
-                className="group/btn relative block h-12 w-full flex items-center justify-center rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] disabled:opacity-70 disabled:cursor-not-allowed"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                ) : (
-                  <>
-                    Send Message &rarr;
-                    <BottomGradient />
-                  </>
-                )}
-              </button>
-            </form>
-          </motion.div>
+              <div className="pt-6 flex justify-end">
+                <button
+                  className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-sky-500 px-8 font-medium text-white transition-all duration-300 hover:bg-sky-600 hover:scale-105 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-[0_4px_14px_0_rgba(14,165,233,0.39)]"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <>
+                      <span className="mr-2">Send Message</span>
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </>
+                  )}
+                </button>
+              </div>
 
-        </div>
+            </form>
+          </div>
+
+        </motion.div>
       </div>
     </main>
   );
 }
-
-const BottomGradient = () => {
-  return (
-    <>
-      <span className="absolute inset-x-0 -bottom-px block h-px w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
-      <span className="absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
-    </>
-  );
-};
 
 const LabelInputContainer = ({
   children,
@@ -193,3 +224,4 @@ const LabelInputContainer = ({
     </div>
   );
 };
+
