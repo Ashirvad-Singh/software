@@ -1,11 +1,64 @@
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Zap, MoreVertical, Circle, Triangle, Hexagon } from "lucide-react";
 
-export default function HeroModern() {
+const RandomSpot = () => {
+  const [position, setPosition] = useState({ x: 50, y: 50 });
+  const [opacity, setOpacity] = useState(0);
+
+  useEffect(() => {
+    const moveSpot = () => {
+      setPosition({ x: 10 + Math.random() * 80, y: 10 + Math.random() * 80 });
+      setOpacity(0.3 + Math.random() * 0.4); // Random opacity between 0.3 and 0.7
+    };
+    moveSpot();
+    const interval = setInterval(moveSpot, 3000 + Math.random() * 2000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="relative min-h-screen pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-[#Fdfdfd]">
-      {/* Background Dots */}
+    <motion.div 
+      className="absolute inset-0 pointer-events-none z-0"
+      animate={{
+        WebkitMaskPosition: `${position.x}% ${position.y}%`,
+        opacity: opacity,
+      } as any}
+      transition={{ duration: 4, ease: "easeInOut" }}
+      style={{
+        backgroundImage: "radial-gradient(#0ea5e9 2px, transparent 2px)",
+        backgroundSize: "24px 24px",
+        WebkitMaskImage: `radial-gradient(150px circle, black, transparent)`,
+        WebkitMaskSize: "300px 300px",
+        WebkitMaskRepeat: "no-repeat",
+        maskImage: `radial-gradient(150px circle, black, transparent)`,
+        maskSize: "300px 300px",
+        maskRepeat: "no-repeat",
+      }}
+    />
+  );
+};
+
+export default function HeroModern() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  return (
+    <section 
+      className="relative min-h-screen pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-[#Fdfdfd]"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
+      {/* Background Dots - Base Layer (Dim) */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-20 z-0"
         style={{
@@ -13,6 +66,26 @@ export default function HeroModern() {
           backgroundSize: "24px 24px",
         }}
       ></div>
+
+      {/* Background Dots - Interactive Hover Layer (Bright/Shining) */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none z-0"
+        animate={{
+          opacity: isHovering ? 0.7 : 0,
+        }}
+        transition={{ duration: 0.3 }}
+        style={{
+          backgroundImage: "radial-gradient(#0ea5e9 2px, transparent 2px)", // Sky blue brighter dots
+          backgroundSize: "24px 24px",
+          WebkitMaskImage: `radial-gradient(250px circle at ${mousePosition.x}px ${mousePosition.y}px, black, transparent)`,
+          maskImage: `radial-gradient(250px circle at ${mousePosition.x}px ${mousePosition.y}px, black, transparent)`,
+        }}
+      ></motion.div>
+
+      {/* Autonomous Random Shining Spots */}
+      <RandomSpot />
+      <RandomSpot />
+      <RandomSpot />
 
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center min-h-[60vh]">
         <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
