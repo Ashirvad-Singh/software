@@ -1,47 +1,47 @@
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import useEmblaCarousel from "embla-carousel-react"
-import { ChevronLeft, ChevronRight, Quote, Star, Loader2 } from "lucide-react"
+import { Star, Loader2 } from "lucide-react"
 import { collection, getDocs, query, orderBy } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 
 const staticTestimonials = [
   {
     id: 1,
-    name: "Sarah Jenkins",
-    role: "CEO, TechFlow",
-    content: "Adat Soft Solutions transformed our clunky legacy system into a sleek, fast, and modern web application. Their attention to detail and technical expertise is unmatched.",
+    name: "David Eyezenhour",
+    role: "Founder - 2020 LI",
+    content: "Adat Soft Solutions came in as a contractor and grew into one of the most valuable people in our operation. They managed our KOL network, built internal systems that genuinely changed how we operate, and then led the development of our analytics platform from architecture through deployment. When we needed an Operations Director, the decision was straightforward. They understand the business, anticipate what's needed, and deliver at a level most senior hires don't reach.",
     rating: 5,
-    avatar: "https://i.pravatar.cc/150?img=1"
+    avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600",
+    stats: []
   },
   {
     id: 2,
-    name: "David Chen",
-    role: "Founder, HealthSync",
-    content: "We hired them for a complex mobile app project. They delivered on time, communicated perfectly throughout, and the end product exceeded our expectations. Highly recommended.",
+    name: "Chad Culp",
+    role: "Founder/Owner - Bloom County",
+    content: "The web development work alone was worth every dollar — but what stood out was how well they understood the brand before they even wrote a line of code. The digital platform they created didn't just look good, it felt like our company. The campaign they ran gave us exposure we couldn't have bought. We saw real growth in our following and engagement from an audience that actually matched our customer base.",
     rating: 5,
-    avatar: "https://i.pravatar.cc/150?img=11"
+    avatar: "https://i.pravatar.cc/150?img=11",
+    stats: [
+      { value: "3x", label: "Social following growth" },
+      { value: "100%", label: "Original content" }
+    ]
   },
   {
     id: 3,
-    name: "Emily Rodriguez",
-    role: "Marketing Director, Bloom",
-    content: "Our e-commerce conversion rates doubled after Adat Soft Solutions completely redesigned and rebuilt our Shopify store. The 3D elements and smooth animations wow our customers.",
+    name: "Majd Hailat",
+    role: "Founder / CEO - Altura",
+    content: "Getting our SaaS platform launched in the same cycle is not something that happens by accident. They built our entire infrastructure from the ground up, handled every pitch, and made sure we showed up to each event prepared. The seamless API integrations extended our reach into audiences we weren't reaching. The work they executed moved the needle on how the broader community perceives us.",
     rating: 5,
-    avatar: "https://i.pravatar.cc/150?img=5"
-  },
-  {
-    id: 4,
-    name: "Michael Chang",
-    role: "CTO, NextGen Logistics",
-    content: "They seamlessly integrated with our internal team to build out our REST API and backend infrastructure. Solid architecture and completely reliable.",
-    rating: 4,
-    avatar: "https://i.pravatar.cc/150?img=12"
+    avatar: "https://i.pravatar.cc/150?img=5",
+    stats: [
+      { value: "5+", label: "Conference stages secured" },
+      { value: "30+", label: "Podcast placements" }
+    ]
   }
 ]
 
 export default function Testimonials() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" })
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [emblaRef] = useEmblaCarousel({ align: "start", dragFree: true })
   const [testimonials, setTestimonials] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -51,7 +51,7 @@ export default function Testimonials() {
         const q = query(collection(db, "testimonials"), orderBy("createdAt", "desc"));
         const snapshot = await getDocs(q);
         const data = snapshot.docs.map(doc => doc.data());
-        if (data.length > 0) {
+        if (data.length >= 3) {
           setTestimonials(data);
         } else {
           setTestimonials(staticTestimonials);
@@ -66,130 +66,139 @@ export default function Testimonials() {
     fetchTestimonials();
   }, []);
 
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev()
-  }, [emblaApi])
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext()
-  }, [emblaApi])
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return
-    setSelectedIndex(emblaApi.selectedScrollSnap())
-  }, [emblaApi, setSelectedIndex])
-
-  useEffect(() => {
-    if (!emblaApi) return
-    onSelect()
-    emblaApi.on("select", onSelect)
-    emblaApi.on("reInit", onSelect)
-  }, [emblaApi, onSelect])
+  if (loading) {
+    return (
+      <section className="py-24 flex justify-center items-center bg-gray-50 min-h-[500px]">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </section>
+    )
+  }
 
   return (
-    <section id="testimonials" className="py-32 relative overflow-hidden bg-neutral-50 border-t border-border/50">
-      {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-      
-      {/* Decorative gradient overlay */}
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-white to-transparent"></div>
-      <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-white to-transparent pointer-events-none z-10"></div>
-
-      <div className="container mx-auto px-4 md:px-6 relative z-20">
-        
-        <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
-          <div className="relative">
-            <span className="absolute -top-10 -left-6 text-7xl text-primary/10 font-serif">"</span>
-            <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
-              Client Success
-            </h2>
-            <h3 className="text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900">
-              Trusted by the Best
-            </h3>
-          </div>
+    <section className="py-12 bg-white w-full overflow-hidden">
+      <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="overflow-hidden" ref={emblaRef} data-cursor-text="Drag or scroll">
+          <div className="flex -ml-6 cursor-none">
           
-          <div className="flex gap-4">
-            <button 
-              onClick={scrollPrev}
-              aria-label="Previous Testimonial"
-              className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-secondary hover:text-primary transition-colors"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button 
-              onClick={scrollNext}
-              aria-label="Next Testimonial"
-              className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-secondary hover:text-primary transition-colors"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
+          {/* Card 0: Title Card */}
+          <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_25%] pl-6 min-w-0">
+            <div className="bg-white border border-gray-100 p-8 flex flex-col justify-between h-[650px] shadow-sm">
+              <div>
+                <div className="flex items-center gap-2 mb-12">
+                  <span className="text-xl font-medium tracking-tight">AdatSoft<span className="font-bold text-red-500">Vox</span></span>
+                  <div className="w-2 h-2 border-t-2 border-r-2 border-red-500"></div>
+                </div>
+                <h2 className="text-5xl lg:text-6xl font-semibold tracking-tight text-gray-900 leading-[1.1]">
+                  Success<br />Stories
+                </h2>
+              </div>
+              <p className="text-gray-500 font-serif italic text-[15px] leading-relaxed pr-4">
+                My work speaks for itself, but my clients' success stories are the true testament to what I deliver.
+              </p>
+            </div>
           </div>
-        </div>
 
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          </div>
-        ) : (
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex -ml-4 md:-ml-6">
-              {testimonials.map((testimonial, index) => (
-                <div 
-                  key={testimonial.id || index} 
-                  className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4 md:pl-6 pt-4"
-                >
-                  <div className="bg-white border border-neutral-200 shadow-sm rounded-3xl p-8 md:p-10 h-full flex flex-col hover:shadow-xl hover:-translate-y-2 hover:border-primary/20 transition-all duration-300 relative group">
-                    
-                    {/* Subtle hover gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl pointer-events-none"></div>
-                    <div className="flex items-center gap-1 mb-6">
-                      {[...Array(5)].map((_, i) => (
-                        <Star 
-                          key={i} 
-                          className={`w-5 h-5 ${i < (testimonial.rating || 5) ? "fill-primary text-primary" : "text-muted"}`} 
-                        />
-                      ))}
-                    </div>
-                    
-                    <Quote className="w-10 h-10 text-primary/20 mb-4" />
-                    
-                    <p className="text-lg mb-10 flex-grow text-neutral-700 leading-relaxed font-medium">"{testimonial.content}"</p>
-                    
-                    <div className="flex items-center gap-4 mt-auto">
-                      <img 
-                        src={testimonial.avatar} 
-                        alt={testimonial.name} 
-                        className="w-14 h-14 rounded-full border-2 border-white shadow-md object-cover"
-                      />
+          {testimonials.map((testimonial, i) => {
+            // Cycle through styles based on index
+            const styleIdx = i % 3;
+
+            // Style 1: Solid Gradient (Image Removed)
+            if (styleIdx === 0) {
+              return (
+                <div key={i} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_25%] pl-6 min-w-0">
+                  <div className="relative overflow-hidden h-[650px] bg-gradient-to-br from-[#ff4d4d] to-[#ff7b7b] flex flex-col justify-end p-8 text-white group">
+                    <div className="relative z-10">
+                      <p className="text-white/95 text-[15px] leading-relaxed mb-8 line-clamp-[12]">
+                        {testimonial.content}
+                      </p>
                       <div>
-                        <h3 className="font-bold text-neutral-900 text-base">{testimonial.name}</h3>
-                        <p className="text-sm text-sky-700 font-medium">{testimonial.role}</p>
+                        <h4 className="font-medium text-lg">{testimonial.name}</h4>
+                        <p className="text-white/80 text-sm">{testimonial.role}</p>
                       </div>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
+              )
+            }
 
-        {!loading && (
-          <div className="flex justify-center gap-2 mt-12">
-            {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => emblaApi?.scrollTo(index)}
-                  className="w-6 h-6 flex items-center justify-center p-1"
-                  aria-label={`Go to slide ${index + 1}`}
-                >
-                  <span className={`h-2 rounded-full transition-all ${
-                    index === selectedIndex ? "w-8 bg-primary" : "w-2 bg-border hover:bg-border/80"
-                  }`} />
-                </button>
-            ))}
-          </div>
-        )}
+            // Style 2: Dark Card
+            if (styleIdx === 1) {
+              return (
+                <div key={i} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_25%] pl-6 min-w-0">
+                  <div className="bg-black text-white p-8 flex flex-col h-[650px]">
+                    <div className="flex gap-1 mb-6">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-[#ff0000] text-[#ff0000]" />
+                      ))}
+                    </div>
+                    <p className="text-gray-300 text-[15px] leading-relaxed flex-grow line-clamp-[10]">
+                      {testimonial.content}
+                    </p>
+                    
+                    <div className="mt-auto">
+                      {testimonial.stats && testimonial.stats.length > 0 && (
+                        <div className="grid grid-cols-2 gap-4 mb-6">
+                          {testimonial.stats.map((stat: any, i: number) => (
+                            <div key={i}>
+                              <div className="text-3xl font-bold mb-1">{stat.value}</div>
+                              <div className="text-xs text-gray-400">{stat.label}</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <hr className="border-gray-800 my-6" />
+                      <div className="flex items-center gap-4">
+                        <img src={testimonial.avatar} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover" />
+                        <div>
+                          <h4 className="font-medium">{testimonial.name}</h4>
+                          <p className="text-gray-400 text-xs">{testimonial.role}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            }
 
+            // Style 3: Light Card
+            return (
+              <div key={i} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_25%] pl-6 min-w-0">
+                <div className="bg-[#f4f4f4] text-black p-8 flex flex-col h-[650px]">
+                  <div className="flex gap-1 mb-6">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-black text-black" />
+                    ))}
+                  </div>
+                  <p className="text-gray-800 text-[15px] leading-relaxed flex-grow line-clamp-[10]">
+                    {testimonial.content}
+                  </p>
+                  
+                  <div className="mt-auto">
+                    {testimonial.stats && testimonial.stats.length > 0 && (
+                      <div className="grid grid-cols-2 gap-4 mb-6">
+                        {testimonial.stats.map((stat: any, i: number) => (
+                          <div key={i}>
+                            <div className="text-3xl font-bold mb-1">{stat.value}</div>
+                            <div className="text-xs text-gray-500">{stat.label}</div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <hr className="border-gray-300 my-6" />
+                    <div className="flex items-center gap-4">
+                      <img src={testimonial.avatar} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover filter grayscale" />
+                      <div>
+                        <h4 className="font-medium">{testimonial.name}</h4>
+                        <p className="text-gray-500 text-xs">{testimonial.role}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+          </div>
+        </div>
       </div>
     </section>
   )

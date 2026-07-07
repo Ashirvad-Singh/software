@@ -33,6 +33,7 @@ const StickyProjectCard = ({
           top: `${i * 25}px`, // Just stacking offset, the base offset is handled by container padding
         }}
         className="relative flex flex-col md:flex-row w-[90vw] max-w-5xl h-[550px] md:h-[600px] origin-top overflow-hidden rounded-3xl border border-border/50 bg-secondary/20 shadow-2xl backdrop-blur-sm mt-8 md:mt-0"
+        data-cursor-text="View Case Study"
       >
         <div className="w-full md:w-1/2 h-[40%] md:h-full relative overflow-hidden">
           <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
@@ -174,6 +175,7 @@ export default function Portfolio() {
                 transition={{ duration: 0.4 }}
                 key={project.id}
                 className="group cursor-pointer rounded-xl overflow-hidden border border-border/50 bg-secondary/10"
+                data-cursor-text="View Project"
               >
                 <div className="relative h-60 overflow-hidden">
                   <img 

@@ -1,8 +1,10 @@
 import emailjs from '@emailjs/browser';
 
-const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "";
-const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "";
-const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "";
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "-4JaAkOFO_LqUJbH0";
+const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_2lkjugn";
+const jobAppTemplateId = import.meta.env.VITE_EMAILJS_JOB_APP_TEMPLATE_ID || "template_i21ferl";
+const contactTemplateId = import.meta.env.VITE_EMAILJS_CONTACT_TEMPLATE_ID || "";
+const statusTemplateId = import.meta.env.VITE_EMAILJS_STATUS_TEMPLATE_ID || "";
 
 emailjs.init(publicKey);
 
@@ -17,7 +19,7 @@ export const sendJobApplicationEmail = async (applicantName: string, applicantEm
     // Replace with actual Service ID and Template ID
     await emailjs.send(
       serviceId,
-      templateId,
+      jobAppTemplateId,
       templateParams
     );
     return true;
@@ -47,15 +49,36 @@ export const sendJobStatusUpdateEmail = async (applicantName: string, applicantE
       position: position,
       message: message
     };
-    // Replace with actual Service ID and Template ID
     await emailjs.send(
       serviceId,
-      templateId,
+      statusTemplateId,
       templateParams
     );
     return true;
   } catch (error) {
     console.error("Failed to send email", error);
+    return false;
+  }
+};
+
+export const sendContactEmail = async (name: string, email: string, phone: string, company: string, message: string) => {
+  try {
+    const templateParams = {
+      to_name: "Adat Soft Solutions Team",
+      from_name: name,
+      from_email: email,
+      phone: phone,
+      company: company,
+      message: message
+    };
+    await emailjs.send(
+      serviceId,
+      contactTemplateId,
+      templateParams
+    );
+    return true;
+  } catch (error) {
+    console.error("Failed to send contact email", error);
     return false;
   }
 };

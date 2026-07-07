@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react"
 import { motion, useMotionValue, useSpring } from "framer-motion"
 
+import { ArrowRight } from "lucide-react"
+
 export default function Cursor() {
   const [isHovered, setIsHovered] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [cursorText, setCursorText] = useState<string | null>(null)
   
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
@@ -32,7 +35,15 @@ export default function Cursor() {
       const target = e.target as HTMLElement
       const computedStyle = window.getComputedStyle(target)
       
+      const cursorAttr = target.closest('[data-cursor-text]')?.getAttribute('data-cursor-text')
+      if (cursorAttr) {
+        setCursorText(cursorAttr)
+      } else {
+        setCursorText(null)
+      }
+
       if (
+        !cursorAttr && (
         target.tagName.toLowerCase() === "a" ||
         target.tagName.toLowerCase() === "button" ||
         target.closest("a") ||
@@ -41,6 +52,7 @@ export default function Cursor() {
         target.closest("input") ||
         target.closest("textarea") ||
         computedStyle.cursor === 'pointer'
+        )
       ) {
         setIsHovered(true)
       } else {
@@ -61,18 +73,28 @@ export default function Cursor() {
 
   return (
     <>
-      {/* Blend Mode Cursor */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[10000] h-6 w-6 rounded-full bg-white mix-blend-difference"
+        className={`pointer-events-none fixed top-0 left-0 z-[10000] flex items-center justify-center overflow-hidden ${
+          cursorText
+            ? "bg-black text-white rounded-full px-4 py-2 font-medium text-sm whitespace-nowrap shadow-lg shadow-black/20"
+            : "h-6 w-6 rounded-full bg-white mix-blend-difference"
+        }`}
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
         }}
         animate={{
-          scale: isHovered ? 2.5 : 1,
+          scale: cursorText ? 1 : isHovered ? 2.5 : 1,
         }}
         transition={{ type: "tween", ease: "backOut", duration: 0.3 }}
-      />
+      >
+        {cursorText && (
+          <div className="flex items-center gap-2">
+            <span>{cursorText}</span>
+            <ArrowRight className="w-4 h-4" />
+          </div>
+        )}
+      </motion.div>
     </>
   )
 }

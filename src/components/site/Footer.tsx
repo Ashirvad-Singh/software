@@ -4,8 +4,30 @@ import { Link } from "react-router-dom"
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border/50 bg-background pt-16 pb-8">
-      <div className="container mx-auto px-4 md:px-6">
+    <footer className="border-t border-border/50 bg-white relative overflow-hidden">
+      
+      {/* Decorative gradient background for marquee */}
+      <div className="absolute inset-0 bg-gradient-to-r from-sky-50 via-white to-sky-100 opacity-60 pointer-events-none"></div>
+
+      {/* Marquee Section */}
+      <div className="w-full overflow-hidden border-b border-border/30 py-16 sm:py-24 relative z-10">
+        <div className="flex whitespace-nowrap animate-marquee">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="flex items-center mx-8">
+              <span className="text-[120px] sm:text-[180px] font-bold text-blue-600 tracking-tight leading-none mx-8">
+                Let's Chat
+              </span>
+              <div className="w-32 h-32 sm:w-40 sm:h-40 bg-blue-600 rounded-full flex items-center justify-center shrink-0">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 pt-16 pb-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="md:col-span-1">

@@ -84,7 +84,7 @@ export default function FeaturesSectionDemo() {
       <div className="relative">
         <div className="mt-12 grid grid-cols-1 rounded-md lg:grid-cols-6 xl:border border-neutral-200">
           {features.map((feature, idx) => (
-            <FeatureCard key={feature.title} className={feature.className} delay={idx * 0.1}>
+            <FeatureCard key={feature.title} className={feature.className} delay={idx * 0.1} cursorText={feature.title}>
               <Link to={`/services/${feature.slug}`} className="absolute inset-0 z-50" aria-label={`View ${feature.title} details`}></Link>
               <FeatureTitle>{feature.title}</FeatureTitle>
               <FeatureDescription>{feature.description}</FeatureDescription>
@@ -103,11 +103,13 @@ export default function FeaturesSectionDemo() {
 const FeatureCard = ({
   children,
   className,
-  delay = 0
+  delay = 0,
+  cursorText
 }: {
   children?: React.ReactNode;
   className?: string;
   delay?: number;
+  cursorText?: string;
 }) => {
   return (
     <motion.div 
@@ -116,6 +118,7 @@ const FeatureCard = ({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay }}
       className={cn(`relative overflow-hidden p-4 sm:p-8`, className)}
+      data-cursor-text={cursorText}
     >
       {children}
     </motion.div>

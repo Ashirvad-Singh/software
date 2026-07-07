@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { sendContactEmail } from "@/lib/email";
 import * as z from "zod";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -44,6 +45,7 @@ export default function ContactPage() {
         ...data,
         createdAt: serverTimestamp(),
       });
+      await sendContactEmail(data.fullName, data.email, data.phone || "", data.company || "", data.message);
       toast.success("Message sent successfully!");
       reset();
     } catch (error) {
