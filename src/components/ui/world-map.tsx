@@ -73,9 +73,10 @@ export default function WorldMap({
                 initial={{
                   pathLength: 0,
                 }}
-                animate={{
+                whileInView={{
                   pathLength: 1,
                 }}
+                viewport={{ once: true, margin: "-100px" }}
                 transition={{
                   duration: 1,
                   delay: 0.5 * i,

@@ -53,7 +53,7 @@ export default function HeroModern() {
 
   return (
     <section 
-      className="relative min-h-screen pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-[#Fdfdfd]"
+      className="relative min-h-[90vh] lg:min-h-screen pt-32 pb-16 md:pt-36 md:pb-20 overflow-hidden bg-[#Fdfdfd]"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}

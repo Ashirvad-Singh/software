@@ -9,6 +9,24 @@ export interface Service {
 
 export const services: Service[] = [
   {
+    slug: "web-development",
+    title: "Web Development",
+    description: "Build robust, responsive, and lightning-fast websites that drive results.",
+    longDescription: "Our web development team builds tailored websites using the latest technologies. From interactive single-page applications (SPAs) to complex enterprise platforms, we ensure your web presence is fast, secure, and optimized for conversions.",
+    benefits: [
+      "Responsive and mobile-first design",
+      "High performance and fast load times",
+      "SEO-friendly architectures",
+      "Robust security and content management"
+    ],
+    process: [
+      { step: "Planning", detail: "Defining site structure and tech stack." },
+      { step: "Development", detail: "Coding the frontend and backend architectures." },
+      { step: "Testing", detail: "Quality assurance across devices and browsers." },
+      { step: "Launch", detail: "Going live and monitoring performance." }
+    ]
+  },
+  {
     slug: "custom-app-development",
     title: "Custom App Development",
     description: "We build scalable, high-performance mobile applications tailored to your business needs.",
@@ -27,57 +45,39 @@ export const services: Service[] = [
     ]
   },
   {
-    slug: "modern-ui-ux-design",
-    title: "Modern UI/UX Design",
-    description: "Engage your users with stunning, intuitive, and modern user interfaces.",
-    longDescription: "A great application is more than just code; it's a seamless experience. Our design team focuses on creating intuitive, accessible, and visually stunning interfaces that captivate users. We utilize modern design paradigms like glassmorphism, dynamic animations, and dark modes to ensure your digital product stands out in a crowded market.",
+    slug: "search-engine-optimization",
+    title: "Search Engine Optimization (SEO)",
+    description: "Dominate search results and drive organic traffic to your business.",
+    longDescription: "A great website is useless if no one can find it. Our SEO experts use data-driven strategies to improve your search engine rankings, increase organic traffic, and drive qualified leads to your business through on-page optimization, technical SEO, and content strategies.",
     benefits: [
-      "User-centric design thinking",
-      "Interactive prototypes and wireframes",
-      "Brand consistency across all platforms",
-      "Micro-animations for higher engagement"
+      "Higher search engine rankings",
+      "Increased organic traffic",
+      "Targeted keyword optimization",
+      "Comprehensive technical SEO audits"
     ],
     process: [
-      { step: "Research", detail: "User personas and competitor analysis." },
-      { step: "Wireframing", detail: "Mapping out the user journey." },
-      { step: "UI Design", detail: "Applying colors, typography, and visual assets." },
-      { step: "Handoff", detail: "Seamless transition to the development team." }
+      { step: "Audit", detail: "Identifying technical and content gaps." },
+      { step: "Strategy", detail: "Keyword research and competitor analysis." },
+      { step: "Implementation", detail: "On-page and technical optimizations." },
+      { step: "Reporting", detail: "Monthly performance and ranking reports." }
     ]
   },
   {
-    slug: "data-driven-insights",
-    title: "Data-Driven Insights",
-    description: "Understand your users better with integrated analytics and performance tracking.",
-    longDescription: "In the modern digital landscape, data is your most valuable asset. We integrate advanced analytics platforms into your applications, providing you with real-time dashboards and actionable insights. Understand user behavior, track conversion funnels, and make informed business decisions based on hard data.",
+    slug: "ecommerce-development",
+    title: "Ecommerce Development",
+    description: "Scale your online sales with custom, high-converting ecommerce platforms globally.",
+    longDescription: "We build powerful online stores that are designed to convert. Whether you need a custom Shopify build, WooCommerce integration, or a headless ecommerce solution, we create global shopping experiences that keep your customers coming back.",
     benefits: [
-      "Custom analytics dashboards",
-      "Real-time user tracking",
-      "Conversion rate optimization (CRO)",
-      "Automated reporting"
+      "Custom shopping experiences",
+      "Secure payment gateway integrations",
+      "Inventory and order management",
+      "Global scaling and fast checkouts"
     ],
     process: [
-      { step: "Audit", detail: "Assessing your current data collection methods." },
-      { step: "Integration", detail: "Implementing tracking codes and event triggers." },
-      { step: "Visualization", detail: "Building custom dashboards for your team." },
-      { step: "Optimization", detail: "A/B testing based on collected data." }
+      { step: "Strategy", detail: "Analyzing target market and product catalog." },
+      { step: "Design", detail: "Creating a seamless shopping journey." },
+      { step: "Integration", detail: "Connecting payment and shipping providers." },
+      { step: "Optimization", detail: "Post-launch conversion rate optimization." }
     ]
-  },
-  {
-    slug: "global-cloud-deployment",
-    title: "Global Cloud Deployment",
-    description: "Deploy your applications globally with blazing fast cloud infrastructure ensuring 99.9% uptime.",
-    longDescription: "We partner with top-tier cloud providers like AWS, Google Cloud, and Azure to ensure your applications are always fast, secure, and available. Our DevOps experts configure auto-scaling infrastructure, CI/CD pipelines, and robust security protocols so you can focus on your business while we handle the servers.",
-    benefits: [
-      "99.99% Guaranteed uptime",
-      "Auto-scaling infrastructure",
-      "Automated backups and disaster recovery",
-      "Continuous Integration & Deployment (CI/CD)"
-    ],
-    process: [
-      { step: "Assessment", detail: "Evaluating your traffic and computing needs." },
-      { step: "Configuration", detail: "Setting up servers, databases, and CDN." },
-      { step: "Migration", detail: "Safely moving your data with zero downtime." },
-      { step: "Monitoring", detail: "24/7 proactive system monitoring." }
-    ]
-  },
+  }
 ];

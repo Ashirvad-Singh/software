@@ -41,7 +41,7 @@ export default function FollowingPointerDemo() {
 
 const blogContent = {
   slug: "amazing-tailwindcss-grid-layouts",
-  author: "Adat Soft",
+  author: "Adat Soft Solutions",
   date: "28th March, 2023",
   title: "Amazing Tailwindcss Grid Layout Examples",
   description:

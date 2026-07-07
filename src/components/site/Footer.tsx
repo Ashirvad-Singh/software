@@ -9,9 +9,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="md:col-span-1">
-            <h2 className="text-2xl font-bold tracking-tighter mb-4">
-              Adat Soft<span className="text-primary">.</span>
-            </h2>
+            <Link to="/" className="text-2xl font-bold tracking-tighter mb-4 inline-block">
+              Adat Soft Solutions<span className="text-primary">.</span>
+            </Link>
             <p className="text-muted-foreground mb-6 max-w-sm">
               We build custom software, web apps, and digital solutions to help your business scale globally.
             </p>

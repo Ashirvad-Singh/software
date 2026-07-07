@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import { cn } from "@/lib/utils";
-import createGlobe from "cobe";
+import GlobeDemo from "@/components/globe-demo";
 import { services as staticServices } from "@/data/services";
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { motion } from "framer-motion";
@@ -263,56 +263,10 @@ export const SkeletonTwo = () => {
 
 export const SkeletonFour = () => {
   return (
-    <div className="relative mt-10 flex h-60 flex-col items-center bg-transparent md:h-60">
-      <Globe className="absolute -right-10 -bottom-80 md:-right-10 md:-bottom-72" />
+    <div className="relative mt-4 flex h-[350px] md:h-[450px] flex-col items-center bg-transparent w-full">
+      <GlobeDemo />
     </div>
   );
 };
 
-export const Globe = ({ className }: { className?: string }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
-    let phi = 0;
-
-    if (!canvasRef.current) return;
-
-    const globe = createGlobe(canvasRef.current, {
-      devicePixelRatio: 2,
-      width: 600 * 2,
-      height: 600 * 2,
-      phi: 0,
-      theta: 0,
-      dark: 0,
-      diffuse: 1.2,
-      mapSamples: 4000,
-      mapBrightness: 6,
-      baseColor: [1, 1, 1],
-      markerColor: [0.1, 0.8, 1],
-      glowColor: [1, 1, 1],
-      markers: [
-        { location: [37.7595, -122.4367], size: 0.03 },
-        { location: [40.7128, -74.006], size: 0.1 },
-        { location: [28.6139, 77.209], size: 0.1 },
-        { location: [51.5074, -0.1278], size: 0.05 },
-      ],
-      // @ts-expect-error onRender is not strictly typed in cobe
-      onRender: (state: Record<string, any>) => {
-        state.phi = phi;
-        phi += 0.01;
-      },
-    });
-
-    return () => {
-      globe.destroy();
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{ width: 600, height: 600, maxWidth: "100%", aspectRatio: 1 }}
-      className={className}
-    />
-  );
-};

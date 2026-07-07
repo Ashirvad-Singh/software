@@ -61,9 +61,9 @@ export default function Navbar({ className }: { className?: string }) {
           <Menu setActive={() => {}}>
             <div className="flex items-center justify-between w-full">
               {/* Logo */}
-              <Link to="/" className="text-2xl font-bold tracking-tighter mr-8">
-                Adat Soft<span className="text-primary">.</span>
-              </Link>
+              <Link to="/" className="text-xl font-black text-neutral-900 flex items-center gap-2 relative z-20">
+              Adat Soft Solutions<span className="text-primary">.</span>
+            </Link>
               
               {/* Links */}
               <div className="flex items-center justify-center space-x-4 lg:space-x-8 text-sm font-medium flex-1">

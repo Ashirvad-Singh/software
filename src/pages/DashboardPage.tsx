@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, updateDoc, doc } from "firebase/firestore";
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "@/lib/firebase";
+import { sendJobStatusUpdateEmail } from "@/lib/email";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, ExternalLink, Lock, X, Download } from "lucide-react";
 import { toast } from "sonner";
@@ -43,6 +44,7 @@ interface JobApplication {
   skills: string;
   coverLetter?: string;
   resumeDownloadURL: string;
+  status?: string;
   createdAt: any;
 }
 
@@ -57,6 +59,30 @@ export default function DashboardPage() {
   const [careers, setCareers] = useState<JobApplication[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedApp, setSelectedApp] = useState<JobApplication | null>(null);
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+
+  const handleStatusUpdate = async (appId: string, newStatus: string) => {
+    if (!confirm(`Are you sure you want to change the status to '${newStatus}'? This will send an automated email to the candidate.`)) return;
+    
+    setIsUpdatingStatus(true);
+    try {
+      await updateDoc(doc(db, "job_applications", appId), { status: newStatus });
+      
+      const app = careers.find(a => a.id === appId);
+      if (app) {
+        await sendJobStatusUpdateEmail(app.fullName, app.email, app.position, newStatus);
+        toast.success(`Status updated to ${newStatus} and email sent!`);
+      }
+      
+      fetchData();
+      setSelectedApp(prev => prev ? { ...prev, status: newStatus } : null);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update status");
+    } finally {
+      setIsUpdatingStatus(false);
+    }
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -336,8 +362,9 @@ export default function DashboardPage() {
                       <th className="p-4 font-medium">Date</th>
                       <th className="p-4 font-medium">Applicant</th>
                       <th className="p-4 font-medium">Role</th>
+                      <th className="p-4 font-medium">Status</th>
                       <th className="p-4 font-medium">Experience</th>
-                      <th className="p-4 font-medium">Resume</th>
+                      <th className="p-4 font-medium">Action</th>
                     </tr>
                   </thead>
                   <tbody className="text-sm">
@@ -354,13 +381,24 @@ export default function DashboardPage() {
                             <div className="text-neutral-500 text-xs mt-1">{app.email}</div>
                           </td>
                           <td className="p-4 text-neutral-800">{app.position}</td>
+                          <td className="p-4">
+                            <span className={`px-2 py-1 rounded-md text-xs font-medium ${
+                              app.status === 'Selected' ? 'bg-green-100 text-green-700' :
+                              app.status === 'Rejected' ? 'bg-red-100 text-red-700' :
+                              app.status === 'Interview Scheduled' ? 'bg-yellow-100 text-yellow-700' :
+                              app.status === 'Reviewed' ? 'bg-blue-100 text-blue-700' :
+                              'bg-neutral-100 text-neutral-700'
+                            }`}>
+                              {app.status || 'New'}
+                            </span>
+                          </td>
                           <td className="p-4 text-neutral-800">{app.experience}</td>
                           <td className="p-4">
                             <button
                               onClick={() => setSelectedApp(app)}
                               className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 font-medium bg-blue-50 px-3 py-1.5 rounded-md transition-colors text-sm"
                             >
-                              View Details
+                              Manage
                             </button>
                           </td>
                         </tr>
@@ -383,12 +421,49 @@ export default function DashboardPage() {
                     className="bg-white rounded-2xl shadow-xl border border-neutral-200 w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col"
                   >
                     <div className="p-6 border-b flex justify-between items-center bg-neutral-50">
-                      <h2 className="text-xl font-bold">Application: {selectedApp.fullName}</h2>
+                      <div>
+                        <h2 className="text-xl font-bold">Application: {selectedApp.fullName}</h2>
+                        <div className="mt-2 flex items-center gap-2">
+                          <span className="text-sm text-neutral-500">Current Status:</span>
+                          <span className={`px-2 py-0.5 rounded-md text-xs font-medium ${
+                            selectedApp.status === 'Selected' ? 'bg-green-100 text-green-700' :
+                            selectedApp.status === 'Rejected' ? 'bg-red-100 text-red-700' :
+                            selectedApp.status === 'Interview Scheduled' ? 'bg-yellow-100 text-yellow-700' :
+                            selectedApp.status === 'Reviewed' ? 'bg-blue-100 text-blue-700' :
+                            'bg-neutral-100 text-neutral-700'
+                          }`}>
+                            {selectedApp.status || 'New'}
+                          </span>
+                        </div>
+                      </div>
                       <button onClick={() => setSelectedApp(null)} className="text-neutral-500 hover:text-black">
                         <X className="w-5 h-5" />
                       </button>
                     </div>
                     <div className="p-6 overflow-y-auto flex-1">
+                      {/* Status Update Actions */}
+                      <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                          <h3 className="font-bold text-blue-900 text-sm">Update Status & Notify Candidate</h3>
+                          <p className="text-xs text-blue-700 mt-1">Changing the status will automatically send an email to {selectedApp.email}.</p>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          <select 
+                            className="text-sm border border-neutral-300 rounded-md px-3 py-1.5 bg-white"
+                            onChange={(e) => e.target.value && handleStatusUpdate(selectedApp.id, e.target.value)}
+                            value=""
+                            disabled={isUpdatingStatus}
+                          >
+                            <option value="" disabled>Change Status...</option>
+                            <option value="Reviewed">Mark as Reviewed</option>
+                            <option value="Interview Scheduled">Invite for Interview</option>
+                            <option value="Selected">Select Candidate</option>
+                            <option value="Rejected">Reject Candidate</option>
+                          </select>
+                          {isUpdatingStatus && <Loader2 className="w-5 h-5 animate-spin text-blue-600" />}
+                        </div>
+                      </div>
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         <div className="space-y-4">
                           <h3 className="font-bold border-b pb-2">Personal Info</h3>

@@ -27,12 +27,14 @@ export function ImageUpload({ value, onChange, multiple = false }: ImageUploadPr
       setIsUploading(false);
       return;
     }
-
     const uploadedUrls: string[] = [];
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const formData = new FormData();
+      const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dk5y5ksw2";
+      const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "ml_default";
+      
       formData.append("file", file);
       formData.append("upload_preset", uploadPreset);
 

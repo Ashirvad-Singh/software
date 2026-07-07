@@ -25,7 +25,7 @@ const staticTestimonials = [
     id: 3,
     name: "Emily Rodriguez",
     role: "Marketing Director, Bloom",
-    content: "Our e-commerce conversion rates doubled after Adat Soft completely redesigned and rebuilt our Shopify store. The 3D elements and smooth animations wow our customers.",
+    content: "Our e-commerce conversion rates doubled after Adat Soft Solutions completely redesigned and rebuilt our Shopify store. The 3D elements and smooth animations wow our customers.",
     rating: 5,
     avatar: "https://i.pravatar.cc/150?img=5"
   },

@@ -10,6 +10,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { sendJobApplicationEmail } from "@/lib/email";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_FILE_TYPES = [
@@ -107,8 +108,13 @@ export default function JobApplicationForm({ defaultPosition = "", readOnlyPosit
                 position: readOnlyPosition ? defaultPosition : restData.position,
                 resumeFileName: file.name,
                 resumeDownloadURL: downloadURL,
+                status: "New",
                 createdAt: serverTimestamp(),
               });
+              
+              // Send automated email
+              await sendJobApplicationEmail(restData.fullName, restData.email, readOnlyPosition ? defaultPosition : restData.position);
+
               toast.success("Application submitted successfully!");
               reset();
               resolve();

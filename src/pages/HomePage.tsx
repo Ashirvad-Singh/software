@@ -178,8 +178,8 @@ export default function HomePage() {
             <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-4">
               The Engine Room
             </h2>
-            <h3 className="text-4xl md:text-5xl font-bold mb-6 text-neutral-900">
-              Powered by Next-Gen Tech
+            <h3 className="text-4xl md:text-5xl font-bold mb-6 text-neutral-900 text-balance">
+              Powered by <span className="whitespace-nowrap">Next-Gen</span> Tech
             </h3>
             <p className="text-neutral-500 max-w-2xl mx-auto text-lg">
               We don't just write code. We architect scalable, future-proof
