@@ -10,22 +10,23 @@ import CTASection from "@/components/site/CTASection"
 import { ThemeProvider } from "@/components/ThemeProvider"
 
 import HomePage from "@/pages/HomePage"
+import { lazy, Suspense } from "react"
 import ScrollToTop from "@/components/ScrollToTop"
-import ServicesPage from "@/pages/ServicesPage"
-import ServiceDetailPage from "@/pages/ServiceDetailPage"
-import WorkPage from "@/pages/WorkPage"
-import ProjectDetailPage from "@/pages/ProjectDetailPage"
-import ProcessPage from "@/pages/ProcessPage"
-import AboutPage from "@/pages/AboutPage"
-import ContactPage from "@/pages/ContactPage"
-import TeamPage from "@/pages/TeamPage"
-import GalleryPage from "@/pages/GalleryPage"
-import CareersPage from "@/pages/CareersPage"
-import JobDetailPage from "@/pages/JobDetailPage"
-import DashboardPage from "@/pages/DashboardPage"
-import BlogPage from "@/pages/BlogPage"
-import BlogPostPage from "@/pages/BlogPostPage"
-import NotFoundPage from "@/pages/NotFoundPage"
+const ServicesPage = lazy(() => import("@/pages/ServicesPage"))
+const ServiceDetailPage = lazy(() => import("@/pages/ServiceDetailPage"))
+const WorkPage = lazy(() => import("@/pages/WorkPage"))
+const ProjectDetailPage = lazy(() => import("@/pages/ProjectDetailPage"))
+const ProcessPage = lazy(() => import("@/pages/ProcessPage"))
+const AboutPage = lazy(() => import("@/pages/AboutPage"))
+const ContactPage = lazy(() => import("@/pages/ContactPage"))
+const TeamPage = lazy(() => import("@/pages/TeamPage"))
+const GalleryPage = lazy(() => import("@/pages/GalleryPage"))
+const CareersPage = lazy(() => import("@/pages/CareersPage"))
+const JobDetailPage = lazy(() => import("@/pages/JobDetailPage"))
+const DashboardPage = lazy(() => import("@/pages/DashboardPage"))
+const BlogPage = lazy(() => import("@/pages/BlogPage"))
+const BlogPostPage = lazy(() => import("@/pages/BlogPostPage"))
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
 import { FloatingShapes } from "@/components/ui/floating-shapes"
 
 function App() {
@@ -77,24 +78,26 @@ function App() {
         {!isDashboard && <Navbar />}
         
         <div className="flex-1 relative z-10">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/services/:slug" element={<ServiceDetailPage />} />
-            <Route path="/work" element={<WorkPage />} />
-            <Route path="/work/:slug" element={<ProjectDetailPage />} />
-            <Route path="/process" element={<ProcessPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/team" element={<TeamPage />} />
-            <Route path="/gallery" element={<GalleryPage />} />
-            <Route path="/careers" element={<CareersPage />} />
-            <Route path="/careers/:id" element={<JobDetailPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+          <Suspense fallback={<div className="h-screen w-full flex items-center justify-center opacity-0 animate-in fade-in duration-500 delay-200"><div className="w-8 h-8 rounded-full border-4 border-primary border-t-transparent animate-spin"></div></div>}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/services/:slug" element={<ServiceDetailPage />} />
+              <Route path="/work" element={<WorkPage />} />
+              <Route path="/work/:slug" element={<ProjectDetailPage />} />
+              <Route path="/process" element={<ProcessPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/team" element={<TeamPage />} />
+              <Route path="/gallery" element={<GalleryPage />} />
+              <Route path="/careers" element={<CareersPage />} />
+              <Route path="/careers/:id" element={<JobDetailPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<BlogPostPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
         </div>
 
         {!isDashboard && <CTASection />}
