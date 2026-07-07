@@ -56,21 +56,7 @@ export default function HomePage() {
     <main>
       <HeroModern />
 
-      <div className="flex w-full items-center justify-center pb-20 -mt-6 md:-mt-32 relative z-20">
-        <ImagesBadge
-          text="Explore Our Web & App Solutions"
-          images={[
-            "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=300",
-            "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=300",
-            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=300",
-          ]}
-          folderSize={{ width: 48, height: 36 }}
-          teaserImageSize={{ width: 40, height: 28 }}
-          hoverImageSize={{ width: 140, height: 108 }}
-          hoverTranslateY={-110}
-          hoverSpread={50}
-        />
-      </div>
+
 
       <StatsCounter />
 
