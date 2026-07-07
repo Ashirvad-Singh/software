@@ -60,15 +60,15 @@ export default function FeaturesSectionDemo() {
         >
           Our Services
         </motion.h2>
-        <motion.h4 
+        <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="mx-auto max-w-5xl text-center text-3xl font-bold tracking-tight text-black lg:text-5xl lg:leading-tight"
+          className="mx-auto max-w-5xl text-center text-3xl font-bold tracking-tight text-black dark:text-white lg:text-5xl lg:leading-tight"
         >
           Comprehensive Web & App Solutions
-        </motion.h4>
+        </motion.h2>
 
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -85,7 +85,7 @@ export default function FeaturesSectionDemo() {
         <div className="mt-12 grid grid-cols-1 rounded-md lg:grid-cols-6 xl:border border-neutral-200">
           {features.map((feature, idx) => (
             <FeatureCard key={feature.title} className={feature.className} delay={idx * 0.1}>
-              <Link to={`/services/${feature.slug}`} className="absolute inset-0 z-50"></Link>
+              <Link to={`/services/${feature.slug}`} className="absolute inset-0 z-50" aria-label={`View ${feature.title} details`}></Link>
               <FeatureTitle>{feature.title}</FeatureTitle>
               <FeatureDescription>{feature.description}</FeatureDescription>
               <div className="h-full w-full">{feature.skeleton}</div>

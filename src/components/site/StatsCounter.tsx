@@ -57,9 +57,9 @@ export default function StatsCounter() {
               transition={{ delay: index * 0.1, duration: 0.5 }}
               className="flex flex-col items-center text-center px-4"
             >
-              <h3 className="text-4xl md:text-5xl font-bold text-primary mb-2">
+              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
                 <Counter value={stat.value} suffix={stat.suffix} />
-              </h3>
+              </div>
               <p className="text-sm md:text-base text-muted-foreground font-medium">
                 {stat.label}
               </p>

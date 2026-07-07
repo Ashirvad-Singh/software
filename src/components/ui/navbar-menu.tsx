@@ -118,8 +118,8 @@ export const HoveredLink = ({ children, href, className, active, ...rest }: any)
       className={cn(
         "transition-colors",
         active 
-          ? "text-primary font-bold" 
-          : "text-neutral-700 dark:text-neutral-200 hover:text-primary dark:hover:text-white",
+          ? "text-sky-700 font-bold" 
+          : "text-neutral-700 dark:text-neutral-200 hover:text-sky-700 dark:hover:text-white",
         className
       )}
     >

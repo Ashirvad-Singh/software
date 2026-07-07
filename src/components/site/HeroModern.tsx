@@ -168,7 +168,7 @@ export default function HeroModern() {
           >
             <Link 
               to="/contact"
-              className="inline-flex items-center justify-center h-14 px-8 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-lg shadow-[0_4px_14px_0_rgba(14,165,233,0.39)] transition-all hover:shadow-[0_6px_20px_rgba(14,165,233,0.23)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center h-14 px-8 rounded-full bg-sky-600 hover:bg-sky-700 text-white font-bold text-lg shadow-[0_4px_14px_0_rgba(2,132,199,0.39)] transition-all hover:shadow-[0_6px_20px_rgba(2,132,199,0.23)] hover:-translate-y-0.5"
             >
               Start a Project - Let's Talk <ArrowRight className="ml-2 w-5 h-5" />
             </Link>

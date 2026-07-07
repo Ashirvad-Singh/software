@@ -111,12 +111,14 @@ export default function Testimonials() {
           <div className="flex gap-4">
             <button 
               onClick={scrollPrev}
+              aria-label="Previous Testimonial"
               className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-secondary hover:text-primary transition-colors"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button 
               onClick={scrollNext}
+              aria-label="Next Testimonial"
               className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-secondary hover:text-primary transition-colors"
             >
               <ChevronRight className="w-6 h-6" />
@@ -160,8 +162,8 @@ export default function Testimonials() {
                         className="w-14 h-14 rounded-full border-2 border-white shadow-md object-cover"
                       />
                       <div>
-                        <h5 className="font-bold text-neutral-900">{testimonial.name}</h5>
-                        <p className="text-sm text-primary font-medium">{testimonial.role}</p>
+                        <h3 className="font-bold text-neutral-900 text-base">{testimonial.name}</h3>
+                        <p className="text-sm text-sky-700 font-medium">{testimonial.role}</p>
                       </div>
                     </div>
                   </div>
@@ -174,14 +176,16 @@ export default function Testimonials() {
         {!loading && (
           <div className="flex justify-center gap-2 mt-12">
             {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => emblaApi?.scrollTo(index)}
-                className={`h-2 rounded-full transition-all ${
-                  index === selectedIndex ? "w-8 bg-primary" : "w-2 bg-border hover:bg-border/80"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
+                <button
+                  key={index}
+                  onClick={() => emblaApi?.scrollTo(index)}
+                  className="w-6 h-6 flex items-center justify-center p-1"
+                  aria-label={`Go to slide ${index + 1}`}
+                >
+                  <span className={`h-2 rounded-full transition-all ${
+                    index === selectedIndex ? "w-8 bg-primary" : "w-2 bg-border hover:bg-border/80"
+                  }`} />
+                </button>
             ))}
           </div>
         )}

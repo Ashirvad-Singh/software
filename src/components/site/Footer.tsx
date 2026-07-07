@@ -16,13 +16,13 @@ export default function Footer() {
               We build custom software, web apps, and digital solutions to help your business scale globally.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="#" aria-label="LinkedIn" className="text-muted-foreground hover:text-primary transition-colors">
                 <IconBrandLinkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="#" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
                 <IconBrandInstagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="#" aria-label="GitHub" className="text-muted-foreground hover:text-primary transition-colors">
                 <IconBrandGithub className="w-5 h-5" />
               </a>
             </div>
