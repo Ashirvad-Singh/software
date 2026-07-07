@@ -117,7 +117,7 @@ export default function HeroModern() {
                 },
               },
             }}
-            className="text-4xl sm:text-5xl md:text-[5.5rem] font-bold tracking-tight text-neutral-900 mb-6 leading-[1.2] md:leading-[1.1]"
+            className="text-[2rem] sm:text-5xl md:text-[5.5rem] font-bold tracking-tight text-neutral-900 mb-6 leading-[1.3] md:leading-[1.1]"
           >
             {/* Line 1 */}
             <motion.span 
@@ -138,7 +138,7 @@ export default function HeroModern() {
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
               }}
             >
-              <span className="relative inline-block px-2 sm:px-4 py-1">
+              <span className="relative inline-block px-2 sm:px-4 py-0 sm:py-1 whitespace-nowrap">
                 <motion.span
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}

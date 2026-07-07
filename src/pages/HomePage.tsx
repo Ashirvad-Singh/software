@@ -55,7 +55,7 @@ export default function HomePage() {
     <main>
       <HeroModern />
 
-      <div className="flex w-full items-center justify-center pb-20 -mt-32 relative z-20">
+      <div className="flex w-full items-center justify-center pb-20 -mt-6 md:-mt-32 relative z-20">
         <ImagesBadge
           text="Explore Our Web & App Solutions"
           images={[
