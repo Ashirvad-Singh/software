@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Zap, MoreVertical, Circle, Triangle, Hexagon } from "lucide-react";
 
 const RandomSpot = () => {
-  const [position, setPosition] = useState({ x: 50, y: 50 });
+  const [position, setPosition] = useState({ x: Math.random() * 80, y: Math.random() * 80 });
   const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {
     const moveSpot = () => {
       setPosition({ x: 10 + Math.random() * 80, y: 10 + Math.random() * 80 });
-      setOpacity(0.3 + Math.random() * 0.4); // Random opacity between 0.3 and 0.7
+      setOpacity(0.3 + Math.random() * 0.4);
     };
     moveSpot();
     const interval = setInterval(moveSpot, 3000 + Math.random() * 2000);
@@ -19,37 +19,33 @@ const RandomSpot = () => {
 
   return (
     <motion.div 
-      className="absolute inset-0 pointer-events-none z-0"
+      className="absolute w-[300px] h-[300px] pointer-events-none z-0 rounded-full"
       animate={{
-        WebkitMaskPosition: `${position.x}% ${position.y}%`,
+        left: `${position.x}%`,
+        top: `${position.y}%`,
         opacity: opacity,
-      } as any}
+      }}
       transition={{ duration: 4, ease: "easeInOut" }}
       style={{
-        backgroundImage: "radial-gradient(#0ea5e9 2px, transparent 2px)",
-        backgroundSize: "24px 24px",
-        WebkitMaskImage: `radial-gradient(150px circle, black, transparent)`,
-        WebkitMaskSize: "300px 300px",
-        WebkitMaskRepeat: "no-repeat",
-        maskImage: `radial-gradient(150px circle, black, transparent)`,
-        maskSize: "300px 300px",
-        maskRepeat: "no-repeat",
+        backgroundImage: "radial-gradient(circle, rgba(14,165,233,0.15) 0%, transparent 70%)",
+        transform: "translate(-50%, -50%)",
       }}
     />
   );
 };
 
 export default function HeroModern() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
   const [isHovering, setIsHovering] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
   };
+
+  const maskImage = useMotionTemplate`radial-gradient(250px circle at ${mouseX}px ${mouseY}px, black, transparent)`;
 
   return (
     <section 
@@ -77,8 +73,8 @@ export default function HeroModern() {
         style={{
           backgroundImage: "radial-gradient(#0ea5e9 2px, transparent 2px)", // Sky blue brighter dots
           backgroundSize: "24px 24px",
-          WebkitMaskImage: `radial-gradient(250px circle at ${mousePosition.x}px ${mousePosition.y}px, black, transparent)`,
-          maskImage: `radial-gradient(250px circle at ${mousePosition.x}px ${mousePosition.y}px, black, transparent)`,
+          WebkitMaskImage: maskImage,
+          maskImage: maskImage,
         }}
       ></motion.div>
 
@@ -110,55 +106,48 @@ export default function HeroModern() {
             initial="hidden"
             animate="visible"
             variants={{
-              hidden: { opacity: 1 },
+              hidden: { opacity: 0, y: 20 },
               visible: {
                 opacity: 1,
+                y: 0,
                 transition: {
-                  staggerChildren: 0.03,
-                  delayChildren: 0.1,
+                  duration: 0.8,
+                  ease: "easeOut",
+                  staggerChildren: 0.2,
                 },
               },
             }}
             className="text-4xl sm:text-5xl md:text-[5.5rem] font-bold tracking-tight text-neutral-900 mb-6 leading-[1.2] md:leading-[1.1]"
           >
             {/* Line 1 */}
-            <span className="block">
-              {"Build software.".split("").map((char, index) => (
-                <motion.span
-                  key={`l1-${index}`}
-                  variants={{
-                    hidden: { opacity: 0, display: "none" },
-                    visible: { opacity: 1, display: "inline-block" },
-                  }}
-                >
-                  {char === " " ? "\u00A0" : char}
-                </motion.span>
-              ))}
-            </span>
+            <motion.span 
+              className="block"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+              }}
+            >
+              Build software.
+            </motion.span>
+            
             {/* Line 2 */}
-            <span className="block mt-2">
+            <motion.span 
+              className="block mt-2"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+              }}
+            >
               <span className="relative inline-block px-2 sm:px-4 py-1">
                 <motion.span
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
-                  transition={{ duration: 1, ease: "circOut", delay: 1 }}
+                  transition={{ duration: 1, ease: "circOut", delay: 0.4 }}
                   className="absolute inset-0 bg-sky-100 rounded-2xl -z-10"
                 />
-                <span className="text-sky-600">
-                  {"Scale your business.".split("").map((char, index) => (
-                    <motion.span
-                      key={`l2-${index}`}
-                      variants={{
-                        hidden: { opacity: 0, display: "none" },
-                        visible: { opacity: 1, display: "inline-block" },
-                      }}
-                    >
-                      {char === " " ? "\u00A0" : char}
-                    </motion.span>
-                  ))}
-                </span>
+                <span className="text-sky-600">Scale your business.</span>
               </span>
-            </span>
+            </motion.span>
           </motion.h1>
 
           {/* Subheading */}

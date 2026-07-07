@@ -23,12 +23,9 @@ export default function Cursor() {
     setIsVisible(true)
 
     const moveCursor = (e: MouseEvent) => {
-      // Offset by half the width/height of the elements to center them
-      cursorX.set(e.clientX - 16)
-      cursorY.set(e.clientY - 16)
-      
-      cursorXDot.set(e.clientX - 4)
-      cursorYDot.set(e.clientY - 4)
+      // Offset by half the width/height of the new element (24px total size = 12px offset)
+      cursorX.set(e.clientX - 12)
+      cursorY.set(e.clientY - 12)
     }
     
     const handleMouseOver = (e: MouseEvent) => {
@@ -64,31 +61,15 @@ export default function Cursor() {
 
   return (
     <>
-      {/* Inner Dot - Immediate Follow */}
+      {/* Blend Mode Cursor */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[10000] h-2 w-2 rounded-full bg-primary shadow-[0_0_8px_rgba(59,130,246,0.5)]"
-        style={{
-          x: cursorXDot,
-          y: cursorYDot,
-        }}
-        animate={{
-          opacity: isHovered ? 0 : 1,
-          scale: isHovered ? 0 : 1,
-        }}
-        transition={{ duration: 0.2 }}
-      />
-      
-      {/* Outer Ring - Spring Follow */}
-      <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[9999] flex h-8 w-8 items-center justify-center rounded-full border border-primary/40 backdrop-blur-[2px]"
+        className="pointer-events-none fixed top-0 left-0 z-[10000] h-6 w-6 rounded-full bg-white mix-blend-difference"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
         }}
         animate={{
-          scale: isHovered ? 2 : 1,
-          backgroundColor: isHovered ? "rgba(59, 130, 246, 0.15)" : "transparent",
-          borderColor: isHovered ? "rgba(59, 130, 246, 0.1)" : "rgba(59, 130, 246, 0.4)",
+          scale: isHovered ? 2.5 : 1,
         }}
         transition={{ type: "tween", ease: "backOut", duration: 0.3 }}
       />

@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Routes, Route, useLocation } from "react-router-dom"
 import Lenis from "lenis"
 import { Toaster } from "sonner"
@@ -27,10 +27,20 @@ import BlogPage from "@/pages/BlogPage"
 import BlogPostPage from "@/pages/BlogPostPage"
 import NotFoundPage from "@/pages/NotFoundPage"
 import { FloatingShapes } from "@/components/ui/floating-shapes"
+import Preloader from "@/components/site/Preloader"
+import { AnimatePresence, motion } from "framer-motion"
 
 function App() {
   const location = useLocation()
   const isDashboard = location.pathname.startsWith("/dashboard")
+  const [showPreloader, setShowPreloader] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPreloader(false)
+    }, 3000)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -58,6 +68,20 @@ function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <div className="bg-background text-foreground min-h-screen selection:bg-primary/30 selection:text-primary flex flex-col relative">
+        <AnimatePresence mode="wait">
+          {showPreloader && (
+            <motion.div
+              key="preloader"
+              initial={{ y: 0 }}
+              exit={{ y: "-100%" }}
+              transition={{ duration: 1, ease: [0.785, 0.135, 0.15, 0.86] }}
+              className="fixed inset-0 z-[1000000]"
+            >
+              <Preloader />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <ScrollToTop />
         <Cursor />
         <ScrollProgress />
