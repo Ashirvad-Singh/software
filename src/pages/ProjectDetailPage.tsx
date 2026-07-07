@@ -124,6 +124,14 @@ export default function ProjectDetailPage() {
                 <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">Key Result</h4>
                 <p className="text-xl font-medium text-primary">{project.result}</p>
               </div>
+              {project.liveUrl && (
+                <div>
+                  <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">Live Link</h4>
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-xl font-medium text-sky-500 hover:underline inline-flex items-center">
+                    View Project <span className="ml-1 text-sm">↗</span>
+                  </a>
+                </div>
+              )}
             </div>
           </div>
 

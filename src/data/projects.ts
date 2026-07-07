@@ -12,6 +12,7 @@ export interface Project {
   challenge: string;
   solution: string;
   gallery: string[];
+  liveUrl?: string;
 }
 
 export const projects: Project[] = [
@@ -83,7 +84,8 @@ export const projects: Project[] = [
     solution: "We built a real-time tracking dashboard utilizing WebSockets for live location updates. The intuitive UI allowed dispatchers to manage routes and driver assignments seamlessly.",
     gallery: [
       "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200"
-    ]
+    ],
+    liveUrl: "https://swift-logistics-demo.vercel.app/"
   },
   {
     id: 5,

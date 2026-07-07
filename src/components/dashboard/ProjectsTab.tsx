@@ -22,6 +22,7 @@ export interface ProjectItem {
   challenge: string;
   solution: string;
   gallery: string; // Newline separated URLs
+  liveUrl?: string;
   createdAt: number;
 }
 
@@ -44,6 +45,7 @@ export default function ProjectsTab() {
     challenge: "",
     solution: "",
     gallery: "",
+    liveUrl: "",
   });
 
   const fetchProjects = async () => {
@@ -124,6 +126,7 @@ export default function ProjectsTab() {
       challenge: project.challenge,
       solution: project.solution,
       gallery: project.gallery,
+      liveUrl: project.liveUrl || "",
     });
     setIsFormOpen(true);
   };
@@ -142,6 +145,7 @@ export default function ProjectsTab() {
       challenge: "",
       solution: "",
       gallery: "",
+      liveUrl: "",
     });
   };
 
@@ -178,7 +182,8 @@ export default function ProjectsTab() {
                   <Input placeholder="Client Name" name="client" value={formData.client} onChange={handleInputChange} />
                   <Input placeholder="Timeline (e.g. 6 Months)" name="timeline" value={formData.timeline} onChange={handleInputChange} />
                   <Input placeholder="Key Result" name="result" value={formData.result} onChange={handleInputChange} />
-                  <Input placeholder="Tags (comma separated)" name="tags" value={formData.tags} onChange={handleInputChange} className="md:col-span-2" required />
+                  <Input placeholder="Tags (comma separated)" name="tags" value={formData.tags} onChange={handleInputChange} required />
+                  <Input placeholder="Live URL (https://...)" name="liveUrl" value={formData.liveUrl || ""} onChange={handleInputChange} />
                   
                   <div className="md:col-span-2 space-y-2">
                     <label className="text-sm font-medium text-neutral-700">Cover Image</label>
