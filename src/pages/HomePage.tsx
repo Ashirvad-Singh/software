@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import HeroModern from "@/components/site/HeroModern";
-import { ImagesBadge } from "@/components/ui/images-badge";
 import Testimonials from "@/components/site/Testimonials";
 import WhatSetsUsApart from "@/components/site/WhatSetsUsApart";
 import ThreeDMarqueeDemo from "@/components/3d-marquee-demo";
