@@ -10,7 +10,7 @@ const fallbackPost = {
   author: "Mike Johnson",
   date: "Oct 24, 2026",
   readTime: "5 min read",
-  image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=2000",
+  image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800",
   content: `
     <p>The landscape of web development has shifted dramatically over the past few years.</p>
     <h2>Conclusion</h2>
