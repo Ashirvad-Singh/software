@@ -45,31 +45,31 @@ export default function AboutSection() {
           lineColor="var(--color-primary)"
           dots={[
             {
-              start: { lat: 28.6139, lng: 77.209, label: "New Delhi (HQ)" },
+              start: { lat: 30.7046, lng: 76.7179, label: "Mohali, Punjab (HQ)" },
               end: { lat: 34.0522, lng: -118.2437, label: "Los Angeles, USA" },
             },
             {
-              start: { lat: 28.6139, lng: 77.209 },
+              start: { lat: 30.7046, lng: 76.7179 },
               end: { lat: 51.5074, lng: -0.1278, label: "London, UK" },
             },
             {
-              start: { lat: 28.6139, lng: 77.209 },
+              start: { lat: 30.7046, lng: 76.7179 },
               end: { lat: 52.5200, lng: 13.4050, label: "Berlin, Germany" },
             },
             {
-              start: { lat: 28.6139, lng: 77.209 },
+              start: { lat: 30.7046, lng: 76.7179 },
               end: { lat: 40.7128, lng: -74.0060, label: "New York, USA" },
             },
             {
-              start: { lat: 28.6139, lng: 77.209 },
+              start: { lat: 30.7046, lng: 76.7179 },
               end: { lat: -33.8688, lng: 151.2093, label: "Sydney, Australia" },
             },
             {
-              start: { lat: 28.6139, lng: 77.209 },
+              start: { lat: 30.7046, lng: 76.7179 },
               end: { lat: 25.2048, lng: 55.2708, label: "Dubai, UAE" },
             },
             {
-              start: { lat: 28.6139, lng: 77.209 },
+              start: { lat: 30.7046, lng: 76.7179 },
               end: { lat: 1.3521, lng: 103.8198, label: "Singapore" },
             },
           ]}
@@ -103,6 +103,52 @@ export default function AboutSection() {
                 <p className="font-bold text-neutral-900 dark:text-white text-lg">Alex Mercer</p>
                 <p className="text-primary font-medium">Founder & CEO</p>
               </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Company Facts */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="mt-20 max-w-5xl mx-auto text-left"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-neutral-50 dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Founded</h4>
+              <p className="text-xl font-bold text-primary">2017</p>
+            </div>
+            <div className="bg-neutral-50 dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Company Size</h4>
+              <p className="text-xl font-bold text-primary">11-50 employees</p>
+            </div>
+            <div className="bg-neutral-50 dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Headquarters</h4>
+              <p className="text-xl font-bold text-primary">Mohali, Punjab</p>
+            </div>
+            <div className="bg-neutral-50 dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Industry</h4>
+              <p className="text-xl font-bold text-primary">Software Development</p>
+            </div>
+            <div className="bg-neutral-50 dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Type</h4>
+              <p className="text-xl font-bold text-primary">Partnership</p>
+            </div>
+            <div className="bg-neutral-50 dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Website</h4>
+              <a href="https://www.adatsolutions.com" target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-sky-500 hover:underline">www.adatsolutions.com</a>
+            </div>
+          </div>
+          <div className="mt-6 bg-neutral-50 dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+            <h4 className="text-sm font-bold text-muted-foreground uppercase mb-2">Specialties</h4>
+            <div className="flex flex-wrap gap-2">
+              {["Web Development", "Design & UI", "Quality Assurance", "E-Commerce Systems", "Product Management"].map((spec) => (
+                <span key={spec} className="px-4 py-2 bg-white dark:bg-neutral-800 rounded-full text-sm font-medium border border-neutral-200 dark:border-neutral-700 shadow-sm text-neutral-700 dark:text-neutral-300">
+                  {spec}
+                </span>
+              ))}
             </div>
           </div>
         </motion.div>

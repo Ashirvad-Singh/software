@@ -22,7 +22,7 @@ export default function HeroScrollDemo() {
             <h1 className="text-4xl font-semibold text-black dark:text-white leading-tight">
               Elevate your business with <br />
               <ContainerTextFlip 
-                words={["Next-Gen Software", "Modern Websites", "Scalable Apps", "Digital Growth"]}
+                words={["Custom Software", "Modern Websites", "Scalable Apps", "Digital Growth"]}
                 className="mt-4 mb-2 text-4xl md:text-[5rem] px-4 shadow-none bg-transparent dark:bg-transparent dark:shadow-none"
                 textClassName="text-primary font-black"
                 interval={2500}

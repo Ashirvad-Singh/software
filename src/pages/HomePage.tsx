@@ -179,7 +179,7 @@ export default function HomePage() {
               The Engine Room
             </h2>
             <h3 className="text-4xl md:text-5xl font-bold mb-6 text-neutral-900 text-balance">
-              Powered by <span className="whitespace-nowrap">Next-Gen</span> Tech
+              Powered by <span className="whitespace-nowrap">Modern</span> Tech
             </h3>
             <p className="text-neutral-500 max-w-2xl mx-auto text-lg">
               We don't just write code. We architect scalable, future-proof
