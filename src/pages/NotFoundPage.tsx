@@ -27,7 +27,7 @@ export default function NotFoundPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative"
         >
-          <h1 className="text-[12rem] md:text-[18rem] font-black text-transparent bg-clip-text bg-gradient-to-br from-neutral-200 to-neutral-50 select-none leading-none tracking-tighter">
+          <h1 className="text-[8rem] sm:text-[12rem] md:text-[18rem] font-black text-transparent bg-clip-text bg-gradient-to-br from-neutral-200 to-neutral-50 select-none leading-none tracking-tighter">
             404
           </h1>
           <div className="absolute inset-0 flex items-center justify-center flex-col">

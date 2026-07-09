@@ -64,7 +64,7 @@ export default function BlogPostPage() {
   return (
     <main className="bg-white dark:bg-neutral-950 min-h-screen">
       {/* Hero Section */}
-      <div className="relative w-full h-[60vh] min-h-[400px]">
+      <div className="relative w-full h-[60vh] min-h-[500px]">
         <img 
           src={postData.image} 
           alt={postData.title}
@@ -72,7 +72,7 @@ export default function BlogPostPage() {
         />
         <div className="absolute inset-0 bg-black/50" />
         
-        <div className="absolute inset-0 flex flex-col justify-end container mx-auto px-4 md:px-6 max-w-4xl pb-16">
+        <div className="absolute inset-0 flex flex-col justify-end container mx-auto px-4 md:px-6 max-w-4xl pt-32 pb-16">
           <Link to="/blog" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors w-fit">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Blog
           </Link>

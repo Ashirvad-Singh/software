@@ -48,8 +48,8 @@ export default function Navbar({ className }: { className?: string }) {
         
         {/* Mobile Logo & Toggle */}
         <div className="md:hidden flex items-center justify-between w-full bg-white/80 backdrop-blur-md px-6 py-3 rounded-full border border-neutral-200 shadow-sm">
-          <Link to="/" className="text-xl font-bold tracking-tighter">
-            Adat Soft<span className="text-primary">.</span>
+          <Link to="/" className="flex items-center">
+            <img src="/adat-logo.png" alt="Adat Soft Solutions" className="h-8 md:h-10 w-auto" />
           </Link>
           <button onClick={() => setIsMobileMenuOpen(true)}>
             <MenuIcon className="w-6 h-6" />
@@ -61,9 +61,9 @@ export default function Navbar({ className }: { className?: string }) {
           <Menu setActive={() => {}}>
             <div className="flex items-center justify-between w-full">
               {/* Logo */}
-              <Link to="/" className="text-xl font-black text-neutral-900 flex items-center gap-2 relative z-20">
-              Adat Soft Solutions<span className="text-primary">.</span>
-            </Link>
+              <Link to="/" className="flex items-center gap-2 relative z-20">
+                <img src="/adat-logo.png" alt="Adat Soft Solutions" className="h-10 md:h-12 w-auto" />
+              </Link>
               
               {/* Links */}
               <div className="flex items-center justify-center space-x-4 lg:space-x-8 text-sm font-medium flex-1">
