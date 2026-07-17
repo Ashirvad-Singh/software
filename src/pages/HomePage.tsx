@@ -3,6 +3,7 @@ import HeroModern from "@/components/site/HeroModern";
 import Testimonials from "@/components/site/Testimonials";
 import WhatSetsUsApart from "@/components/site/WhatSetsUsApart";
 import ThreeDMarqueeDemo from "@/components/3d-marquee-demo";
+import IndustriesSection from "@/components/site/IndustriesSection";
 import FeaturesSectionDemo from "@/components/ui/features-section-demo-3";
 import StatsCounter from "@/components/site/StatsCounter";
 import { FloatingShapes } from "@/components/ui/floating-shapes";
@@ -137,6 +138,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      <IndustriesSection />
       <FeaturesSectionDemo />
       <ThreeDMarqueeDemo />
       

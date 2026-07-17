@@ -29,20 +29,25 @@ const BlogPostPage = lazy(() => import("@/pages/BlogPostPage"))
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
 import { FloatingShapes } from "@/components/ui/floating-shapes"
 
+function ReadyNotifier() {
+  useEffect(() => {
+    (window as any).__reactReady = true;
+    if ((window as any).__loaderFinished && (window as any).__removeLoader) {
+      (window as any).__removeLoader();
+    }
+  }, []);
+  return null;
+}
+
 function App() {
   const location = useLocation()
   const isDashboard = location.pathname.startsWith("/dashboard")
 
   useEffect(() => {
-    // Notify HTML preloader that React is ready
-    (window as any).__reactReady = true;
-    if ((window as any).__loaderFinished && (window as any).__removeLoader) {
-      (window as any).__removeLoader();
-    }
     // Fallback safety
     setTimeout(() => {
       if ((window as any).__removeLoader) (window as any).__removeLoader();
-    }, 2000);
+    }, 5000);
   }, [])
 
   useEffect(() => {
@@ -78,7 +83,8 @@ function App() {
         {!isDashboard && <Navbar />}
         
         <div className="flex-1 relative z-10">
-          <Suspense fallback={<div className="h-screen w-full flex items-center justify-center opacity-0 animate-in fade-in duration-500 delay-200"><div className="w-8 h-8 rounded-full border-4 border-primary border-t-transparent animate-spin"></div></div>}>
+          <Suspense fallback={<div className="h-screen w-full bg-background relative z-50"></div>}>
+            <ReadyNotifier />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/services" element={<ServicesPage />} />

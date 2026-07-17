@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 const transition = {
   type: "spring" as const,
@@ -76,7 +77,6 @@ export const Menu = ({
   );
 };
 
-import { Link } from "react-router-dom";
 
 export const ProductItem = ({
   title,

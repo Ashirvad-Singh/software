@@ -41,23 +41,16 @@ export const MagneticButton = ({
     setPosition({ x: 0, y: 0 });
   };
 
-  const hasMoved = position.x !== 0 || position.y !== 0;
   return (
     <div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={cn("inline-block cursor-pointer rounded-lg border border-dashed transition-colors duration-150 [--show-color:var(--color-blue-500)]", className)}
-      style={{
-        borderColor: hasMoved ? "var(--show-color)" : "transparent",
-        backgroundColor: hasMoved
-          ? "color-mix(in srgb,var(--show-color) 20%, transparent)"
-          : "transparent",
-      }}
+      className={cn("inline-block", className)}
     >
       <motion.div
         ref={ref}
         animate={{ x: position.x, y: position.y }}
-        transition={{ type: "spring", stiffness: 150, damping: 25, mass: 0.1 }}
+        transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
       >
         {children}
       </motion.div>

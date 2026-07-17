@@ -1,5 +1,5 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Calendar, Clock, User, Share2, Loader2 } from "lucide-react";
+import { ArrowLeft, User, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -64,59 +64,58 @@ export default function BlogPostPage() {
   return (
     <main className="bg-white dark:bg-neutral-950 min-h-screen">
       {/* Hero Section */}
-      <div className="relative w-full h-[60vh] min-h-[500px]">
-        <img 
-          src={postData.image} 
-          alt={postData.title}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/50" />
-        
-        <div className="absolute inset-0 flex flex-col justify-end container mx-auto px-4 md:px-6 max-w-4xl pt-32 pb-16">
-          <Link to="/blog" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors w-fit">
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Blog
+      <div className="w-full bg-gradient-to-r from-blue-500 to-sky-600 pt-36 pb-24">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+          <Link to="/blog" className="inline-flex items-center text-white/90 hover:text-white mb-10 transition-colors text-sm font-medium">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to main blog
           </Link>
           
-          <div className="mb-6">
-            <span className="px-4 py-1.5 rounded-full bg-primary text-primary-foreground text-sm font-bold uppercase tracking-wider">
-              {postData.category}
-            </span>
-          </div>
-          
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-bold text-white mb-10 leading-[1.1] tracking-tight max-w-4xl">
             {postData.title}
           </h1>
           
-          <div className="flex flex-wrap items-center gap-6 text-white/80 text-sm">
-            <span className="flex items-center gap-2">
-              <User className="w-4 h-4" /> {postData.author}
-            </span>
-            <span className="flex items-center gap-2">
-              <Calendar className="w-4 h-4" /> {postData.date}
-            </span>
-            <span className="flex items-center gap-2">
-              <Clock className="w-4 h-4" /> {postData.readTime}
-            </span>
+          <div className="flex items-center gap-3 text-white/90 text-sm font-medium">
+            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
+               <User className="w-5 h-5 text-white" />
+            </div>
+            <span>{postData.author}</span>
+            <span className="w-1 h-1 rounded-full bg-white/50 mx-1" />
+            <span>{postData.date}</span>
+            <span className="w-1 h-1 rounded-full bg-white/50 mx-1" />
+            <span>{postData.readTime}</span>
           </div>
         </div>
       </div>
 
       {/* Content Section */}
-      <div className="container mx-auto px-4 md:px-6 max-w-4xl py-16 md:py-24 flex flex-col md:flex-row gap-12">
-        {/* Social Share Sidebar */}
-        <div className="hidden md:flex flex-col gap-4 sticky top-32 h-fit">
-          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">Share</span>
-          <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-neutral-200">
-            <Share2 className="w-4 h-4" />
-          </Button>
-          {/* Add more social icons as needed */}
-        </div>
+      <div className="container mx-auto px-4 md:px-6 max-w-6xl py-16 flex flex-col lg:flex-row gap-12 lg:gap-20">
         
         {/* Article Body */}
-        <article 
-          className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-p:text-neutral-600 dark:prose-p:text-neutral-400 prose-p:leading-relaxed prose-blockquote:border-l-primary prose-blockquote:bg-neutral-50 dark:prose-blockquote:bg-neutral-900 prose-blockquote:p-4 prose-blockquote:rounded-r-lg prose-blockquote:font-medium prose-blockquote:italic max-w-none"
-          dangerouslySetInnerHTML={{ __html: postData.content }}
-        />
+        <div className="flex-1 min-w-0">
+          <article 
+            className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-p:text-neutral-700 dark:prose-p:text-neutral-300 prose-p:leading-relaxed max-w-none"
+            dangerouslySetInnerHTML={{ __html: postData.content }}
+          />
+        </div>
+
+        {/* Right Sidebar - Table of Content */}
+        <div className="w-full lg:w-[360px] shrink-0">
+          <div className="sticky top-32 bg-slate-50 dark:bg-neutral-900 rounded-xl p-8">
+            <h3 className="font-bold text-lg mb-8 text-neutral-900 dark:text-white">Table of Content</h3>
+            <div className="flex flex-col gap-5 text-sm font-semibold text-neutral-600 dark:text-neutral-400">
+              <a href="#" className="hover:text-blue-600 transition-colors leading-relaxed">What Are Google Ads and Facebook Ads?</a>
+              <div className="h-px bg-neutral-200 dark:bg-neutral-800" />
+              <a href="#" className="hover:text-blue-600 transition-colors leading-relaxed">Key Differences Between Google Ads and Facebook Ads for DTC Brands</a>
+              <div className="h-px bg-neutral-200 dark:bg-neutral-800" />
+              <a href="#" className="hover:text-blue-600 transition-colors leading-relaxed">Google Ads vs Facebook Ads Across the Sales Funnel</a>
+              <div className="h-px bg-neutral-200 dark:bg-neutral-800" />
+              <a href="#" className="hover:text-blue-600 transition-colors leading-relaxed">1. Building Awareness at the Top of the Funnel</a>
+              <div className="h-px bg-neutral-200 dark:bg-neutral-800" />
+              <a href="#" className="hover:text-blue-600 transition-colors leading-relaxed">2. Building Consideration in the Middle of the Funnel</a>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </main>
   );

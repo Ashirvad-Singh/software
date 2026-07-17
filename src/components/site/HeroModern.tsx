@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
 import { Link } from "react-router-dom";
+import { MagneticButton } from "@/components/ui/magnetic-button";
 import { ArrowRight, Zap, MoreVertical, Circle, Triangle, Hexagon } from "lucide-react";
 
 const RandomSpot = () => {
@@ -166,12 +167,14 @@ export default function HeroModern() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <Link 
-              to="/contact"
-              className="inline-flex items-center justify-center h-14 px-8 rounded-full bg-sky-600 hover:bg-sky-700 text-white font-bold text-lg shadow-[0_4px_14px_0_rgba(2,132,199,0.39)] transition-all hover:shadow-[0_6px_20px_rgba(2,132,199,0.23)] hover:-translate-y-0.5"
-            >
-              Start a Project - Let's Talk <ArrowRight className="ml-2 w-5 h-5" />
-            </Link>
+            <MagneticButton>
+              <Link 
+                to="/contact"
+                className="inline-flex items-center justify-center h-14 px-8 rounded-full bg-sky-600 hover:bg-sky-700 text-white font-bold text-lg shadow-[0_4px_14px_0_rgba(2,132,199,0.39)] transition-all hover:shadow-[0_6px_20px_rgba(2,132,199,0.23)]"
+              >
+                Start a Project - Let's Talk <ArrowRight className="ml-2 w-5 h-5" />
+              </Link>
+            </MagneticButton>
           </motion.div>
 
           {/* Avatar Group */}
