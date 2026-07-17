@@ -32,7 +32,7 @@ export default function FeaturesSectionDemo() {
     fetchServices();
   }, []);
 
-  const displayServices = dbServices.length > 0 ? dbServices : staticServices;
+  const displayServices = (dbServices.length > 0 ? dbServices : staticServices).slice(0, 4);
 
   const features = displayServices.map((service, index) => {
     const skeletons = [<SkeletonOne />, <SkeletonTwo />, <SkeletonThree />, <SkeletonFour />];
