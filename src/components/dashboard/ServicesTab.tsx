@@ -185,15 +185,17 @@ export default function ServicesTab() {
                   />
 
                   <div className="md:col-span-2 space-y-2">
-                    <label className="text-sm font-medium text-neutral-700">Visual Layout</label>
+                    <label className="text-sm font-medium text-neutral-700 mb-2 block">Visual Layout Component</label>
                     <select
                       name="visualType"
-                      value={formData.visualType || "default"}
-                      onChange={(e) => setFormData(prev => ({ ...prev, visualType: e.target.value as any }))}
-                      className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                      value={formData.visualType}
+                      onChange={handleInputChange}
+                      className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
                     >
-                      <option value="default">Default Auto-Layout</option>
-                      <option value="globe">3D Globe Component</option>
+                      <option value="default">Standard Layout</option>
+                      <option value="globe">3D Globe Component (Great for Cloud/Web)</option>
+                      <option value="staggered_images">UI/UX Interactive Mockup (Great for UI/UX Design)</option>
+                      <option value="analytics">Analytics Dashboard Demo (Great for AI/Analytics)</option>
                       <option value="image">Custom Thumbnail Image</option>
                     </select>
                   </div>

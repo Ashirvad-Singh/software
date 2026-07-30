@@ -132,6 +132,23 @@ export default function ServiceDetailPage() {
             </div>
           </div>
           
+          {service.features && (
+            <div className="mb-16">
+              <h3 className="text-2xl font-bold mb-6">Technologies & Capabilities</h3>
+              <div className="flex flex-wrap gap-3">
+                {(typeof service.features === 'string' ? service.features.split(',') : (Array.isArray(service.features) ? service.features : [])).map((feature: string, index: number) => {
+                  const f = feature.trim();
+                  if (!f) return null;
+                  return (
+                    <span key={index} className="px-4 py-2 bg-primary/10 text-primary rounded-full font-medium text-sm border border-primary/20">
+                      {f}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           <div className="bg-primary text-primary-foreground rounded-2xl p-8 md:p-12 text-center">
             <h3 className="text-2xl md:text-3xl font-bold mb-4">Ready to get started?</h3>
             <p className="mb-8 opacity-90 max-w-xl mx-auto">Let's discuss how our {service.title} services can help you achieve your business goals.</p>

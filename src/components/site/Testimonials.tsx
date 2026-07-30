@@ -1,47 +1,106 @@
 import { useEffect, useState } from "react"
-import useEmblaCarousel from "embla-carousel-react"
-import { Star, Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { collection, getDocs, query, orderBy } from "firebase/firestore"
 import { db } from "@/lib/firebase"
+import useEmblaCarousel from "embla-carousel-react"
+import AutoScroll from "embla-carousel-auto-scroll"
 
 const staticTestimonials = [
   {
-    id: 1,
-    name: "David Eyezenhour",
-    role: "Founder - 2020 LI",
-    content: "Adat Soft Solutions came in as a contractor and grew into one of the most valuable people in our operation. They managed our KOL network, built internal systems that genuinely changed how we operate, and then led the development of our analytics platform from architecture through deployment. When we needed an Operations Director, the decision was straightforward. They understand the business, anticipate what's needed, and deliver at a level most senior hires don't reach.",
-    rating: 5,
-    avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600",
-    stats: []
+    id: "1",
+    name: "Elena Ruiz",
+    role: "CTO, Stackforge",
+    content: "Performance and aesthetics without compromise. Exactly what we needed for the rebrand. The team adopted it overnight.",
+    avatar: "https://i.pravatar.cc/150?img=47",
   },
   {
-    id: 2,
-    name: "Chad Culp",
-    role: "Founder/Owner - Bloom County",
-    content: "The web development work alone was worth every dollar — but what stood out was how well they understood the brand before they even wrote a line of code. The digital platform they created didn't just look good, it felt like our company. The campaign they ran gave us exposure we couldn't have bought. We saw real growth in our following and engagement from an audience that actually matched our customer base.",
-    rating: 5,
+    id: "2",
+    name: "James Okonkwo",
+    role: "Product Ops, Fieldline",
+    content: "The team adopted it overnight. Documentation and demos are first-class. Highly recommended for any serious startup.",
     avatar: "https://i.pravatar.cc/150?img=11",
-    stats: [
-      { value: "3x", label: "Social following growth" },
-      { value: "100%", label: "Original content" }
-    ]
   },
   {
-    id: 3,
-    name: "Majd Hailat",
-    role: "Founder / CEO - Altura",
-    content: "Getting our SaaS platform launched in the same cycle is not something that happens by accident. They built our entire infrastructure from the ground up, handled every pitch, and made sure we showed up to each event prepared. The seamless API integrations extended our reach into audiences we weren't reaching. The work they executed moved the needle on how the broader community perceives us.",
-    rating: 5,
+    id: "3",
+    name: "Amelia Park",
+    role: "Head of Brand, Lumen Co",
+    content: "This is the testimonial we feature everywhere. It perfectly captures why teams choose us. Simply brilliant execution.",
     avatar: "https://i.pravatar.cc/150?img=5",
-    stats: [
-      { value: "5+", label: "Conference stages secured" },
-      { value: "30+", label: "Podcast placements" }
-    ]
+  },
+  {
+    id: "4",
+    name: "Marcus Webb",
+    role: "Design Lead, Orbit Labs",
+    content: "Finally a component kit that feels intentional. Our marketing site shipped in days. We couldn't be happier.",
+    avatar: "https://i.pravatar.cc/150?img=8",
+  },
+  {
+    id: "5",
+    name: "Sarah Chen",
+    role: "VP Engineering",
+    content: "We cut onboarding time in half. This is what we ship to our most demanding clients.",
+    avatar: "https://i.pravatar.cc/150?img=1",
+  },
+  {
+    id: "6",
+    name: "Nina Volkov",
+    role: "Founder, Arc Studio",
+    content: "We use it across three products now. Consistent quality at a speed we didn't expect.",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150",
   }
 ]
 
+const TestimonialCard = ({ testimonial }: { testimonial: any }) => (
+  <div className="w-[350px] md:w-[400px] p-8 flex flex-col justify-between bg-white rounded-2xl border border-neutral-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] hover:shadow-md transition-shadow h-[250px] select-none">
+    <p className="leading-relaxed font-medium mb-8 text-[14px] text-neutral-700 pointer-events-none">
+      "{testimonial.content}"
+    </p>
+    
+    <div className="flex items-center gap-4 mt-auto pointer-events-none">
+      <img 
+        src={testimonial.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=random`} 
+        alt={testimonial.name}
+        className="w-10 h-10 rounded-full object-cover border border-neutral-100"
+      />
+      <div>
+        <h4 className="font-bold text-neutral-900 text-sm tracking-tight">{testimonial.name}</h4>
+        <p className="text-xs text-neutral-500 font-medium">{testimonial.role}</p>
+      </div>
+    </div>
+  </div>
+);
+
+const ScrollingRow = ({ items, speed, direction = "forward" }: { items: any[], speed: number, direction?: "forward" | "backward" }) => {
+  // Duplicate items to ensure smooth infinite scroll
+  const duplicatedItems = [...items, ...items, ...items, ...items, ...items, ...items];
+  
+  const [emblaRef] = useEmblaCarousel(
+    { loop: true, dragFree: true },
+    [
+      AutoScroll({
+        playOnInit: true,
+        speed: speed,
+        direction: direction,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+      })
+    ]
+  )
+
+  return (
+    <div className="overflow-hidden w-full py-2 cursor-grab active:cursor-grabbing" ref={emblaRef}>
+      <div className="flex touch-pan-y">
+        {duplicatedItems.map((testimonial, idx) => (
+          <div key={idx} className="pl-6 shrink-0">
+             <TestimonialCard testimonial={testimonial} />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Testimonials() {
-  const [emblaRef] = useEmblaCarousel({ align: "start", dragFree: true })
   const [testimonials, setTestimonials] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -50,8 +109,8 @@ export default function Testimonials() {
       try {
         const q = query(collection(db, "testimonials"), orderBy("createdAt", "desc"));
         const snapshot = await getDocs(q);
-        const data = snapshot.docs.map(doc => doc.data());
-        if (data.length >= 3) {
+        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        if (data.length > 0) {
           setTestimonials(data);
         } else {
           setTestimonials(staticTestimonials);
@@ -68,138 +127,43 @@ export default function Testimonials() {
 
   if (loading) {
     return (
-      <section className="py-24 flex justify-center items-center bg-gray-50 min-h-[500px]">
+      <section className="py-24 flex justify-center items-center bg-[#fafafa] min-h-[500px]">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </section>
     )
   }
 
+  const displayTestimonials = testimonials.length >= 4 
+    ? testimonials 
+    : [...testimonials, ...staticTestimonials].slice(0, 8); 
+
+  // Split into two rows
+  const midPoint = Math.ceil(displayTestimonials.length / 2);
+  const topRow = displayTestimonials.slice(0, midPoint);
+  const bottomRow = displayTestimonials.slice(midPoint);
+
   return (
-    <section className="py-12 bg-white w-full overflow-hidden">
-      <div className="container mx-auto px-4 max-w-[1400px]">
-        <div className="overflow-hidden" ref={emblaRef} data-cursor-text="Drag or scroll">
-          <div className="flex -ml-6 cursor-none">
-          
-          {/* Card 0: Title Card */}
-          <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_25%] pl-6 min-w-0">
-            <div className="bg-white border border-gray-100 p-8 flex flex-col justify-between h-[650px] shadow-sm">
-              <div>
-                <div className="flex items-center gap-2 mb-12">
-                  <span className="text-xl font-medium tracking-tight">AdatSoft<span className="font-bold text-red-500">Vox</span></span>
-                  <div className="w-2 h-2 border-t-2 border-r-2 border-red-500"></div>
-                </div>
-                <h2 className="text-5xl lg:text-6xl font-semibold tracking-tight text-gray-900 leading-[1.1]">
-                  Success<br />Stories
-                </h2>
-              </div>
-              <p className="text-gray-500 font-serif italic text-[15px] leading-relaxed pr-4">
-                My work speaks for itself, but my clients' success stories are the true testament to what I deliver.
-              </p>
-            </div>
-          </div>
-
-          {testimonials.map((testimonial, i) => {
-            // Cycle through styles based on index
-            const styleIdx = i % 3;
-
-            // Style 1: Solid Gradient (Image Removed)
-            if (styleIdx === 0) {
-              return (
-                <div key={i} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_25%] pl-6 min-w-0">
-                  <div className="relative overflow-hidden h-[650px] bg-gradient-to-br from-[#ff4d4d] to-[#ff7b7b] flex flex-col justify-end p-8 text-white group">
-                    <div className="relative z-10">
-                      <p className="text-white/95 text-[15px] leading-relaxed mb-8 line-clamp-[12]">
-                        {testimonial.content}
-                      </p>
-                      <div>
-                        <h4 className="font-medium text-lg">{testimonial.name}</h4>
-                        <p className="text-white/80 text-sm">{testimonial.role}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
-            }
-
-            // Style 2: Dark Card
-            if (styleIdx === 1) {
-              return (
-                <div key={i} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_25%] pl-6 min-w-0">
-                  <div className="bg-black text-white p-8 flex flex-col h-[650px]">
-                    <div className="flex gap-1 mb-6">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-[#ff0000] text-[#ff0000]" />
-                      ))}
-                    </div>
-                    <p className="text-gray-300 text-[15px] leading-relaxed flex-grow line-clamp-[10]">
-                      {testimonial.content}
-                    </p>
-                    
-                    <div className="mt-auto">
-                      {testimonial.stats && testimonial.stats.length > 0 && (
-                        <div className="grid grid-cols-2 gap-4 mb-6">
-                          {testimonial.stats.map((stat: any, i: number) => (
-                            <div key={i}>
-                              <div className="text-3xl font-bold mb-1">{stat.value}</div>
-                              <div className="text-xs text-gray-400">{stat.label}</div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      <hr className="border-gray-800 my-6" />
-                      <div className="flex items-center gap-4">
-                        <img src={testimonial.avatar} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover" />
-                        <div>
-                          <h4 className="font-medium">{testimonial.name}</h4>
-                          <p className="text-gray-400 text-xs">{testimonial.role}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
-            }
-
-            // Style 3: Light Card
-            return (
-              <div key={i} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_25%] pl-6 min-w-0">
-                <div className="bg-[#f4f4f4] text-black p-8 flex flex-col h-[650px]">
-                  <div className="flex gap-1 mb-6">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-black text-black" />
-                    ))}
-                  </div>
-                  <p className="text-gray-800 text-[15px] leading-relaxed flex-grow line-clamp-[10]">
-                    {testimonial.content}
-                  </p>
-                  
-                  <div className="mt-auto">
-                    {testimonial.stats && testimonial.stats.length > 0 && (
-                      <div className="grid grid-cols-2 gap-4 mb-6">
-                        {testimonial.stats.map((stat: any, i: number) => (
-                          <div key={i}>
-                            <div className="text-3xl font-bold mb-1">{stat.value}</div>
-                            <div className="text-xs text-gray-500">{stat.label}</div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    <hr className="border-gray-300 my-6" />
-                    <div className="flex items-center gap-4">
-                      <img src={testimonial.avatar} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover filter grayscale" />
-                      <div>
-                        <h4 className="font-medium">{testimonial.name}</h4>
-                        <p className="text-gray-500 text-xs">{testimonial.role}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-          </div>
-        </div>
+    <section className="py-24 bg-[#fafafa] w-full overflow-hidden font-sans">
+      
+      <div className="text-center mb-16 relative z-20 px-8">
+        <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-5 tracking-tight text-balance">
+          Trusted in production, not just in demos.
+        </h2>
+        <p className="text-neutral-500 font-medium max-w-2xl mx-auto text-sm md:text-base">
+          Short notes from teams who ship with the same polish they show customers.
+        </p>
       </div>
+
+      {/* Full width Marquee Rows */}
+      <div className="w-full relative z-20 flex flex-col gap-2">
+        <ScrollingRow items={topRow} speed={0.7} direction="forward" />
+        <ScrollingRow items={bottomRow} speed={0.5} direction="backward" />
+        
+        {/* Side Gradients for smooth fade out */}
+        <div className="absolute inset-y-0 left-0 w-24 md:w-64 bg-gradient-to-r from-[#fafafa] to-transparent z-30 pointer-events-none"></div>
+        <div className="absolute inset-y-0 right-0 w-24 md:w-64 bg-gradient-to-l from-[#fafafa] to-transparent z-30 pointer-events-none"></div>
+      </div>
+      
     </section>
   )
 }

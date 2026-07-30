@@ -4,6 +4,11 @@ import {
   Store, Smartphone, Wifi, Brain, Server, BarChart, GitBranch, Cloud, Megaphone, 
   Code, Globe, Wrench, ShieldCheck, Lightbulb, Monitor
 } from "lucide-react"
+import * as LucideIcons from "lucide-react"
+import { useEffect } from "react"
+import { collection, getDocs, query, orderBy } from "firebase/firestore"
+import { db } from "@/lib/firebase"
+import { services as staticServices } from "@/data/services"
 import { Button } from "@/components/ui/button"
 import { Link, useLocation } from "react-router-dom"
 import { HoveredLink, Menu, MenuItem } from "@/components/ui/navbar-menu"
@@ -23,6 +28,53 @@ const navLinks = [
 ]
 
 const MegaMenuContent = () => {
+  const [dbServices, setDbServices] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const q = query(collection(db, "services"), orderBy("createdAt", "asc"));
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        if (data.length > 0) {
+          setDbServices(data);
+        } else {
+          setDbServices(staticServices);
+        }
+      } catch (error) {
+        console.error("Error fetching services:", error);
+        setDbServices(staticServices);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
+
+  const displayServices = dbServices.length > 0 ? dbServices : staticServices;
+
+  const col1 = displayServices.slice(0, 4);
+  const col2 = displayServices.slice(4, 9);
+  const col3 = displayServices.slice(9, 14);
+
+  const renderLinks = (services: any[]) => (
+    <div className="flex flex-col gap-5">
+      {loading ? (
+        <div className="py-4 text-center text-neutral-400 text-sm">Loading...</div>
+      ) : services.length === 0 ? (
+        <div className="py-4 text-center text-neutral-400 text-sm">No services found.</div>
+      ) : services.map((service, idx) => {
+        const IconComponent = (LucideIcons as any)[service.iconName || "Code"] || LucideIcons.Circle;
+        return (
+          <Link key={idx} to={`/services/${service.slug}`} className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
+            <IconComponent className="w-4 h-4 text-neutral-400 shrink-0" /> <span className="truncate">{service.title}</span>
+          </Link>
+        )
+      })}
+    </div>
+  );
+
   return (
     <div className="flex w-[850px] bg-white text-neutral-900 overflow-hidden gap-8 p-2">
       {/* Left Sidebar */}
@@ -35,65 +87,24 @@ const MegaMenuContent = () => {
 
       {/* Right Content */}
       <div className="flex-1 flex gap-8 pt-2">
-        <div className="flex-1">
+        <div className="flex-1 min-w-[200px]">
           <h4 className="font-bold mb-6 text-sm text-neutral-900">Featured Expertise</h4>
-          <div className="flex flex-col gap-5">
-            <Link to="/services/shopify-development" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <Store className="w-4 h-4 text-neutral-400" /> Shopify Development
-            </Link>
-            <Link to="/services/mobile-app-development" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <Smartphone className="w-4 h-4 text-neutral-400" /> Mobile App Development
-            </Link>
-            <Link to="/services/iot" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <Wifi className="w-4 h-4 text-neutral-400" /> IOT (Internet of Things)
-            </Link>
-            <Link to="/services/ai-ml" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <Brain className="w-4 h-4 text-neutral-400" /> AI/ML
-            </Link>
-          </div>
+          {renderLinks(col1)}
         </div>
 
-        <div className="flex-1">
-          <h4 className="font-bold mb-6 text-sm text-neutral-900">Services</h4>
-          <div className="flex flex-col gap-5">
-            <Link to="/services/enterprise-app-development" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <Server className="w-4 h-4 text-neutral-400" /> Enterprise App Development
-            </Link>
-            <Link to="/services/user-analytics" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <BarChart className="w-4 h-4 text-neutral-400" /> User Analytics
-            </Link>
-            <Link to="/services/devops" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <GitBranch className="w-4 h-4 text-neutral-400" /> DevOps
-            </Link>
-            <Link to="/services/cloud-computing" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <Cloud className="w-4 h-4 text-neutral-400" /> Cloud Computing
-            </Link>
-            <Link to="/services/digital-marketing" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <Megaphone className="w-4 h-4 text-neutral-400" /> Digital Marketing
-            </Link>
+        {col2.length > 0 && (
+          <div className="flex-1 min-w-[200px]">
+            <h4 className="font-bold mb-6 text-sm text-neutral-900">Services</h4>
+            {renderLinks(col2)}
           </div>
-        </div>
+        )}
 
-        <div className="flex-1">
-          <h4 className="font-bold mb-6 text-sm text-transparent select-none">Services</h4>
-          <div className="flex flex-col gap-5">
-            <Link to="/services/digital-product-engineering" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <Code className="w-4 h-4 text-neutral-400" /> Digital Product Engineering
-            </Link>
-            <Link to="/services/web-development" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <Globe className="w-4 h-4 text-neutral-400" /> Web Development
-            </Link>
-            <Link to="/services/application-maintenance" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <Wrench className="w-4 h-4 text-neutral-400" /> Application Maintenance
-            </Link>
-            <Link to="/services/quality-assurance" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <ShieldCheck className="w-4 h-4 text-neutral-400" /> Quality Assurance & Testing
-            </Link>
-            <Link to="/services/consulting-services" className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-              <Lightbulb className="w-4 h-4 text-neutral-400" /> Consulting Services
-            </Link>
+        {col3.length > 0 && (
+          <div className="flex-1 min-w-[200px]">
+            <h4 className="font-bold mb-6 text-sm text-transparent select-none">Services</h4>
+            {renderLinks(col3)}
           </div>
-        </div>
+        )}
       </div>
     </div>
   )
