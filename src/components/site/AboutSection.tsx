@@ -1,45 +1,49 @@
 import { motion } from "framer-motion"
 import WorldMap from "@/components/ui/world-map"
 
-export default function AboutSection() {
+export default function AboutSection({ hideHeader = false }: { hideHeader?: boolean }) {
   return (
     <section id="about" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background overflow-hidden w-full">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 text-center">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5 }}
-          className="text-sm font-bold text-primary tracking-widest uppercase mb-3"
-        >
-          About Us
-        </motion.h2>
-        <p className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl dark:text-white text-black mb-4 sm:mb-6 tracking-tight">
-          Delivering Excellence{" "}
-          <span className="text-primary inline-block whitespace-nowrap">
-            {"Worldwide".split("").map((word, idx) => (
-              <motion.span
-                key={idx}
-                className="inline-block"
-                initial={{ x: -10, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.04 }}
-              >
-                {word}
-              </motion.span>
-            ))}
-          </span>
-        </p>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto mb-10 sm:mb-16"
-        >
-          At Adat Soft Solutions, we build websites and mobile apps that transcend borders. From startup MVPs to enterprise systems, we connect global businesses with cutting-edge technology.
-        </motion.p>
+        {!hideHeader && (
+          <>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5 }}
+              className="text-sm font-bold text-primary tracking-widest uppercase mb-3"
+            >
+              About Us
+            </motion.h2>
+            <p className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl dark:text-white text-black mb-4 sm:mb-6 tracking-tight">
+              Delivering Excellence{" "}
+              <span className="text-primary inline-block whitespace-nowrap">
+                {"Worldwide".split("").map((word, idx) => (
+                  <motion.span
+                    key={idx}
+                    className="inline-block"
+                    initial={{ x: -10, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.04 }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </span>
+            </p>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto mb-10 sm:mb-16"
+            >
+              At Adat Soft Solutions, we build websites and mobile apps that transcend borders. From startup MVPs to enterprise systems, we connect global businesses with cutting-edge technology.
+            </motion.p>
+          </>
+        )}
 
         <WorldMap
           lineColor="var(--color-primary)"

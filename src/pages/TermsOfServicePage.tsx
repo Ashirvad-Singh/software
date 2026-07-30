@@ -51,7 +51,7 @@ export default function TermsOfServicePage() {
   ]
 
   return (
-    <main className="pt-24 sm:pt-28 md:pt-36 pb-20 min-h-screen bg-background text-foreground">
+    <main className="pt-32 sm:pt-36 md:pt-40 pb-20 min-h-screen bg-background text-foreground">
       {/* Header */}
       <div className="bg-gradient-to-b from-sky-50/50 via-background to-background border-b border-border/40 py-12 md:py-16">
         <div className="container mx-auto px-4 max-w-4xl text-center">

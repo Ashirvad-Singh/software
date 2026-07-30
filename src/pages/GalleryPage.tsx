@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import SubBanner from "@/components/site/SubBanner";
 import { Loader2 } from "lucide-react";
 
 const staticImages = [
@@ -72,18 +73,13 @@ export default function GalleryPage() {
   }, []);
 
   return (
-    <main className="pt-24 md:pt-40 min-h-screen bg-background">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-8 md:mb-10 px-4"
-      >
-        <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-3 md:mb-4">Our Gallery</h1>
-        <p className="text-sm md:text-lg text-neutral-500 max-w-2xl mx-auto">
-          Explore our workspace, team events, and the amazing web and mobile apps we build.
-        </p>
-      </motion.div>
+    <main className="min-h-screen bg-background pb-16">
+      <SubBanner
+        badge="Showcase"
+        title="Our"
+        highlightTitle="Gallery"
+        subtitle="Explore our workspace, team events, and the amazing web and mobile apps we build."
+      />
 
       {loading ? (
         <div className="flex justify-center items-center h-64">

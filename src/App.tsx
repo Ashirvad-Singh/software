@@ -10,10 +10,8 @@ import CTASection from "@/components/site/CTASection"
 import { ThemeProvider } from "@/components/ThemeProvider"
 
 import HomePage from "@/pages/HomePage"
-import { lazy, Suspense, useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { lazy, Suspense } from "react"
 import ScrollToTop from "@/components/ScrollToTop"
-import { PixelPreloader } from "@/components/ui/pixel-preloader"
 const ServicesPage = lazy(() => import("@/pages/ServicesPage"))
 const ServiceDetailPage = lazy(() => import("@/pages/ServiceDetailPage"))
 const WorkPage = lazy(() => import("@/pages/WorkPage"))
@@ -38,19 +36,6 @@ import { FloatingShapes } from "@/components/ui/floating-shapes"
 function App() {
   const location = useLocation()
   const isDashboard = location.pathname.startsWith("/dashboard")
-  const [showPreloader, setShowPreloader] = useState(!isDashboard)
-
-  useEffect(() => {
-    if (isDashboard) {
-      setShowPreloader(false);
-      return;
-    }
-    const timer = setTimeout(() => {
-      setShowPreloader(false);
-    }, 1800);
-
-    return () => clearTimeout(timer);
-  }, [isDashboard]);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -78,17 +63,6 @@ function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <div className="bg-background text-foreground min-h-screen selection:bg-primary/30 selection:text-primary flex flex-col relative">
-        <AnimatePresence mode="wait">
-          {showPreloader && <PixelPreloader key="preloader" />}
-        </AnimatePresence>
-        
-        <motion.div
-          initial={false}
-          animate={{ opacity: showPreloader ? 0 : 1, pointerEvents: showPreloader ? "none" : "auto" }}
-          transition={{ duration: 0.5, ease: "easeIn" }}
-          className="contents"
-        >
-        
         <ScrollToTop />
         {!isDashboard && <Cursor />}
         {!isDashboard && <ScrollProgress />}
@@ -96,7 +70,7 @@ function App() {
         {!isDashboard && <Navbar />}
         
         <div className="flex-1 relative z-10">
-          <Suspense fallback={<div className="h-screen w-full bg-background relative z-50"></div>}>
+          <Suspense fallback={null}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/services" element={<ServicesPage />} />
@@ -123,8 +97,6 @@ function App() {
         {!isDashboard && <CTASection />}
         {!isDashboard && <Footer />}
         
-        </motion.div>
-
         <Toaster position="bottom-right" theme="system" />
       </div>
     </ThemeProvider>

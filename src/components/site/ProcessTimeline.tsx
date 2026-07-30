@@ -55,18 +55,20 @@ const WavyLine = ({ count }: { count: number }) => {
   );
 }
 
-export default function ProcessTimeline() {
+export default function ProcessTimeline({ hideHeader = false }: { hideHeader?: boolean }) {
   return (
     <section id="process" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background overflow-x-hidden">
       <div className="container mx-auto px-4 sm:px-6 md:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
-            How We Work
-          </h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-6 text-foreground">
-            Our Process
-          </h3>
-        </div>
+        {!hideHeader && (
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
+              How We Work
+            </h2>
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-6 text-foreground">
+              Our Process
+            </h3>
+          </div>
+        )}
 
         <div className="relative max-w-6xl mx-auto md:overflow-x-auto pb-10 md:hide-scrollbar">
           <div className="md:min-w-[900px] flex flex-col relative md:px-4">

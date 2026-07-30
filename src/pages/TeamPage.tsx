@@ -2,6 +2,7 @@ import { HoverMember } from "@/components/ui/hover-member";
 import { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import SubBanner from "@/components/site/SubBanner";
 import { Loader2 } from "lucide-react";
 
 const staticTeamData = [
@@ -63,19 +64,15 @@ export default function TeamPage() {
   }, []);
 
   return (
-    <main className="py-12 sm:py-16 md:py-20 lg:py-24 bg-neutral-50 dark:bg-neutral-950 min-h-screen overflow-x-hidden">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <h1 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
-            Our Team
-          </h1>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-6 text-foreground">
-            Meet the Minds Behind the Magic
-          </h2>
-          <p className="text-muted-foreground text-sm sm:text-base">
-            We are a collective of passionate designers, developers, and strategists dedicated to crafting exceptional digital experiences.
-          </p>
-        </div>
+    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen overflow-x-hidden pb-16 lg:pb-24">
+      <SubBanner
+        badge="Our Team"
+        title="Meet the Minds Behind the"
+        highlightTitle="Magic"
+        subtitle="We are a collective of passionate designers, developers, and strategists dedicated to crafting exceptional digital experiences."
+      />
+
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16">
 
         {loading ? (
           <div className="flex justify-center items-center h-64">

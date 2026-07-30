@@ -12,7 +12,7 @@ import { IconDeviceDesktopAnalytics } from "@tabler/icons-react";
 import { Loader2 } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 
-export default function FeaturesSectionDemo({ limit }: { limit?: number }) {
+export default function FeaturesSectionDemo({ limit, hideHeader = false }: { limit?: number; hideHeader?: boolean }) {
   const [dbServices, setDbServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -45,6 +45,16 @@ export default function FeaturesSectionDemo({ limit }: { limit?: number }) {
     );
   }
 
+  const getGridSpanClass = (index: number) => {
+    const classes = [
+      "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800 group/feature cursor-pointer",
+      "border-b col-span-1 lg:col-span-2 dark:border-neutral-800 group/feature cursor-pointer",
+      "col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800 group/feature cursor-pointer",
+      "col-span-1 lg:col-span-3 border-b lg:border-none group/feature cursor-pointer",
+    ];
+    return classes[index % classes.length];
+  };
+
   let allServices = dbServices.length > 0 ? dbServices : staticServices;
   const displayServices = limit ? allServices.slice(0, limit) : allServices;
 
@@ -64,50 +74,50 @@ export default function FeaturesSectionDemo({ limit }: { limit?: number }) {
       skeleton = <SkeletonThree />;
     }
 
-    const classes = [
-      "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800 group/feature cursor-pointer",
-      "border-b col-span-1 lg:col-span-2 dark:border-neutral-800 group/feature cursor-pointer",
-      "col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800 group/feature cursor-pointer",
-      "col-span-1 lg:col-span-3 border-b lg:border-none group/feature cursor-pointer",
-    ];
     return {
-      ...service,
-      skeleton,
-      className: classes[index % classes.length],
+      title: service.title,
+      description: service.description,
+      slug: service.slug,
+      iconName: service.iconName,
+      skeleton: skeleton,
+      className: getGridSpanClass(index),
     };
   });
-  return (
-    <section id="services" className="relative z-20 mx-auto max-w-7xl py-24 bg-transparent">
-      <div className="px-8">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5 }}
-          className="text-sm font-bold text-primary tracking-widest uppercase mb-3 text-center"
-        >
-          Our Services
-        </motion.h2>
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mx-auto max-w-5xl text-center text-3xl font-bold tracking-tight text-black dark:text-white lg:text-5xl lg:leading-tight"
-        >
-          Comprehensive Web & App Solutions
-        </motion.h2>
 
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mx-auto my-4 max-w-2xl text-center text-sm font-normal text-neutral-500 lg:text-base"
-        >
-          From full-stack web applications to cross-platform mobile apps, Adat Soft Solutions has everything you need to scale your digital presence.
-        </motion.p>
-      </div>
+  return (
+    <section id="services" className="relative z-20 mx-auto max-w-7xl py-12 md:py-20 bg-transparent">
+      {!hideHeader && (
+        <div className="px-8">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+            className="text-sm font-bold text-primary tracking-widest uppercase mb-3 text-center"
+          >
+            Our Services
+          </motion.h2>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mx-auto max-w-5xl text-center text-3xl font-bold tracking-tight text-black dark:text-white lg:text-5xl lg:leading-tight"
+          >
+            Comprehensive Web & App Solutions
+          </motion.h2>
+
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mx-auto my-4 max-w-2xl text-center text-sm font-normal text-neutral-500 lg:text-base"
+          >
+            From full-stack web applications to cross-platform mobile apps, Adat Soft Solutions has everything you need to scale your digital presence.
+          </motion.p>
+        </div>
+      )}
 
       <div className="relative">
         <div className="mt-12 grid grid-cols-1 rounded-md lg:grid-cols-6 xl:border border-neutral-200">

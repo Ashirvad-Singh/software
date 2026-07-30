@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import SubBanner from "@/components/site/SubBanner";
 
 const contactSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
@@ -57,37 +58,16 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="py-12 sm:py-16 md:py-20 lg:py-24 min-h-screen relative overflow-x-hidden bg-white">
-      {/* Background Dots */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.03] z-0"
-        style={{
-          backgroundImage: "radial-gradient(#000 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
-        }}
-      ></div>
+    <main className="min-h-screen relative overflow-x-hidden bg-white pb-16 lg:pb-24">
+      <SubBanner
+        badge="Contact Us"
+        title="Get in"
+        highlightTitle="touch"
+        subtitle="Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions."
+      />
 
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl relative z-10 pt-12 md:pt-16">
         
-        {/* Header Text */}
-        <div className="text-center mb-16">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 text-neutral-900"
-          >
-            Get in touch
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-sm sm:text-base text-neutral-500 max-w-2xl mx-auto"
-          >
-            Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions.
-          </motion.p>
-        </div>
-
           <motion.div 
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}

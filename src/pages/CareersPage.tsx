@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import JobApplicationForm from "@/components/site/JobApplicationForm";
+import SubBanner from "@/components/site/SubBanner";
 
 
 
@@ -41,19 +42,21 @@ export default function CareersPage() {
 
 
   return (
-    <main className="pt-32 pb-24 min-h-screen bg-background">
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="shadow-input mx-auto w-full max-w-2xl rounded-none bg-white p-4 md:rounded-2xl md:p-8 border border-neutral-100"
-      >
-        <h2 className="text-3xl font-bold text-neutral-800">
-          Join Adat Soft Solutions
-        </h2>
-        <p className="mt-2 text-neutral-600 mb-10">
-          We are always looking for talented individuals to join our team of builders. Explore our open roles and apply below!
-        </p>
+    <main className="min-h-screen bg-background pb-24">
+      <SubBanner
+        badge="Careers"
+        title="Join Adat"
+        highlightTitle="Soft Solutions"
+        subtitle="We are always looking for talented individuals to join our team of builders. Explore our open roles and apply below!"
+      />
+
+      <div className="container mx-auto px-4 max-w-3xl pt-12 md:pt-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="shadow-input mx-auto w-full rounded-2xl bg-white p-6 md:p-10 border border-neutral-100"
+        >
 
         {/* Job Openings List */}
         <div className="mb-12">
@@ -97,6 +100,7 @@ export default function CareersPage() {
           <JobApplicationForm defaultPosition={defaultPosition} />
         </div>
       </motion.div>
-    </main>
+    </div>
+  </main>
   );
 }

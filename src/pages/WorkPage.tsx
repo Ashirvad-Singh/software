@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react"
 import { collection, getDocs, query, orderBy } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import { projects as staticProjects } from "@/data/projects"
+import SubBanner from "@/components/site/SubBanner"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Link } from "react-router-dom"
 import { ExternalLink } from "lucide-react"
@@ -131,21 +132,15 @@ export default function WorkPage() {
   const ySlow = useTransform(scrollYProgress, [0, 1], [0, 200])
 
   return (
-    <main className="pt-24 md:pt-40 min-h-screen bg-background overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto text-center mb-12 md:mb-32"
-        >
-          <h1 className="text-4xl md:text-7xl font-bold tracking-tighter mb-4 md:mb-6">
-            Our <span className="text-primary">Work</span>
-          </h1>
-          <p className="text-base md:text-xl text-muted-foreground">
-            Explore our portfolio of digital experiences, custom applications, and web platforms built for the modern era.
-          </p>
-        </motion.div>
+    <main className="min-h-screen bg-background overflow-hidden">
+      <SubBanner
+        badge="Portfolio"
+        title="Our"
+        highlightTitle="Work"
+        subtitle="Explore our portfolio of digital experiences, custom applications, and web platforms built for the modern era."
+      />
+      
+      <div className="container mx-auto px-4 md:px-6 pt-12 md:pt-16">
 
         {/* MOBILE: Simple grid, no parallax */}
         {isMobile && (

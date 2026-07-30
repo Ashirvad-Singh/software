@@ -35,18 +35,12 @@ const RandomSpot = () => {
   );
 };
 
-let hasHeroLoadedOnce = false;
-
 export default function HeroModern() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [isHovering, setIsHovering] = useState(false);
 
-  const isFirstLoad = !hasHeroLoadedOnce;
-  useEffect(() => {
-    hasHeroLoadedOnce = true;
-  }, []);
-  const baseDelay = isFirstLoad ? 1.8 : 0;
+  const baseDelay = 0;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();

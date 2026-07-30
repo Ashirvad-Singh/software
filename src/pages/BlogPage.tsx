@@ -3,6 +3,7 @@ import { ArrowRight, Calendar, Clock, User, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import SubBanner from "@/components/site/SubBanner";
 
 const blogPosts = [
   {
@@ -85,19 +86,15 @@ export default function BlogPage() {
   const regularPosts = displayPosts.filter(post => post.id !== featuredPost?.id);
 
   return (
-    <main className="pt-32 pb-32 bg-neutral-50 dark:bg-neutral-950 min-h-screen">
-      <div className="container mx-auto px-4 md:px-6 max-w-7xl">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h1 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
-            Insights & Articles
-          </h1>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6 text-foreground">
-            Our Latest Thinking
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            Thoughts, tutorials, and insights on design, development, and building successful digital products.
-          </p>
-        </div>
+    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen pb-24">
+      <SubBanner
+        badge="Blog & Articles"
+        title="Our Latest"
+        highlightTitle="Thinking"
+        subtitle="Thoughts, tutorials, and insights on design, development, and building successful digital products."
+      />
+
+      <div className="container mx-auto px-4 md:px-6 max-w-7xl pt-12 md:pt-16">
 
         {loading ? (
           <div className="flex justify-center items-center h-64">
