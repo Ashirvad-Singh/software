@@ -1,9 +1,5 @@
 import { useState } from "react"
-import { 
-  Menu as MenuIcon, X, 
-  Store, Smartphone, Wifi, Brain, Server, BarChart, GitBranch, Cloud, Megaphone, 
-  Code, Globe, Wrench, ShieldCheck, Lightbulb, Monitor
-} from "lucide-react"
+import { Menu as MenuIcon, X, Monitor } from "lucide-react"
 import * as LucideIcons from "lucide-react"
 import { useEffect } from "react"
 import { collection, getDocs, query, orderBy } from "firebase/firestore"

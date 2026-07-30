@@ -222,7 +222,7 @@ export const SkeletonThree = () => {
 export const SkeletonUIUX = () => {
   const variants = {
     initial: { y: 0 },
-    animate: { y: -8, transition: { duration: 2, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" } },
+    animate: { y: -8, transition: { duration: 2, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" } as any },
   };
   
   return (
