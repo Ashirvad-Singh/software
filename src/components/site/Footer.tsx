@@ -30,8 +30,8 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 md:px-6 pt-16 pb-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 pt-10 sm:pt-12 md:pt-16 pb-6 md:pb-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
           {/* Brand */}
           <div className="md:col-span-1">
             <Link to="/" className="mb-4 inline-block">
@@ -100,8 +100,8 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Adat Soft Solutions. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
+            <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

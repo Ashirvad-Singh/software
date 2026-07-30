@@ -15,9 +15,39 @@ const staticImages = [
   "https://images.unsplash.com/photo-1439853949127-fa647821eba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2640&q=80",
 ];
 
+// Simple masonry-style grid for mobile
+const MobileGallery = ({ images }: { images: string[] }) => (
+  <div className="columns-2 gap-3 px-4 pb-16">
+    {images.map((img, idx) => (
+      <motion.div
+        key={idx}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4, delay: idx * 0.05 }}
+        className="mb-3 break-inside-avoid overflow-hidden rounded-xl"
+      >
+        <img
+          src={img}
+          alt={`Gallery ${idx + 1}`}
+          className="w-full h-auto object-cover rounded-xl"
+          loading="lazy"
+        />
+      </motion.div>
+    ))}
+  </div>
+);
+
 export default function GalleryPage() {
   const [images, setImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -25,7 +55,6 @@ export default function GalleryPage() {
         const q = query(collection(db, "gallery"), orderBy("createdAt", "desc"));
         const snapshot = await getDocs(q);
         const data = snapshot.docs.map(doc => doc.data().imageUrl || doc.data().url);
-        // Filter out undefined/null values in case some documents are malformed
         const validData = data.filter(Boolean);
         if (validData.length > 0) {
           setImages(validData);
@@ -43,22 +72,25 @@ export default function GalleryPage() {
   }, []);
 
   return (
-    <main className="pt-32 md:pt-40 min-h-screen bg-background">
-      <motion.div 
+    <main className="pt-24 md:pt-40 min-h-screen bg-background">
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-8 px-4"
+        className="text-center mb-8 md:mb-10 px-4"
       >
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-black">Our Gallery</h1>
-        <p className="text-lg text-neutral-500 max-w-2xl mx-auto">
+        <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-3 md:mb-4">Our Gallery</h1>
+        <p className="text-sm md:text-lg text-neutral-500 max-w-2xl mx-auto">
           Explore our workspace, team events, and the amazing web and mobile apps we build.
         </p>
       </motion.div>
+
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
+      ) : isMobile ? (
+        <MobileGallery images={images} />
       ) : (
         <ParallaxScroll images={images} />
       )}

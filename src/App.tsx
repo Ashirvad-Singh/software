@@ -10,8 +10,10 @@ import CTASection from "@/components/site/CTASection"
 import { ThemeProvider } from "@/components/ThemeProvider"
 
 import HomePage from "@/pages/HomePage"
-import { lazy, Suspense } from "react"
+import { lazy, Suspense, useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
 import ScrollToTop from "@/components/ScrollToTop"
+import { PixelPreloader } from "@/components/ui/pixel-preloader"
 const ServicesPage = lazy(() => import("@/pages/ServicesPage"))
 const ServiceDetailPage = lazy(() => import("@/pages/ServiceDetailPage"))
 const WorkPage = lazy(() => import("@/pages/WorkPage"))
@@ -26,29 +28,29 @@ const JobDetailPage = lazy(() => import("@/pages/JobDetailPage"))
 const DashboardPage = lazy(() => import("@/pages/DashboardPage"))
 const BlogPage = lazy(() => import("@/pages/BlogPage"))
 const BlogPostPage = lazy(() => import("@/pages/BlogPostPage"))
+const PrivacyPolicyPage = lazy(() => import("@/pages/PrivacyPolicyPage"))
+const TermsOfServicePage = lazy(() => import("@/pages/TermsOfServicePage"))
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
 import { FloatingShapes } from "@/components/ui/floating-shapes"
 
-function ReadyNotifier() {
-  useEffect(() => {
-    (window as any).__reactReady = true;
-    if ((window as any).__loaderFinished && (window as any).__removeLoader) {
-      (window as any).__removeLoader();
-    }
-  }, []);
-  return null;
-}
+
 
 function App() {
   const location = useLocation()
   const isDashboard = location.pathname.startsWith("/dashboard")
+  const [showPreloader, setShowPreloader] = useState(!isDashboard)
 
   useEffect(() => {
-    // Fallback safety
-    setTimeout(() => {
-      if ((window as any).__removeLoader) (window as any).__removeLoader();
-    }, 5000);
-  }, [])
+    if (isDashboard) {
+      setShowPreloader(false);
+      return;
+    }
+    const timer = setTimeout(() => {
+      setShowPreloader(false);
+    }, 1800);
+
+    return () => clearTimeout(timer);
+  }, [isDashboard]);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -76,15 +78,25 @@ function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <div className="bg-background text-foreground min-h-screen selection:bg-primary/30 selection:text-primary flex flex-col relative">
+        <AnimatePresence mode="wait">
+          {showPreloader && <PixelPreloader key="preloader" />}
+        </AnimatePresence>
+        
+        <motion.div
+          initial={false}
+          animate={{ opacity: showPreloader ? 0 : 1, pointerEvents: showPreloader ? "none" : "auto" }}
+          transition={{ duration: 0.5, ease: "easeIn" }}
+          className="contents"
+        >
+        
         <ScrollToTop />
-        <Cursor />
-        <ScrollProgress />
+        {!isDashboard && <Cursor />}
+        {!isDashboard && <ScrollProgress />}
         {!isDashboard && <FloatingShapes />}
         {!isDashboard && <Navbar />}
         
         <div className="flex-1 relative z-10">
           <Suspense fallback={<div className="h-screen w-full bg-background relative z-50"></div>}>
-            <ReadyNotifier />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/services" element={<ServicesPage />} />
@@ -101,6 +113,8 @@ function App() {
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
+              <Route path="/privacy" element={<PrivacyPolicyPage />} />
+              <Route path="/terms" element={<TermsOfServicePage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
@@ -109,6 +123,8 @@ function App() {
         {!isDashboard && <CTASection />}
         {!isDashboard && <Footer />}
         
+        </motion.div>
+
         <Toaster position="bottom-right" theme="system" />
       </div>
     </ThemeProvider>

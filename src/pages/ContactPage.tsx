@@ -57,7 +57,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="pt-32 md:pt-40 pb-24 min-h-screen relative overflow-hidden bg-white">
+    <main className="py-12 sm:py-16 md:py-20 lg:py-24 min-h-screen relative overflow-x-hidden bg-white">
       {/* Background Dots */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03] z-0"
@@ -67,14 +67,14 @@ export default function ContactPage() {
         }}
       ></div>
 
-      <div className="container mx-auto px-4 max-w-6xl relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl relative z-10">
         
         {/* Header Text */}
         <div className="text-center mb-16">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-neutral-900"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 text-neutral-900"
           >
             Get in touch
           </motion.h1>
@@ -82,13 +82,13 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg text-neutral-500 max-w-2xl mx-auto"
+            className="text-sm sm:text-base text-neutral-500 max-w-2xl mx-auto"
           >
             Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions.
           </motion.p>
         </div>
 
-        <motion.div 
+          <motion.div 
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
@@ -96,12 +96,12 @@ export default function ContactPage() {
         >
           
           {/* Left Dark Side - Contact Info */}
-          <div className="lg:w-2/5 bg-gradient-to-br from-sky-500 to-sky-700 p-10 md:p-14 text-white relative overflow-hidden flex flex-col justify-between">
+          <div className="lg:w-2/5 bg-gradient-to-br from-sky-500 to-sky-700 p-6 sm:p-8 md:p-14 text-white relative overflow-hidden flex flex-col justify-between">
             <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-sky-300/30 blur-3xl pointer-events-none"></div>
             
             <div className="relative z-10">
-              <h3 className="text-3xl font-semibold mb-4 tracking-tight">Contact Information</h3>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 tracking-tight">Contact Information</h3>
               <p className="text-sky-100 mb-12 text-sm leading-relaxed">Fill up the form and our Team will get back to you within 24 hours.</p>
 
               <div className="space-y-8">
@@ -145,10 +145,10 @@ export default function ContactPage() {
           </div>
 
           {/* Right White Side - Form */}
-          <div className="lg:w-3/5 p-10 md:p-14 bg-sky-50 relative">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div className="lg:w-3/5 p-6 sm:p-8 md:p-14 bg-sky-50 relative">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
                 <LabelInputContainer>
                   <Label htmlFor="fullName" className="text-neutral-600 font-medium">First & Last Name</Label>
                   <Input id="fullName" placeholder="John Doe" type="text" {...register("fullName")} className="bg-neutral-50/50" />
@@ -162,7 +162,7 @@ export default function ContactPage() {
                 </LabelInputContainer>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
                 <LabelInputContainer>
                   <Label htmlFor="email" className="text-neutral-600 font-medium">Email Address</Label>
                   <Input id="email" placeholder="john@example.com" type="email" {...register("email")} className="bg-neutral-50/50" />
@@ -189,7 +189,7 @@ export default function ContactPage() {
 
               <div className="pt-6 flex justify-end">
                 <button
-                  className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-sky-600 px-8 font-medium text-white transition-all duration-300 hover:bg-sky-700 hover:scale-105 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-[0_4px_14px_0_rgba(2,132,199,0.39)]"
+                  className="w-full sm:w-auto group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-sky-600 px-8 font-medium text-white transition-all duration-300 hover:bg-sky-700 hover:scale-105 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-[0_4px_14px_0_rgba(2,132,199,0.39)]"
                   type="submit"
                   disabled={isSubmitting}
                 >

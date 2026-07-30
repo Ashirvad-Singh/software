@@ -57,21 +57,21 @@ const WavyLine = ({ count }: { count: number }) => {
 
 export default function ProcessTimeline() {
   return (
-    <section id="process" className="py-24 bg-background overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="process" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background overflow-x-hidden">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
             How We Work
           </h2>
-          <h3 className="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-foreground">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-6 text-foreground">
             Our Process
           </h3>
         </div>
 
-        <div className="relative max-w-6xl mx-auto overflow-x-auto pb-10 hide-scrollbar">
-          <div className="min-w-[900px] flex flex-col relative px-4">
+        <div className="relative max-w-6xl mx-auto md:overflow-x-auto pb-10 md:hide-scrollbar">
+          <div className="md:min-w-[900px] flex flex-col relative md:px-4">
             {/* Cards Row */}
-            <div className="flex w-full gap-4">
+            <div className="flex flex-col md:flex-row w-full gap-4 sm:gap-6 md:gap-8">
               {steps.map((step, index) => (
                 <motion.div 
                   key={step.title}
@@ -79,12 +79,13 @@ export default function ProcessTimeline() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={`flex-1 flex flex-col items-center text-center px-4 pt-8 pb-14 rounded-t-2xl ${step.color} text-zinc-900 shadow-sm`}
-                  style={{ clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 30px), 50% 100%, 0 calc(100% - 30px))" }}
+                  className={`flex-1 flex flex-col items-center text-center p-4 sm:p-5 md:p-6 lg:p-8 rounded-t-2xl md:rounded-t-2xl md:rounded-b-none rounded-b-2xl ${step.color} text-zinc-900 shadow-sm relative`}
+                  style={{ clipPath: "none" }} // overriding for simpler structure on mobile if needed, or keeping it but adjusting
                 >
+                  <div className="hidden md:block absolute bottom-0 left-0 w-full h-[30px] bg-background" style={{ clipPath: "polygon(0 100%, 100% 100%, 50% 0)" }}></div>
                   {step.icon}
                   <h4 className="font-bold text-[17px] mb-3">{step.title}</h4>
-                  <p className="text-[13px] opacity-80 leading-relaxed font-medium">
+                  <p className="text-sm sm:text-base opacity-80 leading-relaxed font-medium">
                     {step.description}
                   </p>
                 </motion.div>
@@ -92,7 +93,7 @@ export default function ProcessTimeline() {
             </div>
 
             {/* Dots and Wavy Line Row */}
-            <div className="relative flex w-full mt-8 h-12">
+            <div className="hidden md:flex relative w-full mt-8 h-12">
               <WavyLine count={steps.length} />
               {steps.map((step, index) => (
                 <div key={index} className="flex-1 flex justify-center items-center">

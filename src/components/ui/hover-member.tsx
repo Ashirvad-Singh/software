@@ -12,7 +12,7 @@ export const HoverMember = ({ teamMembers }: { teamMembers: TeamMember[] }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-7xl mx-auto">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 w-full max-w-7xl mx-auto">
       {teamMembers.map((member, idx) => (
         <div
           key={idx}
@@ -39,7 +39,7 @@ export const HoverMember = ({ teamMembers }: { teamMembers: TeamMember[] }) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
-                className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center backdrop-blur-[2px] bg-black/40"
+                className="absolute inset-0 flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 text-center backdrop-blur-[2px] bg-black/40"
               >
                 <div className="overflow-hidden">
                   <motion.h3
@@ -47,20 +47,20 @@ export const HoverMember = ({ teamMembers }: { teamMembers: TeamMember[] }) => {
                     animate={{ y: 0 }}
                     exit={{ y: "100%" }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="text-4xl md:text-5xl font-black text-white uppercase tracking-widest mb-2"
+                    className="text-lg sm:text-2xl md:text-4xl font-black text-white uppercase tracking-widest mb-1 sm:mb-2"
                   >
                     {member.name}
                   </motion.h3>
                 </div>
                 
                 {member.role && (
-                  <div className="overflow-hidden mt-2">
+                  <div className="overflow-hidden mt-1 sm:mt-2">
                     <motion.div
                       initial={{ y: "100%" }}
                       animate={{ y: 0 }}
                       exit={{ y: "100%" }}
                       transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                      className="px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-medium tracking-wide uppercase"
+                      className="px-2 py-1 sm:px-4 sm:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] sm:text-xs md:text-sm font-medium tracking-wide uppercase"
                     >
                       {member.role}
                     </motion.div>

@@ -63,16 +63,16 @@ export default function TeamPage() {
   }, []);
 
   return (
-    <main className="pt-32 pb-32 bg-neutral-50 dark:bg-neutral-950 min-h-screen">
-      <div className="container mx-auto px-4 md:px-6">
+    <main className="py-12 sm:py-16 md:py-20 lg:py-24 bg-neutral-50 dark:bg-neutral-950 min-h-screen overflow-x-hidden">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <h1 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
             Our Team
           </h1>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6 text-foreground">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-6 text-foreground">
             Meet the Minds Behind the Magic
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-sm sm:text-base">
             We are a collective of passionate designers, developers, and strategists dedicated to crafting exceptional digital experiences.
           </p>
         </div>

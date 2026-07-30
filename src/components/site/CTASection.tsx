@@ -25,8 +25,8 @@ export default function CTASection() {
   };
 
   return (
-    <section className="py-24 md:py-32 bg-white text-neutral-900 relative overflow-hidden font-sans border-t border-neutral-100">
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+    <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-white text-neutral-900 relative overflow-hidden font-sans border-t border-neutral-100">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-8 max-w-7xl">
         {/* Dashed Box Container */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] border-y border-dashed border-neutral-300">
           {/* Left Side: Copy & Buttons */}
@@ -35,11 +35,11 @@ export default function CTASection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="p-8 md:p-16 lg:p-20 border-b lg:border-b-0 lg:border-r border-dashed border-neutral-300"
+            className="p-4 sm:p-6 md:p-12 lg:p-20 border-b lg:border-b-0 lg:border-r border-dashed border-neutral-300"
           >
             <motion.h2
               variants={itemVariants}
-              className="text-3xl md:text-[2.75rem] leading-[1.1] font-normal text-neutral-600 mb-4 tracking-tight"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] leading-[1.1] font-normal text-neutral-600 mb-4 tracking-tight"
             >
               Build{" "}
               <span className="font-bold text-neutral-900">
@@ -49,7 +49,7 @@ export default function CTASection() {
             </motion.h2>
             <motion.p
               variants={itemVariants}
-              className="text-2xl md:text-[2rem] leading-[1.2] font-normal text-neutral-600 mb-10 tracking-tight"
+              className="text-lg sm:text-xl md:text-2xl lg:text-[2rem] leading-[1.2] font-normal text-neutral-600 mb-8 sm:mb-10 tracking-tight"
             >
               Get the best in class{" "}
               <span className="text-blue-600">support</span> for your company's{" "}
@@ -58,22 +58,22 @@ export default function CTASection() {
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-wrap items-center gap-4"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
             >
               <Button
                 asChild
-                className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-7 py-6 text-base font-semibold shadow-[0_0_20px_rgba(37,99,235,0.2)] transition-all"
+                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-7 py-6 text-base font-semibold shadow-[0_0_20px_rgba(37,99,235,0.2)] transition-all"
               >
-                <Link to="/contact">
+                <Link to="/contact" className="flex items-center justify-center">
                   Start Project <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
               </Button>
               <Button
                 asChild
                 variant="outline"
-                className="bg-white hover:bg-neutral-50 border-neutral-300 text-neutral-900 rounded-xl px-7 py-6 text-base font-medium transition-all shadow-sm"
+                className="w-full sm:w-auto bg-white hover:bg-neutral-50 border-neutral-300 text-neutral-900 rounded-xl px-7 py-6 text-base font-medium transition-all shadow-sm"
               >
-                <Link to="/contact">
+                <Link to="/contact" className="flex items-center justify-center">
                   Talk to us{" "}
                   <MessageCircle className="ml-2 w-4 h-4 text-neutral-500" />
                 </Link>
@@ -87,9 +87,9 @@ export default function CTASection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="p-8 md:p-16 lg:p-20 flex flex-col justify-center"
+            className="p-4 sm:p-6 md:p-12 lg:p-20 flex flex-col justify-center"
           >
-            <blockquote className="text-[1.1rem] leading-relaxed text-neutral-700 mb-8 font-medium">
+            <blockquote className="text-base sm:text-lg leading-relaxed text-neutral-700 mb-8 font-medium">
               "Adat Soft Solutions is the best development partner ever. Ten on
               ten recommended. I just can't wait to see what happens with our
               new mobile app and website."

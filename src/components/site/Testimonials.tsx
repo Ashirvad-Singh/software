@@ -51,20 +51,20 @@ const staticTestimonials = [
 ]
 
 const TestimonialCard = ({ testimonial }: { testimonial: any }) => (
-  <div className="w-[350px] md:w-[400px] p-8 flex flex-col justify-between bg-white rounded-2xl border border-neutral-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] hover:shadow-md transition-shadow h-[250px] select-none">
-    <p className="leading-relaxed font-medium mb-8 text-[14px] text-neutral-700 pointer-events-none">
+  <div className="w-[240px] sm:w-[300px] md:w-[360px] lg:w-[400px] p-4 sm:p-5 md:p-7 flex flex-col justify-between bg-white rounded-2xl border border-neutral-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] hover:shadow-md transition-shadow h-[180px] sm:h-[210px] md:h-[240px] select-none">
+    <p className="leading-relaxed font-medium mb-4 text-[11px] sm:text-[12px] md:text-[14px] text-neutral-700 pointer-events-none line-clamp-4">
       "{testimonial.content}"
     </p>
     
-    <div className="flex items-center gap-4 mt-auto pointer-events-none">
+    <div className="flex items-center gap-2 sm:gap-3 mt-auto pointer-events-none">
       <img 
         src={testimonial.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=random`} 
         alt={testimonial.name}
-        className="w-10 h-10 rounded-full object-cover border border-neutral-100"
+        className="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full object-cover border border-neutral-100 shrink-0"
       />
       <div>
-        <h4 className="font-bold text-neutral-900 text-sm tracking-tight">{testimonial.name}</h4>
-        <p className="text-xs text-neutral-500 font-medium">{testimonial.role}</p>
+        <h4 className="font-bold text-neutral-900 text-[11px] sm:text-xs md:text-sm tracking-tight">{testimonial.name}</h4>
+        <p className="text-[10px] sm:text-xs text-neutral-500 font-medium">{testimonial.role}</p>
       </div>
     </div>
   </div>

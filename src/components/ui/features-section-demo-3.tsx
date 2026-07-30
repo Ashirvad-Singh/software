@@ -58,6 +58,8 @@ export default function FeaturesSectionDemo({ limit }: { limit?: number }) {
       skeleton = <SkeletonOne imageUrl={service.thumbnailUrl} />;
     } else if (service.visualType === 'ui_mockup' || service.visualType === 'staggered_images') {
       skeleton = <SkeletonUIUX />;
+    } else if (service.visualType === 'tasks_drop') {
+      skeleton = <SkeletonTechStack />;
     } else if (service.visualType === 'analytics') {
       skeleton = <SkeletonThree />;
     }
@@ -343,12 +345,12 @@ export const SkeletonTwo = () => {
               alt="bali images"
               width="500"
               height="500"
-              className="h-20 w-20 shrink-0 rounded-lg object-cover md:h-40 md:w-40"
+              className="h-20 w-20 flex-shrink-0 rounded-lg object-cover md:h-40 md:w-40"
             />
           </motion.div>
         ))}
       </div>
-      <div className="flex flex-row">
+      <div className="-ml-20 flex flex-row">
         {images.map((image, idx) => (
           <motion.div
             key={"images-second" + idx}
@@ -358,21 +360,78 @@ export const SkeletonTwo = () => {
             variants={imageVariants}
             whileHover="whileHover"
             whileTap="whileTap"
-            className="mt-4 -mr-4 shrink-0 overflow-hidden rounded-xl border border-neutral-100 bg-white p-1"
+            className="-mr-4 mt-4 shrink-0 overflow-hidden rounded-xl border border-neutral-100 bg-white p-1"
           >
             <img
               src={image}
               alt="bali images"
               width="500"
               height="500"
-              className="h-20 w-20 shrink-0 rounded-lg object-cover md:h-40 md:w-40"
+              className="h-20 w-20 flex-shrink-0 rounded-lg object-cover md:h-40 md:w-40"
             />
           </motion.div>
         ))}
       </div>
 
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-[100] h-full w-20 bg-gradient-to-r from-white to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-[100] h-full w-20 bg-gradient-to-l from-white to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-[100] w-20 bg-gradient-to-r from-white to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-[100] w-20 bg-gradient-to-l from-white to-transparent" />
+    </div>
+  );
+};
+
+export const SkeletonTechStack = () => {
+  return (
+    <div className="relative flex h-full w-full items-center justify-center p-4 lg:p-8 bg-transparent">
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-dot-black/[0.1]"></div>
+
+      <motion.div 
+        className="relative z-10 w-full max-w-xs rounded-2xl border border-neutral-100 bg-white/90 backdrop-blur-sm shadow-xl p-5 md:p-6"
+        style={{ transform: "rotate(-3deg) translateY(-10px)" }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h3 className="text-base md:text-lg font-bold text-neutral-600 mb-4">Tech Stack</h3>
+        
+        <div className="space-y-4">
+          <TechItem 
+            category="CMS Platform"
+            title="WordPress"
+            status="Priority: High"
+            delay={0.1}
+          />
+          <TechItem 
+            category="E-Commerce"
+            title="Shopify & WooCommerce"
+            status="Priority: High"
+            delay={0.3}
+          />
+          <TechItem 
+            category="Web Application"
+            title="React Dashboard"
+            status="Priority: Medium"
+            delay={0.5}
+          />
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+const TechItem = ({ category, title, status, delay }: any) => {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <span className="text-[10px] md:text-xs font-bold text-neutral-400 uppercase tracking-wider pl-1">{category}</span>
+      <motion.div
+        initial={{ opacity: 0, y: -40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay, type: "spring", bounce: 0.5 }}
+        className="rounded-xl border border-neutral-100 bg-white p-3 shadow-sm hover:shadow-md transition-shadow"
+      >
+        <p className="font-bold text-neutral-800 text-sm">{title}</p>
+        <p className="text-[10px] md:text-xs text-neutral-500 mt-1">{status}</p>
+      </motion.div>
     </div>
   );
 };

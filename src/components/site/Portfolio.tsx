@@ -26,21 +26,21 @@ const StickyProjectCard = ({
   const scale = useTransform(progress, range, [1, targetScale])
 
   return (
-    <div ref={container} className="sticky top-0 flex flex-col items-center justify-start min-h-screen pt-24 md:pt-32">
+    <div ref={container} className="sticky top-0 flex flex-col items-center justify-start min-h-screen pt-16 sm:pt-20 md:pt-24 lg:pt-32">
       <motion.div
         style={{
           scale,
           top: `${i * 25}px`, // Just stacking offset, the base offset is handled by container padding
         }}
-        className="relative flex flex-col md:flex-row w-[90vw] max-w-5xl h-[550px] md:h-[600px] origin-top overflow-hidden rounded-3xl border border-border/50 bg-secondary/20 shadow-2xl backdrop-blur-sm mt-8 md:mt-0"
+        className="relative flex flex-col md:flex-row w-[90vw] max-w-5xl h-[400px] sm:h-[500px] md:h-[600px] origin-top overflow-hidden rounded-3xl border border-border/50 bg-secondary/20 shadow-2xl backdrop-blur-sm mt-8 md:mt-0"
         data-cursor-text="View Case Study"
       >
-        <div className="w-full md:w-1/2 h-[40%] md:h-full relative overflow-hidden">
+        <div className="w-full md:w-1/2 h-[35%] sm:h-[40%] md:h-full relative overflow-hidden">
           <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent md:bg-gradient-to-r" />
         </div>
         
-        <div className="w-full md:w-1/2 h-[60%] md:h-full p-5 sm:p-8 md:p-12 flex flex-col justify-center bg-background/95">
+        <div className="w-full md:w-1/2 h-[65%] sm:h-[60%] md:h-full p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col justify-center bg-background/95">
           <div className="flex flex-wrap gap-1.5 md:gap-2 mb-2 sm:mb-4">
             {project.tags.map(tag => (
               <span key={tag} className="px-3 py-1 bg-secondary rounded-full text-xs font-medium border border-border/50">
@@ -48,7 +48,7 @@ const StickyProjectCard = ({
               </span>
             ))}
           </div>
-          <h4 className="text-2xl md:text-5xl font-bold mb-2 md:mb-4 line-clamp-1 md:line-clamp-none">{project.title}</h4>
+          <h4 className="text-xl sm:text-3xl md:text-5xl font-bold mb-2 md:mb-4 line-clamp-1 md:line-clamp-none">{project.title}</h4>
           <p className="text-primary font-medium mb-3 md:mb-6 text-sm md:text-lg">{project.result}</p>
           <p className="text-muted-foreground line-clamp-2 md:line-clamp-3 mb-4 md:mb-8 text-xs md:text-base">{project.challenge}</p>
           
@@ -104,10 +104,10 @@ export default function Portfolio() {
   })
 
   return (
-    <section id="work" className="py-24 bg-background">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="work" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background overflow-x-hidden">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8">
         
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4 sm:gap-6 md:gap-8">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -118,10 +118,10 @@ export default function Portfolio() {
             <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
               Our Work
             </h2>
-            <h3 className="text-3xl md:text-5xl font-bold tracking-tighter mb-4">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-4">
               Selected Case Studies
             </h3>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-sm sm:text-base">
               Explore our recent projects and see how we've helped businesses achieve their digital goals through custom web and mobile apps.
             </p>
           </motion.div>
@@ -164,7 +164,7 @@ export default function Portfolio() {
         )}
 
         {/* Project Grid */}
-        <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           <AnimatePresence mode="popLayout">
             {filteredProjects.filter(p => activeTab !== "All" || !p.featured).map((project) => (
               <motion.div

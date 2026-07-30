@@ -50,21 +50,20 @@ const MegaMenuContent = () => {
 
   const displayServices = dbServices.length > 0 ? dbServices : staticServices;
 
-  const col1 = displayServices.slice(0, 4);
-  const col2 = displayServices.slice(4, 9);
-  const col3 = displayServices.slice(9, 14);
+  const col1 = displayServices.slice(0, Math.ceil(displayServices.length / 2));
+  const col2 = displayServices.slice(Math.ceil(displayServices.length / 2));
 
   const renderLinks = (services: any[]) => (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-3">
       {loading ? (
-        <div className="py-4 text-center text-neutral-400 text-sm">Loading...</div>
+        <div className="py-2 text-center text-neutral-400 text-xs">Loading...</div>
       ) : services.length === 0 ? (
-        <div className="py-4 text-center text-neutral-400 text-sm">No services found.</div>
+        <div className="py-2 text-center text-neutral-400 text-xs">No services found.</div>
       ) : services.map((service, idx) => {
         const IconComponent = (LucideIcons as any)[service.iconName || "Code"] || LucideIcons.Circle;
         return (
-          <Link key={idx} to={`/services/${service.slug}`} className="text-sm flex items-center gap-3 text-neutral-600 hover:text-sky-600 transition-colors font-medium">
-            <IconComponent className="w-4 h-4 text-neutral-400 shrink-0" /> <span className="truncate">{service.title}</span>
+          <Link key={idx} to={`/services/${service.slug}`} className="text-xs sm:text-sm flex items-center gap-2.5 text-neutral-600 hover:text-sky-600 transition-colors font-medium py-0.5">
+            <IconComponent className="w-3.5 h-3.5 text-sky-500 shrink-0" /> <span className="truncate">{service.title}</span>
           </Link>
         )
       })}
@@ -72,33 +71,26 @@ const MegaMenuContent = () => {
   );
 
   return (
-    <div className="flex w-[850px] bg-white text-neutral-900 overflow-hidden gap-8 p-2">
+    <div className="flex w-[560px] max-w-[85vw] bg-white text-neutral-900 overflow-hidden gap-6 p-2">
       {/* Left Sidebar */}
-      <div className="w-[280px] flex flex-col gap-2 border-r border-neutral-100 pr-6 shrink-0">
-        <div className="bg-sky-500 text-white rounded-xl p-5 cursor-pointer shadow-md">
-          <div className="font-bold flex items-center gap-2"><Monitor className="w-4 h-4"/> IT Services</div>
-          <p className="text-xs text-sky-100 mt-2 leading-relaxed">Web, mobile, AI, and cloud solutions that fuel growth.</p>
+      <div className="w-[180px] flex flex-col gap-2 border-r border-neutral-100 pr-4 shrink-0 hidden sm:flex">
+        <div className="bg-sky-500 text-white rounded-xl p-4 cursor-pointer shadow-md">
+          <div className="font-bold flex items-center gap-2 text-xs sm:text-sm"><Monitor className="w-4 h-4"/> Our Services</div>
+          <p className="text-[11px] text-sky-100 mt-1.5 leading-relaxed">Web, mobile, AI, and cloud solutions built to scale.</p>
         </div>
       </div>
 
       {/* Right Content */}
-      <div className="flex-1 flex gap-8 pt-2">
-        <div className="flex-1 min-w-[200px]">
-          <h4 className="font-bold mb-6 text-sm text-neutral-900">Featured Expertise</h4>
+      <div className="flex-1 flex gap-6 pt-1">
+        <div className="flex-1 min-w-[140px]">
+          <h4 className="font-bold mb-3 text-xs text-neutral-400 uppercase tracking-wider">Featured</h4>
           {renderLinks(col1)}
         </div>
 
         {col2.length > 0 && (
-          <div className="flex-1 min-w-[200px]">
-            <h4 className="font-bold mb-6 text-sm text-neutral-900">Services</h4>
+          <div className="flex-1 min-w-[140px]">
+            <h4 className="font-bold mb-3 text-xs text-neutral-400 uppercase tracking-wider">Solutions</h4>
             {renderLinks(col2)}
-          </div>
-        )}
-
-        {col3.length > 0 && (
-          <div className="flex-1 min-w-[200px]">
-            <h4 className="font-bold mb-6 text-sm text-transparent select-none">Services</h4>
-            {renderLinks(col3)}
           </div>
         )}
       </div>
@@ -135,18 +127,18 @@ export default function Navbar({ className }: { className?: string }) {
         className={cn("fixed top-4 inset-x-0 max-w-7xl mx-auto z-50 flex items-center justify-center px-4 md:px-0 w-full", className)}
       >
         
-        {/* Mobile Logo & Toggle */}
-        <div className="md:hidden flex items-center justify-between w-full bg-white/80 backdrop-blur-md px-6 py-3 rounded-full border border-neutral-200 shadow-sm">
+        {/* Mobile Logo & Toggle - shown on mobile AND tablet */}
+        <div className="lg:hidden flex items-center justify-between w-full bg-white/80 backdrop-blur-md px-4 sm:px-6 h-14 sm:h-16 rounded-full border border-neutral-200 shadow-sm">
           <Link to="/" className="flex items-center">
-            <img src="/adat-logo.png" alt="Adat Soft Solutions" className="h-8 md:h-10 w-auto" />
+            <img src="/adat-logo.png" alt="Adat Soft Solutions" className="h-6 sm:h-8 md:h-10 w-auto" />
           </Link>
           <button onClick={() => setIsMobileMenuOpen(true)}>
             <MenuIcon className="w-6 h-6" />
           </button>
         </div>
 
-        {/* Desktop Navbar (Pill) */}
-        <div className="hidden md:block w-full px-4">
+        {/* Desktop Navbar (Pill) - shown only on lg+ */}
+        <div className="hidden lg:block w-full px-4">
           <Menu setActive={setActive}>
             <div className="flex items-center justify-between w-full">
               {/* Logo */}

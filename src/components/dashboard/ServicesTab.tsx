@@ -195,6 +195,7 @@ export default function ServicesTab() {
                       <option value="default">Standard Layout</option>
                       <option value="globe">3D Globe Component (Great for Cloud/Web)</option>
                       <option value="staggered_images">UI/UX Interactive Mockup (Great for UI/UX Design)</option>
+                      <option value="tasks_drop">Tech Stack Drop Animation (Great for CMS/Web)</option>
                       <option value="analytics">Analytics Dashboard Demo (Great for AI/Analytics)</option>
                       <option value="image">Custom Thumbnail Image</option>
                     </select>

@@ -5,8 +5,7 @@ import * as z from "zod";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { IconBrandLinkedin, IconBrandGithub } from "@tabler/icons-react";
-import { Loader2 } from "lucide-react";
+import { Loader2, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -250,35 +249,12 @@ export default function JobApplicationForm({ defaultPosition = "", readOnlyPosit
         {isSubmitting ? (
           <Loader2 className="w-5 h-5 animate-spin" />
         ) : (
-          <>
-            Submit Application &rarr;
+          <span className="flex items-center justify-center gap-2">
+            Submit Application <ArrowRight className="w-4 h-4" />
             <BottomGradient />
-          </>
+          </span>
         )}
       </button>
-
-      <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent" />
-
-      <p className="text-center text-sm text-neutral-600 mb-4">Or apply via social platforms</p>
-
-      <div className="flex flex-col space-y-4">
-        <button
-          className="group/btn shadow-input relative flex h-10 w-full items-center justify-center space-x-2 rounded-md bg-gray-50 border border-neutral-200 px-4 font-medium text-black"
-          type="button"
-        >
-          <IconBrandLinkedin className="h-5 w-5 text-blue-600" />
-          <span className="text-sm text-neutral-700">Apply with LinkedIn</span>
-          <BottomGradient />
-        </button>
-        <button
-          className="group/btn shadow-input relative flex h-10 w-full items-center justify-center space-x-2 rounded-md bg-gray-50 border border-neutral-200 px-4 font-medium text-black"
-          type="button"
-        >
-          <IconBrandGithub className="h-5 w-5 text-neutral-800" />
-          <span className="text-sm text-neutral-700">Apply with GitHub</span>
-          <BottomGradient />
-        </button>
-      </div>
     </form>
   );
 }

@@ -61,7 +61,7 @@ export default function HomePage() {
       <StatsCounter />
 
       {/* Mini About Section */}
-      <section className="py-24 bg-neutral-50 relative overflow-hidden">
+      <section className="py-10 sm:py-14 md:py-20 lg:py-24 bg-neutral-50 relative overflow-hidden">
         <FloatingShapes />
         <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
           <motion.div
@@ -73,10 +73,10 @@ export default function HomePage() {
             <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
               Who We Are
             </h2>
-            <h3 className="text-3xl md:text-4xl font-bold mb-6 text-neutral-900">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-neutral-900">
               Building Digital Experiences That Matter
             </h3>
-            <p className="text-lg text-neutral-600 mb-12 leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-neutral-600 mb-8 md:mb-12 leading-relaxed">
               Adat Soft Solutions is a premier digital agency specializing in
               cutting-edge web and mobile applications. We connect global
               businesses with modern technology to help them scale and succeed
@@ -143,7 +143,7 @@ export default function HomePage() {
       <ThreeDMarqueeDemo />
       
       {/* Advanced Tech Stack Section (Dynamic) */}
-      <section className="py-32 relative overflow-hidden bg-white border-t border-neutral-100">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-32 relative overflow-hidden bg-white border-t border-neutral-100">
         <div
           className="absolute inset-0 pointer-events-none opacity-[0.03]"
           style={{
@@ -161,15 +161,15 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-24"
+            className="text-center mb-10 sm:mb-14 md:mb-20 lg:mb-24"
           >
             <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-4">
               The Engine Room
             </h2>
-            <h3 className="text-4xl md:text-5xl font-bold mb-6 text-neutral-900 text-balance">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-neutral-900 text-balance">
               Powered by <span className="whitespace-nowrap">Modern</span> Tech
             </h3>
-            <p className="text-neutral-500 max-w-2xl mx-auto text-lg">
+            <p className="text-neutral-500 max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
               We don't just write code. We architect scalable, future-proof
               digital ecosystems (websites and mobile apps) using the industry's
               most advanced tools and frameworks.
@@ -195,18 +195,18 @@ export default function HomePage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.5, delay: idx * 0.1 }}
-                    className="group relative p-8 md:p-10 rounded-[2rem] bg-white border border-neutral-200 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 overflow-hidden"
+                    className="group relative p-5 sm:p-6 md:p-8 lg:p-10 rounded-[2rem] bg-white border border-neutral-200 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 overflow-hidden"
                   >
                     <div className={`absolute inset-0 bg-gradient-to-br ${theme.bg} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
 
                     <div className="relative z-10">
-                      <div className="w-14 h-14 rounded-2xl bg-neutral-50 border border-neutral-100 flex items-center justify-center mb-8 group-hover:bg-white group-hover:shadow-sm transition-all">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-2xl bg-neutral-50 border border-neutral-100 flex items-center justify-center mb-4 md:mb-8 group-hover:bg-white group-hover:shadow-sm transition-all">
                         {renderCategoryIcon(category.categoryIcon, theme.text)}
                       </div>
-                      <h4 className="text-2xl font-bold mb-2 text-neutral-900">
+                      <h4 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 text-neutral-900">
                         {category.title}
                       </h4>
-                      <p className="text-neutral-500 mb-10 text-sm leading-relaxed">
+                      <p className="text-neutral-500 mb-5 md:mb-10 text-sm leading-relaxed">
                         {category.description}
                       </p>
 

@@ -45,9 +45,9 @@ export default function StatsCounter() {
   ]
 
   return (
-    <div className="w-full bg-secondary/50 py-16 border-y border-border/50">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-border/50">
+    <div className="w-full bg-secondary/50 py-12 sm:py-16 md:py-20 lg:py-24 border-y border-border/50">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 divide-x divide-border/50">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -55,12 +55,12 @@ export default function StatsCounter() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="flex flex-col items-center text-center px-4"
+              className="flex flex-col items-center text-center px-2 sm:px-4"
             >
-              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-2">
                 <Counter value={stat.value} suffix={stat.suffix} />
               </div>
-              <p className="text-sm md:text-base text-muted-foreground font-medium">
+              <p className="text-xs sm:text-sm md:text-base text-muted-foreground font-medium">
                 {stat.label}
               </p>
             </motion.div>
