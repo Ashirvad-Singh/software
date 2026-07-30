@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
 import { Link } from "react-router-dom";
 import { MagneticButton } from "@/components/ui/magnetic-button";
-import { ArrowRight, Zap, MoreVertical, Circle, Triangle, Hexagon } from "lucide-react";
+import { ArrowRight, Triangle, MoreVertical } from "lucide-react";
 
 const RandomSpot = () => {
   const [position, setPosition] = useState({ x: Math.random() * 80, y: Math.random() * 80 });

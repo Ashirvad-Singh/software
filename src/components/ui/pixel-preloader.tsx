@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 export const PixelPreloader = () => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -20,7 +20,7 @@ export const PixelPreloader = () => {
   const blocks = Array.from({ length: totalBlocks });
 
   // Randomized staggered exit — each block flies away
-  const blockVariants = {
+  const blockVariants: Variants = {
     initial: { opacity: 1, scale: 1, y: 0 },
     exit: (_i: number) => ({
       opacity: 0,
@@ -34,7 +34,7 @@ export const PixelPreloader = () => {
     }),
   };
 
-  const textVariants = {
+  const textVariants: Variants = {
     initial: { opacity: 0, y: 20, filter: "blur(6px)" },
     animate: {
       opacity: 1,
