@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Loader2, Plus, Pencil, Trash2, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 export interface ServiceItem {
   id?: string;
@@ -17,6 +18,8 @@ export interface ServiceItem {
   process: string;
   iconName: string; // e.g. "Code", "Smartphone", "Globe"
   features: string; // comma separated
+  visualType?: "default" | "globe" | "image";
+  thumbnailUrl?: string;
   createdAt: number;
 }
 
@@ -35,6 +38,8 @@ export default function ServicesTab() {
     process: "",
     iconName: "Code",
     features: "",
+    visualType: "default",
+    thumbnailUrl: "",
   });
 
   const fetchServices = async () => {
@@ -176,8 +181,34 @@ export default function ServicesTab() {
                     name="benefits" 
                     value={formData.benefits} 
                     onChange={handleInputChange} 
-                    className="flex min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm md:col-span-2"
+                    className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm"
                   />
+
+                  <div className="md:col-span-2 space-y-2">
+                    <label className="text-sm font-medium text-neutral-700">Visual Layout</label>
+                    <select
+                      name="visualType"
+                      value={formData.visualType || "default"}
+                      onChange={(e) => setFormData(prev => ({ ...prev, visualType: e.target.value as any }))}
+                      className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                    >
+                      <option value="default">Default Auto-Layout</option>
+                      <option value="globe">3D Globe Component</option>
+                      <option value="image">Custom Thumbnail Image</option>
+                    </select>
+                  </div>
+
+                  {formData.visualType === "image" && (
+                    <div className="md:col-span-2 space-y-2">
+                      <label className="text-sm font-medium text-neutral-700">Service Thumbnail</label>
+                      <ImageUpload 
+                        value={formData.thumbnailUrl || ""} 
+                        onChange={(url) => setFormData(prev => ({ ...prev, thumbnailUrl: url }))} 
+                        multiple={false} 
+                      />
+                    </div>
+                  )}
+
                   <textarea 
                     placeholder="Process (Format: 'Step Title: Step Description' one per line)" 
                     name="process" 

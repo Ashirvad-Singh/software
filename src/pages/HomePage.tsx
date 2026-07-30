@@ -139,7 +139,7 @@ export default function HomePage() {
       </section>
 
       <IndustriesSection />
-      <FeaturesSectionDemo />
+      <FeaturesSectionDemo limit={4} />
       <ThreeDMarqueeDemo />
       
       {/* Advanced Tech Stack Section (Dynamic) */}

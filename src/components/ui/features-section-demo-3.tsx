@@ -10,7 +10,7 @@ import { db } from "@/lib/firebase";
 import { motion } from "framer-motion";
 import { IconDeviceDesktopAnalytics } from "@tabler/icons-react";
 
-export default function FeaturesSectionDemo() {
+export default function FeaturesSectionDemo({ limit }: { limit?: number }) {
   const [dbServices, setDbServices] = useState<any[]>([]);
 
   useEffect(() => {
@@ -32,10 +32,19 @@ export default function FeaturesSectionDemo() {
     fetchServices();
   }, []);
 
-  const displayServices = (dbServices.length > 0 ? dbServices : staticServices).slice(0, 4);
+  let allServices = dbServices.length > 0 ? dbServices : staticServices;
+  const displayServices = limit ? allServices.slice(0, limit) : allServices;
 
   const features = displayServices.map((service, index) => {
-    const skeletons = [<SkeletonOne />, <SkeletonTwo />, <SkeletonThree />, <SkeletonFour />];
+    const defaultSkeletons = [<SkeletonOne />, <SkeletonTwo />, <SkeletonThree />, <SkeletonFour />];
+    let skeleton = defaultSkeletons[index % defaultSkeletons.length];
+    
+    if (service.visualType === 'globe') {
+      skeleton = <SkeletonFour />;
+    } else if (service.visualType === 'image' && service.thumbnailUrl) {
+      skeleton = <SkeletonOne imageUrl={service.thumbnailUrl} />;
+    }
+
     const classes = [
       "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800 group/feature cursor-pointer",
       "border-b col-span-1 lg:col-span-2 dark:border-neutral-800 group/feature cursor-pointer",
@@ -44,7 +53,7 @@ export default function FeaturesSectionDemo() {
     ];
     return {
       ...service,
-      skeleton: skeletons[index % skeletons.length],
+      skeleton,
       className: classes[index % classes.length],
     };
   });
@@ -147,13 +156,14 @@ const FeatureDescription = ({ children }: { children?: React.ReactNode }) => {
   );
 };
 
-export const SkeletonOne = () => {
+export const SkeletonOne = ({ imageUrl }: { imageUrl?: string }) => {
+  const src = imageUrl || "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop";
   return (
     <div className="relative flex h-full gap-10 px-2 py-8">
       <div className="group mx-auto h-full w-full bg-white p-5 shadow-2xl border border-neutral-200 rounded-xl overflow-hidden">
         <div className="flex h-full w-full flex-1 flex-col space-y-2">
           <img
-            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop"
+            src={src}
             alt="header"
             width={800}
             height={800}
