@@ -62,8 +62,9 @@ const MegaMenuContent = () => {
       ) : services.map((service, idx) => {
         const IconComponent = (LucideIcons as any)[service.iconName || "Code"] || LucideIcons.Circle;
         return (
-          <Link key={idx} to={`/services/${service.slug}`} className="text-xs sm:text-sm flex items-center gap-2.5 text-neutral-600 hover:text-sky-600 transition-colors font-medium py-0.5">
-            <IconComponent className="w-3.5 h-3.5 text-sky-500 shrink-0" /> <span className="truncate">{service.title}</span>
+          <Link key={idx} to={`/services/${service.slug}`} className="text-xs sm:text-sm flex items-start gap-2.5 text-neutral-600 hover:text-sky-600 transition-colors font-medium py-1">
+            <IconComponent className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" /> 
+            <span className="whitespace-normal leading-tight">{service.title}</span>
           </Link>
         )
       })}
@@ -71,25 +72,25 @@ const MegaMenuContent = () => {
   );
 
   return (
-    <div className="flex w-[560px] max-w-[85vw] bg-white text-neutral-900 overflow-hidden gap-6 p-2">
+    <div className="flex w-[750px] max-w-[90vw] bg-white text-neutral-900 overflow-hidden gap-8 p-4">
       {/* Left Sidebar */}
-      <div className="w-[180px] flex flex-col gap-2 border-r border-neutral-100 pr-4 shrink-0 hidden sm:flex">
-        <div className="bg-sky-500 text-white rounded-xl p-4 cursor-pointer shadow-md">
-          <div className="font-bold flex items-center gap-2 text-xs sm:text-sm"><Monitor className="w-4 h-4"/> Our Services</div>
-          <p className="text-[11px] text-sky-100 mt-1.5 leading-relaxed">Web, mobile, AI, and cloud solutions built to scale.</p>
+      <div className="w-[220px] flex flex-col gap-2 border-r border-neutral-100 pr-6 shrink-0 hidden sm:flex">
+        <div className="bg-sky-500 text-white rounded-xl p-5 cursor-pointer shadow-md h-full">
+          <div className="font-bold flex items-center gap-2 text-sm mb-3"><Monitor className="w-5 h-5"/> Our Services</div>
+          <p className="text-xs text-sky-100 leading-relaxed">Web, mobile, AI, and cloud solutions built to scale tailored to your unique business requirements.</p>
         </div>
       </div>
 
       {/* Right Content */}
-      <div className="flex-1 flex gap-6 pt-1">
-        <div className="flex-1 min-w-[140px]">
-          <h4 className="font-bold mb-3 text-xs text-neutral-400 uppercase tracking-wider">Featured</h4>
+      <div className="flex-1 grid grid-cols-2 gap-8 pt-1">
+        <div>
+          <h4 className="font-bold mb-4 text-xs text-neutral-400 uppercase tracking-wider">Featured</h4>
           {renderLinks(col1)}
         </div>
 
         {col2.length > 0 && (
-          <div className="flex-1 min-w-[140px]">
-            <h4 className="font-bold mb-3 text-xs text-neutral-400 uppercase tracking-wider">Solutions</h4>
+          <div>
+            <h4 className="font-bold mb-4 text-xs text-neutral-400 uppercase tracking-wider">Solutions</h4>
             {renderLinks(col2)}
           </div>
         )}
@@ -143,7 +144,7 @@ export default function Navbar({ className }: { className?: string }) {
             <div className="flex items-center justify-between w-full">
               {/* Logo */}
               <Link to="/" className="flex items-center gap-2 relative z-20">
-                <img src="/adat-logo.png" alt="Adat Soft Solutions" className="h-10 md:h-12 w-auto" />
+                <img src="/adat-logo.png" alt="Adat Soft Solutions" className="h-8 md:h-10 w-auto" />
               </Link>
               
               {/* Links */}
@@ -167,7 +168,7 @@ export default function Navbar({ className }: { className?: string }) {
               </div>
 
               {/* CTA */}
-              <Button size="sm" className="rounded-full px-6 py-5 ml-8" asChild>
+              <Button size="sm" className="rounded-full px-6 py-2.5 ml-8 h-10" asChild>
                 <Link to="/contact">Get a Quote</Link>
               </Button>
             </div>

@@ -69,7 +69,7 @@ export default function WhatSetsUsApart() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-gray-900"
             >
-              <span className="font-semibold">Maxime McLean</span>, <span className="italic text-gray-600">Founder</span>
+              <span className="font-semibold">Vijay Vikram Singh</span>, <span className="italic text-gray-600">Founder</span>
             </motion.div>
           </div>
 
