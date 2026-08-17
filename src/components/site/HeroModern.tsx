@@ -1,90 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { ArrowRight } from "lucide-react";
 
-const RandomSpot = () => {
-  const [position, setPosition] = useState({ x: Math.random() * 80, y: Math.random() * 80 });
-  const [opacity, setOpacity] = useState(0);
-
-  useEffect(() => {
-    const moveSpot = () => {
-      setPosition({ x: 10 + Math.random() * 80, y: 10 + Math.random() * 80 });
-      setOpacity(0.3 + Math.random() * 0.4);
-    };
-    moveSpot();
-    const interval = setInterval(moveSpot, 3000 + Math.random() * 2000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <motion.div 
-      className="absolute w-[300px] h-[300px] pointer-events-none z-0 rounded-full"
-      animate={{
-        left: `${position.x}%`,
-        top: `${position.y}%`,
-        opacity: opacity,
-      }}
-      transition={{ duration: 4, ease: "easeInOut" }}
-      style={{
-        backgroundImage: "radial-gradient(circle, rgba(14,165,233,0.15) 0%, transparent 70%)",
-        transform: "translate(-50%, -50%)",
-      }}
-    />
-  );
-};
-
 export default function HeroModern() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const [isHovering, setIsHovering] = useState(false);
-
   const baseDelay = 0;
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    mouseX.set(e.clientX - rect.left);
-    mouseY.set(e.clientY - rect.top);
-  };
-
-  const maskImage = useMotionTemplate`radial-gradient(250px circle at ${mouseX}px ${mouseY}px, black, transparent)`;
 
   return (
     <section 
-      className="relative pt-24 sm:pt-28 md:pt-32 pb-8 sm:pb-10 md:pb-12 overflow-hidden bg-[#Fdfdfd]"
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-black"
     >
-      {/* Background Dots - Base Layer (Dim) */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-20 z-0"
-        style={{
-          backgroundImage: "radial-gradient(#000 1.5px, transparent 1.5px)",
-          backgroundSize: "24px 24px",
-        }}
-      ></div>
-
-      {/* Background Dots - Interactive Hover Layer (Bright/Shining) */}
-      <motion.div 
-        className="absolute inset-0 pointer-events-none z-0"
-        animate={{
-          opacity: isHovering ? 0.7 : 0,
-        }}
-        transition={{ duration: 0.3 }}
-        style={{
-          backgroundImage: "radial-gradient(#0ea5e9 2px, transparent 2px)", // Sky blue brighter dots
-          backgroundSize: "24px 24px",
-          WebkitMaskImage: maskImage,
-          maskImage: maskImage,
-        }}
-      ></motion.div>
-
-      {/* Autonomous Random Shining Spots */}
-      <RandomSpot />
-      <RandomSpot />
-      <RandomSpot />
+      {/* Background Video */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src="/75668ad5438032989d3af79b8264dce2_720w.mp4" type="video/mp4" />
+      </video>
+      {/* Dark Overlay for Text Readability */}
+      <div className="absolute inset-0 bg-black/60 z-0"></div>
 
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center py-2">
         <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
@@ -95,10 +32,10 @@ export default function HeroModern() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <div className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 rounded-full bg-sky-100 border border-sky-200 text-sky-800 font-bold text-xs sm:text-sm shadow-sm text-center max-w-[90%] md:max-w-none mx-auto leading-relaxed md:leading-normal">
+            <div className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md font-bold text-xs sm:text-sm shadow-sm text-center max-w-[90%] md:max-w-none mx-auto leading-relaxed md:leading-normal">
               <span className="relative flex h-3 w-3 md:h-3.5 md:w-3.5 flex-shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-50"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 md:h-3.5 md:w-3.5 bg-sky-600 border-[2.5px] border-sky-200"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-50"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 md:h-3.5 md:w-3.5 bg-sky-400 border-[2.5px] border-transparent"></span>
               </span>
               <span>New! We build AI-powered Web & Mobile Applications</span>
             </div>
@@ -120,7 +57,7 @@ export default function HeroModern() {
                 },
               },
             }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-neutral-900 mb-4 sm:mb-6 md:mb-8 leading-[1.3] md:leading-[1.1]"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-4 sm:mb-6 md:mb-8 leading-[1.3] md:leading-[1.1]"
           >
             {/* Line 1 */}
             <motion.span 
@@ -146,9 +83,9 @@ export default function HeroModern() {
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 1, ease: "circOut", delay: 0.4 }}
-                  className="absolute inset-0 bg-sky-100 rounded-2xl -z-10"
+                  className="absolute inset-0 bg-sky-500/20 backdrop-blur-sm rounded-2xl -z-10"
                 />
-                <span className="text-sky-600">Scale your business.</span>
+                <span className="text-white">Scale your business.</span>
               </span>
             </motion.span>
           </motion.h1>
@@ -158,7 +95,7 @@ export default function HeroModern() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: baseDelay + 0.2 }}
-            className="text-sm sm:text-base md:text-lg text-neutral-500 mb-8 md:mb-10 max-w-2xl mx-auto px-4 md:px-0 leading-relaxed font-medium"
+            className="text-sm sm:text-base md:text-lg text-neutral-200 mb-8 md:mb-10 max-w-2xl mx-auto px-4 md:px-0 leading-relaxed font-medium"
           >
             We architect scalable, future-proof web and mobile apps. Focus on what matters - growing your business.
           </motion.p>
