@@ -1,17 +1,19 @@
+import { lazy, Suspense, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import HeroModern from "@/components/site/HeroModern";
-import Testimonials from "@/components/site/Testimonials";
-import WhatSetsUsApart from "@/components/site/WhatSetsUsApart";
-import ThreeDMarqueeDemo from "@/components/3d-marquee-demo";
-import IndustriesSection from "@/components/site/IndustriesSection";
-import FeaturesSectionDemo from "@/components/ui/features-section-demo-3";
-import StatsCounter from "@/components/site/StatsCounter";
 import { FloatingShapes } from "@/components/ui/floating-shapes";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import WorldMap from "@/components/ui/world-map";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+
+// Lazy loaded components for faster initial load
+const StatsCounter = lazy(() => import("@/components/site/StatsCounter"));
+const WorldMap = lazy(() => import("@/components/ui/world-map"));
+const IndustriesSection = lazy(() => import("@/components/site/IndustriesSection"));
+const FeaturesSectionDemo = lazy(() => import("@/components/ui/features-section-demo-3"));
+const ThreeDMarqueeDemo = lazy(() => import("@/components/3d-marquee-demo"));
+const WhatSetsUsApart = lazy(() => import("@/components/site/WhatSetsUsApart"));
+const Testimonials = lazy(() => import("@/components/site/Testimonials"));
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import * as TablerIcons from "@tabler/icons-react";
@@ -58,7 +60,9 @@ export default function HomePage() {
 
 
 
-      <StatsCounter />
+      <Suspense fallback={<div className="min-h-[150px]" />}>
+        <StatsCounter />
+      </Suspense>
 
       {/* Mini About Section */}
       <section className="py-10 sm:py-14 md:py-20 lg:py-24 bg-neutral-50 relative overflow-hidden">
@@ -91,31 +95,33 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-12"
           >
-            <WorldMap
-              lineColor="var(--color-primary)"
-              dots={[
-                {
-                  start: { lat: 28.6139, lng: 77.209, label: "New Delhi (HQ)" },
-                  end: { lat: 34.0522, lng: -118.2437, label: "Los Angeles, USA" },
-                },
-                {
-                  start: { lat: 28.6139, lng: 77.209 },
-                  end: { lat: 51.5074, lng: -0.1278, label: "London, UK" },
-                },
-                {
-                  start: { lat: 28.6139, lng: 77.209 },
-                  end: { lat: 40.7128, lng: -74.006, label: "New York, USA" },
-                },
-                {
-                  start: { lat: 28.6139, lng: 77.209 },
-                  end: { lat: -33.8688, lng: 151.2093, label: "Sydney, Australia" },
-                },
-                {
-                  start: { lat: 28.6139, lng: 77.209 },
-                  end: { lat: 25.2048, lng: 55.2708, label: "Dubai, UAE" },
-                },
-              ]}
-            />
+            <Suspense fallback={<div className="h-[300px] w-full bg-neutral-100 animate-pulse rounded-3xl" />}>
+              <WorldMap
+                lineColor="var(--color-primary)"
+                dots={[
+                  {
+                    start: { lat: 28.6139, lng: 77.209, label: "New Delhi (HQ)" },
+                    end: { lat: 34.0522, lng: -118.2437, label: "Los Angeles, USA" },
+                  },
+                  {
+                    start: { lat: 28.6139, lng: 77.209 },
+                    end: { lat: 51.5074, lng: -0.1278, label: "London, UK" },
+                  },
+                  {
+                    start: { lat: 28.6139, lng: 77.209 },
+                    end: { lat: 40.7128, lng: -74.006, label: "New York, USA" },
+                  },
+                  {
+                    start: { lat: 28.6139, lng: 77.209 },
+                    end: { lat: -33.8688, lng: 151.2093, label: "Sydney, Australia" },
+                  },
+                  {
+                    start: { lat: 28.6139, lng: 77.209 },
+                    end: { lat: 25.2048, lng: 55.2708, label: "Dubai, UAE" },
+                  },
+                ]}
+              />
+            </Suspense>
           </motion.div>
 
           <motion.div
@@ -138,9 +144,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <IndustriesSection />
-      <FeaturesSectionDemo limit={4} />
-      <ThreeDMarqueeDemo />
+      <Suspense fallback={<div className="min-h-[500px]" />}>
+        <IndustriesSection />
+        <FeaturesSectionDemo limit={4} />
+        <ThreeDMarqueeDemo />
+      </Suspense>
       
       {/* Advanced Tech Stack Section (Dynamic) */}
       <section className="py-12 sm:py-16 md:py-20 lg:py-32 relative overflow-hidden bg-white border-t border-neutral-100">
@@ -229,8 +237,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <WhatSetsUsApart />
-      <Testimonials />
+      <Suspense fallback={<div className="min-h-[500px]" />}>
+        <WhatSetsUsApart />
+        <Testimonials />
+      </Suspense>
     </main>
   );
 }

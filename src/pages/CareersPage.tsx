@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -11,7 +10,6 @@ import {
   MapPin, 
   Clock, 
   Briefcase, 
-  ChevronRight,
   Laptop,
   Sun,
   Heart,
