@@ -1,13 +1,11 @@
-import { useState } from "react"
-import { Menu as MenuIcon, X, Monitor } from "lucide-react"
-import * as LucideIcons from "lucide-react"
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
+import { Menu as MenuIcon, X, ArrowRight } from "lucide-react"
 import { collection, getDocs, query, orderBy } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import { services as staticServices } from "@/data/services"
 import { Button } from "@/components/ui/button"
 import { Link, useLocation } from "react-router-dom"
-import { HoveredLink, Menu, MenuItem } from "@/components/ui/navbar-menu"
+import { HoveredLink, Menu, MenuItem, ProductItem } from "@/components/ui/navbar-menu"
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
 import { cn } from "@/lib/utils"
 
@@ -23,9 +21,17 @@ const navLinks = [
   { name: "Gallery", href: "/gallery" },
 ]
 
+const defaultThumbnails = [
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1556742049-0a67d5145747?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=500&q=80",
+];
+
 const MegaMenuContent = () => {
   const [dbServices, setDbServices] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -41,59 +47,32 @@ const MegaMenuContent = () => {
       } catch (error) {
         console.error("Error fetching services:", error);
         setDbServices(staticServices);
-      } finally {
-        setLoading(false);
       }
     };
     fetchServices();
   }, []);
 
   const displayServices = dbServices.length > 0 ? dbServices : staticServices;
-
-  const col1 = displayServices.slice(0, Math.ceil(displayServices.length / 2));
-  const col2 = displayServices.slice(Math.ceil(displayServices.length / 2));
-
-  const renderLinks = (services: any[]) => (
-    <div className="flex flex-col gap-3">
-      {loading ? (
-        <div className="py-2 text-center text-neutral-400 text-xs">Loading...</div>
-      ) : services.length === 0 ? (
-        <div className="py-2 text-center text-neutral-400 text-xs">No services found.</div>
-      ) : services.map((service, idx) => {
-        const IconComponent = (LucideIcons as any)[service.iconName || "Code"] || LucideIcons.Circle;
-        return (
-          <Link key={idx} to={`/services/${service.slug}`} className="text-xs sm:text-sm flex items-start gap-2.5 text-neutral-600 hover:text-sky-600 transition-colors font-medium py-1">
-            <IconComponent className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" /> 
-            <span className="whitespace-normal leading-tight">{service.title}</span>
-          </Link>
-        )
-      })}
-    </div>
-  );
+  const itemsToDisplay = displayServices.slice(0, 4);
 
   return (
-    <div className="flex w-[750px] max-w-[90vw] bg-white text-neutral-900 overflow-hidden gap-8 p-4">
-      {/* Left Sidebar */}
-      <div className="w-[220px] flex flex-col gap-2 border-r border-neutral-100 pr-6 shrink-0 hidden sm:flex">
-        <div className="bg-sky-500 text-white rounded-xl p-5 cursor-pointer shadow-md h-full">
-          <div className="font-bold flex items-center gap-2 text-sm mb-3"><Monitor className="w-5 h-5"/> Our Services</div>
-          <p className="text-xs text-sky-100 leading-relaxed">Web, mobile, AI, and cloud solutions built to scale tailored to your unique business requirements.</p>
-        </div>
+    <div className="w-[640px] sm:w-[720px] max-w-[92vw] p-3 sm:p-4 text-neutral-900 dark:text-white">
+      <div className="grid grid-cols-2 gap-4 sm:gap-6">
+        {itemsToDisplay.map((service, idx) => (
+          <ProductItem
+            key={service.slug || idx}
+            title={service.title}
+            description={service.description}
+            href={`/services/${service.slug}`}
+            src={service.thumbnailUrl || service.image || service.thumbnail || defaultThumbnails[idx % defaultThumbnails.length]}
+          />
+        ))}
       </div>
-
-      {/* Right Content */}
-      <div className="flex-1 grid grid-cols-2 gap-8 pt-1">
-        <div>
-          <h4 className="font-bold mb-4 text-xs text-neutral-400 uppercase tracking-wider">Featured</h4>
-          {renderLinks(col1)}
-        </div>
-
-        {col2.length > 0 && (
-          <div>
-            <h4 className="font-bold mb-4 text-xs text-neutral-400 uppercase tracking-wider">Solutions</h4>
-            {renderLinks(col2)}
-          </div>
-        )}
+      <div className="mt-4 pt-3 border-t border-neutral-100 dark:border-neutral-800/60 flex items-center justify-between px-2">
+        <span className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">Explore all enterprise & digital solutions</span>
+        <Link to="/services" className="text-xs font-semibold text-sky-500 hover:text-sky-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1.5 group">
+          View all services <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+        </Link>
       </div>
     </div>
   )

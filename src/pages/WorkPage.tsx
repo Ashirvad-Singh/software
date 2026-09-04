@@ -1,175 +1,257 @@
-import { useEffect, useState, useRef } from "react"
-import { collection, getDocs, query, orderBy } from "firebase/firestore"
-import { db } from "@/lib/firebase"
-import { projects as staticProjects } from "@/data/projects"
-import SubBanner from "@/components/site/SubBanner"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { Link } from "react-router-dom"
-import { ExternalLink } from "lucide-react"
+import { useEffect, useState, useRef } from "react";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { projects as staticProjects } from "@/data/projects";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+import SEO from "@/components/site/SEO";
 
-// Simple card for mobile
-const MobileProjectCard = ({ project, idx }: { project: any; idx: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 24 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.4, delay: idx * 0.08 }}
-    className="group relative flex flex-col cursor-pointer bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-border shadow-sm active:shadow-md transition-shadow"
-  >
-    <Link to={`/work/${project.slug}`} className="absolute inset-0 z-10" aria-label={`View ${project.title}`} />
-    
-    {/* Image */}
-    <div className="relative overflow-hidden aspect-[16/9] bg-secondary/20">
-      <img
-        src={project.image}
-        alt={project.title}
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
-      <span className="absolute top-3 left-3 text-[10px] font-bold tracking-widest uppercase bg-white/90 text-primary px-2.5 py-1 rounded-full">
-        {project.category}
-      </span>
-    </div>
+const sampleVideos = [
+  "https://assets.mixkit.co/videos/preview/mixkit-code-animation-on-a-screen-4075-large.mp4",
+  "https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-over-a-table-41552-large.mp4",
+  "https://assets.mixkit.co/videos/preview/mixkit-man-working-on-his-laptop-308-large.mp4",
+  "https://assets.mixkit.co/videos/preview/mixkit-futuristic-robotic-arm-in-a-laboratory-43403-large.mp4",
+  "https://assets.mixkit.co/videos/preview/mixkit-developer-working-on-code-41566-large.mp4",
+  "https://assets.mixkit.co/videos/preview/mixkit-web-design-application-on-a-laptop-41555-large.mp4",
+];
 
-    {/* Content */}
-    <div className="p-4">
-      <h3 className="text-base font-bold mb-1.5 group-hover:text-primary transition-colors leading-snug">
-        {project.title}
-      </h3>
-      <p className="text-muted-foreground text-xs line-clamp-2 mb-3">
-        {project.challenge || "Explore the full case study to learn more about this project."}
-      </p>
-      <div className="flex flex-wrap gap-1.5">
-        {project.tags?.slice(0, 3).map((tag: string) => (
-          <span key={tag} className="text-[10px] font-medium bg-secondary/50 px-2.5 py-1 rounded-full border border-border/50">
-            {tag}
+const WorkCard = ({ project, idx }: { project: any; idx: number }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const videoSrc = project.videoUrl || sampleVideos[idx % sampleVideos.length];
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
+  // Format tags as hyphenated uppercase string (like reference image)
+  const formattedServices = project.tags
+    ? (Array.isArray(project.tags) ? project.tags : project.tags.split(",")).map((t: string) => t.trim().toUpperCase()).join(" - ")
+    : "DIGITAL DESIGN - WEB DEVELOPMENT - UI/UX";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: (idx % 2) * 0.08 }}
+      className="group flex flex-col cursor-pointer pb-6"
+    >
+      <Link
+        to={`/work/${project.slug}`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="block relative overflow-hidden bg-neutral-900 aspect-[4/3] w-full border border-neutral-200 dark:border-neutral-800"
+      >
+        {/* Static Image */}
+        <img
+          src={project.image}
+          alt={project.title}
+          className={`w-full h-full object-cover transition-opacity duration-500 ${
+            isHovered ? "opacity-0 scale-105" : "opacity-100 scale-100"
+          }`}
+        />
+
+        {/* Hover Video Preview */}
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          loop
+          muted
+          playsInline
+          preload="none"
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+            isHovered ? "opacity-100 scale-105" : "opacity-0 scale-100"
+          }`}
+        />
+
+        {/* Overlay Title on Hover (like Tengile River Lodge card in reference image) */}
+        <div className={`absolute inset-0 p-6 flex flex-col justify-center items-center text-center bg-black/40 backdrop-blur-[2px] transition-opacity duration-300 ${
+          isHovered ? "opacity-100" : "opacity-0"
+        }`}>
+          <span className="text-[10px] font-mono uppercase tracking-widest text-white/80 bg-black/50 px-2.5 py-1 mb-2 rounded-sm border border-white/20">
+            {project.client || "FEATURED PROJECT"}
           </span>
-        ))}
-      </div>
-    </div>
-  </motion.div>
-)
+          <h2 className="text-2xl sm:text-4xl font-serif uppercase tracking-wider text-white drop-shadow-md">
+            {project.title}
+          </h2>
+        </div>
+      </Link>
 
-// Parallax card for desktop
-const DesktopProjectCard = ({ project, yMotion }: { project: any; yMotion: any }) => (
-  <motion.div
-    style={{ y: yMotion }}
-    className="group relative flex flex-col cursor-pointer bg-white dark:bg-zinc-900 rounded-3xl p-4 border border-border shadow-sm hover:shadow-xl transition-shadow duration-500"
-    data-cursor-text="View Project"
-  >
-    <Link to={`/work/${project.slug}`} className="absolute inset-0 z-10" aria-label={`View ${project.title}`} />
-    <div className="relative overflow-hidden rounded-2xl aspect-[4/3] bg-secondary/20 mb-6">
-      <img
-        src={project.image}
-        alt={project.title}
-        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
-      <div className="absolute top-4 right-4 bg-white dark:bg-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-4 group-hover:translate-y-0 shadow-lg">
-        <ExternalLink className="w-5 h-5 text-primary" />
+      {/* Subtitle / Category List Below Card (Exact match to reference image) */}
+      <div className="pt-3 flex flex-col">
+        <span className="text-[10px] sm:text-[11px] font-sans font-medium uppercase tracking-wider text-neutral-600 dark:text-neutral-400">
+          {formattedServices}
+        </span>
+        <Link to={`/work/${project.slug}`}>
+          <h3 className="text-lg sm:text-xl font-bold uppercase tracking-tight text-neutral-900 dark:text-white group-hover:text-blue-600 transition-colors mt-0.5">
+            {project.title}
+          </h3>
+        </Link>
       </div>
-    </div>
-    <div className="px-2 pb-4">
-      <div className="text-sm text-primary font-bold tracking-widest uppercase mb-3">
-        {project.category}
-      </div>
-      <h3 className="text-2xl md:text-3xl font-bold mb-3 group-hover:text-primary transition-colors">
-        {project.title}
-      </h3>
-      <p className="text-muted-foreground line-clamp-2 mb-6">
-        {project.challenge || "Explore the full case study to learn more about this project."}
-      </p>
-      <div className="flex flex-wrap gap-2">
-        {project.tags?.slice(0, 3).map((tag: string) => (
-          <span key={tag} className="text-xs font-medium bg-secondary/50 px-3 py-1.5 rounded-full border border-border/50">
-            {tag}
-          </span>
-        ))}
-      </div>
-    </div>
-  </motion.div>
-)
+    </motion.div>
+  );
+};
 
 export default function WorkPage() {
-  const [dbProjects, setDbProjects] = useState<any[]>([])
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
-    check()
-    window.addEventListener("resize", check)
-    return () => window.removeEventListener("resize", check)
-  }, [])
+  const [dbProjects, setDbProjects] = useState<any[]>([]);
+  const [viewMode, setViewMode] = useState<"GRID" | "LIST">("GRID");
+  const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const q = query(collection(db, "projects"), orderBy("createdAt", "desc"))
-        const snapshot = await getDocs(q)
-        const data = snapshot.docs.map(doc => {
-          const docData = doc.data()
-          const tags = docData.tags ? docData.tags.split(',').map((t: string) => t.trim()) : []
-          return { id: doc.id, ...docData, tags }
-        })
+        const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map((doc) => {
+          const docData = doc.data();
+          const tags = docData.tags ? docData.tags.split(",").map((t: string) => t.trim()) : [];
+          return { id: doc.id, ...docData, tags };
+        });
         if (data.length > 0) {
-          setDbProjects(data)
+          setDbProjects(data);
         } else {
-          setDbProjects(staticProjects)
+          setDbProjects(staticProjects);
         }
       } catch (error) {
-        console.error("Error fetching projects:", error)
-        setDbProjects(staticProjects)
+        console.error("Error fetching projects:", error);
+        setDbProjects(staticProjects);
       }
-    }
-    fetchProjects()
-  }, [])
+    };
+    fetchProjects();
+  }, []);
 
-  const displayProjects = dbProjects.length > 0 ? dbProjects : staticProjects
+  const rawProjects = dbProjects.length > 0 ? dbProjects : staticProjects;
 
-  // Parallax (desktop only)
-  const gridRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: gridRef, offset: ["start end", "end start"] })
-  const yFast = useTransform(scrollYProgress, [0, 1], [0, -300])
-  const ySlow = useTransform(scrollYProgress, [0, 1], [0, 200])
+  const categories = ["ALL", "WEB", "APP", "E-COMMERCE"];
+
+  const filteredProjects = selectedCategory === "ALL" 
+    ? rawProjects 
+    : rawProjects.filter((p) => (p.category || "").toUpperCase() === selectedCategory);
 
   return (
-    <main className="min-h-screen bg-background overflow-hidden">
-      <SubBanner
-        badge="Portfolio"
-        title="Our"
-        highlightTitle="Work"
-        subtitle="Explore our portfolio of digital experiences, custom applications, and web platforms built for the modern era."
+    <main className="min-h-screen bg-[#f5f5f5] dark:bg-neutral-950 text-neutral-900 dark:text-white pt-24 sm:pt-28 md:pt-32 pb-24 px-4 sm:px-8 md:px-12 lg:px-16 font-sans">
+      <SEO 
+        title="Work | Adat Soft Solutions" 
+        description="Explore our portfolio of digital experiences, custom applications, and mobile products." 
+        keywords="work, portfolio, projects, web development, mobile apps"
       />
-      
-      <div className="container mx-auto px-4 md:px-6 pt-12 md:pt-16">
 
-        {/* MOBILE: Simple grid, no parallax */}
-        {isMobile && (
-          <div className="flex flex-col gap-5 pb-16">
-            {displayProjects.map((project, idx) => (
-              <MobileProjectCard key={project.id || project.slug} project={project} idx={idx} />
+      {/* Header Section matching reference screenshot */}
+      <div className="w-full mb-8">
+        <div className="flex items-center justify-between pb-4 border-b-2 border-neutral-900 dark:border-white">
+          {/* WORK* Logo Title */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter text-neutral-900 dark:text-white leading-none">
+            WORK<span className="text-blue-600">*</span>
+          </h1>
+
+          {/* Center Category Filter */}
+          <div className="hidden sm:flex items-center gap-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mr-2">
+              FILTER:
+            </span>
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded transition-colors ${
+                  selectedCategory === cat
+                    ? "text-neutral-900 dark:text-white underline decoration-2 underline-offset-4"
+                    : "text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
+                }`}
+              >
+                {cat} {cat === "ALL" && "+"}
+              </button>
             ))}
           </div>
-        )}
 
-        {/* DESKTOP: Parallax layout */}
-        {!isMobile && (
-          <div className="relative pb-32" ref={gridRef}>
-            <div className="grid grid-cols-2 gap-8 md:gap-16 max-w-6xl mx-auto">
-              {displayProjects.map((project, idx) => {
-                const isEven = idx % 2 === 0
-                return (
-                  <div
-                    key={project.id || project.slug}
-                    style={{ marginTop: !isEven ? '8rem' : '0' }}
-                  >
-                    <DesktopProjectCard project={project} yMotion={isEven ? yFast : ySlow} />
-                  </div>
-                )
-              })}
-            </div>
+          {/* Right Grid / List Switcher */}
+          <div className="flex items-center gap-1 bg-neutral-200 dark:bg-neutral-900 p-1 rounded-full border border-neutral-300 dark:border-neutral-800">
+            <button
+              onClick={() => setViewMode("GRID")}
+              className={`px-3.5 py-1 text-[11px] font-bold uppercase rounded-full transition-all ${
+                viewMode === "GRID"
+                  ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow"
+                  : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900"
+              }`}
+            >
+              GRID
+            </button>
+            <button
+              onClick={() => setViewMode("LIST")}
+              className={`px-3.5 py-1 text-[11px] font-bold uppercase rounded-full transition-all ${
+                viewMode === "LIST"
+                  ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow"
+                  : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900"
+              }`}
+            >
+              LIST
+            </button>
           </div>
-        )}
+        </div>
+      </div>
+
+      {/* Content Section */}
+      <div className="w-full">
+        <AnimatePresence mode="wait">
+          {viewMode === "GRID" ? (
+            <motion.div 
+              key="grid"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-10 md:gap-y-14"
+            >
+              {filteredProjects.map((project, idx) => (
+                <WorkCard key={project.id || project.slug || idx} project={project} idx={idx} />
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="list"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="divide-y divide-neutral-300 dark:divide-neutral-800"
+            >
+              {filteredProjects.map((project, idx) => (
+                <Link
+                  key={project.id || project.slug || idx}
+                  to={`/work/${project.slug}`}
+                  className="group flex flex-col sm:flex-row sm:items-center justify-between py-6 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-900/50 transition-colors"
+                >
+                  <div className="flex items-center gap-6">
+                    <span className="text-xs font-mono text-neutral-400">0{idx + 1}</span>
+                    <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-neutral-900 dark:text-white group-hover:text-blue-600 transition-colors">
+                      {project.title}
+                    </h3>
+                  </div>
+
+                  <div className="flex items-center gap-8 mt-2 sm:mt-0 text-xs uppercase font-mono text-neutral-500">
+                    <span>{project.category}</span>
+                    <span>©2024-2026</span>
+                    <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                  </div>
+                </Link>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </main>
-  )
+  );
 }

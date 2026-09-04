@@ -72,18 +72,18 @@ export default function HeroModern() {
             
             {/* Line 2 */}
             <motion.span 
-              className="block mt-2"
+              className="block mt-2 md:mt-4"
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
               }}
             >
-              <span className="relative inline-block px-2 sm:px-4 py-0 sm:py-1 whitespace-nowrap">
+              <span className="relative inline-block px-4 sm:px-6 py-1 sm:py-2 whitespace-nowrap">
                 <motion.span
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 1, ease: "circOut", delay: 0.4 }}
-                  className="absolute inset-0 bg-sky-500/20 backdrop-blur-sm rounded-2xl -z-10"
+                  className="absolute inset-0 bg-[#072439]/70 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.4)] rounded-2xl -z-10"
                 />
                 <span className="text-white">Scale your business.</span>
               </span>

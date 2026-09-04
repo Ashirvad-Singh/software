@@ -110,8 +110,10 @@ export default function ServicesTab() {
       longDescription: service.longDescription || "",
       benefits: service.benefits || "",
       process: service.process || "",
-      iconName: service.iconName,
-      features: service.features,
+      iconName: service.iconName || "Code",
+      features: service.features || "",
+      visualType: service.visualType || "default",
+      thumbnailUrl: service.thumbnailUrl || "",
     });
     setIsFormOpen(true);
   };
@@ -126,6 +128,8 @@ export default function ServicesTab() {
       process: "",
       iconName: "Code",
       features: "",
+      visualType: "default",
+      thumbnailUrl: "",
     });
   };
 
@@ -201,16 +205,14 @@ export default function ServicesTab() {
                     </select>
                   </div>
 
-                  {formData.visualType === "image" && (
-                    <div className="md:col-span-2 space-y-2">
-                      <label className="text-sm font-medium text-neutral-700">Service Thumbnail</label>
-                      <ImageUpload 
-                        value={formData.thumbnailUrl || ""} 
-                        onChange={(url) => setFormData(prev => ({ ...prev, thumbnailUrl: url }))} 
-                        multiple={false} 
-                      />
-                    </div>
-                  )}
+                  <div className="md:col-span-2 space-y-2">
+                    <label className="text-sm font-medium text-neutral-700">Service Thumbnail Image (for Navbar & Cards)</label>
+                    <ImageUpload 
+                      value={formData.thumbnailUrl || ""} 
+                      onChange={(url) => setFormData(prev => ({ ...prev, thumbnailUrl: url }))} 
+                      multiple={false} 
+                    />
+                  </div>
 
                   <textarea 
                     placeholder="Process (Format: 'Step Title: Step Description' one per line)" 

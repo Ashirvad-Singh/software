@@ -89,20 +89,26 @@ export const ProductItem = ({
   href: string;
   src: string;
 }) => {
+  const defaultFallback = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80";
+  const [imgSrc, setImgSrc] = React.useState<string>(src || defaultFallback);
+
+  React.useEffect(() => {
+    setImgSrc(src || defaultFallback);
+  }, [src]);
+
   return (
-    <Link to={href} className="flex space-x-2">
+    <Link to={href} className="flex space-x-3 group items-center p-1.5 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-900/60 transition-all">
       <img
-        src={src}
-        width={140}
-        height={70}
+        src={imgSrc}
         alt={title}
-        className="shrink-0 rounded-md shadow-2xl"
+        onError={() => setImgSrc(defaultFallback)}
+        className="shrink-0 rounded-lg shadow-md object-cover h-[75px] w-[130px] sm:w-[140px] group-hover:scale-[1.02] transition-transform duration-200 bg-neutral-100 dark:bg-neutral-800"
       />
-      <div>
-        <h4 className="text-xl font-bold mb-1 text-black dark:text-white">
+      <div className="flex flex-col justify-center">
+        <h4 className="text-sm sm:text-base font-bold mb-1 text-black dark:text-white group-hover:text-sky-500 transition-colors leading-snug">
           {title}
         </h4>
-        <p className="text-neutral-700 text-sm max-w-[10rem] dark:text-neutral-300">
+        <p className="text-neutral-600 text-xs max-w-[12rem] sm:max-w-[14rem] dark:text-neutral-400 leading-relaxed line-clamp-2">
           {description}
         </p>
       </div>

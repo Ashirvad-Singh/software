@@ -33,6 +33,8 @@ import { FloatingShapes } from "@/components/ui/floating-shapes"
 
 
 
+import { ErrorBoundary } from "@/components/common/ErrorBoundary"
+
 function App() {
   const location = useLocation()
   const isDashboard = location.pathname.startsWith("/dashboard")
@@ -61,45 +63,47 @@ function App() {
   }, [])
 
   return (
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-      <div className="bg-background text-foreground min-h-screen selection:bg-primary/30 selection:text-primary flex flex-col relative">
-        <ScrollToTop />
-        {!isDashboard && <Cursor />}
-        {!isDashboard && <ScrollProgress />}
-        {!isDashboard && <FloatingShapes />}
-        {!isDashboard && <Navbar />}
-        
-        <div className="flex-1 relative z-10">
-          <Suspense fallback={null}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/services/:slug" element={<ServiceDetailPage />} />
-              <Route path="/work" element={<WorkPage />} />
-              <Route path="/work/:slug" element={<ProjectDetailPage />} />
-              <Route path="/process" element={<ProcessPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/team" element={<TeamPage />} />
-              <Route path="/gallery" element={<GalleryPage />} />
-              <Route path="/careers" element={<CareersPage />} />
-              <Route path="/careers/:id" element={<JobDetailPage />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/blog/:slug" element={<BlogPostPage />} />
-              <Route path="/privacy" element={<PrivacyPolicyPage />} />
-              <Route path="/terms" element={<TermsOfServicePage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Suspense>
-        </div>
+    <ErrorBoundary>
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+        <div className="bg-background text-foreground min-h-screen selection:bg-primary/30 selection:text-primary flex flex-col relative">
+          <ScrollToTop />
+          {!isDashboard && <Cursor />}
+          {!isDashboard && <ScrollProgress />}
+          {!isDashboard && <FloatingShapes />}
+          {!isDashboard && <Navbar />}
+          
+          <div className="flex-1 relative z-10">
+            <Suspense fallback={null}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/services/:slug" element={<ServiceDetailPage />} />
+                <Route path="/work" element={<WorkPage />} />
+                <Route path="/work/:slug" element={<ProjectDetailPage />} />
+                <Route path="/process" element={<ProcessPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/team" element={<TeamPage />} />
+                <Route path="/gallery" element={<GalleryPage />} />
+                <Route path="/careers" element={<CareersPage />} />
+                <Route path="/careers/:id" element={<JobDetailPage />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/blog/:slug" element={<BlogPostPage />} />
+                <Route path="/privacy" element={<PrivacyPolicyPage />} />
+                <Route path="/terms" element={<TermsOfServicePage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
+          </div>
 
-        {!isDashboard && <CTASection />}
-        {!isDashboard && <Footer />}
-        
-        <Toaster position="bottom-right" theme="system" />
-      </div>
-    </ThemeProvider>
+          {!isDashboard && <CTASection />}
+          {!isDashboard && <Footer />}
+          
+          <Toaster position="bottom-right" theme="system" />
+        </div>
+      </ThemeProvider>
+    </ErrorBoundary>
   )
 }
 
