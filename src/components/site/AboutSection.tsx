@@ -79,31 +79,7 @@ export default function AboutSection({ hideHeader = false }: { hideHeader?: bool
           ]}
         />
 
-        {/* Key Metrics Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-12 sm:mt-16 max-w-5xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
-        >
-          <div className="bg-gradient-to-b from-sky-50/80 to-white dark:from-neutral-900 dark:to-neutral-950 p-6 rounded-2xl border border-sky-100 dark:border-neutral-800 text-center shadow-sm hover:shadow-md transition-all">
-            <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-sky-600 dark:text-sky-400">8+</p>
-            <p className="text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-300 mt-2">Years of Excellence</p>
-          </div>
-          <div className="bg-gradient-to-b from-sky-50/80 to-white dark:from-neutral-900 dark:to-neutral-950 p-6 rounded-2xl border border-sky-100 dark:border-neutral-800 text-center shadow-sm hover:shadow-md transition-all">
-            <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-sky-600 dark:text-sky-400">150+</p>
-            <p className="text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-300 mt-2">Projects Delivered</p>
-          </div>
-          <div className="bg-gradient-to-b from-sky-50/80 to-white dark:from-neutral-900 dark:to-neutral-950 p-6 rounded-2xl border border-sky-100 dark:border-neutral-800 text-center shadow-sm hover:shadow-md transition-all">
-            <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-sky-600 dark:text-sky-400">99%</p>
-            <p className="text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-300 mt-2">Client Satisfaction</p>
-          </div>
-          <div className="bg-gradient-to-b from-sky-50/80 to-white dark:from-neutral-900 dark:to-neutral-950 p-6 rounded-2xl border border-sky-100 dark:border-neutral-800 text-center shadow-sm hover:shadow-md transition-all">
-            <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-sky-600 dark:text-sky-400">24/7</p>
-            <p className="text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-300 mt-2">Continuous Support</p>
-          </div>
-        </motion.div>
+
 
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
