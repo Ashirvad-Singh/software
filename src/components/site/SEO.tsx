@@ -5,19 +5,24 @@ interface SEOProps {
   description?: string;
   keywords?: string;
   image?: string;
+  canonicalUrl?: string;
+  jsonLd?: object;
 }
 
 export default function SEO({
   title = "Adat Soft Solutions | Web, Mobile App & AI Development Agency",
-  description = "Adat Soft Solutions is a global tech agency building scalable, modern, and high-performance websites and mobile applications.",
-  keywords = "web development, mobile app development, software agency, custom software, UI UX design, AI development",
-  image = "/adat_hero_ui.png"
+  description = "Adat Soft Solutions is a premier digital tech agency building high-performance web applications, custom mobile apps, enterprise AI platforms, and cloud infrastructure.",
+  keywords = "Adat Soft Solutions, Web Development Agency, Mobile App Development, Enterprise AI, React Development, Next.js Agency, Flutter Apps, Cloud DevOps",
+  image = "/adat_hero_ui.png",
+  canonicalUrl,
+  jsonLd,
 }: SEOProps) {
   useEffect(() => {
-    // Update Title
-    document.title = title.includes("Adat") ? title : `${title} | Adat Soft Solutions`;
+    // 1. Update Document Title
+    const fullTitle = title.includes("Adat") ? title : `${title} | Adat Soft Solutions`;
+    document.title = fullTitle;
 
-    // Update Meta Description
+    // 2. Update Meta Description
     let metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute("content", description);
@@ -28,7 +33,7 @@ export default function SEO({
       document.head.appendChild(metaDescription);
     }
 
-    // Update Meta Keywords
+    // 3. Update Meta Keywords
     let metaKeywords = document.querySelector('meta[name="keywords"]');
     if (metaKeywords) {
       metaKeywords.setAttribute("content", keywords);
@@ -39,7 +44,16 @@ export default function SEO({
       document.head.appendChild(metaKeywords);
     }
 
-    // Update Open Graph (og:title, og:description, og:image)
+    // 4. Set Robots tag to ensure Google Indexing
+    let metaRobots = document.querySelector('meta[name="robots"]');
+    if (!metaRobots) {
+      metaRobots = document.createElement("meta");
+      metaRobots.setAttribute("name", "robots");
+      metaRobots.setAttribute("content", "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
+      document.head.appendChild(metaRobots);
+    }
+
+    // 5. Update Open Graph Meta Tags
     const setOgMeta = (property: string, content: string) => {
       let el = document.querySelector(`meta[property="${property}"]`);
       if (el) {
@@ -52,11 +66,55 @@ export default function SEO({
       }
     };
 
-    setOgMeta("og:title", title);
+    const currentHref = canonicalUrl || window.location.href;
+    setOgMeta("og:title", fullTitle);
     setOgMeta("og:description", description);
     setOgMeta("og:image", image);
+    setOgMeta("og:url", currentHref);
     setOgMeta("og:type", "website");
-  }, [title, description, keywords, image]);
+
+    // 6. Set Canonical Tag for SEO
+    let canonicalTag = document.querySelector('link[rel="canonical"]');
+    if (canonicalTag) {
+      canonicalTag.setAttribute("href", currentHref);
+    } else {
+      canonicalTag = document.createElement("link");
+      canonicalTag.setAttribute("rel", "canonical");
+      canonicalTag.setAttribute("href", currentHref);
+      document.head.appendChild(canonicalTag);
+    }
+
+    // 7. Inject JSON-LD Schema Markup
+    const defaultSchema = {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Adat Soft Solutions",
+      url: "https://www.adatsolutions.com/",
+      logo: "https://www.adatsolutions.com/adat-logo.png",
+      description: description,
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+1-555-123-4567",
+        contactType: "customer service",
+        email: "hello@adatsoft.com",
+        availableLanguage: ["English", "Hindi"],
+      },
+      sameAs: [
+        "https://github.com/Ashirvad-Singh",
+        "https://linkedin.com",
+        "https://twitter.com",
+      ],
+    };
+
+    let scriptTag = document.querySelector("#json-ld-schema") as HTMLScriptElement;
+    if (!scriptTag) {
+      scriptTag = document.createElement("script");
+      scriptTag.id = "json-ld-schema";
+      scriptTag.type = "application/ld+json";
+      document.head.appendChild(scriptTag);
+    }
+    scriptTag.textContent = JSON.stringify(jsonLd || defaultSchema);
+  }, [title, description, keywords, image, canonicalUrl, jsonLd]);
 
   return null;
 }

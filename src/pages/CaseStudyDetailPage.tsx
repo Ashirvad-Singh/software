@@ -38,78 +38,115 @@ function listValue(value?: string | string[]) {
 const sampleCaseStudies: CaseStudy[] = [
   {
     slug: "global-fintech-platform",
-    title: "Global FinTech Platform",
-    category: "Web",
+    title: "Global FinTech & Trading Platform",
+    category: "Web Engineering",
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=85&w=1200",
-    tags: ["React", "Node.js", "PostgreSQL"],
-    client: "FinServe Global",
+    tags: ["React", "Node.js", "PostgreSQL", "Redis"],
+    client: "FinServe Global Capital",
     timeline: "6 Months",
-    result: "Increased transaction volume by 150%",
+    result: "150% Increase in Daily Transaction Volume",
     challenge:
-      "A secure, scalable financial platform was needed to handle thousands of concurrent transactions without latency.",
+      "FinServe Global needed to modernize their core trading dashboard to handle over 50,000 sub-millisecond transactions per minute while adhering to strict FINRA compliance, multi-factor security, and automated fraud prevention.",
     solution:
-      "We created a real-time dashboard with robust architecture, clear workflows, and performance-focused engineering.",
+      "We engineered a distributed microservices ecosystem utilizing Node.js, Redis pub/sub caching, and PostgreSQL database sharding. The frontend dashboard was built using React with virtualized data grids and WebSockets for real-time price feeds.",
+    metrics: "50k+/min|Real-time Transactions\n99.99%|System Availability SLA\n150%|Daily Trading Volume Growth",
+    gallery: [
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=85&w=1200",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=85&w=1200",
+      "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=85&w=1200",
+    ],
+    testimonial:
+      "Adat Soft Solutions delivered an architecture that transformed our core business. Their deep technical expertise in real-time systems and financial security is world-class.",
+    testimonialAuthor: "Marcus Vance — CTO, FinServe Global",
   },
   {
     slug: "healthcare-booking-app",
-    title: "Healthcare Booking App",
+    title: "Telehealth & Doctor Appointment Ecosystem",
     category: "Mobile App",
     image:
       "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=85&w=1200",
-    tags: ["Flutter", "Firebase"],
-    client: "MediCare Plus",
+    tags: ["Flutter", "Firebase", "WebRTC"],
+    client: "MediCare Plus Network",
     timeline: "4 Months",
-    result: "10k+ active daily users",
+    result: "10,000+ Active Daily Teleconsultations",
     challenge:
-      "Patients needed a faster and simpler way to discover doctors and book appointments.",
+      "MediCare Plus required a HIPAA-compliant cross-platform mobile app allowing patients to schedule emergency appointments, access encrypted lab results, and conduct HD video consultations with specialist doctors without lag.",
     solution:
-      "A cross-platform mobile experience with live availability, notifications, and a frictionless booking flow.",
+      "Using Flutter, we built a single codebase iOS and Android app integrated with WebRTC for zero-latency peer-to-peer video streaming. We built a secure Node.js backend with automated push notifications and calendar sync.",
+    metrics: "10,000+|Daily Teleconsultations\n4.9 / 5.0|App Store Rating\n< 2 Sec|Average Booking Speed",
+    gallery: [
+      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=85&w=1200",
+      "https://images.unsplash.com/photo-1581056771107-24ca5f033842?auto=format&fit=crop&q=85&w=1200",
+      "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&q=85&w=1200",
+    ],
+    testimonial:
+      "The mobile app built by Adat Soft Solutions scaled seamlessly overnight during peak patient demand. Their attention to UX and security is remarkable.",
+    testimonialAuthor: "Dr. Elena Rostova — Medical Director, MediCare Plus",
   },
   {
     slug: "luxury-fashion-store",
-    title: "Luxury Fashion Store",
+    title: "Luxury E-Commerce & Headless Storefront",
     category: "E-commerce",
     image:
       "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=85&w=1200",
-    tags: ["Shopify", "Tailwind CSS"],
-    client: "Aura Boutique",
+    tags: ["Shopify Plus", "Next.js", "Tailwind CSS"],
+    client: "Aura Luxury Boutique",
     timeline: "3 Months",
-    result: "30% higher conversion rate",
+    result: "30% Higher Mobile Conversion Rate",
     challenge:
-      "An outdated online store was slowing purchases and failing to reflect the premium brand.",
+      "Aura Boutique faced high bounce rates on their traditional monolith storefront due to slow page load speeds (4.5s) and clunky mobile checkout flows.",
     solution:
-      "A polished storefront with high-quality visuals, fast browsing, and a smoother checkout journey.",
+      "We engineered a Headless E-Commerce storefront utilizing Next.js, Shopify GraphQL APIs, and Tailwind CSS. We implemented instant sub-second page transitions, 3D product previews, and localized multi-currency checkout.",
+    metrics: "0.8 Sec|Page Load Speed\n+30%|Conversion Rate Growth\n45%|Cart Abandonment Reduction",
+    gallery: [
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=85&w=1200",
+      "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=85&w=1200",
+      "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=85&w=1200",
+    ],
+    testimonial:
+      "Our website transformed from a standard online shop into an immersive brand experience. Sales jumped 30% within the first month of launch!",
+    testimonialAuthor: "Sophia Laurent — Brand Director, Aura Boutique",
   },
   {
     slug: "logistics-dashboard",
-    title: "Logistics Dashboard",
+    title: "AI Logistics & Fleet Operations Center",
     category: "Web App",
     image:
       "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=85&w=1200",
-    tags: ["Vue.js", "Express"],
-    client: "Swift Logistics",
+    tags: ["React", "Python", "Mapbox GL"],
+    client: "Swift Express Logistics",
     timeline: "5 Months",
-    result: "Optimized route planning",
+    result: "25% Savings in Fuel & Transit Time",
     challenge:
-      "Dispatchers needed a clearer view of vehicles, routes, and delivery progress.",
+      "Swift Logistics operated 1,200 delivery trucks across 14 hubs with manual dispatching spreadsheets, leading to delayed shipments and route inefficiencies.",
     solution:
-      "A live operations dashboard bringing tracking, assignments, and route planning into one place.",
+      "We built a real-time Fleet Management Command Center featuring Mapbox GL live GPS tracking, automated dynamic route optimization using Python OR-Tools, and automated SMS alerts.",
+    metrics: "1,200+|Vehicles Tracked\n25%|Fuel Cost Reduction\n98.4%|On-Time Delivery Rate",
+    gallery: [
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=85&w=1200",
+      "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=85&w=1200",
+    ],
   },
   {
     slug: "fitness-tracker-app",
-    title: "Fitness Tracker App",
+    title: "AI Powered Fitness & Nutrition Tracker",
     category: "Mobile App",
     image:
       "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&q=85&w=1200",
-    tags: ["React Native", "Redux"],
-    client: "FitLife",
+    tags: ["React Native", "Apple HealthKit", "TensorFlow"],
+    client: "FitPulse Interactive",
     timeline: "6 Months",
-    result: "4.8/5 App Store rating",
+    result: "500,000+ Downloads & 4.8 Rating",
     challenge:
-      "Users wanted meaningful workout insights across multiple wearable devices.",
+      "FitPulse wanted a mobile app capable of analyzing meal photos using on-device computer vision to estimate macros instantly, while syncing continuous heart rate data from Apple Watch.",
     solution:
-      "A motivating fitness experience with synced health data, progress analytics, and gamified goals.",
+      "We created a React Native app with embedded TensorFlow Lite models for instant food photo recognition. We integrated Apple HealthKit and Google Health Connect APIs for background biometric data syncing.",
+    metrics: "500k+|Mobile Installs\n4.8 ★|App Store Rating\n94%|Food Photo Recognition",
+    gallery: [
+      "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&q=85&w=1200",
+      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&q=85&w=1200",
+    ],
   },
 ];
 
