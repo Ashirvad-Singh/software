@@ -52,7 +52,7 @@ export const MenuItem = ({
               >
                 <motion.div
                   layout // layout ensures smooth animation
-                  className="w-max h-full p-4"
+                  className="w-max h-full p-1.5"
                 >
                   {children}
                 </motion.div>
@@ -136,10 +136,10 @@ export const HoveredLink = ({
       to={href}
       {...rest}
       className={cn(
-        "transition-colors",
+        "px-3.5 py-2 rounded-xl text-sm font-medium transition-all block",
         active
-          ? "text-sky-700 font-bold"
-          : "text-neutral-700 dark:text-neutral-200 hover:text-sky-700 dark:hover:text-white",
+          ? "bg-sky-50 dark:bg-sky-950/60 text-sky-600 font-bold"
+          : "text-neutral-700 dark:text-neutral-200 hover:text-sky-600 dark:hover:text-white hover:bg-neutral-100/80 dark:hover:bg-neutral-900/80",
         className,
       )}
     >

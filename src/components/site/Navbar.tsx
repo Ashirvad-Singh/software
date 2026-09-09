@@ -167,7 +167,7 @@ const IndustriesMegaMenu = () => {
 
 const AboutMenuContent = () => {
   return (
-    <div className="flex w-64 flex-col gap-3 p-4 text-neutral-900 dark:text-white">
+    <div className="flex w-48 flex-col gap-0.5 p-1 text-neutral-900 dark:text-white">
       <HoveredLink href="/about">About Us</HoveredLink>
       <HoveredLink href="/about#process">Our Process</HoveredLink>
       <HoveredLink href="/team">Our Team</HoveredLink>
@@ -647,7 +647,7 @@ export default function Navbar({ className }: { className?: string }) {
                       active={active}
                       item="Resources"
                     >
-                      <div className="flex w-64 flex-col gap-3 p-4 text-neutral-900 dark:text-white">
+                      <div className="flex w-48 flex-col gap-0.5 p-1 text-neutral-900 dark:text-white">
                         <HoveredLink href="/case-studies">
                           Case Studies
                         </HoveredLink>
