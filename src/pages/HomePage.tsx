@@ -22,6 +22,7 @@ const HomeCaseStudiesSection = lazy(
   () => import("@/components/site/HomeCaseStudiesSection"),
 );
 const HomeBlogSection = lazy(() => import("@/components/site/HomeBlogSection"));
+const FaqSection = lazy(() => import("@/components/site/FaqSection"));
 export default function HomePage() {
   return (
     <main>
@@ -136,6 +137,7 @@ export default function HomePage() {
       <Suspense fallback={<div className="min-h-[500px]" />}>
         <WhatSetsUsApart />
         <Testimonials />
+        <FaqSection />
         <HomeBlogSection />
       </Suspense>
     </main>
