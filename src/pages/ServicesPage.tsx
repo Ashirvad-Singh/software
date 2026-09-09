@@ -2,7 +2,7 @@ import HomeServicesSection from "@/components/site/HomeServicesSection";
 import SubBanner from "@/components/site/SubBanner";
 import FaqSection from "@/components/site/FaqSection";
 import { motion } from "framer-motion";
-import { Code2, Cpu, ShieldCheck, Zap, Layers, CheckCircle2, ArrowRight } from "lucide-react";
+import { Code2, Cpu, Zap, Layers, CheckCircle2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const serviceCapabilities = [
