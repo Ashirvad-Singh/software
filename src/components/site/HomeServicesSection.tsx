@@ -113,7 +113,7 @@ export default function HomeServicesSection({
                     `${event.clientY - bounds.top}px`,
                   );
                 }}
-                className="group relative grid min-h-[124px] items-center border-b border-neutral-200 bg-white px-3 py-7 dark:border-neutral-800 dark:bg-neutral-950 sm:grid-cols-[1fr_1.45fr_72px] sm:px-5 lg:min-h-[132px] lg:grid-cols-[1fr_1.35fr_72px]"
+                className="group relative grid min-h-[124px] items-center gap-x-6 border-b border-neutral-200 bg-white px-3 py-7 dark:border-neutral-800 dark:bg-neutral-950 sm:grid-cols-[1fr_1.45fr_72px] sm:px-5 lg:min-h-[132px] lg:grid-cols-[1fr_1.35fr_72px]"
               >
                 <span
                   aria-hidden="true"
@@ -141,7 +141,7 @@ export default function HomeServicesSection({
                           : { opacity: 0, scale: 0.92, y: -8 }
                       }
                       transition={{ duration: 0.7, ease: "easeOut" }}
-                      className="pointer-events-none absolute bottom-2 right-16 z-10 hidden h-48 w-72 rotate-[-4deg] overflow-hidden border-4 border-white bg-neutral-100 shadow-xl dark:border-neutral-800 sm:block lg:bottom-1 lg:right-20 lg:h-56 lg:w-84"
+                      className="pointer-events-none absolute bottom-2 right-16 z-10 hidden h-48 w-72 rotate-[-4deg] overflow-hidden border-4 border-white bg-neutral-100 shadow-xl dark:border-neutral-800 [@media(min-width:1280px)_and_(hover:hover)_and_(pointer:fine)]:block lg:bottom-1 lg:right-20 lg:h-56 lg:w-84"
                     >
                       <img
                         src={activeService.thumbnailUrl || fallbackImage}

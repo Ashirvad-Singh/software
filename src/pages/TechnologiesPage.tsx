@@ -67,7 +67,7 @@ function TechnologyBadge({
     : null;
 
   return (
-    <div className="group flex flex-col items-center justify-center gap-2 rounded-xl border border-neutral-100 bg-neutral-50/50 p-4 transition-all duration-300 hover:border-primary/30 hover:bg-white hover:shadow-sm">
+    <div className="group flex min-w-0 flex-col items-center justify-center gap-2 rounded-xl border border-neutral-100 bg-neutral-50/50 p-4 transition-all duration-300 hover:border-primary/30 hover:bg-white hover:shadow-sm">
       {isImage ? (
         <img
           src={technology.iconUrl}
@@ -80,7 +80,7 @@ function TechnologyBadge({
           stroke={1.5}
         />
       )}
-      <span className="text-center text-[11px] font-medium uppercase tracking-wider text-neutral-500 transition-colors group-hover:text-neutral-900">
+      <span className="max-w-full break-words text-center text-[11px] font-medium uppercase tracking-wider text-neutral-500 transition-colors group-hover:text-neutral-900">
         {technology.name}
       </span>
     </div>
@@ -160,7 +160,7 @@ export default function TechnologiesPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="group relative overflow-hidden rounded-[2rem] border border-neutral-200 bg-white p-5 shadow-sm transition-all duration-300 hover:border-primary/20 hover:shadow-xl sm:p-6 md:p-8 lg:p-10"
+                    className="group relative overflow-hidden rounded-[2rem] border border-neutral-200 bg-white p-5 shadow-sm transition-all duration-300 hover:border-primary/20 hover:shadow-xl sm:p-6 md:p-6 xl:p-10"
                   >
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${theme.bg} to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
@@ -175,7 +175,7 @@ export default function TechnologiesPage() {
                       <p className="mb-5 text-sm leading-relaxed text-neutral-500 md:mb-10">
                         {category.description}
                       </p>
-                      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+                      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3 sm:gap-4">
                         {category.technologies?.map(
                           (technology, technologyIndex) => (
                             <TechnologyBadge

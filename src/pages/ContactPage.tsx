@@ -72,11 +72,11 @@ export default function ContactPage() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-neutral-100 overflow-hidden flex flex-col lg:flex-row"
+          className="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-neutral-100 overflow-hidden flex flex-col xl:flex-row"
         >
           
           {/* Left Dark Side - Contact Info */}
-          <div className="lg:w-2/5 bg-gradient-to-br from-sky-500 to-sky-700 p-6 sm:p-8 md:p-14 text-white relative overflow-hidden flex flex-col justify-between">
+          <div className="xl:w-2/5 min-w-0 bg-gradient-to-br from-sky-500 to-sky-700 p-6 sm:p-8 md:p-10 xl:p-12 text-white relative overflow-hidden flex flex-col justify-between">
             <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-sky-300/30 blur-3xl pointer-events-none"></div>
             
@@ -86,19 +86,19 @@ export default function ContactPage() {
 
               <div className="space-y-8">
                 <div className="flex items-center gap-4 group cursor-pointer">
-                  <div className="p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
+                  <div className="shrink-0 p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
                     <Phone className="w-5 h-5" />
                   </div>
-                  <span className="text-sky-100 hover:text-white transition-colors">+1 (555) 123-4567</span>
+                  <span className="min-w-0 break-words text-sky-100 hover:text-white transition-colors">+1 (555) 123-4567</span>
                 </div>
                 <div className="flex items-center gap-4 group cursor-pointer">
-                  <div className="p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
+                  <div className="shrink-0 p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
                     <Mail className="w-5 h-5" />
                   </div>
-                  <span className="text-sky-100 hover:text-white transition-colors">hello@adatsoft.com</span>
+                  <span className="min-w-0 break-words text-sky-100 hover:text-white transition-colors">hello@adatsoft.com</span>
                 </div>
                 <div className="flex items-center gap-4 group cursor-pointer">
-                  <div className="p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
+                  <div className="shrink-0 p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <span className="text-sky-100 leading-relaxed group-hover:text-white transition-colors">
@@ -125,7 +125,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right White Side - Form */}
-          <div className="lg:w-3/5 p-6 sm:p-8 md:p-14 bg-sky-50 relative">
+          <div className="xl:w-3/5 min-w-0 p-6 sm:p-8 md:p-10 xl:p-12 bg-sky-50 relative">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
               
               <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">

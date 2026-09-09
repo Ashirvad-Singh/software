@@ -35,7 +35,7 @@ export default function CTASection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="p-4 sm:p-6 md:p-12 lg:p-20 border-b lg:border-b-0 lg:border-r border-dashed border-neutral-300"
+            className="p-4 sm:p-6 md:p-12 lg:p-10 xl:p-16 border-b lg:border-b-0 lg:border-r border-dashed border-neutral-300"
           >
             <motion.h2
               variants={itemVariants}
@@ -58,7 +58,7 @@ export default function CTASection() {
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
+              className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-4"
             >
               <Button
                 asChild
@@ -87,7 +87,7 @@ export default function CTASection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="p-4 sm:p-6 md:p-12 lg:p-20 flex flex-col justify-center"
+            className="p-4 sm:p-6 md:p-12 lg:p-10 xl:p-16 flex flex-col justify-center"
           >
             <blockquote className="text-base sm:text-lg leading-relaxed text-neutral-700 mb-8 font-medium">
               "Adat Soft Solutions is the best development partner ever. Ten on

@@ -70,10 +70,10 @@ export default function ProcessTimeline({ hideHeader = false }: { hideHeader?: b
           </div>
         )}
 
-        <div className="relative max-w-6xl mx-auto md:overflow-x-auto pb-10 md:hide-scrollbar">
-          <div className="md:min-w-[900px] flex flex-col relative md:px-4">
+        <div className="relative max-w-6xl mx-auto pb-10">
+          <div className="min-w-0 flex flex-col relative md:px-4">
             {/* Cards Row */}
-            <div className="flex flex-col md:flex-row w-full gap-4 sm:gap-6 md:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 w-full gap-4 sm:gap-6 xl:gap-4">
               {steps.map((step, index) => (
                 <motion.div 
                   key={step.title}
@@ -81,10 +81,10 @@ export default function ProcessTimeline({ hideHeader = false }: { hideHeader?: b
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={`flex-1 flex flex-col items-center text-center p-4 sm:p-5 md:p-6 lg:p-8 rounded-t-2xl md:rounded-t-2xl md:rounded-b-none rounded-b-2xl ${step.color} text-zinc-900 shadow-sm relative`}
+                  className={`flex-1 flex flex-col items-center text-center p-4 sm:p-5 md:p-6 xl:p-5 rounded-t-2xl md:rounded-t-2xl xl:rounded-b-none rounded-b-2xl ${step.color} text-zinc-900 shadow-sm relative`}
                   style={{ clipPath: "none" }} // overriding for simpler structure on mobile if needed, or keeping it but adjusting
                 >
-                  <div className="hidden md:block absolute bottom-0 left-0 w-full h-[30px] bg-background" style={{ clipPath: "polygon(0 100%, 100% 100%, 50% 0)" }}></div>
+                  <div className="hidden xl:block absolute bottom-0 left-0 w-full h-[30px] bg-background" style={{ clipPath: "polygon(0 100%, 100% 100%, 50% 0)" }}></div>
                   {step.icon}
                   <h4 className="font-bold text-[17px] mb-3">{step.title}</h4>
                   <p className="text-sm sm:text-base opacity-80 leading-relaxed font-medium">
@@ -95,7 +95,7 @@ export default function ProcessTimeline({ hideHeader = false }: { hideHeader?: b
             </div>
 
             {/* Dots and Wavy Line Row */}
-            <div className="hidden md:flex relative w-full mt-8 h-12">
+            <div className="hidden xl:flex relative w-full mt-8 h-12">
               <WavyLine count={steps.length} />
               {steps.map((step, index) => (
                 <div key={index} className="flex-1 flex justify-center items-center">

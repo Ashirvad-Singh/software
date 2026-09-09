@@ -31,11 +31,11 @@ export default function Footer() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 md:px-8 pt-10 sm:pt-12 md:pt-16 pb-6 md:pb-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-10 mb-8 md:mb-12">
           {/* Brand */}
           <div className="md:col-span-1">
             <Link to="/" className="mb-4 inline-block">
-              <img src="/adat-logo.png" alt="Adat Soft Solutions" className="h-12 md:h-16 w-auto" />
+              <img src="/adat-logo.png" alt="Adat Soft Solutions" className="h-12 md:h-14 w-auto max-w-full" />
             </Link>
             <p className="text-muted-foreground mb-6 max-w-sm">
               We build custom software, web apps, and digital solutions to help your business scale globally.
@@ -81,7 +81,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-muted-foreground">
                 <Mail className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <span>hello@adatsoft.com</span>
+                <span className="min-w-0 break-words">hello@adatsoft.com</span>
               </li>
               <li className="flex items-start gap-3 text-muted-foreground">
                 <Phone className="w-5 h-5 text-primary shrink-0 mt-0.5" />
@@ -95,7 +95,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="pt-8 border-t border-border/50 flex flex-col lg:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} Adat Soft Solutions. All rights reserved.
           </p>

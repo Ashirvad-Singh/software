@@ -47,7 +47,7 @@ export const ParallaxScroll = ({
       ref={gridRef}
     >
       <div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start max-w-7xl mx-auto gap-10 py-40 px-10"
+        className="grid grid-cols-1 md:grid-cols-3 items-start max-w-7xl mx-auto gap-4 lg:gap-10 py-24 lg:py-40 px-6 lg:px-10"
       >
         <div className="grid gap-10">
           {firstPart.map((el, idx) => (
@@ -58,7 +58,7 @@ export const ParallaxScroll = ({
               <img
                 src={el}
                 onClick={() => setSelectedIndex(idx)}
-                className="h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0 cursor-pointer hover:opacity-90 transition-opacity shadow-sm"
+                className="h-56 lg:h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0 cursor-pointer hover:opacity-90 transition-opacity shadow-sm"
                 height="400"
                 width="400"
                 alt="thumbnail"
@@ -72,7 +72,7 @@ export const ParallaxScroll = ({
               <img
                 src={el}
                 onClick={() => setSelectedIndex(third + idx)}
-                className="h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0 cursor-pointer hover:opacity-90 transition-opacity shadow-sm"
+                className="h-56 lg:h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0 cursor-pointer hover:opacity-90 transition-opacity shadow-sm"
                 height="400"
                 width="400"
                 alt="thumbnail"
@@ -86,7 +86,7 @@ export const ParallaxScroll = ({
               <img
                 src={el}
                 onClick={() => setSelectedIndex(2 * third + idx)}
-                className="h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0 cursor-pointer hover:opacity-90 transition-opacity shadow-sm"
+                className="h-56 lg:h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0 cursor-pointer hover:opacity-90 transition-opacity shadow-sm"
                 height="400"
                 width="400"
                 alt="thumbnail"

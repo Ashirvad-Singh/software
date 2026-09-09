@@ -144,7 +144,16 @@ export default function HomeCaseStudiesAndBlog({
   const [activeCaseStudy, setActiveCaseStudy] = useState(0);
   const [expandedCaseStudy, setExpandedCaseStudy] = useState<any | null>(null);
   const [activeBlog, setActiveBlog] = useState(0);
+  const [canDragPreview, setCanDragPreview] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 1280px) and (hover: hover) and (pointer: fine)");
+    const updatePreview = () => setCanDragPreview(media.matches);
+    updatePreview();
+    media.addEventListener("change", updatePreview);
+    return () => media.removeEventListener("change", updatePreview);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -199,7 +208,7 @@ export default function HomeCaseStudiesAndBlog({
       {!blogOnly && (
         <section
           style={{ fontFamily: '"Geist Variable", sans-serif' }}
-          className="relative min-h-[680px] overflow-hidden bg-[#f4f7fb] px-5 py-16 font-sans text-foreground sm:min-h-[760px] sm:px-8 sm:py-24 lg:px-12 lg:py-28"
+          className="relative min-h-[680px] overflow-hidden bg-[#f4f7fb] px-5 py-16 font-sans text-foreground sm:min-h-[760px] sm:px-8 sm:py-24 xl:px-12 xl:py-28"
         >
           <svg
             aria-hidden="true"
@@ -230,7 +239,7 @@ export default function HomeCaseStudiesAndBlog({
             />
             <circle cx="160" cy="160" r="8" fill="currentColor" />
           </svg>
-          <div className="mx-auto flex min-h-[590px] max-w-7xl flex-col justify-between lg:min-h-[620px]">
+          <div className="mx-auto flex max-w-7xl flex-col justify-between xl:min-h-[620px]">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-xs font-medium uppercase tracking-[0.24em] text-primary">
@@ -253,18 +262,18 @@ export default function HomeCaseStudiesAndBlog({
             </div>
 
             {caseStudies.length > 0 && (
-              <div className="relative flex flex-1 items-center">
+              <div className="relative mt-10 grid flex-1 grid-cols-1 items-center justify-items-center gap-8 xl:grid-cols-2 xl:gap-20">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={caseStudies[activeCaseStudy]?.slug}
-                    initial={{ opacity: 0, x: -35, rotate: -4 }}
-                    animate={{ opacity: 1, x: 0, rotate: -4 }}
-                    exit={{ opacity: 0, x: 35, rotate: 4 }}
+                    initial={{ opacity: 0, x: -35, rotate: canDragPreview ? -4 : 0 }}
+                    animate={{ opacity: 1, x: 0, rotate: canDragPreview ? -4 : 0 }}
+                    exit={{ opacity: 0, x: 35, rotate: canDragPreview ? 4 : 0 }}
                     transition={{ duration: 0.65, ease: "easeOut" }}
-                    className="absolute left-0 top-1/2 w-[72%] max-w-[560px] -translate-y-1/2 sm:w-[55%] lg:left-[7%] lg:w-[44%]"
+                    className="relative min-w-0 w-full max-w-[560px]"
                   >
                     <motion.div
-                      drag
+                      drag={canDragPreview}
                       dragConstraints={{
                         left: -60,
                         right: 60,
@@ -273,7 +282,7 @@ export default function HomeCaseStudiesAndBlog({
                       }}
                       dragElastic={0.2}
                       whileDrag={{ scale: 1.03, rotate: 0, cursor: "grabbing" }}
-                      className="group relative aspect-[4/3] cursor-grab overflow-hidden rounded-xl border border-white/15 bg-neutral-900 shadow-2xl"
+                      className={`group relative aspect-[4/3] overflow-hidden rounded-xl border border-white/15 bg-neutral-900 shadow-2xl ${canDragPreview ? "cursor-grab" : ""}`}
                     >
                       <img
                         src={caseStudies[activeCaseStudy]?.image}
@@ -292,7 +301,7 @@ export default function HomeCaseStudiesAndBlog({
                             {caseStudies[activeCaseStudy]?.title}
                           </p>
                         </div>
-                        <span className="rounded-full border border-white/25 px-3 py-1 text-[10px] uppercase tracking-wider text-white/65">
+                        <span className={`${canDragPreview ? "" : "hidden"} rounded-full border border-white/25 px-3 py-1 text-[10px] uppercase tracking-wider text-white/65`}>
                           Drag
                         </span>
                       </div>
@@ -300,7 +309,7 @@ export default function HomeCaseStudiesAndBlog({
                   </motion.div>
                 </AnimatePresence>
 
-                <div className="relative z-10 ml-auto w-full max-w-md lg:mr-[5%]">
+                <div className="relative z-10 min-w-0 w-full max-w-[560px] xl:max-w-md">
                   <p className="mb-4 border-b border-border pb-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
                     My Case Studies
                   </p>
@@ -314,9 +323,9 @@ export default function HomeCaseStudiesAndBlog({
                         onClick={() =>
                           navigate(`/case-studies/${project.slug}`)
                         }
-                        className={`group flex w-full items-center justify-between border-b border-border py-2 text-left text-2xl tracking-tight transition-colors sm:text-3xl ${index === activeCaseStudy ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                        className={`group flex min-h-12 w-full items-center justify-between gap-3 border-b border-border py-3 text-left text-xl leading-snug tracking-tight transition-colors sm:text-3xl ${index === activeCaseStudy ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
                       >
-                        <span>{project.title}</span>
+                        <span className="min-w-0 break-words">{project.title}</span>
                         <ArrowUpRight
                           className={`h-5 w-5 shrink-0 transition-all ${index === activeCaseStudy ? "text-primary opacity-100" : "opacity-0 group-hover:opacity-100"}`}
                         />
@@ -357,7 +366,7 @@ export default function HomeCaseStudiesAndBlog({
               </Link>
             </div>
 
-            <div className="relative h-[440px] overflow-hidden py-2 sm:h-[500px] sm:py-4">
+            <div className="relative overflow-hidden py-2 sm:py-4">
               <div className="relative h-full">
                 {caseStudies.map((project, index) => (
                   <motion.div
@@ -365,7 +374,7 @@ export default function HomeCaseStudiesAndBlog({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: index === activeCaseStudy ? 1 : 0.5 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
-                    className={`absolute left-1/2 top-2 w-[calc(100%-1rem)] -translate-x-1/2 transition-transform duration-700 sm:top-4 sm:w-[78%] lg:w-[68%] ${index === activeCaseStudy ? "z-20" : index === (activeCaseStudy - 1 + caseStudies.length) % caseStudies.length ? "z-10 -translate-x-[115%] sm:-translate-x-[112%]" : "z-10 translate-x-[15%] sm:translate-x-[12%]"} ${index !== activeCaseStudy ? "hidden sm:block" : ""}`}
+                    className={`${index === activeCaseStudy ? "relative" : "absolute"} left-1/2 top-0 w-[calc(100%-1rem)] -translate-x-1/2 transition-transform duration-700 xl:w-[68%] ${index === activeCaseStudy ? "z-20" : index === (activeCaseStudy - 1 + caseStudies.length) % caseStudies.length ? "z-10 -translate-x-[115%] sm:-translate-x-[112%]" : "z-10 translate-x-[15%] sm:translate-x-[12%]"} ${index !== activeCaseStudy ? "hidden xl:block" : ""}`}
                   >
                     <div className="group block overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-500 hover:shadow-xl">
                       <div className="relative aspect-[16/9] overflow-hidden bg-muted sm:aspect-[16/8]">
@@ -446,7 +455,7 @@ export default function HomeCaseStudiesAndBlog({
                       (index - 1 + caseStudies.length) % caseStudies.length,
                   )
                 }
-                className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-foreground shadow-sm transition-colors hover:bg-primary hover:text-primary-foreground sm:left-5"
+                className="absolute left-2 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-foreground shadow-sm transition-colors hover:bg-primary hover:text-primary-foreground sm:left-5"
               >
                 <ArrowRight className="h-5 w-5 rotate-180" />
               </button>
@@ -458,7 +467,7 @@ export default function HomeCaseStudiesAndBlog({
                     (index) => (index + 1) % caseStudies.length,
                   )
                 }
-                className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-foreground shadow-sm transition-colors hover:bg-primary hover:text-primary-foreground sm:right-5"
+                className="absolute right-2 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-foreground shadow-sm transition-colors hover:bg-primary hover:text-primary-foreground sm:right-5"
               >
                 <ArrowRight className="h-5 w-5" />
               </button>
@@ -553,14 +562,14 @@ export default function HomeCaseStudiesAndBlog({
                 View all articles <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="relative h-[500px] overflow-hidden py-2 sm:h-[540px]">
+            <div className="relative overflow-hidden py-2">
               {posts.slice(0, 3).map((post, index) => (
                 <motion.div
                   key={post.id || post.slug}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: index === activeBlog ? 1 : 0.42 }}
+                  animate={{ opacity: index === activeBlog ? 1 : 0.42, y: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className={`absolute left-1/2 top-2 w-[calc(100%-1rem)] -translate-x-1/2 transition-transform duration-700 sm:top-4 sm:w-[72%] lg:w-[58%] ${index === activeBlog ? "z-20" : index === (activeBlog - 1 + Math.min(posts.length, 3)) % Math.min(posts.length, 3) ? "z-10 -translate-x-[112%]" : "z-10 translate-x-[12%]"} ${index !== activeBlog ? "hidden sm:block" : ""}`}
+                  className={`${index === activeBlog ? "relative" : "absolute"} left-1/2 top-0 w-[calc(100%-1rem)] -translate-x-1/2 transition-transform duration-700 xl:w-[58%] ${index === activeBlog ? "z-20" : index === (activeBlog - 1 + Math.min(posts.length, 3)) % Math.min(posts.length, 3) ? "z-10 -translate-x-[112%]" : "z-10 translate-x-[12%]"} ${index !== activeBlog ? "hidden xl:block" : ""}`}
                 >
                   <Link
                     to={`/blog/${post.slug}`}

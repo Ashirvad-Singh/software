@@ -160,8 +160,8 @@ export default function Testimonials() {
         <ScrollingRow items={bottomRow} speed={0.5} direction="backward" />
         
         {/* Side Gradients for smooth fade out */}
-        <div className="absolute inset-y-0 left-0 w-24 md:w-64 bg-gradient-to-r from-[#fafafa] to-transparent z-30 pointer-events-none"></div>
-        <div className="absolute inset-y-0 right-0 w-24 md:w-64 bg-gradient-to-l from-[#fafafa] to-transparent z-30 pointer-events-none"></div>
+        <div className="absolute inset-y-0 left-0 w-10 sm:w-16 xl:w-40 bg-gradient-to-r from-[#fafafa] to-transparent z-30 pointer-events-none"></div>
+        <div className="absolute inset-y-0 right-0 w-10 sm:w-16 xl:w-40 bg-gradient-to-l from-[#fafafa] to-transparent z-30 pointer-events-none"></div>
       </div>
       
     </section>

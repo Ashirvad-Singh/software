@@ -90,10 +90,13 @@ export default function IndustriesSection() {
   const [isPaused, setIsPaused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [isCompact, setIsCompact] = useState(false);
+  const [isCompact, setIsCompact] = useState(() =>
+    typeof window === "undefined" ||
+    window.matchMedia("(max-width: 1279px), (pointer: coarse)").matches,
+  );
 
   useEffect(() => {
-    const media = window.matchMedia("(max-width: 639px)");
+    const media = window.matchMedia("(max-width: 1279px), (pointer: coarse)");
     const update = () => setIsCompact(media.matches);
     update();
     media.addEventListener("change", update);
@@ -110,6 +113,7 @@ export default function IndustriesSection() {
   const x = useMotionValue("0%");
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    if (isCompact) return;
     const position = Math.max(0, Math.min(1, (progress - 0.1) / 0.8));
     const group = Math.round(position * (groupCount - 1));
     slideAnimation.current?.stop();
@@ -148,7 +152,7 @@ export default function IndustriesSection() {
   }, [autoIndex, isVisible, reduceMotion, isPaused, isHovered, isFocused, x, cardsPerGroup, groupCount, trackGroups]);
 
   useEffect(() => {
-    const progress = scrollYProgress.get();
+    const progress = isCompact ? 0 : scrollYProgress.get();
     const position = Math.max(0, Math.min(1, (progress - 0.1) / 0.8));
     const group = Math.round(position * (groupCount - 1));
     slideAnimation.current?.stop();
@@ -157,7 +161,7 @@ export default function IndustriesSection() {
     setVisibleGroup(group);
     setAutoIndex(group * cardsPerGroup);
     setExpandedCard(null);
-  }, [cardsPerGroup, groupCount, trackGroups, scrollYProgress, x]);
+  }, [isCompact, cardsPerGroup, groupCount, trackGroups, scrollYProgress, x]);
 
   useEffect(() => () => slideAnimation.current?.stop(), []);
 
@@ -165,6 +169,17 @@ export default function IndustriesSection() {
     const section = sectionRef.current;
     if (!section) return;
     const group = Math.max(0, Math.min(groupCount - 1, currentGroup + direction));
+    if (isCompact) {
+      setIsPaused(true);
+      setCurrentGroup(group);
+      setVisibleGroup(group);
+      setAutoIndex(group * cardsPerGroup);
+      slideAnimation.current?.stop();
+      slideAnimation.current = animate(x, `${group * (-100 / trackGroups)}%`, {
+        duration: reduceMotion ? 0 : 0.4,
+      });
+      return;
+    }
     const start = section.getBoundingClientRect().top + window.scrollY;
     const distance = section.offsetHeight - window.innerHeight;
     window.scrollTo({
@@ -174,9 +189,9 @@ export default function IndustriesSection() {
   };
 
   return (
-    <section ref={sectionRef} className="relative h-[400svh] bg-[#f7f7f5] font-sans sm:h-[200svh]">
-      <div className="sticky top-0 flex h-svh items-center overflow-hidden pt-20 pb-4">
-      <div className="relative z-10 w-full px-3 sm:px-5 lg:px-8">
+    <section ref={sectionRef} className={`relative bg-[#f7f7f5] font-sans ${isCompact ? "py-16 sm:py-20" : "h-[200svh]"}`}>
+      <div className={isCompact ? "overflow-hidden" : "sticky top-0 flex h-svh items-center overflow-hidden pt-20 pb-4"}>
+      <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 sm:px-8">
         <div className="mb-4 text-center md:mb-6">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
@@ -225,7 +240,7 @@ export default function IndustriesSection() {
           onFocusCapture={() => setIsFocused(true)}
           onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false); }}
         >
-          <motion.div style={{ x, width: `${trackGroups * 100}%` }} className="flex h-[clamp(340px,48svh,460px)] sm:h-[clamp(340px,52svh,640px)]">
+          <motion.div style={{ x, width: `${trackGroups * 100}%` }} className={`flex ${isCompact ? "h-[380px] sm:h-[440px]" : "h-[clamp(340px,52svh,640px)]"}`}>
             {Array.from({ length: trackGroups }, (_, group) => (
               <div
                 key={group}
@@ -287,7 +302,7 @@ export default function IndustriesSection() {
                       <div className="absolute left-4 top-4 hidden h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-black/20 text-white lg:flex">
                         <Icon className="h-4 w-4" aria-hidden="true" />
                       </div>
-                      <div className={`pointer-events-none absolute inset-x-0 bottom-0 z-20 p-3 sm:p-4 ${isExpanded ? "block" : "hidden lg:block"}`}>
+                      <div className={`pointer-events-none absolute inset-x-0 bottom-0 z-20 p-3 sm:p-4 ${isExpanded ? "block" : "hidden"}`}>
                         <h3 className="text-base font-bold leading-tight text-white sm:text-lg lg:text-xl">
                           {industry.name}
                         </h3>

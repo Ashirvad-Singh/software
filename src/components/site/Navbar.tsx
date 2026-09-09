@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Menu as MenuIcon,
   X,
@@ -380,7 +380,37 @@ export default function Navbar({ className }: { className?: string }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    menuRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMobileMenuOpen(false);
+      if (event.key !== "Tab") return;
+      const controls = menuRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
+      if (!controls?.length) return;
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+      previousFocus?.focus();
+    };
+  }, [isMobileMenuOpen]);
 
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
@@ -404,12 +434,12 @@ export default function Navbar({ className }: { className?: string }) {
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
         className={cn(
-          "fixed top-4 inset-x-0 max-w-7xl mx-auto z-50 flex items-center justify-center px-4 md:px-0 w-full",
+          "fixed top-4 inset-x-0 max-w-7xl mx-auto z-50 flex items-center justify-center px-4 sm:px-6 xl:px-0 w-full",
           className,
         )}
       >
         {/* Mobile Logo & Toggle - shown on mobile AND tablet */}
-        <div className="lg:hidden flex items-center justify-between w-full bg-white/80 backdrop-blur-md px-4 sm:px-6 h-14 sm:h-16 rounded-full border border-neutral-200 shadow-sm">
+        <div className="xl:hidden [@media(pointer:coarse)]:flex flex items-center justify-between w-full bg-white/80 backdrop-blur-md px-4 sm:px-6 h-14 sm:h-16 rounded-full border border-neutral-200 shadow-sm">
           <Link to="/" className="flex items-center">
             <img
               src="/adat-logo.png"
@@ -417,13 +447,13 @@ export default function Navbar({ className }: { className?: string }) {
               className="h-6 sm:h-8 md:h-10 w-auto"
             />
           </Link>
-          <button onClick={() => setIsMobileMenuOpen(true)}>
+          <button type="button" aria-label="Open navigation" aria-expanded={isMobileMenuOpen} className="flex h-11 w-11 items-center justify-center" onClick={() => setIsMobileMenuOpen(true)}>
             <MenuIcon className="w-6 h-6" />
           </button>
         </div>
 
-        {/* Desktop Navbar (Pill) - shown only on lg+ */}
-        <div className="hidden lg:block w-full px-4">
+        {/* Wide-screen navigation for mouse and trackpad input. */}
+        <div className="hidden xl:block [@media(pointer:coarse)]:hidden w-full px-4">
           <Menu setActive={setActive}>
             <div className="flex items-center justify-between w-full">
               {/* Logo */}
@@ -436,7 +466,7 @@ export default function Navbar({ className }: { className?: string }) {
               </Link>
 
               {/* Links */}
-              <div className="flex items-center justify-center space-x-4 lg:space-x-8 text-sm font-medium flex-1">
+              <div className="flex items-center justify-center space-x-4 xl:space-x-5 text-sm font-medium flex-1">
                 {navLinks.map((link) =>
                   link.name === "Services" ? (
                     <MenuItem
@@ -504,19 +534,25 @@ export default function Navbar({ className }: { className?: string }) {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-xl flex flex-col justify-center items-center"
+            ref={menuRef}
+            data-lenis-prevent
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
+            className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-background/95 backdrop-blur-xl px-6 py-20"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
             <button
+              aria-label="Close navigation"
               className="absolute top-6 right-6 p-2 text-foreground"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <X className="w-8 h-8" />
             </button>
-            <div className="flex flex-col items-center gap-6">
+            <div className="mx-auto flex min-h-full max-w-lg flex-col items-center justify-center gap-5">
               {navLinks.map((link, i) => {
                 const isActive = location.pathname === link.href;
                 if (link.name === "Resources") {

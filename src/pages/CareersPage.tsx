@@ -427,7 +427,7 @@ export default function CareersPage() {
             <div className="w-full md:w-1/2 flex justify-center">
               <div className="relative w-full max-w-sm">
                 <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600" alt="Apply process" className="rounded-3xl shadow-2xl" />
-                <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3">
+                <div className="absolute -bottom-6 right-0 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3">
                   <div className="w-10 h-10 bg-green-100 text-green-500 rounded-full flex items-center justify-center">
                     <CheckCircle size={20} />
                   </div>

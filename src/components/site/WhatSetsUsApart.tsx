@@ -38,7 +38,7 @@ export default function WhatSetsUsApart() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 lg:gap-8 items-center">
           
           {/* Left Side: Content */}
           <div className="flex flex-col justify-center max-w-lg">
@@ -74,7 +74,7 @@ export default function WhatSetsUsApart() {
           </div>
 
           {/* Right Side: Cards */}
-          <div className="flex flex-col md:grid md:grid-cols-2 lg:flex lg:flex-col gap-4 sm:gap-6 md:gap-6 lg:gap-0 lg:space-y-6 relative">
+          <div className="flex flex-col md:grid md:grid-cols-2 xl:flex xl:flex-col gap-4 sm:gap-6 md:gap-6 xl:gap-0 xl:space-y-6 relative">
             
             {/* Card 1: Research */}
             <motion.div 
@@ -82,12 +82,12 @@ export default function WhatSetsUsApart() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-[#dcfce7] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 shadow-sm flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 ml-0 lg:ml-12 hover:shadow-md transition-shadow relative overflow-hidden group"
+              className="bg-[#dcfce7] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 shadow-sm flex flex-col sm:flex-row md:flex-col xl:flex-row items-center sm:items-start gap-4 sm:gap-6 ml-0 xl:ml-12 hover:shadow-md transition-shadow relative overflow-hidden group"
             >
               <div className="bg-white/60 p-4 rounded-full shrink-0 relative z-10 group-hover:scale-110 transition-transform duration-300">
                 <Search className="w-10 h-10 text-green-600" />
               </div>
-              <div className="relative z-10 text-center sm:text-left">
+              <div className="relative z-10 min-w-0 text-center sm:text-left">
                 <h3 className="text-2xl font-semibold mb-3 text-gray-900">Research</h3>
                 <p className="text-gray-700 leading-relaxed text-sm">
                   We Dive Deep Into Understanding Your Brand, Audience, And Goals, Uncovering Insights To Shape Your Digital Success.
@@ -105,12 +105,12 @@ export default function WhatSetsUsApart() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-[#bfdbfe] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 shadow-sm flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 mr-0 lg:mr-12 hover:shadow-md transition-shadow relative overflow-hidden group"
+              className="bg-[#bfdbfe] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 shadow-sm flex flex-col sm:flex-row md:flex-col xl:flex-row items-center sm:items-start gap-4 sm:gap-6 mr-0 xl:mr-12 hover:shadow-md transition-shadow relative overflow-hidden group"
             >
               <div className="bg-white/60 p-4 rounded-full shrink-0 relative z-10 group-hover:scale-110 transition-transform duration-300">
                 <Lightbulb className="w-10 h-10 text-blue-600" />
               </div>
-              <div className="relative z-10 text-center sm:text-left">
+              <div className="relative z-10 min-w-0 text-center sm:text-left">
                 <h3 className="text-2xl font-semibold mb-3 text-gray-900">Strategy</h3>
                 <p className="text-gray-700 leading-relaxed text-sm">
                   We Craft Tailored Plans That Combine Creativity And Data To Align Your Vision With Measurable Outcomes.
@@ -128,12 +128,12 @@ export default function WhatSetsUsApart() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="bg-[#e9d5ff] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 shadow-sm flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 ml-0 lg:ml-24 hover:shadow-md transition-shadow relative overflow-hidden group md:col-span-2 lg:col-span-1"
+              className="bg-[#e9d5ff] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 shadow-sm flex flex-col sm:flex-row md:flex-col xl:flex-row items-center sm:items-start gap-4 sm:gap-6 ml-0 xl:ml-24 hover:shadow-md transition-shadow relative overflow-hidden group md:col-span-2 xl:col-span-1"
             >
               <div className="bg-white/60 p-4 rounded-full shrink-0 relative z-10 group-hover:scale-110 transition-transform duration-300">
                 <Rocket className="w-10 h-10 text-purple-600" />
               </div>
-              <div className="relative z-10 text-center sm:text-left">
+              <div className="relative z-10 min-w-0 text-center sm:text-left">
                 <h3 className="text-2xl font-semibold mb-3 text-gray-900">Execution</h3>
                 <p className="text-gray-700 leading-relaxed text-sm">
                   We Bring Concepts To Life With Precision, Ensuring Every Detail Works Seamlessly To Achieve Impactful Results.
