@@ -355,11 +355,13 @@ export default function TechnologiesPage() {
                           ? (TablerIcons as any)[tech.iconUrl] ||
                             TablerIcons.IconCode
                           : null;
+                        const techSlug = tech.name.toLowerCase().replace(/[^a-z0-9]/g, "");
 
                         return (
-                          <div
+                          <Link
                             key={techIdx}
-                            className="p-3 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-200/80 dark:border-neutral-800 flex items-center justify-between gap-3 hover:border-primary/30 transition-colors"
+                            to={`/technologies/${techSlug}`}
+                            className="p-3 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-200/80 dark:border-neutral-800 flex items-center justify-between gap-3 hover:border-primary/40 hover:bg-neutral-100/50 dark:hover:bg-neutral-900/80 transition-all group/item"
                           >
                             <div className="flex items-center gap-3 min-w-0">
                               <div className="w-8 h-8 rounded-xl bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center shrink-0">
@@ -377,7 +379,7 @@ export default function TechnologiesPage() {
                                 )}
                               </div>
                               <div className="min-w-0">
-                                <h3 className="text-xs font-bold text-neutral-900 dark:text-white truncate">
+                                <h3 className="text-xs font-bold text-neutral-900 dark:text-white truncate group-hover/item:text-primary transition-colors">
                                   {tech.name}
                                 </h3>
                                 <p className="text-[10px] text-neutral-500 truncate">
@@ -390,7 +392,7 @@ export default function TechnologiesPage() {
                                 {tech.badge}
                               </span>
                             )}
-                          </div>
+                          </Link>
                         );
                       })}
                     </div>

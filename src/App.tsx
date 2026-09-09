@@ -14,6 +14,7 @@ import { lazy, Suspense } from "react";
 import ScrollToTop from "@/components/ScrollToTop";
 const ServicesPage = lazy(() => import("@/pages/ServicesPage"));
 const TechnologiesPage = lazy(() => import("@/pages/TechnologiesPage"));
+const TechnologyDetailPage = lazy(() => import("@/pages/TechnologyDetailPage"));
 const ServiceDetailPage = lazy(() => import("@/pages/ServiceDetailPage"));
 const WorkPage = lazy(() => import("@/pages/WorkPage"));
 const ProjectDetailPage = lazy(() => import("@/pages/ProjectDetailPage"));
@@ -78,6 +79,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/services" element={<ServicesPage />} />
                 <Route path="/technologies" element={<TechnologiesPage />} />
+                <Route path="/technologies/:slug" element={<TechnologyDetailPage />} />
                 <Route path="/services/:slug" element={<ServiceDetailPage />} />
                 <Route path="/work" element={<WorkPage />} />
                 <Route path="/work/:slug" element={<ProjectDetailPage />} />

@@ -326,10 +326,11 @@ const getSavedBrandIcon = (iconUrl?: string) => {
 const TechnologyMenuItem = ({ technology }: { technology: any }) => {
   const logoUrl = getTechnologyLogo(technology.name, technology.iconUrl);
   const SavedBrandIcon = getSavedBrandIcon(technology.iconUrl);
+  const techSlug = (technology.slug || technology.name).toLowerCase().replace(/[^a-z0-9]/g, "");
 
   return (
     <Link
-      to="/technologies"
+      to={`/technologies/${techSlug}`}
       className="group flex items-center gap-3 rounded-xl border border-neutral-100 bg-neutral-50/70 px-3 py-3 transition-all hover:border-primary/30 hover:bg-white hover:shadow-sm dark:border-neutral-800 dark:bg-neutral-900/70 dark:hover:bg-neutral-900"
     >
       {logoUrl ? (
