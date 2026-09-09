@@ -2,7 +2,6 @@ import AboutSection from "@/components/site/AboutSection"
 import CoreValuesSection from "@/components/site/CoreValuesSection"
 import ProcessTimeline from "@/components/site/ProcessTimeline"
 import SubBanner from "@/components/site/SubBanner"
-import UpgradeBrandCta from "@/components/site/UpgradeBrandCta"
 
 export default function AboutPage() {
   return (
@@ -16,7 +15,6 @@ export default function AboutPage() {
       <AboutSection hideHeader />
       <CoreValuesSection />
       <ProcessTimeline />
-      <UpgradeBrandCta />
     </main>
   );
 }
