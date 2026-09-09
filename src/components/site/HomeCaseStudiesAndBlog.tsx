@@ -208,7 +208,7 @@ export default function HomeCaseStudiesAndBlog({
       {!blogOnly && (
         <section
           style={{ fontFamily: '"Geist Variable", sans-serif' }}
-          className="relative min-h-[680px] overflow-hidden bg-[#f4f7fb] px-5 py-16 font-sans text-foreground sm:min-h-[760px] sm:px-8 sm:py-24 xl:px-12 xl:py-28"
+          className="relative overflow-hidden bg-[#f4f7fb] px-5 py-10 font-sans text-foreground sm:px-8 sm:py-14 xl:px-12 xl:py-16"
         >
           <svg
             aria-hidden="true"
@@ -347,7 +347,7 @@ export default function HomeCaseStudiesAndBlog({
       )}
 
       {!caseStudiesOnly && !blogOnly && (
-        <section className="bg-background px-5 py-16 font-sans sm:px-8 sm:py-24 lg:px-12 lg:py-28">
+        <section className="bg-background px-5 py-10 font-sans sm:px-8 sm:py-14 lg:px-12 lg:py-16">
           <div className="mx-auto max-w-7xl">
             <div className="mb-10 flex items-end justify-between gap-6 sm:mb-14">
               <div>

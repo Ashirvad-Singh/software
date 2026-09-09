@@ -69,7 +69,7 @@ export default function HomeServicesSection({
       id="services"
       aria-label={hideHeader ? "Services" : undefined}
       aria-labelledby={hideHeader ? undefined : "home-services-heading"}
-      className="bg-white px-5 py-16 font-sans text-[15px] dark:bg-neutral-950 sm:px-8 sm:py-24 lg:px-12 lg:py-28"
+      className="bg-white px-5 py-10 font-sans text-[15px] dark:bg-neutral-950 sm:px-8 sm:py-14 lg:px-12 lg:py-16"
     >
       <div className="mx-auto max-w-[1280px]">
         {!hideHeader && (

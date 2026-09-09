@@ -127,7 +127,7 @@ export default function Testimonials() {
 
   if (loading) {
     return (
-      <section className="py-24 flex justify-center items-center bg-[#fafafa] min-h-[500px]">
+      <section className="py-12 flex justify-center items-center bg-[#fafafa] min-h-[200px]">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </section>
     )
@@ -143,9 +143,9 @@ export default function Testimonials() {
   const bottomRow = displayTestimonials.slice(midPoint);
 
   return (
-    <section className="py-24 bg-[#fafafa] w-full overflow-hidden font-sans">
+    <section className="py-12 md:py-16 bg-[#fafafa] w-full overflow-hidden font-sans">
       
-      <div className="text-center mb-16 relative z-20 px-8">
+      <div className="text-center mb-8 relative z-20 px-8">
         <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-5 tracking-tight text-balance">
           Trusted in production, not just in demos.
         </h2>

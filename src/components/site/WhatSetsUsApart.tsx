@@ -4,7 +4,7 @@ import { Search, Lightbulb, Rocket } from "lucide-react";
 
 export default function WhatSetsUsApart() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden bg-white w-full">
+    <section className="py-10 sm:py-12 md:py-16 relative overflow-hidden bg-white w-full">
       {/* Background Wireframe Elements */}
       <div className="absolute top-10 left-10 opacity-30 pointer-events-none hidden lg:block">
         <svg width="180" height="180" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">

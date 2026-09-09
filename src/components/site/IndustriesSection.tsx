@@ -189,7 +189,7 @@ export default function IndustriesSection() {
   };
 
   return (
-    <section ref={sectionRef} className={`relative bg-[#f7f7f5] font-sans ${isCompact ? "py-16 sm:py-20" : "h-[200svh]"}`}>
+    <section ref={sectionRef} className={`relative bg-[#f7f7f5] font-sans ${isCompact ? "py-10 sm:py-14" : "h-[130svh]"}`}>
       <div className={isCompact ? "overflow-hidden" : "sticky top-0 flex h-svh items-center overflow-hidden pt-14 md:pt-16 pb-6"}>
       <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 sm:px-8 flex flex-col justify-between h-full max-h-svh py-2">
         <div className="mb-2 text-center md:mb-4">
