@@ -18,7 +18,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Loader2,
   ExternalLink,
-  Lock,
   X,
   Download,
   MessageSquare,
@@ -38,7 +37,6 @@ import {
   ChevronRight,
   ShieldCheck,
   Home,
-  LayoutDashboard,
   Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -104,7 +102,7 @@ interface NavGroup {
   items: {
     id: TabType;
     label: string;
-    icon: React.ElementType;
+    icon: React.ComponentType<{ className?: string }>;
     badge?: number;
   }[];
 }
