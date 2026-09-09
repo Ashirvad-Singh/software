@@ -90,6 +90,18 @@ export default function IndustriesSection() {
   const [isPaused, setIsPaused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsCompact(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+  const cardsPerGroup = isCompact ? 1 : 6;
+  const groupCount = industries.length / cardsPerGroup;
+  const trackGroups = groupCount + 1;
   const slideAnimation = useRef<{ stop: () => void } | null>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -99,12 +111,12 @@ export default function IndustriesSection() {
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     const position = Math.max(0, Math.min(1, (progress - 0.1) / 0.8));
-    const group = Math.round(position);
+    const group = Math.round(position * (groupCount - 1));
     slideAnimation.current?.stop();
-    x.set(`${position * (-100 / 3)}%`);
+    x.set(`${position * (groupCount - 1) * (-100 / trackGroups)}%`);
     setVisibleGroup(group);
     setCurrentGroup(group);
-    setAutoIndex((index) => Math.floor(index / 6) === group ? index : group * 6);
+    setAutoIndex((index) => Math.floor(index / cardsPerGroup) === group ? index : group * cardsPerGroup);
   });
 
   useEffect(() => {
@@ -112,19 +124,19 @@ export default function IndustriesSection() {
     const timer = window.setInterval(() => {
       if (document.hidden) return;
       const nextIndex = (autoIndex + 1) % industries.length;
-      const nextGroup = Math.floor(nextIndex / 6);
+      const nextGroup = Math.floor(nextIndex / cardsPerGroup);
       // Slide forward into a matching copy of the first group at the loop boundary.
-      const targetGroup = nextIndex === 0 ? 2 : nextGroup;
+      const targetGroup = nextIndex === 0 ? groupCount : nextGroup;
       setVisibleGroup(targetGroup);
       setAutoIndex(nextIndex);
       setExpandedCard(null);
       setCurrentGroup(nextGroup);
       slideAnimation.current?.stop();
-      slideAnimation.current = animate(x, `${targetGroup * (-100 / 3)}%`, {
+      slideAnimation.current = animate(x, `${targetGroup * (-100 / trackGroups)}%`, {
         duration: 0.8,
         ease: [0.22, 1, 0.36, 1],
         onComplete: () => {
-          if (targetGroup === 2) {
+          if (targetGroup === groupCount) {
             // Both groups have identical content, so this reset is invisible.
             x.set("0%");
             setVisibleGroup(0);
@@ -133,24 +145,36 @@ export default function IndustriesSection() {
       });
     }, 3000);
     return () => window.clearInterval(timer);
-  }, [autoIndex, isVisible, reduceMotion, isPaused, isHovered, isFocused, x]);
+  }, [autoIndex, isVisible, reduceMotion, isPaused, isHovered, isFocused, x, cardsPerGroup, groupCount, trackGroups]);
+
+  useEffect(() => {
+    const progress = scrollYProgress.get();
+    const position = Math.max(0, Math.min(1, (progress - 0.1) / 0.8));
+    const group = Math.round(position * (groupCount - 1));
+    slideAnimation.current?.stop();
+    x.set(`${position * (groupCount - 1) * (-100 / trackGroups)}%`);
+    setCurrentGroup(group);
+    setVisibleGroup(group);
+    setAutoIndex(group * cardsPerGroup);
+    setExpandedCard(null);
+  }, [cardsPerGroup, groupCount, trackGroups, scrollYProgress, x]);
 
   useEffect(() => () => slideAnimation.current?.stop(), []);
 
   const selectAdjacent = (direction: number) => {
     const section = sectionRef.current;
     if (!section) return;
-    const group = Math.max(0, Math.min(1, currentGroup + direction));
+    const group = Math.max(0, Math.min(groupCount - 1, currentGroup + direction));
     const start = section.getBoundingClientRect().top + window.scrollY;
     const distance = section.offsetHeight - window.innerHeight;
     window.scrollTo({
-      top: start + distance * (0.1 + group * 0.8),
+      top: start + distance * (0.1 + (group / (groupCount - 1)) * 0.8),
       behavior: reduceMotion ? "instant" : "smooth",
     });
   };
 
   return (
-    <section ref={sectionRef} className="relative h-[200svh] bg-[#f7f7f5] font-sans">
+    <section ref={sectionRef} className="relative h-[400svh] bg-[#f7f7f5] font-sans sm:h-[200svh]">
       <div className="sticky top-0 flex h-svh items-center overflow-hidden pt-20 pb-4">
       <div className="relative z-10 w-full px-3 sm:px-5 lg:px-8">
         <div className="mb-4 text-center md:mb-6">
@@ -183,7 +207,7 @@ export default function IndustriesSection() {
             <button type="button" onClick={() => selectAdjacent(-1)} disabled={currentGroup === 0} aria-label="Previous industry" className="rounded-full border border-neutral-300 p-2 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-primary">
               <ChevronLeft className="h-4 w-4" />
             </button>
-            <button type="button" onClick={() => selectAdjacent(1)} disabled={currentGroup === 1} aria-label="Next industry" className="rounded-full border border-neutral-300 p-2 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-primary">
+            <button type="button" onClick={() => selectAdjacent(1)} disabled={currentGroup === groupCount - 1} aria-label="Next industry" className="rounded-full border border-neutral-300 p-2 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-primary">
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>
@@ -201,26 +225,27 @@ export default function IndustriesSection() {
           onFocusCapture={() => setIsFocused(true)}
           onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false); }}
         >
-          <motion.div style={{ x }} className="flex h-[clamp(340px,48svh,460px)] w-[300%] sm:h-[clamp(340px,52svh,640px)]">
-            {[0, 1, 2].map((group) => (
+          <motion.div style={{ x, width: `${trackGroups * 100}%` }} className="flex h-[clamp(340px,48svh,460px)] sm:h-[clamp(340px,52svh,640px)]">
+            {Array.from({ length: trackGroups }, (_, group) => (
               <div
                 key={group}
                 inert={visibleGroup !== group}
                 aria-hidden={visibleGroup !== group}
-                onPointerLeave={() => setExpandedCard(null)}
+                onPointerLeave={(event) => { if (event.pointerType === "mouse") setExpandedCard(null); }}
                 onBlurCapture={(event) => {
                   if (!event.currentTarget.contains(event.relatedTarget)) setExpandedCard(null);
                 }}
-                className="grid w-1/3 shrink-0 grid-cols-3 gap-2 px-0.5 lg:flex lg:gap-3"
+                style={{ width: `${100 / trackGroups}%` }}
+                className="flex shrink-0 gap-1 px-0.5 sm:gap-2 lg:gap-3"
               >
-                {industries.slice((group % 2) * 6, (group % 2) * 6 + 6).map((industry) => {
+                {industries.slice((group % groupCount) * cardsPerGroup, (group % groupCount + 1) * cardsPerGroup).map((industry) => {
                   const Icon = industry.icon;
                   const hoveredInGroup = industries
-                    .slice((group % 2) * 6, (group % 2) * 6 + 6)
+                    .slice((group % groupCount) * cardsPerGroup, (group % groupCount + 1) * cardsPerGroup)
                     .some((item) => item.name === expandedCard);
-                  const isExpanded = hoveredInGroup
+                  const isExpanded = isCompact || (hoveredInGroup
                     ? expandedCard === industry.name
-                    : industry === industries[autoIndex];
+                    : industry === industries[autoIndex]);
                   return (
                     <motion.article
                       key={industry.name}
@@ -231,7 +256,7 @@ export default function IndustriesSection() {
                         if (event.pointerType === "mouse") setExpandedCard(industry.name);
                       }}
                       onFocusCapture={() => setExpandedCard(industry.name)}
-                      className="relative min-h-0 min-w-0 overflow-hidden rounded-xl bg-neutral-900 lg:basis-0"
+                      className="relative min-h-0 min-w-0 overflow-hidden rounded-xl bg-neutral-900 basis-0"
                     >
                       <motion.img
                         src={industry.image}
@@ -243,20 +268,36 @@ export default function IndustriesSection() {
                         className="absolute inset-0 h-full w-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/10" />
-                      <div className="absolute left-4 top-4 hidden h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-black/20 text-white sm:flex">
+                      <button
+                        type="button"
+                        onClick={() => setExpandedCard(industry.name)}
+                        aria-label={`Expand ${industry.name}`}
+                        aria-expanded={isExpanded}
+                        className="absolute inset-0 z-10 rounded-xl text-white focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white lg:hidden"
+                      >
+                        <span aria-hidden="true" className="absolute left-1/2 top-4 -translate-x-1/2">
+                          <Icon className="h-3 w-3" />
+                        </span>
+                        {!isExpanded && (
+                          <span aria-hidden="true" className="absolute bottom-5 left-1/2 -translate-x-1/2 rotate-180 whitespace-nowrap text-[10px] font-semibold [writing-mode:vertical-rl] sm:text-xs">
+                            {industry.name}
+                          </span>
+                        )}
+                      </button>
+                      <div className="absolute left-4 top-4 hidden h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-black/20 text-white lg:flex">
                         <Icon className="h-4 w-4" aria-hidden="true" />
                       </div>
-                      <div className="absolute inset-x-0 bottom-0 p-2 sm:p-4 lg:p-4">
-                        <h3 className="text-xs font-bold leading-tight text-white sm:text-lg lg:text-xl">
+                      <div className={`pointer-events-none absolute inset-x-0 bottom-0 z-20 p-3 sm:p-4 ${isExpanded ? "block" : "hidden lg:block"}`}>
+                        <h3 className="text-base font-bold leading-tight text-white sm:text-lg lg:text-xl">
                           {industry.name}
                         </h3>
-                        <p className="mt-1 text-[10px] leading-snug text-white/80 sm:mt-2 sm:text-xs lg:text-sm">
+                        <p className="mt-1 text-xs leading-snug text-white/80 sm:mt-2 sm:text-xs lg:text-sm">
                           {industry.description}
                         </p>
                         <Link
                           to="/contact"
                           aria-label={`Start a ${industry.name} project`}
-                          className="mt-2 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold text-neutral-900 transition-colors hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:mt-4 sm:py-2 sm:text-xs"
+                          className="pointer-events-auto mt-2 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold text-neutral-900 transition-colors hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:mt-4 sm:py-2 sm:text-xs"
                         >
                           Let's build <ArrowUpRight className="h-3 w-3 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
                         </Link>

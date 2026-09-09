@@ -1,4 +1,4 @@
-import { HoverMember } from "@/components/ui/hover-member";
+import TeamShowcaseScroll, { type TeamMember } from "@/components/site/TeamShowcaseScroll";
 import { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -39,7 +39,7 @@ const staticTeamData = [
 ];
 
 export default function TeamPage() {
-  const [teamMembers, setTeamMembers] = useState<{name: string, role: string, image: string}[]>([]);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function TeamPage() {
       try {
         const q = query(collection(db, "team"), orderBy("createdAt", "asc"));
         const snapshot = await getDocs(q);
-        const data = snapshot.docs.map(doc => doc.data() as {name: string, role: string, image: string});
+        const data = snapshot.docs.map(doc => doc.data() as TeamMember);
         if (data.length > 0) {
           setTeamMembers(data);
         } else {
@@ -64,7 +64,7 @@ export default function TeamPage() {
   }, []);
 
   return (
-    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen overflow-x-hidden pb-16 lg:pb-24">
+    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen font-sans">
       <SubBanner
         badge="Our Team"
         title="Meet the Minds Behind the"
@@ -72,16 +72,14 @@ export default function TeamPage() {
         subtitle="We are a collective of passionate designers, developers, and strategists dedicated to crafting exceptional digital experiences."
       />
 
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16">
-
         {loading ? (
-          <div className="flex justify-center items-center h-64">
+          <div role="status" className="flex justify-center items-center h-64">
+            <span className="sr-only">Loading our team</span>
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : (
-          <HoverMember teamMembers={teamMembers} />
+          <TeamShowcaseScroll members={teamMembers} />
         )}
-      </div>
     </main>
   );
 }
