@@ -169,6 +169,7 @@ const AboutMenuContent = () => {
   return (
     <div className="flex w-64 flex-col gap-3 p-4 text-neutral-900 dark:text-white">
       <HoveredLink href="/about">About Us</HoveredLink>
+      <HoveredLink href="/about#process">Our Process</HoveredLink>
       <HoveredLink href="/team">Our Team</HoveredLink>
       <HoveredLink href="/careers">Careers</HoveredLink>
       <HoveredLink href="/gallery">Gallery</HoveredLink>

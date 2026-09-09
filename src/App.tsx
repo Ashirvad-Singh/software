@@ -19,7 +19,6 @@ const WorkPage = lazy(() => import("@/pages/WorkPage"));
 const ProjectDetailPage = lazy(() => import("@/pages/ProjectDetailPage"));
 const CaseStudiesPage = lazy(() => import("@/pages/CaseStudiesPage"));
 const CaseStudyDetailPage = lazy(() => import("@/pages/CaseStudyDetailPage"));
-const ProcessPage = lazy(() => import("@/pages/ProcessPage"));
 const AboutPage = lazy(() => import("@/pages/AboutPage"));
 const ContactPage = lazy(() => import("@/pages/ContactPage"));
 const TeamPage = lazy(() => import("@/pages/TeamPage"));
@@ -87,7 +86,7 @@ function App() {
                   path="/case-studies/:slug"
                   element={<CaseStudyDetailPage />}
                 />
-                <Route path="/process" element={<ProcessPage />} />
+                <Route path="/process" element={<AboutPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/team" element={<TeamPage />} />
