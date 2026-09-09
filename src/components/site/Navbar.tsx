@@ -12,6 +12,15 @@ import {
   Server,
   Sparkles,
   ChevronDown,
+  ShoppingCart,
+  Heart,
+  TrendingUp,
+  Radio,
+  Zap,
+  GraduationCap,
+  Cpu,
+  Gamepad2,
+  Truck,
 } from "lucide-react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -35,23 +44,139 @@ import * as TablerIcons from "@tabler/icons-react";
 
 const navLinks = [
   { name: "Home", href: "/" },
+  { name: "Industries", href: "/#industries" },
   { name: "Services", href: "/services" },
   { name: "Technologies", href: "/technologies" },
-  { name: "Process", href: "/process" },
   { name: "About", href: "/about" },
   { name: "Resources", href: "#resources" },
 ];
+
+const industriesList = [
+  {
+    icon: ShoppingCart,
+    title: "Retail & eCommerce",
+    description: "Digital platforms built for scale, conversion, and experience.",
+  },
+  {
+    icon: Heart,
+    title: "Healthcare & Life Sciences",
+    description: "Secure, compliant systems enabling modern care delivery.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Market Research",
+    description: "Digital tools that simplify research and speed up insight delivery.",
+  },
+  {
+    icon: Radio,
+    title: "Telecom & Media",
+    description: "Infrastructure for real-time content, connection, and digital reach.",
+  },
+  {
+    icon: Zap,
+    title: "Energy & Utilities",
+    description: "Intelligent systems supporting resilient, data-driven energy operations.",
+  },
+  {
+    icon: GraduationCap,
+    title: "EdTech",
+    description: "Adaptive learning platforms built for scale, insight, and real outcomes.",
+  },
+  {
+    icon: Cpu,
+    title: "Manufacturing & SaaS",
+    description: "Connected digital cores enabling smarter, faster production decisions.",
+  },
+  {
+    icon: Gamepad2,
+    title: "Gaming & Entertainment",
+    description: "High-performance digital experiences designed for engagement at scale.",
+  },
+  {
+    icon: Truck,
+    title: "Mobility & Transportation",
+    description: "Software that moves riders, drivers, and fleets from booking to payout.",
+  },
+];
+
+const IndustriesMegaMenu = () => {
+  return (
+    <div className="w-[min(880px,calc(100vw-2rem))] overflow-hidden text-neutral-900 dark:text-white">
+      <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[360px]">
+        {/* Left 2 Columns of Industries */}
+        <div className="lg:col-span-8 p-6 sm:p-7 bg-white dark:bg-neutral-950 flex flex-col justify-between">
+          <div>
+            <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400">
+              Industries
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              {industriesList.map((ind) => {
+                const Icon = ind.icon;
+                return (
+                  <Link
+                    key={ind.title}
+                    to="/#industries"
+                    className="group flex items-start gap-3 p-1.5 rounded-xl transition-all hover:bg-sky-50/70 dark:hover:bg-neutral-900"
+                  >
+                    <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-sky-100 bg-sky-50 text-sky-600 transition-colors group-hover:bg-sky-500 group-hover:text-white dark:border-neutral-800 dark:bg-neutral-900 dark:text-sky-400">
+                      <Icon className="h-4.5 w-4.5 stroke-[1.75]" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-neutral-900 group-hover:text-sky-600 dark:text-white dark:group-hover:text-sky-400 transition-colors">
+                        {ind.title}
+                      </h4>
+                      <p className="mt-0.5 text-xs text-neutral-500 dark:text-neutral-400 leading-snug line-clamp-2">
+                        {ind.description}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Promo Side Panel */}
+        <div className="lg:col-span-4 p-6 sm:p-7 bg-slate-50 dark:bg-neutral-900 border-l border-neutral-100 dark:border-neutral-800/80 flex flex-col justify-between">
+          <div>
+            <h4 className="text-base font-bold text-neutral-950 dark:text-white leading-snug">
+              See how ADAT enables <span className="text-sky-500">digital evolution across critical</span> global sectors.
+            </h4>
+            
+            <div className="mt-5 relative h-36 rounded-2xl overflow-hidden shadow-md group">
+              <img
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80"
+                alt="Digital Evolution"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            </div>
+          </div>
+
+          <Link
+            to="/contact"
+            className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-neutral-950 px-5 py-3 text-xs font-bold text-white transition-colors hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-200"
+          >
+            Let's Connect <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const AboutMenuContent = () => {
   return (
     <div className="flex w-64 flex-col gap-3 p-4 text-neutral-900 dark:text-white">
       <HoveredLink href="/about">About Us</HoveredLink>
+      <HoveredLink href="/about#process">Our Process</HoveredLink>
       <HoveredLink href="/team">Our Team</HoveredLink>
       <HoveredLink href="/careers">Careers</HoveredLink>
       <HoveredLink href="/gallery">Gallery</HoveredLink>
     </div>
   );
 };
+
 
 
 const defaultThumbnails = [
@@ -389,6 +514,7 @@ export default function Navbar({ className }: { className?: string }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isIndustriesOpen, setIsIndustriesOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
@@ -478,7 +604,16 @@ export default function Navbar({ className }: { className?: string }) {
               {/* Links */}
               <div className="flex items-center justify-center space-x-4 xl:space-x-5 text-sm font-medium flex-1">
                 {navLinks.map((link) =>
-                  link.name === "Services" ? (
+                  link.name === "Industries" ? (
+                    <MenuItem
+                      key={link.name}
+                      setActive={setActive}
+                      active={active}
+                      item="Industries"
+                    >
+                      <IndustriesMegaMenu />
+                    </MenuItem>
+                  ) : link.name === "Services" ? (
                     <MenuItem
                       key={link.name}
                       setActive={setActive}
@@ -574,6 +709,42 @@ export default function Navbar({ className }: { className?: string }) {
             <div className="mx-auto flex min-h-full max-w-lg flex-col items-center justify-center gap-5">
               {navLinks.map((link, i) => {
                 const isActive = location.pathname === link.href;
+                if (link.name === "Industries") {
+                  return (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 * i, duration: 0.4 }}
+                      className="flex flex-col items-center"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setIsIndustriesOpen((open) => !open)}
+                        className="flex items-center gap-2 text-2xl font-semibold transition-colors hover:text-primary"
+                      >
+                        Industries
+                        <ChevronDown
+                          className={`h-5 w-5 transition-transform ${isIndustriesOpen ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                      {isIndustriesOpen && (
+                        <div className="mt-3 flex flex-col items-center gap-2.5 text-lg text-muted-foreground">
+                          {industriesList.map((ind) => (
+                            <Link
+                              key={ind.title}
+                              to="/#industries"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="hover:text-primary text-base"
+                            >
+                              {ind.title}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </motion.div>
+                  );
+                }
                 if (link.name === "About") {
                   return (
                     <motion.div
@@ -601,6 +772,13 @@ export default function Navbar({ className }: { className?: string }) {
                             className="hover:text-primary"
                           >
                             About Us
+                          </Link>
+                          <Link
+                            to="/about#process"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="hover:text-primary"
+                          >
+                            Our Process
                           </Link>
                           <Link
                             to="/team"
