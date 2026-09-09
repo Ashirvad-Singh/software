@@ -56,13 +56,16 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="font-semibold text-lg mb-4">Company</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5 text-sm">
               <li><Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">About Us</Link></li>
+              <li><Link to="/team" className="text-muted-foreground hover:text-foreground transition-colors">Our Team</Link></li>
+              <li><Link to="/careers" className="text-muted-foreground hover:text-foreground transition-colors">Careers</Link></li>
+              <li><Link to="/gallery" className="text-muted-foreground hover:text-foreground transition-colors">Gallery</Link></li>
               <li><Link to="/work" className="text-muted-foreground hover:text-foreground transition-colors">Our Work</Link></li>
               <li><Link to="/process" className="text-muted-foreground hover:text-foreground transition-colors">Process</Link></li>
-              <li><Link to="/team" className="text-muted-foreground hover:text-foreground transition-colors">Careers</Link></li>
             </ul>
           </div>
+
 
           {/* Services */}
           <div>
