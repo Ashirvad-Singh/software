@@ -39,11 +39,20 @@ const navLinks = [
   { name: "Technologies", href: "/technologies" },
   { name: "Process", href: "/process" },
   { name: "About", href: "/about" },
-  { name: "Team", href: "/team" },
   { name: "Resources", href: "#resources" },
-  { name: "Careers", href: "/careers" },
-  { name: "Gallery", href: "/gallery" },
 ];
+
+const AboutMenuContent = () => {
+  return (
+    <div className="flex w-64 flex-col gap-3 p-4 text-neutral-900 dark:text-white">
+      <HoveredLink href="/about">About Us</HoveredLink>
+      <HoveredLink href="/team">Our Team</HoveredLink>
+      <HoveredLink href="/careers">Careers</HoveredLink>
+      <HoveredLink href="/gallery">Gallery</HoveredLink>
+    </div>
+  );
+};
+
 
 const defaultThumbnails = [
   "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80",
@@ -379,6 +388,7 @@ const TechnologyMegaMenu = () => {
 export default function Navbar({ className }: { className?: string }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
@@ -486,6 +496,15 @@ export default function Navbar({ className }: { className?: string }) {
                     >
                       <TechnologyMegaMenu />
                     </MenuItem>
+                  ) : link.name === "About" ? (
+                    <MenuItem
+                      key={link.name}
+                      setActive={setActive}
+                      active={active}
+                      item="About"
+                    >
+                      <AboutMenuContent />
+                    </MenuItem>
                   ) : link.name === "Resources" ? (
                     <MenuItem
                       key={link.name}
@@ -555,6 +574,60 @@ export default function Navbar({ className }: { className?: string }) {
             <div className="mx-auto flex min-h-full max-w-lg flex-col items-center justify-center gap-5">
               {navLinks.map((link, i) => {
                 const isActive = location.pathname === link.href;
+                if (link.name === "About") {
+                  return (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 * i, duration: 0.4 }}
+                      className="flex flex-col items-center"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setIsAboutOpen((open) => !open)}
+                        className="flex items-center gap-2 text-2xl font-semibold transition-colors hover:text-primary"
+                      >
+                        About
+                        <ChevronDown
+                          className={`h-5 w-5 transition-transform ${isAboutOpen ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                      {isAboutOpen && (
+                        <div className="mt-3 flex flex-col items-center gap-3 text-lg text-muted-foreground">
+                          <Link
+                            to="/about"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="hover:text-primary"
+                          >
+                            About Us
+                          </Link>
+                          <Link
+                            to="/team"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="hover:text-primary"
+                          >
+                            Our Team
+                          </Link>
+                          <Link
+                            to="/careers"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="hover:text-primary"
+                          >
+                            Careers
+                          </Link>
+                          <Link
+                            to="/gallery"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="hover:text-primary"
+                          >
+                            Gallery
+                          </Link>
+                        </div>
+                      )}
+                    </motion.div>
+                  );
+                }
                 if (link.name === "Resources") {
                   return (
                     <motion.div
