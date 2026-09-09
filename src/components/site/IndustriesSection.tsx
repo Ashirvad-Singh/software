@@ -190,29 +190,29 @@ export default function IndustriesSection() {
 
   return (
     <section ref={sectionRef} className={`relative bg-[#f7f7f5] font-sans ${isCompact ? "py-16 sm:py-20" : "h-[200svh]"}`}>
-      <div className={isCompact ? "overflow-hidden" : "sticky top-0 flex h-svh items-center overflow-hidden pt-20 pb-4"}>
-      <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 sm:px-8">
-        <div className="mb-4 text-center md:mb-6">
+      <div className={isCompact ? "overflow-hidden" : "sticky top-0 flex h-svh items-center overflow-hidden pt-14 md:pt-16 pb-6"}>
+      <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 sm:px-8 flex flex-col justify-between h-full max-h-svh py-2">
+        <div className="mb-2 text-center md:mb-4">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <p className="mb-3 text-sm font-bold uppercase tracking-widest text-primary">
+            <p className="mb-1.5 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary">
               What we build
             </p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 text-balance">
               Use Cases &amp; Industry Applications
             </h2>
           </motion.div>
-          <p className="hidden mx-auto mt-4 max-w-2xl text-sm sm:text-base md:text-lg leading-relaxed text-neutral-500 md:block">
+          <p className="hidden mx-auto mt-2 max-w-2xl text-xs sm:text-sm md:text-base leading-relaxed text-neutral-500 md:block">
             From first sketch to global scale, we pair product thinking with
             engineering that creates measurable momentum.
           </p>
         </div>
 
-        <div className="mb-4 flex items-center justify-end text-xs text-neutral-500">
+        <div className="mb-2 flex items-center justify-end text-xs text-neutral-500">
           <div className="flex items-center gap-2">
             {!reduceMotion && (
               <button type="button" onClick={() => setIsPaused((paused) => !paused)} aria-label={isPaused ? "Play industry slider" : "Pause industry slider"} className="rounded-full border border-neutral-300 p-2 hover:bg-white focus-visible:outline-2 focus-visible:outline-primary">
@@ -240,7 +240,7 @@ export default function IndustriesSection() {
           onFocusCapture={() => setIsFocused(true)}
           onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false); }}
         >
-          <motion.div style={{ x, width: `${trackGroups * 100}%` }} className={`flex ${isCompact ? "h-[380px] sm:h-[440px]" : "h-[clamp(340px,52svh,640px)]"}`}>
+          <motion.div style={{ x, width: `${trackGroups * 100}%` }} className={`flex ${isCompact ? "h-[380px] sm:h-[440px]" : "h-[clamp(280px,44svh,520px)]"}`}>
             {Array.from({ length: trackGroups }, (_, group) => (
               <div
                 key={group}
@@ -271,7 +271,7 @@ export default function IndustriesSection() {
                         if (event.pointerType === "mouse") setExpandedCard(industry.name);
                       }}
                       onFocusCapture={() => setExpandedCard(industry.name)}
-                      className="relative min-h-0 min-w-0 overflow-hidden rounded-xl bg-neutral-900 basis-0"
+                      className="relative min-h-0 min-w-0 overflow-hidden rounded-xl bg-neutral-900 basis-0 cursor-pointer"
                     >
                       <motion.img
                         src={industry.image}
@@ -283,26 +283,34 @@ export default function IndustriesSection() {
                         className="absolute inset-0 h-full w-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/10" />
+                      
                       <button
                         type="button"
                         onClick={() => setExpandedCard(industry.name)}
                         aria-label={`Expand ${industry.name}`}
                         aria-expanded={isExpanded}
-                        className="absolute inset-0 z-10 rounded-xl text-white focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white lg:hidden"
-                      >
-                        <span aria-hidden="true" className="absolute left-1/2 top-4 -translate-x-1/2">
-                          <Icon className="h-3 w-3" />
-                        </span>
-                        {!isExpanded && (
-                          <span aria-hidden="true" className="absolute bottom-5 left-1/2 -translate-x-1/2 rotate-180 whitespace-nowrap text-[10px] font-semibold [writing-mode:vertical-rl] sm:text-xs">
-                            {industry.name}
-                          </span>
-                        )}
-                      </button>
-                      <div className="absolute left-4 top-4 hidden h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-black/20 text-white lg:flex">
+                        className="absolute inset-0 z-10 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white"
+                      />
+
+                      {/* Icon */}
+                      <div className={`absolute top-4 z-20 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-xs transition-all duration-300 ${isExpanded ? "left-4" : "left-1/2 -translate-x-1/2"}`}>
                         <Icon className="h-4 w-4" aria-hidden="true" />
                       </div>
-                      <div className={`pointer-events-none absolute inset-x-0 bottom-0 z-20 p-3 sm:p-4 ${isExpanded ? "block" : "hidden"}`}>
+
+                      {/* Vertical Title when collapsed */}
+                      {!isExpanded && (
+                        <div className="pointer-events-none absolute inset-x-0 bottom-6 z-20 flex justify-center">
+                          <span
+                            aria-hidden="true"
+                            className="rotate-180 whitespace-nowrap text-xs font-bold uppercase tracking-widest text-white/90 drop-shadow-md [writing-mode:vertical-rl] sm:text-sm"
+                          >
+                            {industry.name}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Expanded Content */}
+                      <div className={`pointer-events-none absolute inset-x-0 bottom-0 z-20 p-3 sm:p-4 transition-opacity duration-300 ${isExpanded ? "block opacity-100" : "hidden opacity-0"}`}>
                         <h3 className="text-base font-bold leading-tight text-white sm:text-lg lg:text-xl">
                           {industry.name}
                         </h3>
@@ -325,7 +333,7 @@ export default function IndustriesSection() {
           </motion.div>
         </div>
 
-        <div className="mt-3 flex flex-col gap-2 border-t border-neutral-200 pt-3 text-xs sm:text-sm sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-2.5 flex flex-col gap-2 border-t border-neutral-200 pt-2.5 text-xs sm:text-sm sm:flex-row sm:items-center sm:justify-between shrink-0">
           <p className="text-neutral-500">Your next big idea belongs here.</p>
           <Link to="/contact" className="inline-flex items-center gap-2 font-semibold text-neutral-950 hover:text-primary">
             Tell us what you are building <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
