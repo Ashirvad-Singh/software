@@ -11,6 +11,7 @@ import {
   Globe2,
   Server,
   Sparkles,
+  ChevronDown,
 } from "lucide-react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -36,11 +37,10 @@ const navLinks = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
   { name: "Technologies", href: "/technologies" },
-  { name: "Work", href: "/work" },
   { name: "Process", href: "/process" },
   { name: "About", href: "/about" },
   { name: "Team", href: "/team" },
-  { name: "Blog", href: "/blog" },
+  { name: "Resources", href: "#resources" },
   { name: "Careers", href: "/careers" },
   { name: "Gallery", href: "/gallery" },
 ];
@@ -378,6 +378,7 @@ const TechnologyMegaMenu = () => {
 
 export default function Navbar({ className }: { className?: string }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const location = useLocation();
 
@@ -455,6 +456,20 @@ export default function Navbar({ className }: { className?: string }) {
                     >
                       <TechnologyMegaMenu />
                     </MenuItem>
+                  ) : link.name === "Resources" ? (
+                    <MenuItem
+                      key={link.name}
+                      setActive={setActive}
+                      active={active}
+                      item="Resources"
+                    >
+                      <div className="flex w-64 flex-col gap-3 p-4 text-neutral-900 dark:text-white">
+                        <HoveredLink href="/case-studies">
+                          Case Studies
+                        </HoveredLink>
+                        <HoveredLink href="/blog">Blog</HoveredLink>
+                      </div>
+                    </MenuItem>
                   ) : (
                     <div key={link.name} onMouseEnter={() => setActive(null)}>
                       <HoveredLink
@@ -504,6 +519,46 @@ export default function Navbar({ className }: { className?: string }) {
             <div className="flex flex-col items-center gap-6">
               {navLinks.map((link, i) => {
                 const isActive = location.pathname === link.href;
+                if (link.name === "Resources") {
+                  return (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 * i, duration: 0.4 }}
+                      className="flex flex-col items-center"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setIsResourcesOpen((open) => !open)}
+                        className="flex items-center gap-2 text-2xl font-semibold transition-colors hover:text-primary"
+                      >
+                        Resources
+                        <ChevronDown
+                          className={`h-5 w-5 transition-transform ${isResourcesOpen ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                      {isResourcesOpen && (
+                        <div className="mt-3 flex flex-col items-center gap-3 text-lg text-muted-foreground">
+                          <Link
+                            to="/case-studies"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="hover:text-primary"
+                          >
+                            Case Studies
+                          </Link>
+                          <Link
+                            to="/blog"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="hover:text-primary"
+                          >
+                            Blog
+                          </Link>
+                        </div>
+                      )}
+                    </motion.div>
+                  );
+                }
                 return (
                   <motion.div
                     key={link.name}

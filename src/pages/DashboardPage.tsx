@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, orderBy, query, updateDoc, doc } from "firebase/firestore";
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { db, auth } from "@/lib/firebase";
 import { sendJobStatusUpdateEmail } from "@/lib/email";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,6 +26,7 @@ import GalleryTab from "@/components/dashboard/GalleryTab";
 import TeamTab from "@/components/dashboard/TeamTab";
 import TestimonialsTab from "@/components/dashboard/TestimonialsTab";
 import ProjectsTab from "@/components/dashboard/ProjectsTab";
+import CaseStudiesTab from "@/components/dashboard/CaseStudiesTab";
 
 interface ContactSubmission {
   id: string;
@@ -53,8 +65,20 @@ export default function DashboardPage() {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  
-  const [activeTab, setActiveTab] = useState<"contact" | "applications" | "services" | "tech_stack" | "blogs" | "jobs" | "gallery" | "team" | "testimonials" | "projects">("contact");
+
+  const [activeTab, setActiveTab] = useState<
+    | "contact"
+    | "applications"
+    | "services"
+    | "tech_stack"
+    | "blogs"
+    | "jobs"
+    | "gallery"
+    | "team"
+    | "testimonials"
+    | "projects"
+    | "case_studies"
+  >("contact");
   const [contacts, setContacts] = useState<ContactSubmission[]>([]);
   const [careers, setCareers] = useState<JobApplication[]>([]);
   const [loading, setLoading] = useState(false);
@@ -62,20 +86,32 @@ export default function DashboardPage() {
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
 
   const handleStatusUpdate = async (appId: string, newStatus: string) => {
-    if (!confirm(`Are you sure you want to change the status to '${newStatus}'? This will send an automated email to the candidate.`)) return;
-    
+    if (
+      !confirm(
+        `Are you sure you want to change the status to '${newStatus}'? This will send an automated email to the candidate.`,
+      )
+    )
+      return;
+
     setIsUpdatingStatus(true);
     try {
-      await updateDoc(doc(db, "job_applications", appId), { status: newStatus });
-      
-      const app = careers.find(a => a.id === appId);
+      await updateDoc(doc(db, "job_applications", appId), {
+        status: newStatus,
+      });
+
+      const app = careers.find((a) => a.id === appId);
       if (app) {
-        await sendJobStatusUpdateEmail(app.fullName, app.email, app.position, newStatus);
+        await sendJobStatusUpdateEmail(
+          app.fullName,
+          app.email,
+          app.position,
+          newStatus,
+        );
         toast.success(`Status updated to ${newStatus} and email sent!`);
       }
-      
+
       fetchData();
-      setSelectedApp(prev => prev ? { ...prev, status: newStatus } : null);
+      setSelectedApp((prev) => (prev ? { ...prev, status: newStatus } : null));
     } catch (error) {
       console.error(error);
       toast.error("Failed to update status");
@@ -87,7 +123,10 @@ export default function DashboardPage() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const contactQuery = query(collection(db, "contact_submissions"), orderBy("createdAt", "desc"));
+      const contactQuery = query(
+        collection(db, "contact_submissions"),
+        orderBy("createdAt", "desc"),
+      );
       const contactSnapshot = await getDocs(contactQuery);
       const contactData = contactSnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -95,7 +134,10 @@ export default function DashboardPage() {
       })) as ContactSubmission[];
       setContacts(contactData);
 
-      const careersQuery = query(collection(db, "job_applications"), orderBy("createdAt", "desc"));
+      const careersQuery = query(
+        collection(db, "job_applications"),
+        orderBy("createdAt", "desc"),
+      );
       const careersSnapshot = await getDocs(careersQuery);
       const careersData = careersSnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -157,7 +199,7 @@ export default function DashboardPage() {
   if (!isAuthenticated) {
     return (
       <main className="pt-32 pb-24 min-h-screen bg-neutral-50 flex items-center justify-center">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-white p-8 rounded-2xl shadow-sm border border-neutral-200 w-full max-w-md mx-4"
@@ -167,20 +209,24 @@ export default function DashboardPage() {
               <Lock className="w-6 h-6" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold text-center text-neutral-800 mb-2">Admin Dashboard</h1>
-          <p className="text-center text-neutral-500 mb-8">Sign in with your admin credentials</p>
-          
+          <h1 className="text-2xl font-bold text-center text-neutral-800 mb-2">
+            Admin Dashboard
+          </h1>
+          <p className="text-center text-neutral-500 mb-8">
+            Sign in with your admin credentials
+          </p>
+
           <form onSubmit={handleLogin} className="space-y-4">
-            <Input 
-              type="email" 
+            <Input
+              type="email"
               placeholder="Admin Email"
               value={emailInput}
               onChange={(e) => setEmailInput(e.target.value)}
               className="w-full text-center h-12"
               required
             />
-            <Input 
-              type="password" 
+            <Input
+              type="password"
               placeholder="Enter passcode"
               value={passwordInput}
               onChange={(e) => setPasswordInput(e.target.value)}
@@ -192,7 +238,11 @@ export default function DashboardPage() {
               disabled={isLoggingIn}
               className="w-full bg-black text-white rounded-md h-12 font-medium hover:bg-neutral-800 transition-colors shadow-sm disabled:opacity-70 flex items-center justify-center"
             >
-              {isLoggingIn ? <Loader2 className="w-5 h-5 animate-spin" /> : "Access Dashboard"}
+              {isLoggingIn ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                "Access Dashboard"
+              )}
             </button>
           </form>
         </motion.div>
@@ -204,13 +254,17 @@ export default function DashboardPage() {
     <main className="pt-32 pb-24 min-h-screen bg-neutral-50">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <h1 className="text-3xl font-bold text-neutral-800">Admin Dashboard</h1>
+          <h1 className="text-3xl font-bold text-neutral-800">
+            Admin Dashboard
+          </h1>
           <div className="flex flex-col xl:flex-row items-center gap-4 w-full xl:w-auto">
             <div className="flex flex-wrap bg-white rounded-lg p-1 border border-neutral-200 shadow-sm w-full xl:w-auto justify-center gap-1">
               <button
                 onClick={() => setActiveTab("contact")}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeTab === "contact" ? "bg-black text-white" : "text-neutral-600 hover:text-black"
+                  activeTab === "contact"
+                    ? "bg-black text-white"
+                    : "text-neutral-600 hover:text-black"
                 }`}
               >
                 Inquiries
@@ -218,7 +272,9 @@ export default function DashboardPage() {
               <button
                 onClick={() => setActiveTab("applications")}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeTab === "applications" ? "bg-black text-white" : "text-neutral-600 hover:text-black"
+                  activeTab === "applications"
+                    ? "bg-black text-white"
+                    : "text-neutral-600 hover:text-black"
                 }`}
               >
                 Applications
@@ -226,7 +282,9 @@ export default function DashboardPage() {
               <button
                 onClick={() => setActiveTab("services")}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeTab === "services" ? "bg-black text-white" : "text-neutral-600 hover:text-black"
+                  activeTab === "services"
+                    ? "bg-black text-white"
+                    : "text-neutral-600 hover:text-black"
                 }`}
               >
                 Services
@@ -234,15 +292,29 @@ export default function DashboardPage() {
               <button
                 onClick={() => setActiveTab("projects")}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeTab === "projects" ? "bg-black text-white" : "text-neutral-600 hover:text-black"
+                  activeTab === "projects"
+                    ? "bg-black text-white"
+                    : "text-neutral-600 hover:text-black"
                 }`}
               >
                 Projects
               </button>
               <button
+                onClick={() => setActiveTab("case_studies")}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  activeTab === "case_studies"
+                    ? "bg-black text-white"
+                    : "text-neutral-600 hover:text-black"
+                }`}
+              >
+                Case Studies
+              </button>
+              <button
                 onClick={() => setActiveTab("gallery")}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeTab === "gallery" ? "bg-black text-white" : "text-neutral-600 hover:text-black"
+                  activeTab === "gallery"
+                    ? "bg-black text-white"
+                    : "text-neutral-600 hover:text-black"
                 }`}
               >
                 Gallery
@@ -250,7 +322,9 @@ export default function DashboardPage() {
               <button
                 onClick={() => setActiveTab("team")}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeTab === "team" ? "bg-black text-white" : "text-neutral-600 hover:text-black"
+                  activeTab === "team"
+                    ? "bg-black text-white"
+                    : "text-neutral-600 hover:text-black"
                 }`}
               >
                 Team
@@ -258,7 +332,9 @@ export default function DashboardPage() {
               <button
                 onClick={() => setActiveTab("testimonials")}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeTab === "testimonials" ? "bg-black text-white" : "text-neutral-600 hover:text-black"
+                  activeTab === "testimonials"
+                    ? "bg-black text-white"
+                    : "text-neutral-600 hover:text-black"
                 }`}
               >
                 Testimonials
@@ -266,7 +342,9 @@ export default function DashboardPage() {
               <button
                 onClick={() => setActiveTab("tech_stack")}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeTab === "tech_stack" ? "bg-black text-white" : "text-neutral-600 hover:text-black"
+                  activeTab === "tech_stack"
+                    ? "bg-black text-white"
+                    : "text-neutral-600 hover:text-black"
                 }`}
               >
                 Tech Stack
@@ -274,7 +352,9 @@ export default function DashboardPage() {
               <button
                 onClick={() => setActiveTab("blogs")}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeTab === "blogs" ? "bg-black text-white" : "text-neutral-600 hover:text-black"
+                  activeTab === "blogs"
+                    ? "bg-black text-white"
+                    : "text-neutral-600 hover:text-black"
                 }`}
               >
                 Blogs
@@ -282,7 +362,9 @@ export default function DashboardPage() {
               <button
                 onClick={() => setActiveTab("jobs")}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeTab === "jobs" ? "bg-black text-white" : "text-neutral-600 hover:text-black"
+                  activeTab === "jobs"
+                    ? "bg-black text-white"
+                    : "text-neutral-600 hover:text-black"
                 }`}
               >
                 Jobs
@@ -311,106 +393,156 @@ export default function DashboardPage() {
           >
             {activeTab === "services" && <ServicesTab />}
             {activeTab === "projects" && <ProjectsTab />}
+            {activeTab === "case_studies" && <CaseStudiesTab />}
             {activeTab === "tech_stack" && <TechStackTab />}
             {activeTab === "blogs" && <BlogsTab />}
             {activeTab === "jobs" && <JobsTab />}
             {activeTab === "gallery" && <GalleryTab />}
             {activeTab === "team" && <TeamTab />}
             {activeTab === "testimonials" && <TestimonialsTab />}
-            
-            {(activeTab === "contact" || activeTab === "applications") && (
-            <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 overflow-hidden">
-              <div className="overflow-x-auto">
-              {activeTab === "contact" && (
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-neutral-50 border-b border-neutral-200 text-sm text-neutral-500">
-                      <th className="p-4 font-medium">Date</th>
-                      <th className="p-4 font-medium">Name</th>
-                      <th className="p-4 font-medium">Email / Phone</th>
-                      <th className="p-4 font-medium">Subject</th>
-                      <th className="p-4 font-medium min-w-[300px]">Message</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-sm">
-                    {contacts.length === 0 ? (
-                      <tr>
-                        <td colSpan={5} className="p-8 text-center text-neutral-500">No contact inquiries found.</td>
-                      </tr>
-                    ) : (
-                      contacts.map((contact) => (
-                        <tr key={contact.id} className="border-b border-neutral-100 hover:bg-neutral-50 transition-colors">
-                          <td className="p-4 whitespace-nowrap text-neutral-500">{formatDate(contact.createdAt)}</td>
-                          <td className="p-4 font-medium text-neutral-800">{contact.fullName}</td>
-                          <td className="p-4">
-                            <div className="text-neutral-800">{contact.email}</div>
-                            <div className="text-neutral-500 text-xs mt-1">{contact.phone}</div>
-                          </td>
-                          <td className="p-4 text-neutral-800">{contact.subject}</td>
-                          <td className="p-4 text-neutral-600 max-w-xs truncate" title={contact.message}>{contact.message}</td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              )}
 
-              {activeTab === "applications" && (
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-neutral-50 border-b border-neutral-200 text-sm text-neutral-500">
-                      <th className="p-4 font-medium">Date</th>
-                      <th className="p-4 font-medium">Applicant</th>
-                      <th className="p-4 font-medium">Role</th>
-                      <th className="p-4 font-medium">Status</th>
-                      <th className="p-4 font-medium">Experience</th>
-                      <th className="p-4 font-medium">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-sm">
-                    {careers.length === 0 ? (
-                      <tr>
-                        <td colSpan={5} className="p-8 text-center text-neutral-500">No job applications found.</td>
-                      </tr>
-                    ) : (
-                      careers.map((app) => (
-                        <tr key={app.id} className="border-b border-neutral-100 hover:bg-neutral-50 transition-colors">
-                          <td className="p-4 whitespace-nowrap text-neutral-500">{formatDate(app.createdAt)}</td>
-                          <td className="p-4">
-                            <div className="font-medium text-neutral-800">{app.fullName}</div>
-                            <div className="text-neutral-500 text-xs mt-1">{app.email}</div>
-                          </td>
-                          <td className="p-4 text-neutral-800">{app.position}</td>
-                          <td className="p-4">
-                            <span className={`px-2 py-1 rounded-md text-xs font-medium ${
-                              app.status === 'Selected' ? 'bg-green-100 text-green-700' :
-                              app.status === 'Rejected' ? 'bg-red-100 text-red-700' :
-                              app.status === 'Interview Scheduled' ? 'bg-yellow-100 text-yellow-700' :
-                              app.status === 'Reviewed' ? 'bg-blue-100 text-blue-700' :
-                              'bg-neutral-100 text-neutral-700'
-                            }`}>
-                              {app.status || 'New'}
-                            </span>
-                          </td>
-                          <td className="p-4 text-neutral-800">{app.experience}</td>
-                          <td className="p-4">
-                            <button
-                              onClick={() => setSelectedApp(app)}
-                              className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 font-medium bg-blue-50 px-3 py-1.5 rounded-md transition-colors text-sm"
-                            >
-                              Manage
-                            </button>
-                          </td>
+            {(activeTab === "contact" || activeTab === "applications") && (
+              <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 overflow-hidden">
+                <div className="overflow-x-auto">
+                  {activeTab === "contact" && (
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-neutral-50 border-b border-neutral-200 text-sm text-neutral-500">
+                          <th className="p-4 font-medium">Date</th>
+                          <th className="p-4 font-medium">Name</th>
+                          <th className="p-4 font-medium">Email / Phone</th>
+                          <th className="p-4 font-medium">Subject</th>
+                          <th className="p-4 font-medium min-w-[300px]">
+                            Message
+                          </th>
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              )}
+                      </thead>
+                      <tbody className="text-sm">
+                        {contacts.length === 0 ? (
+                          <tr>
+                            <td
+                              colSpan={5}
+                              className="p-8 text-center text-neutral-500"
+                            >
+                              No contact inquiries found.
+                            </td>
+                          </tr>
+                        ) : (
+                          contacts.map((contact) => (
+                            <tr
+                              key={contact.id}
+                              className="border-b border-neutral-100 hover:bg-neutral-50 transition-colors"
+                            >
+                              <td className="p-4 whitespace-nowrap text-neutral-500">
+                                {formatDate(contact.createdAt)}
+                              </td>
+                              <td className="p-4 font-medium text-neutral-800">
+                                {contact.fullName}
+                              </td>
+                              <td className="p-4">
+                                <div className="text-neutral-800">
+                                  {contact.email}
+                                </div>
+                                <div className="text-neutral-500 text-xs mt-1">
+                                  {contact.phone}
+                                </div>
+                              </td>
+                              <td className="p-4 text-neutral-800">
+                                {contact.subject}
+                              </td>
+                              <td
+                                className="p-4 text-neutral-600 max-w-xs truncate"
+                                title={contact.message}
+                              >
+                                {contact.message}
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  )}
+
+                  {activeTab === "applications" && (
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-neutral-50 border-b border-neutral-200 text-sm text-neutral-500">
+                          <th className="p-4 font-medium">Date</th>
+                          <th className="p-4 font-medium">Applicant</th>
+                          <th className="p-4 font-medium">Role</th>
+                          <th className="p-4 font-medium">Status</th>
+                          <th className="p-4 font-medium">Experience</th>
+                          <th className="p-4 font-medium">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-sm">
+                        {careers.length === 0 ? (
+                          <tr>
+                            <td
+                              colSpan={5}
+                              className="p-8 text-center text-neutral-500"
+                            >
+                              No job applications found.
+                            </td>
+                          </tr>
+                        ) : (
+                          careers.map((app) => (
+                            <tr
+                              key={app.id}
+                              className="border-b border-neutral-100 hover:bg-neutral-50 transition-colors"
+                            >
+                              <td className="p-4 whitespace-nowrap text-neutral-500">
+                                {formatDate(app.createdAt)}
+                              </td>
+                              <td className="p-4">
+                                <div className="font-medium text-neutral-800">
+                                  {app.fullName}
+                                </div>
+                                <div className="text-neutral-500 text-xs mt-1">
+                                  {app.email}
+                                </div>
+                              </td>
+                              <td className="p-4 text-neutral-800">
+                                {app.position}
+                              </td>
+                              <td className="p-4">
+                                <span
+                                  className={`px-2 py-1 rounded-md text-xs font-medium ${
+                                    app.status === "Selected"
+                                      ? "bg-green-100 text-green-700"
+                                      : app.status === "Rejected"
+                                        ? "bg-red-100 text-red-700"
+                                        : app.status === "Interview Scheduled"
+                                          ? "bg-yellow-100 text-yellow-700"
+                                          : app.status === "Reviewed"
+                                            ? "bg-blue-100 text-blue-700"
+                                            : "bg-neutral-100 text-neutral-700"
+                                  }`}
+                                >
+                                  {app.status || "New"}
+                                </span>
+                              </td>
+                              <td className="p-4 text-neutral-800">
+                                {app.experience}
+                              </td>
+                              <td className="p-4">
+                                <button
+                                  onClick={() => setSelectedApp(app)}
+                                  className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 font-medium bg-blue-50 px-3 py-1.5 rounded-md transition-colors text-sm"
+                                >
+                                  Manage
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
               </div>
-            </div>
             )}
-            
+
             <AnimatePresence>
               {selectedApp && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
@@ -422,21 +554,34 @@ export default function DashboardPage() {
                   >
                     <div className="p-6 border-b flex justify-between items-center bg-neutral-50">
                       <div>
-                        <h2 className="text-xl font-bold">Application: {selectedApp.fullName}</h2>
+                        <h2 className="text-xl font-bold">
+                          Application: {selectedApp.fullName}
+                        </h2>
                         <div className="mt-2 flex items-center gap-2">
-                          <span className="text-sm text-neutral-500">Current Status:</span>
-                          <span className={`px-2 py-0.5 rounded-md text-xs font-medium ${
-                            selectedApp.status === 'Selected' ? 'bg-green-100 text-green-700' :
-                            selectedApp.status === 'Rejected' ? 'bg-red-100 text-red-700' :
-                            selectedApp.status === 'Interview Scheduled' ? 'bg-yellow-100 text-yellow-700' :
-                            selectedApp.status === 'Reviewed' ? 'bg-blue-100 text-blue-700' :
-                            'bg-neutral-100 text-neutral-700'
-                          }`}>
-                            {selectedApp.status || 'New'}
+                          <span className="text-sm text-neutral-500">
+                            Current Status:
+                          </span>
+                          <span
+                            className={`px-2 py-0.5 rounded-md text-xs font-medium ${
+                              selectedApp.status === "Selected"
+                                ? "bg-green-100 text-green-700"
+                                : selectedApp.status === "Rejected"
+                                  ? "bg-red-100 text-red-700"
+                                  : selectedApp.status === "Interview Scheduled"
+                                    ? "bg-yellow-100 text-yellow-700"
+                                    : selectedApp.status === "Reviewed"
+                                      ? "bg-blue-100 text-blue-700"
+                                      : "bg-neutral-100 text-neutral-700"
+                            }`}
+                          >
+                            {selectedApp.status || "New"}
                           </span>
                         </div>
                       </div>
-                      <button onClick={() => setSelectedApp(null)} className="text-neutral-500 hover:text-black">
+                      <button
+                        onClick={() => setSelectedApp(null)}
+                        className="text-neutral-500 hover:text-black"
+                      >
                         <X className="w-5 h-5" />
                       </button>
                     </div>
@@ -444,66 +589,122 @@ export default function DashboardPage() {
                       {/* Status Update Actions */}
                       <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <div>
-                          <h3 className="font-bold text-blue-900 text-sm">Update Status & Notify Candidate</h3>
-                          <p className="text-xs text-blue-700 mt-1">Changing the status will automatically send an email to {selectedApp.email}.</p>
+                          <h3 className="font-bold text-blue-900 text-sm">
+                            Update Status & Notify Candidate
+                          </h3>
+                          <p className="text-xs text-blue-700 mt-1">
+                            Changing the status will automatically send an email
+                            to {selectedApp.email}.
+                          </p>
                         </div>
                         <div className="flex flex-wrap gap-2">
-                          <select 
+                          <select
                             className="text-sm border border-neutral-300 rounded-md px-3 py-1.5 bg-white"
-                            onChange={(e) => e.target.value && handleStatusUpdate(selectedApp.id, e.target.value)}
+                            onChange={(e) =>
+                              e.target.value &&
+                              handleStatusUpdate(selectedApp.id, e.target.value)
+                            }
                             value=""
                             disabled={isUpdatingStatus}
                           >
-                            <option value="" disabled>Change Status...</option>
+                            <option value="" disabled>
+                              Change Status...
+                            </option>
                             <option value="Reviewed">Mark as Reviewed</option>
-                            <option value="Interview Scheduled">Invite for Interview</option>
+                            <option value="Interview Scheduled">
+                              Invite for Interview
+                            </option>
                             <option value="Selected">Select Candidate</option>
                             <option value="Rejected">Reject Candidate</option>
                           </select>
-                          {isUpdatingStatus && <Loader2 className="w-5 h-5 animate-spin text-blue-600" />}
+                          {isUpdatingStatus && (
+                            <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
+                          )}
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         <div className="space-y-4">
-                          <h3 className="font-bold border-b pb-2">Personal Info</h3>
+                          <h3 className="font-bold border-b pb-2">
+                            Personal Info
+                          </h3>
                           <div className="grid grid-cols-2 gap-2 text-sm">
                             <span className="text-neutral-500">Email:</span>
-                            <span className="font-medium break-words">{selectedApp.email}</span>
+                            <span className="font-medium break-words">
+                              {selectedApp.email}
+                            </span>
                             <span className="text-neutral-500">Phone:</span>
-                            <span className="font-medium">{selectedApp.phone}</span>
+                            <span className="font-medium">
+                              {selectedApp.phone}
+                            </span>
                             <span className="text-neutral-500">Location:</span>
-                            <span className="font-medium">{selectedApp.currentCity}</span>
+                            <span className="font-medium">
+                              {selectedApp.currentCity}
+                            </span>
                           </div>
                         </div>
                         <div className="space-y-4">
-                          <h3 className="font-bold border-b pb-2">Professional Details</h3>
+                          <h3 className="font-bold border-b pb-2">
+                            Professional Details
+                          </h3>
                           <div className="grid grid-cols-2 gap-2 text-sm">
                             <span className="text-neutral-500">Position:</span>
-                            <span className="font-medium text-primary">{selectedApp.position}</span>
-                            <span className="text-neutral-500">Experience:</span>
-                            <span className="font-medium">{selectedApp.experience}</span>
-                            <span className="text-neutral-500">Notice Period:</span>
-                            <span className="font-medium">{selectedApp.noticePeriod}</span>
-                            <span className="text-neutral-500">Current CTC:</span>
-                            <span className="font-medium">{selectedApp.currentCtc || "N/A"}</span>
-                            <span className="text-neutral-500">Expected CTC:</span>
-                            <span className="font-medium">{selectedApp.expectedCtc || "N/A"}</span>
+                            <span className="font-medium text-primary">
+                              {selectedApp.position}
+                            </span>
+                            <span className="text-neutral-500">
+                              Experience:
+                            </span>
+                            <span className="font-medium">
+                              {selectedApp.experience}
+                            </span>
+                            <span className="text-neutral-500">
+                              Notice Period:
+                            </span>
+                            <span className="font-medium">
+                              {selectedApp.noticePeriod}
+                            </span>
+                            <span className="text-neutral-500">
+                              Current CTC:
+                            </span>
+                            <span className="font-medium">
+                              {selectedApp.currentCtc || "N/A"}
+                            </span>
+                            <span className="text-neutral-500">
+                              Expected CTC:
+                            </span>
+                            <span className="font-medium">
+                              {selectedApp.expectedCtc || "N/A"}
+                            </span>
                           </div>
                         </div>
                       </div>
 
                       <div className="space-y-4 mb-8">
-                        <h3 className="font-bold border-b pb-2">Skills & Links</h3>
-                        <p className="text-sm font-medium">{selectedApp.skills}</p>
+                        <h3 className="font-bold border-b pb-2">
+                          Skills & Links
+                        </h3>
+                        <p className="text-sm font-medium">
+                          {selectedApp.skills}
+                        </p>
                         <div className="flex gap-4 mt-2">
                           {selectedApp.linkedin && (
-                            <a href={selectedApp.linkedin} target="_blank" rel="noreferrer" className="text-sm text-blue-600 hover:underline inline-flex items-center gap-1">
+                            <a
+                              href={selectedApp.linkedin}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-sm text-blue-600 hover:underline inline-flex items-center gap-1"
+                            >
                               LinkedIn <ExternalLink className="w-3 h-3" />
                             </a>
                           )}
                           {selectedApp.portfolio && (
-                            <a href={selectedApp.portfolio} target="_blank" rel="noreferrer" className="text-sm text-blue-600 hover:underline inline-flex items-center gap-1">
+                            <a
+                              href={selectedApp.portfolio}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-sm text-blue-600 hover:underline inline-flex items-center gap-1"
+                            >
                               Portfolio <ExternalLink className="w-3 h-3" />
                             </a>
                           )}
@@ -512,34 +713,60 @@ export default function DashboardPage() {
 
                       {selectedApp.coverLetter && (
                         <div className="space-y-4 mb-8">
-                          <h3 className="font-bold border-b pb-2">Cover Letter</h3>
-                          <p className="text-sm text-neutral-700 whitespace-pre-wrap">{selectedApp.coverLetter}</p>
+                          <h3 className="font-bold border-b pb-2">
+                            Cover Letter
+                          </h3>
+                          <p className="text-sm text-neutral-700 whitespace-pre-wrap">
+                            {selectedApp.coverLetter}
+                          </p>
                         </div>
                       )}
 
                       <div className="space-y-4 h-[500px] flex flex-col">
                         <div className="flex justify-between items-center border-b pb-2">
                           <h3 className="font-bold">Resume Viewer</h3>
-                          <a href={selectedApp.resumeDownloadURL.replace(/\/upload\//, '/upload/fl_attachment/')} download className="text-xs bg-black text-white px-3 py-1 rounded flex items-center gap-2">
+                          <a
+                            href={selectedApp.resumeDownloadURL.replace(
+                              /\/upload\//,
+                              "/upload/fl_attachment/",
+                            )}
+                            download
+                            className="text-xs bg-black text-white px-3 py-1 rounded flex items-center gap-2"
+                          >
                             <Download className="w-3 h-3" /> Download Resume
                           </a>
                         </div>
-                        {selectedApp.resumeDownloadURL.toLowerCase().endsWith('.pdf') ? (
+                        {selectedApp.resumeDownloadURL
+                          .toLowerCase()
+                          .endsWith(".pdf") ? (
                           <div className="w-full flex-1 border rounded-lg bg-neutral-100 overflow-auto flex flex-col items-center p-4">
-                            <p className="text-sm text-neutral-500 mb-4 text-center">Previewing first page. Click Download for the full document.</p>
-                            <img 
-                              src={selectedApp.resumeDownloadURL.replace(/\.pdf$/i, '.jpg')} 
+                            <p className="text-sm text-neutral-500 mb-4 text-center">
+                              Previewing first page. Click Download for the full
+                              document.
+                            </p>
+                            <img
+                              src={selectedApp.resumeDownloadURL.replace(
+                                /\.pdf$/i,
+                                ".jpg",
+                              )}
                               alt="Resume Preview"
                               className="max-w-full h-auto shadow-sm"
                               onError={(e) => {
-                                (e.target as HTMLImageElement).style.display = 'none';
-                                (e.target as HTMLImageElement).parentElement!.innerHTML += '<p class="text-sm text-red-500 mt-4">Preview not available. Please download to view.</p>';
+                                (e.target as HTMLImageElement).style.display =
+                                  "none";
+                                (
+                                  e.target as HTMLImageElement
+                                ).parentElement!.innerHTML +=
+                                  '<p class="text-sm text-red-500 mt-4">Preview not available. Please download to view.</p>';
                               }}
                             />
                           </div>
                         ) : (
                           <div className="w-full flex-1 border rounded-lg bg-neutral-100 flex items-center justify-center">
-                            <p className="text-sm text-neutral-500">Preview not available for this file type. Please click Download.</p>
+                            <p className="text-sm text-neutral-500">
+                              Preview not available for this file type. Please
+                              click Download.
+                            </p>
                           </div>
                         )}
                       </div>

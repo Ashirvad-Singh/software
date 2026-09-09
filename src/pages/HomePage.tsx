@@ -1,8 +1,8 @@
-import { lazy, Suspense, useState, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import HeroModern from "@/components/site/HeroModern";
 import { FloatingShapes } from "@/components/ui/floating-shapes";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
@@ -12,83 +12,17 @@ const WorldMap = lazy(() => import("@/components/ui/world-map"));
 const IndustriesSection = lazy(
   () => import("@/components/site/IndustriesSection"),
 );
-const FeaturesSectionDemo = lazy(
-  () => import("@/components/ui/features-section-demo-3"),
+const HomeServicesSection = lazy(
+  () => import("@/components/site/HomeServicesSection"),
 );
 const ThreeDMarqueeDemo = lazy(() => import("@/components/3d-marquee-demo"));
 const WhatSetsUsApart = lazy(() => import("@/components/site/WhatSetsUsApart"));
 const Testimonials = lazy(() => import("@/components/site/Testimonials"));
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import * as TablerIcons from "@tabler/icons-react";
-import * as LucideIcons from "lucide-react";
-
+const HomeCaseStudiesSection = lazy(
+  () => import("@/components/site/HomeCaseStudiesSection"),
+);
+const HomeBlogSection = lazy(() => import("@/components/site/HomeBlogSection"));
 export default function HomePage() {
-  const [techCategories, setTechCategories] = useState<any[]>([]);
-  const [loadingTech, setLoadingTech] = useState(true);
-
-  useEffect(() => {
-    const fetchTechStack = async () => {
-      try {
-        const q = query(
-          collection(db, "tech_stack"),
-          orderBy("createdAt", "asc"),
-        );
-        const snapshot = await getDocs(q);
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setTechCategories(data);
-      } catch (error) {
-        console.error("Error fetching tech stack:", error);
-      } finally {
-        setLoadingTech(false);
-      }
-    };
-    fetchTechStack();
-  }, []);
-
-  const getThemeColors = (color: string) => {
-    switch (color) {
-      case "blue":
-        return {
-          bg: "from-blue-50",
-          text: "text-blue-500",
-          groupHoverText: "group-hover:text-blue-500",
-        };
-      case "purple":
-        return {
-          bg: "from-purple-50",
-          text: "text-purple-500",
-          groupHoverText: "group-hover:text-purple-500",
-        };
-      case "orange":
-        return {
-          bg: "from-orange-50",
-          text: "text-orange-500",
-          groupHoverText: "group-hover:text-orange-500",
-        };
-      case "green":
-        return {
-          bg: "from-green-50",
-          text: "text-green-500",
-          groupHoverText: "group-hover:text-green-500",
-        };
-      default:
-        return {
-          bg: "from-gray-50",
-          text: "text-gray-500",
-          groupHoverText: "group-hover:text-gray-500",
-        };
-    }
-  };
-
-  const renderCategoryIcon = (iconName: string, textClass: string) => {
-    const IconComponent = (LucideIcons as any)[iconName] || LucideIcons.Code;
-    return <IconComponent className={`w-7 h-7 ${textClass}`} />;
-  };
-
   return (
     <main>
       <HeroModern />
@@ -189,149 +123,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Suspense fallback={<div className="min-h-[500px]" />}>
-        <IndustriesSection />
-        <FeaturesSectionDemo limit={4} />
-        <ThreeDMarqueeDemo />
+      <Suspense fallback={<div className="min-h-[680px]" />}>
+        <HomeCaseStudiesSection />
       </Suspense>
 
-      {/* Advanced Tech Stack Section (Dynamic) */}
-      <section className="py-12 sm:py-16 md:py-20 lg:py-32 relative overflow-hidden bg-white border-t border-neutral-100">
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.03]"
-          style={{
-            backgroundImage: "radial-gradient(#000 1px, transparent 1px)",
-            backgroundSize: "24px 24px",
-          }}
-        ></div>
-
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 via-white to-white pointer-events-none z-0"></div>
-        <FloatingShapes />
-
-        <div className="container mx-auto px-4 max-w-7xl relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-10 sm:mb-14 md:mb-20 lg:mb-24"
-          >
-            <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-4">
-              The Engine Room
-            </h2>
-            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-neutral-900 text-balance">
-              Powered by <span className="whitespace-nowrap">Modern</span> Tech
-            </h3>
-            <p className="text-neutral-500 max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
-              We don't just write code. We architect scalable, future-proof
-              digital ecosystems (websites and mobile apps) using the industry's
-              most advanced tools and frameworks.
-            </p>
-          </motion.div>
-
-          {loadingTech ? (
-            <div className="flex justify-center items-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {techCategories.length === 0 ? (
-                <div className="col-span-full text-center text-neutral-500 py-12">
-                  No tech stack added yet. Add from Dashboard.
-                </div>
-              ) : (
-                techCategories.map((category, idx) => {
-                  const theme = getThemeColors(category.themeColor);
-                  return (
-                    <motion.div
-                      key={category.id || idx}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-100px" }}
-                      transition={{ duration: 0.5, delay: idx * 0.1 }}
-                      className="group relative p-5 sm:p-6 md:p-8 lg:p-10 rounded-[2rem] bg-white border border-neutral-200 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 overflow-hidden"
-                    >
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-br ${theme.bg} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-                      ></div>
-
-                      <div className="relative z-10">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-2xl bg-neutral-50 border border-neutral-100 flex items-center justify-center mb-4 md:mb-8 group-hover:bg-white group-hover:shadow-sm transition-all">
-                          {renderCategoryIcon(
-                            category.categoryIcon,
-                            theme.text,
-                          )}
-                        </div>
-                        <h4 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 text-neutral-900">
-                          {category.title}
-                        </h4>
-                        <p className="text-neutral-500 mb-5 md:mb-10 text-sm leading-relaxed">
-                          {category.description}
-                        </p>
-
-                        <div className="grid grid-cols-3 gap-4">
-                          {category.technologies?.map(
-                            (tech: any, tIdx: number) => (
-                              <AdvancedTechBadge
-                                key={tIdx}
-                                iconUrl={tech.iconUrl}
-                                name={tech.name}
-                                hoverColor={theme.groupHoverText}
-                              />
-                            ),
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })
-              )}
-            </div>
-          )}
-        </div>
-      </section>
+      <Suspense fallback={<div className="min-h-[500px]" />}>
+        <IndustriesSection />
+        <HomeServicesSection />
+        <ThreeDMarqueeDemo />
+      </Suspense>
 
       <Suspense fallback={<div className="min-h-[500px]" />}>
         <WhatSetsUsApart />
         <Testimonials />
+        <HomeBlogSection />
       </Suspense>
     </main>
-  );
-}
-
-function AdvancedTechBadge({
-  iconUrl,
-  name,
-  hoverColor,
-}: {
-  iconUrl: string;
-  name: string;
-  hoverColor: string;
-}) {
-  const isImage = iconUrl?.startsWith("http") || iconUrl?.startsWith("data:");
-  const IconComponent = !isImage
-    ? (TablerIcons as any)[iconUrl] || TablerIcons.IconCode
-    : null;
-
-  return (
-    <div
-      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-neutral-50/50 border border-neutral-100 hover:bg-white hover:shadow-sm hover:border-primary/30 transition-all duration-300 cursor-pointer group`}
-    >
-      {isImage ? (
-        <img
-          src={iconUrl}
-          alt={name}
-          className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-110"
-        />
-      ) : (
-        <IconComponent
-          className={`w-8 h-8 text-neutral-400 transition-colors duration-300 ${hoverColor} group-hover:scale-110`}
-          stroke={1.5}
-        />
-      )}
-      <span className="text-[11px] font-medium text-neutral-500 group-hover:text-neutral-900 transition-colors uppercase tracking-wider text-center">
-        {name}
-      </span>
-    </div>
   );
 }

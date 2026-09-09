@@ -1,5 +1,5 @@
-import FeaturesSectionDemo from "@/components/ui/features-section-demo-3"
-import SubBanner from "@/components/site/SubBanner"
+import HomeServicesSection from "@/components/site/HomeServicesSection";
+import SubBanner from "@/components/site/SubBanner";
 
 export default function ServicesPage() {
   return (
@@ -10,7 +10,7 @@ export default function ServicesPage() {
         highlightTitle="Services"
         subtitle="From full-stack web applications to cross-platform mobile apps, explore our end-to-end digital solutions."
       />
-      <FeaturesSectionDemo hideHeader />
+      <HomeServicesSection showAll hideHeader />
     </main>
-  )
+  );
 }
