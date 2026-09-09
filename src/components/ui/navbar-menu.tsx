@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { ChevronDown } from "lucide-react";
 
 const transition = {
   type: "spring" as const,
@@ -28,9 +29,13 @@ export const MenuItem = ({
     <div onMouseEnter={() => setActive(item)} className="relative ">
       <motion.p
         transition={{ duration: 0.3 }}
-        className="cursor-pointer text-black hover:opacity-[0.9] dark:text-white"
+        className="flex cursor-pointer items-center gap-1 text-black hover:opacity-[0.9] dark:text-white"
       >
         {item}
+        <ChevronDown
+          className={`h-3.5 w-3.5 transition-transform duration-200 ${active === item ? "rotate-180" : ""}`}
+          aria-hidden="true"
+        />
       </motion.p>
       {active !== null && (
         <motion.div
@@ -77,7 +82,6 @@ export const Menu = ({
   );
 };
 
-
 export const ProductItem = ({
   title,
   description,
@@ -89,7 +93,8 @@ export const ProductItem = ({
   href: string;
   src: string;
 }) => {
-  const defaultFallback = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80";
+  const defaultFallback =
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80";
   const [imgSrc, setImgSrc] = React.useState<string>(src || defaultFallback);
 
   React.useEffect(() => {
@@ -97,7 +102,10 @@ export const ProductItem = ({
   }, [src]);
 
   return (
-    <Link to={href} className="flex space-x-3 group items-center p-1.5 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-900/60 transition-all">
+    <Link
+      to={href}
+      className="flex space-x-3 group items-center p-1.5 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-900/60 transition-all"
+    >
       <img
         src={imgSrc}
         alt={title}
@@ -116,17 +124,23 @@ export const ProductItem = ({
   );
 };
 
-export const HoveredLink = ({ children, href, className, active, ...rest }: any) => {
+export const HoveredLink = ({
+  children,
+  href,
+  className,
+  active,
+  ...rest
+}: any) => {
   return (
     <Link
       to={href}
       {...rest}
       className={cn(
         "transition-colors",
-        active 
-          ? "text-sky-700 font-bold" 
+        active
+          ? "text-sky-700 font-bold"
           : "text-neutral-700 dark:text-neutral-200 hover:text-sky-700 dark:hover:text-white",
-        className
+        className,
       )}
     >
       {children}

@@ -5,6 +5,7 @@ import { projects as staticProjects } from "@/data/projects";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import SEO from "@/components/site/SEO";
+import { ArrowUpRight } from "lucide-react";
 
 const sampleVideos = [
   "https://assets.mixkit.co/videos/preview/mixkit-code-animation-on-a-screen-4075-large.mp4",
@@ -15,7 +16,8 @@ const sampleVideos = [
   "https://assets.mixkit.co/videos/preview/mixkit-web-design-application-on-a-laptop-41555-large.mp4",
 ];
 
-const WorkCard = ({ project, idx }: { project: any; idx: number }) => {
+// Single Elium Studio Editorial Row Component
+const EliumProjectRow = ({ project, idx }: { project: any; idx: number }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -36,78 +38,109 @@ const WorkCard = ({ project, idx }: { project: any; idx: number }) => {
     }
   };
 
-  // Format tags as hyphenated uppercase string (like reference image)
-  const formattedServices = project.tags
-    ? (Array.isArray(project.tags) ? project.tags : project.tags.split(",")).map((t: string) => t.trim().toUpperCase()).join(" - ")
-    : "DIGITAL DESIGN - WEB DEVELOPMENT - UI/UX";
+  // Format tags as comma separated or array
+  const tagsList = Array.isArray(project.tags) && project.tags.length > 0
+    ? project.tags
+    : typeof project.tags === "string" && project.tags.trim().length > 0
+    ? project.tags.split(",").map((t: string) => t.trim())
+    : [project.category || "Web App"];
+
+  const indexFormatted = idx < 9 ? `0${idx + 1}` : `${idx + 1}`;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: (idx % 2) * 0.08 }}
-      className="group flex flex-col cursor-pointer pb-6"
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="group border-t border-neutral-300 dark:border-neutral-800 py-12 sm:py-16 md:py-20"
     >
       <Link
         to={`/work/${project.slug}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="block relative overflow-hidden bg-neutral-900 aspect-[4/3] w-full border border-neutral-200 dark:border-neutral-800"
+        className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
       >
-        {/* Static Image */}
-        <img
-          src={project.image}
-          alt={project.title}
-          className={`w-full h-full object-cover transition-opacity duration-500 ${
-            isHovered ? "opacity-0 scale-105" : "opacity-100 scale-100"
-          }`}
-        />
-
-        {/* Hover Video Preview */}
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          loop
-          muted
-          playsInline
-          preload="none"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-            isHovered ? "opacity-100 scale-105" : "opacity-0 scale-100"
-          }`}
-        />
-
-        {/* Overlay Title on Hover (like Tengile River Lodge card in reference image) */}
-        <div className={`absolute inset-0 p-6 flex flex-col justify-center items-center text-center bg-black/40 backdrop-blur-[2px] transition-opacity duration-300 ${
-          isHovered ? "opacity-100" : "opacity-0"
-        }`}>
-          <span className="text-[10px] font-mono uppercase tracking-widest text-white/80 bg-black/50 px-2.5 py-1 mb-2 rounded-sm border border-white/20">
-            {project.client || "FEATURED PROJECT"}
+        {/* COLUMN 1: Meta Information (Left side) */}
+        <div className="lg:col-span-3 flex flex-col gap-2">
+          <span className="font-mono text-xs text-neutral-400 dark:text-neutral-500 font-semibold tracking-wider">
+            {indexFormatted}
           </span>
-          <h2 className="text-2xl sm:text-4xl font-serif uppercase tracking-wider text-white drop-shadow-md">
-            {project.title}
-          </h2>
+          
+          <div className="flex flex-col mt-2">
+            <span className="text-xs font-mono uppercase tracking-widest font-bold text-neutral-900 dark:text-white">
+              {project.client || "ADAT CLIENT"}
+            </span>
+            <span className="text-[11px] font-mono text-neutral-500 mt-1">
+              ©2024-2026
+            </span>
+          </div>
+
+          <div className="flex flex-wrap gap-1.5 mt-4">
+            {tagsList.map((tag: string, tIdx: number) => (
+              <span
+                key={tIdx}
+                className="text-[10px] font-mono uppercase tracking-wider text-neutral-600 dark:text-neutral-400 bg-neutral-200/60 dark:bg-neutral-900 px-2 py-0.5 rounded"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* COLUMN 2: Big Title & Description (Center) */}
+        <div className="lg:col-span-5 flex flex-col justify-center">
+          <div className="flex items-center gap-3">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-medium tracking-tight text-neutral-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+              {project.title}
+            </h2>
+            <ArrowUpRight className="w-6 h-6 text-neutral-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 shrink-0" />
+          </div>
+
+          <p className="mt-4 text-sm sm:text-base text-neutral-600 dark:text-neutral-400 font-normal leading-relaxed max-w-lg">
+            {project.challenge || project.description || "Delivering high detailing, user-centric software architecture, and custom interactive engineering."}
+          </p>
+
+          {project.result && (
+            <div className="mt-4 text-xs font-mono text-blue-600 dark:text-blue-400 font-medium">
+              → {project.result}
+            </div>
+          )}
+        </div>
+
+        {/* COLUMN 3: Product Image / Video Showcase (Right side) */}
+        <div className="lg:col-span-4 flex justify-end">
+          <div className="relative overflow-hidden rounded-2xl w-full max-w-md aspect-[4/3] bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-sm group-hover:shadow-xl transition-shadow duration-500">
+            {/* Image */}
+            <img
+              src={project.image}
+              alt={project.title}
+              className={`w-full h-full object-cover transition-all duration-700 ${
+                isHovered ? "scale-105 opacity-0" : "scale-100 opacity-100"
+              }`}
+            />
+
+            {/* Video */}
+            <video
+              ref={videoRef}
+              src={videoSrc}
+              loop
+              muted
+              playsInline
+              preload="none"
+              className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
+                isHovered ? "opacity-100 scale-105" : "opacity-0 scale-100"
+              }`}
+            />
+          </div>
         </div>
       </Link>
-
-      {/* Subtitle / Category List Below Card (Exact match to reference image) */}
-      <div className="pt-3 flex flex-col">
-        <span className="text-[10px] sm:text-[11px] font-sans font-medium uppercase tracking-wider text-neutral-600 dark:text-neutral-400">
-          {formattedServices}
-        </span>
-        <Link to={`/work/${project.slug}`}>
-          <h3 className="text-lg sm:text-xl font-bold uppercase tracking-tight text-neutral-900 dark:text-white group-hover:text-blue-600 transition-colors mt-0.5">
-            {project.title}
-          </h3>
-        </Link>
-      </div>
     </motion.div>
   );
 };
 
 export default function WorkPage() {
   const [dbProjects, setDbProjects] = useState<any[]>([]);
-  const [viewMode, setViewMode] = useState<"GRID" | "LIST">("GRID");
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
 
   useEffect(() => {
@@ -135,122 +168,74 @@ export default function WorkPage() {
 
   const rawProjects = dbProjects.length > 0 ? dbProjects : staticProjects;
 
-  const categories = ["ALL", "WEB", "APP", "E-COMMERCE"];
+  const categories = [
+    { label: "SELECTED", value: "ALL" },
+    { label: "WEB APPS", value: "WEB" },
+    { label: "MOBILE APPS", value: "APP" },
+    { label: "E-COMMERCE", value: "E-COMMERCE" },
+  ];
 
   const filteredProjects = selectedCategory === "ALL" 
     ? rawProjects 
-    : rawProjects.filter((p) => (p.category || "").toUpperCase() === selectedCategory);
+    : rawProjects.filter((p) => (p.category || "").toUpperCase().includes(selectedCategory));
 
   return (
-    <main className="min-h-screen bg-[#f5f5f5] dark:bg-neutral-950 text-neutral-900 dark:text-white pt-24 sm:pt-28 md:pt-32 pb-24 px-4 sm:px-8 md:px-12 lg:px-16 font-sans">
+    <main className="min-h-screen bg-[#fcfcfc] dark:bg-neutral-950 text-neutral-900 dark:text-white pt-28 sm:pt-32 md:pt-36 pb-28 font-sans selection:bg-blue-600 selection:text-white">
       <SEO 
-        title="Work | Adat Soft Solutions" 
-        description="Explore our portfolio of digital experiences, custom applications, and mobile products." 
-        keywords="work, portfolio, projects, web development, mobile apps"
+        title="Our Work | Adat Soft Solutions" 
+        description="We stand up for precision and qualitative software manufacturing. Explore our portfolio of web applications, mobile platforms, and custom software." 
+        keywords="elium studio work, software portfolio, adat work, web development"
       />
 
-      {/* Header Section matching reference screenshot */}
-      <div className="w-full mb-8">
-        <div className="flex items-center justify-between pb-4 border-b-2 border-neutral-900 dark:border-white">
-          {/* WORK* Logo Title */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter text-neutral-900 dark:text-white leading-none">
-            WORK<span className="text-blue-600">*</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+        {/* TOP MANIFESTO INTRO (Exact Elium Studio Vibe) */}
+        <div className="mb-14 max-w-4xl">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500 block mb-4">
+            OUR WORK
+          </span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-neutral-900 dark:text-white leading-[1.15]">
+            We stand up for <span className="font-semibold italic">precision engineering</span> and qualitative digital craftsmanship. We work hand-in-hand with founders to deliver high detailing and scalable platforms.
           </h1>
-
-          {/* Center Category Filter */}
-          <div className="hidden sm:flex items-center gap-2">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mr-2">
-              FILTER:
-            </span>
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded transition-colors ${
-                  selectedCategory === cat
-                    ? "text-neutral-900 dark:text-white underline decoration-2 underline-offset-4"
-                    : "text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
-                }`}
-              >
-                {cat} {cat === "ALL" && "+"}
-              </button>
-            ))}
-          </div>
-
-          {/* Right Grid / List Switcher */}
-          <div className="flex items-center gap-1 bg-neutral-200 dark:bg-neutral-900 p-1 rounded-full border border-neutral-300 dark:border-neutral-800">
-            <button
-              onClick={() => setViewMode("GRID")}
-              className={`px-3.5 py-1 text-[11px] font-bold uppercase rounded-full transition-all ${
-                viewMode === "GRID"
-                  ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow"
-                  : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900"
-              }`}
-            >
-              GRID
-            </button>
-            <button
-              onClick={() => setViewMode("LIST")}
-              className={`px-3.5 py-1 text-[11px] font-bold uppercase rounded-full transition-all ${
-                viewMode === "LIST"
-                  ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow"
-                  : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900"
-              }`}
-            >
-              LIST
-            </button>
-          </div>
         </div>
-      </div>
 
-      {/* Content Section */}
-      <div className="w-full">
-        <AnimatePresence mode="wait">
-          {viewMode === "GRID" ? (
-            <motion.div 
-              key="grid"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-10 md:gap-y-14"
+        {/* CATEGORY FILTER TABS (Exact Elium Studio Navigation) */}
+        <div className="flex flex-wrap items-center gap-6 sm:gap-10 pb-6 mb-8 border-b border-neutral-300 dark:border-neutral-800">
+          {categories.map((cat) => (
+            <button
+              key={cat.value}
+              onClick={() => setSelectedCategory(cat.value)}
+              className={`text-xs sm:text-sm font-mono tracking-wider transition-colors relative py-1 ${
+                selectedCategory === cat.value
+                  ? "text-neutral-900 dark:text-white font-bold"
+                  : "text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200"
+              }`}
             >
-              {filteredProjects.map((project, idx) => (
-                <WorkCard key={project.id || project.slug || idx} project={project} idx={idx} />
-              ))}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="list"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="divide-y divide-neutral-300 dark:divide-neutral-800"
-            >
-              {filteredProjects.map((project, idx) => (
-                <Link
-                  key={project.id || project.slug || idx}
-                  to={`/work/${project.slug}`}
-                  className="group flex flex-col sm:flex-row sm:items-center justify-between py-6 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-900/50 transition-colors"
-                >
-                  <div className="flex items-center gap-6">
-                    <span className="text-xs font-mono text-neutral-400">0{idx + 1}</span>
-                    <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-neutral-900 dark:text-white group-hover:text-blue-600 transition-colors">
-                      {project.title}
-                    </h3>
-                  </div>
+              {cat.label}
+              {selectedCategory === cat.value && (
+                <motion.div
+                  layoutId="activeCategory"
+                  className="absolute bottom-0 left-0 right-0 h-[2px] bg-neutral-900 dark:bg-white"
+                />
+              )}
+            </button>
+          ))}
+          <span className="ml-auto text-xs font-mono text-neutral-400">
+            SHOWING ({filteredProjects.length}) PROJECTS
+          </span>
+        </div>
 
-                  <div className="flex items-center gap-8 mt-2 sm:mt-0 text-xs uppercase font-mono text-neutral-500">
-                    <span>{project.category}</span>
-                    <span>©2024-2026</span>
-                    <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
-                  </div>
-                </Link>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* EDITORIAL PROJECT ROWS */}
+        <div className="flex flex-col">
+          <AnimatePresence mode="wait">
+            {filteredProjects.map((project, idx) => (
+              <EliumProjectRow 
+                key={project.id || project.slug || idx} 
+                project={project} 
+                idx={idx} 
+              />
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
     </main>
   );

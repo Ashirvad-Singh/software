@@ -1,43 +1,42 @@
-import { useEffect } from "react"
-import { Routes, Route, useLocation } from "react-router-dom"
-import Lenis from "lenis"
-import { Toaster } from "sonner"
-import Cursor from "@/components/site/Cursor"
-import ScrollProgress from "@/components/site/ScrollProgress"
-import Navbar from "@/components/site/Navbar"
-import Footer from "@/components/site/Footer"
-import CTASection from "@/components/site/CTASection"
-import { ThemeProvider } from "@/components/ThemeProvider"
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Lenis from "lenis";
+import { Toaster } from "sonner";
+import Cursor from "@/components/site/Cursor";
+import ScrollProgress from "@/components/site/ScrollProgress";
+import Navbar from "@/components/site/Navbar";
+import Footer from "@/components/site/Footer";
+import CTASection from "@/components/site/CTASection";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
-import HomePage from "@/pages/HomePage"
-import { lazy, Suspense } from "react"
-import ScrollToTop from "@/components/ScrollToTop"
-const ServicesPage = lazy(() => import("@/pages/ServicesPage"))
-const ServiceDetailPage = lazy(() => import("@/pages/ServiceDetailPage"))
-const WorkPage = lazy(() => import("@/pages/WorkPage"))
-const ProjectDetailPage = lazy(() => import("@/pages/ProjectDetailPage"))
-const ProcessPage = lazy(() => import("@/pages/ProcessPage"))
-const AboutPage = lazy(() => import("@/pages/AboutPage"))
-const ContactPage = lazy(() => import("@/pages/ContactPage"))
-const TeamPage = lazy(() => import("@/pages/TeamPage"))
-const GalleryPage = lazy(() => import("@/pages/GalleryPage"))
-const CareersPage = lazy(() => import("@/pages/CareersPage"))
-const JobDetailPage = lazy(() => import("@/pages/JobDetailPage"))
-const DashboardPage = lazy(() => import("@/pages/DashboardPage"))
-const BlogPage = lazy(() => import("@/pages/BlogPage"))
-const BlogPostPage = lazy(() => import("@/pages/BlogPostPage"))
-const PrivacyPolicyPage = lazy(() => import("@/pages/PrivacyPolicyPage"))
-const TermsOfServicePage = lazy(() => import("@/pages/TermsOfServicePage"))
-const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
-import { FloatingShapes } from "@/components/ui/floating-shapes"
+import HomePage from "@/pages/HomePage";
+import { lazy, Suspense } from "react";
+import ScrollToTop from "@/components/ScrollToTop";
+const ServicesPage = lazy(() => import("@/pages/ServicesPage"));
+const TechnologiesPage = lazy(() => import("@/pages/TechnologiesPage"));
+const ServiceDetailPage = lazy(() => import("@/pages/ServiceDetailPage"));
+const WorkPage = lazy(() => import("@/pages/WorkPage"));
+const ProjectDetailPage = lazy(() => import("@/pages/ProjectDetailPage"));
+const ProcessPage = lazy(() => import("@/pages/ProcessPage"));
+const AboutPage = lazy(() => import("@/pages/AboutPage"));
+const ContactPage = lazy(() => import("@/pages/ContactPage"));
+const TeamPage = lazy(() => import("@/pages/TeamPage"));
+const GalleryPage = lazy(() => import("@/pages/GalleryPage"));
+const CareersPage = lazy(() => import("@/pages/CareersPage"));
+const JobDetailPage = lazy(() => import("@/pages/JobDetailPage"));
+const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
+const BlogPage = lazy(() => import("@/pages/BlogPage"));
+const BlogPostPage = lazy(() => import("@/pages/BlogPostPage"));
+const PrivacyPolicyPage = lazy(() => import("@/pages/PrivacyPolicyPage"));
+const TermsOfServicePage = lazy(() => import("@/pages/TermsOfServicePage"));
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
+import { FloatingShapes } from "@/components/ui/floating-shapes";
 
-
-
-import { ErrorBoundary } from "@/components/common/ErrorBoundary"
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 
 function App() {
-  const location = useLocation()
-  const isDashboard = location.pathname.startsWith("/dashboard")
+  const location = useLocation();
+  const isDashboard = location.pathname.startsWith("/dashboard");
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -48,19 +47,19 @@ function App() {
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 2,
-    })
+    });
 
     function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
+      lenis.raf(time);
+      requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf)
+    requestAnimationFrame(raf);
 
     return () => {
-      lenis.destroy()
-    }
-  }, [])
+      lenis.destroy();
+    };
+  }, []);
 
   return (
     <ErrorBoundary>
@@ -71,12 +70,13 @@ function App() {
           {!isDashboard && <ScrollProgress />}
           {!isDashboard && <FloatingShapes />}
           {!isDashboard && <Navbar />}
-          
+
           <div className="flex-1 relative z-10">
             <Suspense fallback={null}>
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/services" element={<ServicesPage />} />
+                <Route path="/technologies" element={<TechnologiesPage />} />
                 <Route path="/services/:slug" element={<ServiceDetailPage />} />
                 <Route path="/work" element={<WorkPage />} />
                 <Route path="/work/:slug" element={<ProjectDetailPage />} />
@@ -99,12 +99,12 @@ function App() {
 
           {!isDashboard && <CTASection />}
           {!isDashboard && <Footer />}
-          
+
           <Toaster position="bottom-right" theme="system" />
         </div>
       </ThemeProvider>
     </ErrorBoundary>
-  )
+  );
 }
 
-export default App
+export default App;
