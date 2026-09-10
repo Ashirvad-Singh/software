@@ -184,7 +184,7 @@ export default function CareersPage() {
           className="mt-16 w-full overflow-hidden h-[240px] md:h-[320px] cursor-grab active:cursor-grabbing"
           ref={emblaRef}
         >
-          <div className="flex pl-4 min-w-max">
+          <div className="flex touch-pan-y pl-4 min-w-max">
             {galleryImages.map((src, i) => (
               <div key={i} className={`relative flex-shrink-0 w-[200px] md:w-[280px] h-full mr-4 rounded-2xl overflow-hidden shadow-xl ${i % 2 !== 0 ? 'mt-4 md:mt-8' : ''}`}>
                 <img src={src} alt={`Gallery ${i}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 pointer-events-none" />

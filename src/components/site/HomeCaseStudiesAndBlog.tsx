@@ -1,3 +1,4 @@
+import { useSwipe } from "@/hooks/useSwipe";
 import { useEffect, useState } from "react";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { ArrowRight, Clock } from "lucide-react";
@@ -168,6 +169,10 @@ export default function HomeCaseStudiesAndBlog({
   const [caseStudies, setCaseStudies] = useState<any[]>(sampleCaseStudies);
   const [posts, setPosts] = useState<BlogPost[]>(staticPosts);
   const [activeBlog, setActiveBlog] = useState(0);
+  const blogSwipe = useSwipe((direction) => {
+    const count = Math.min(posts.length, 3);
+    if (count > 1) setActiveBlog((index) => (index + direction + count) % count);
+  });
 
   useEffect(() => {
     let cancelled = false;
@@ -262,7 +267,7 @@ export default function HomeCaseStudiesAndBlog({
                 View all articles <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="relative overflow-hidden py-2">
+            <div {...blogSwipe} className="relative overflow-hidden py-2">
               {posts.slice(0, 3).map((post, index) => (
                 <motion.div
                   key={post.id || post.slug}

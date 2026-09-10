@@ -80,7 +80,7 @@ export default function HomeServicesSection({
               viewport={{ once: true, amount: 0.3 }}
               className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl text-neutral-900 dark:text-white"
             >
-              Our Services & Core Works
+              Services
             </motion.h2>
             <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg font-medium leading-relaxed text-neutral-600 dark:text-neutral-400">
               Thoughtful digital solutions designed to help your business stand out, scale faster, and deliver world-class digital experiences.
@@ -160,6 +160,5 @@ export default function HomeServicesSection({
     </section>
   );
 }
-
 
 

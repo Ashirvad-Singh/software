@@ -1,3 +1,4 @@
+import { useSwipe } from "@/hooks/useSwipe";
 import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -50,6 +51,9 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const cardFrameRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const navigateCard = useRef<(direction: number) => void>(() => {});
+  const cardSwipe = useSwipe((direction) => navigateCard.current(direction));
 
   useGSAP(
     () => {
@@ -111,9 +115,20 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
         }
       });
 
+      navigateCard.current = (direction) => {
+        const trigger = tl.scrollTrigger;
+        if (!trigger || totalCards < 2) return;
+        const current = Math.max(0, Math.round(tl.time() - 0.25));
+        const next = Math.max(0, Math.min(totalCards - 1, current + direction));
+        if (next === current) return;
+        const progress = next === 0 ? 0 : (next + 0.25) / tl.duration();
+        trigger.scroll(trigger.start + progress * (trigger.end - trigger.start));
+        ScrollTrigger.update();
+      };
       ScrollTrigger.refresh();
+      return () => { navigateCard.current = () => {}; };
     },
-    { scope: containerRef, dependencies: [cards] }
+    { scope: containerRef, dependencies: [cards], revertOnUpdate: true }
   );
 
   return (
@@ -179,6 +194,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
 
         {/* Card stack frame - Spacious, Large & 100% Opaque */}
         <div
+          {...cardSwipe}
           ref={cardFrameRef}
           className="relative z-10 w-full max-w-6xl h-[550px] sm:h-[550px] md:h-[560px] lg:h-[580px] mx-auto overflow-hidden rounded-3xl shadow-2xl"
         >
@@ -208,7 +224,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                   willChange: "transform",
                 }}
               >
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-10 items-stretch h-full w-full">
+                <div className="grid grid-cols-1 grid-rows-[auto_minmax(0,1fr)] md:grid-cols-12 md:grid-rows-1 gap-6 lg:gap-10 items-stretch h-full w-full">
                   {/* LEFT SIDE: Image Preview (5 cols) */}
                   <div
                     className={cn(
@@ -246,7 +262,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                   </div>
 
                   {/* RIGHT SIDE: Spacious & Clear Content Details (7 cols) */}
-                  <div className="md:col-span-7 flex flex-col justify-between h-full py-1 min-w-0 space-y-3.5 sm:space-y-4">
+                  <div className="md:col-span-7 flex flex-col justify-between h-full py-1 min-w-0 min-h-0 space-y-3.5 sm:space-y-4">
                     <div className="space-y-3.5 sm:space-y-4">
                       {/* Client Header */}
                       <div className="flex items-center justify-between gap-3 border-b border-slate-100 dark:border-neutral-800 pb-2">
@@ -274,7 +290,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
 
                       {/* Challenge Section */}
                       {card.challenge && (
-                        <div className="space-y-1">
+                        <div className="hidden md:block space-y-1">
                           <p className="text-[11px] sm:text-xs font-black uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
                             THE CHALLENGE
                           </p>
@@ -291,7 +307,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
 
                       {/* Solution Section */}
                       {card.solution && (
-                        <div className="space-y-1">
+                        <div className="hidden md:block space-y-1">
                           <p className="text-[11px] sm:text-xs font-black uppercase tracking-widest text-primary">
                             OUR SOLUTION
                           </p>
@@ -308,7 +324,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
 
                       {/* Feature Bullet Points / Key Highlights */}
                       {featureList.length > 0 && (
-                        <div className="space-y-2 pt-0.5">
+                        <div className="hidden md:block space-y-2 pt-0.5">
                           {featureList.map((ft, fIdx) => (
                             <div
                               key={fIdx}
@@ -325,7 +341,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                     {/* Bottom Footer Row: Tech Stack Tags & CTA Button */}
                     <div className="space-y-3 pt-2.5 border-t border-slate-100 dark:border-neutral-800 shrink-0">
                       {card.tags && card.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
+                        <div className="hidden md:flex flex-wrap gap-2">
                           {card.tags.map((tag, tIdx) => (
                             <span
                               key={tIdx}

@@ -1,3 +1,4 @@
+import { useSwipe } from "@/hooks/useSwipe";
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useMotionValue, useMotionValueEvent, useInView, animate } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -188,6 +189,8 @@ export default function IndustriesSection() {
     });
   };
 
+  const industrySwipe = useSwipe(selectAdjacent);
+
   return (
     <section ref={sectionRef} className={`relative bg-[#f7f7f5] font-sans ${isCompact ? "py-10 sm:py-14" : "h-[130svh]"}`}>
       <div className={isCompact ? "overflow-hidden" : "sticky top-0 flex h-svh items-center overflow-hidden pt-14 md:pt-16 pb-6"}>
@@ -229,6 +232,7 @@ export default function IndustriesSection() {
         </div>
 
         <div
+          {...industrySwipe}
           ref={galleryRef}
           className="overflow-hidden"
           role="region"

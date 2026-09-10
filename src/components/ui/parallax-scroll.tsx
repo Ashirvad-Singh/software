@@ -1,4 +1,5 @@
 "use client";
+import { useSwipe } from "@/hooks/useSwipe";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
@@ -25,6 +26,10 @@ export const ParallaxScroll = ({
   const thirdPart = images.slice(2 * third);
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const gallerySwipe = useSwipe((direction) => {
+    setSelectedIndex((index) => index === null ? null : Math.max(0, Math.min(images.length - 1, index + direction)));
+  });
 
   // Close lightbox on escape key
   useEffect(() => {
@@ -98,7 +103,7 @@ export const ParallaxScroll = ({
 
       {/* Lightbox Modal */}
       {selectedIndex !== null && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm">
+        <div {...gallerySwipe} className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm">
           <button
             onClick={() => setSelectedIndex(null)}
             className="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white z-50 p-2"
