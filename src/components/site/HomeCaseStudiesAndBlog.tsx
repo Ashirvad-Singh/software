@@ -225,6 +225,7 @@ export default function HomeCaseStudiesAndBlog({
     <>
       {!blogOnly && (
         <StickyCard002
+          showWave
           cards={caseStudies.map((cs) => ({
             id: cs.id || cs.slug,
             image: cs.image,

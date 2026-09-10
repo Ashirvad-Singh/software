@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { ArrowUpRight, Sparkles, ExternalLink, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import ParticleWave from "@/components/ui/particle-wave";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -36,6 +37,7 @@ export interface StickyCard002Props {
   title?: string;
   subtitle?: string;
   isDark?: boolean;
+  showWave?: boolean;
 }
 
 export const StickyCard002: React.FC<StickyCard002Props> = ({
@@ -47,6 +49,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
   title = "Impactful Solutions & Case Studies",
   subtitle = "Explore detailed outcomes and modern engineering from our selected client projects.",
   isDark = false,
+  showWave = false,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardFrameRef = useRef<HTMLDivElement>(null);
@@ -62,7 +65,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
       const cardEls = cardRefs.current.filter(Boolean) as HTMLDivElement[];
       const totalCards = cardEls.length;
 
-      // Set initial card states with 100% SOLID opacity so zero text bleeds through during slide-up
+      // Keep the next real card visible in the preview area below the active card.
       cardEls.forEach((card, index) => {
         if (index === 0) {
           gsap.set(card, {
@@ -75,7 +78,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
           });
         } else {
           gsap.set(card, {
-            yPercent: 100,
+            yPercent: index === 1 ? 100 : 200,
             opacity: 1,
             scale: 1,
             rotate: 0,
@@ -112,6 +115,14 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
             },
             index - 0.75
           );
+          tl.set(cardEls[index - 1], { autoAlpha: 0, pointerEvents: "none" }, index + 0.25);
+          if (cardEls[index + 1]) {
+            tl.to(cardEls[index + 1], {
+              yPercent: 100,
+              ease: "power1.inOut",
+              duration: 1,
+            }, index - 0.75);
+          }
         }
       });
 
@@ -139,6 +150,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
         isDark
           ? "bg-neutral-950 text-white"
           : "bg-slate-50 text-neutral-900 border-y border-neutral-200/80",
+        showWave && "pb-52 md:pb-56",
         className
       )}
     >
@@ -156,6 +168,8 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
           </>
         )}
       </div>
+
+      {showWave && <ParticleWave />}
 
       {/* Main card stack frame container */}
       <div className="flex flex-col justify-center items-center w-full px-4 md:px-8 max-w-7xl mx-auto my-auto">
@@ -192,11 +206,11 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
           )}
         </div>
 
-        {/* Card stack frame - Spacious, Large & 100% Opaque */}
+        {/* Reserve space beneath the active card for a preview of the next card. */}
         <div
           {...cardSwipe}
           ref={cardFrameRef}
-          className="relative z-10 w-full max-w-6xl h-[550px] sm:h-[550px] md:h-[560px] lg:h-[580px] mx-auto overflow-hidden rounded-3xl shadow-2xl"
+          className="relative z-10 w-full max-w-6xl h-[614px] sm:h-[614px] md:h-[640px] lg:h-[660px] mx-auto overflow-hidden rounded-3xl"
         >
           {cards.map((card, i) => {
             const cardSlug = card.slug || `case-study-${card.id}`;
@@ -214,7 +228,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                   cardRefs.current[i] = el;
                 }}
                 className={cn(
-                  "absolute inset-0 w-full h-full rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl border flex flex-col justify-between transition-shadow duration-300 opacity-100",
+                  "absolute inset-x-0 top-0 w-full h-[calc(100%-64px)] md:h-[calc(100%-80px)] rounded-3xl p-6 sm:p-8 lg:p-8 shadow-2xl border flex flex-col justify-between transition-shadow duration-300 opacity-100",
                   isDark
                     ? "bg-neutral-900 border-neutral-700 text-white shadow-black/80"
                     : "bg-white border-neutral-200/90 text-neutral-900 shadow-slate-300/80 ring-1 ring-black/5",
@@ -262,8 +276,8 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                   </div>
 
                   {/* RIGHT SIDE: Spacious & Clear Content Details (7 cols) */}
-                  <div className="md:col-span-7 flex flex-col justify-between h-full py-1 min-w-0 min-h-0 space-y-3.5 sm:space-y-4">
-                    <div className="space-y-3.5 sm:space-y-4">
+                  <div className="md:col-span-7 flex flex-col justify-between h-full py-1 min-w-0 min-h-0 space-y-3 md:space-y-3">
+                    <div className="space-y-3 md:space-y-3">
                       {/* Client Header */}
                       <div className="flex items-center justify-between gap-3 border-b border-slate-100 dark:border-neutral-800 pb-2">
                         {card.client && (
@@ -281,7 +295,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                       {/* Case Study Title */}
                       <h3
                         className={cn(
-                          "text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight break-words",
+                          "text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight leading-tight break-words",
                           isDark ? "text-white" : "text-neutral-900"
                         )}
                       >
@@ -296,7 +310,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                           </p>
                           <p
                             className={cn(
-                              "text-xs sm:text-sm md:text-base leading-relaxed font-normal line-clamp-2 sm:line-clamp-3",
+                              "text-xs sm:text-sm lg:text-base leading-relaxed font-normal line-clamp-2 sm:line-clamp-3",
                               isDark ? "text-neutral-300" : "text-neutral-700"
                             )}
                           >
@@ -313,7 +327,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                           </p>
                           <p
                             className={cn(
-                              "text-xs sm:text-sm md:text-base leading-relaxed font-normal line-clamp-2 sm:line-clamp-3",
+                              "text-xs sm:text-sm lg:text-base leading-relaxed font-normal line-clamp-2 sm:line-clamp-3",
                               isDark ? "text-neutral-300" : "text-neutral-700"
                             )}
                           >
@@ -324,7 +338,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
 
                       {/* Feature Bullet Points / Key Highlights */}
                       {featureList.length > 0 && (
-                        <div className="hidden md:block space-y-2 pt-0.5">
+                        <div className="hidden lg:block space-y-2 pt-0.5">
                           {featureList.map((ft, fIdx) => (
                             <div
                               key={fIdx}
@@ -341,7 +355,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                     {/* Bottom Footer Row: Tech Stack Tags & CTA Button */}
                     <div className="space-y-3 pt-2.5 border-t border-slate-100 dark:border-neutral-800 shrink-0">
                       {card.tags && card.tags.length > 0 && (
-                        <div className="hidden md:flex flex-wrap gap-2">
+                        <div className="hidden lg:flex flex-wrap gap-2">
                           {card.tags.map((tag, tIdx) => (
                             <span
                               key={tIdx}

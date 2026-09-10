@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { MagneticButton } from "@/components/ui/magnetic-button";
+import { ContainerTextFlip } from "@/components/ui/container-text-flip";
 import { ArrowRight } from "lucide-react";
 
 export default function HeroModern() {
@@ -78,15 +79,11 @@ export default function HeroModern() {
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
               }}
             >
-              <span className="relative inline-block px-4 sm:px-6 py-1 sm:py-2 whitespace-nowrap">
-                <motion.span
-                  initial={{ width: "0%" }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 1, ease: "circOut", delay: 0.4 }}
-                  className="absolute inset-0 bg-[#072439]/70 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.4)] rounded-2xl -z-10"
-                />
-                <span className="text-white">Scale your business.</span>
-              </span>
+              Scale your{" "}
+              <ContainerTextFlip
+                words={["business.", "brand.", "growth."]}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white dark:text-white from-[#072439]/90 to-[#0b3956]/90 dark:from-[#072439]/90 dark:to-[#0b3956]/90 shadow-[inset_0_0_0_1px_#ffffff26,0_8px_30px_#00000066] dark:shadow-[inset_0_0_0_1px_#ffffff26,0_8px_30px_#00000066] backdrop-blur-md"
+              />
             </motion.span>
           </motion.h1>
 
