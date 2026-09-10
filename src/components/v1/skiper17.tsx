@@ -58,7 +58,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
       const cardEls = cardRefs.current.filter(Boolean) as HTMLDivElement[];
       const totalCards = cardEls.length;
 
-      // Set initial card states
+      // Set initial card states with 100% SOLID opacity so zero text bleeds through during slide-up
       cardEls.forEach((card, index) => {
         if (index === 0) {
           gsap.set(card, {
@@ -72,7 +72,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
         } else {
           gsap.set(card, {
             yPercent: 100,
-            opacity: 0,
+            opacity: 1,
             scale: 1,
             rotate: 0,
             zIndex: index + 1,
@@ -81,12 +81,12 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
         }
       });
 
-      // Pinned GSAP timeline centered in viewport for perfect visibility on mobile, tablet, laptop & desktop
+      // Pinned GSAP timeline centered in viewport for perfect visibility
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: cardFrameRef.current,
           start: "center center",
-          end: `+=${Math.max((totalCards - 1) * 360, 750)}`,
+          end: `+=${Math.max((totalCards - 1) * 380, 800)}`,
           pin: true,
           pinSpacing: true,
           scrub: 0.6,
@@ -120,7 +120,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
     <section
       ref={containerRef}
       className={cn(
-        "relative w-full font-sans transition-colors duration-300 py-6 md:py-10 min-h-[92vh] flex flex-col justify-center items-center overflow-hidden",
+        "relative w-full font-sans transition-colors duration-300 py-8 md:py-12 min-h-[95vh] flex flex-col justify-center items-center overflow-hidden",
         isDark
           ? "bg-neutral-950 text-white"
           : "bg-slate-50 text-neutral-900 border-y border-neutral-200/80",
@@ -144,22 +144,22 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
 
       {/* Main card stack frame container */}
       <div className="flex flex-col justify-center items-center w-full px-4 md:px-8 max-w-7xl mx-auto my-auto">
-        {/* Compact Header content */}
-        <div className="relative z-20 mx-auto max-w-3xl text-center mb-4 md:mb-6 shrink-0">
+        {/* Header content */}
+        <div className="relative z-20 mx-auto max-w-3xl text-center mb-5 md:mb-7 shrink-0">
           <div
             className={cn(
-              "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-extrabold uppercase tracking-widest backdrop-blur-md shadow-sm border",
+              "inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest shadow-sm border",
               isDark
                 ? "border-primary/30 bg-primary/10 text-primary"
                 : "border-primary/20 bg-primary/10 text-primary"
             )}
           >
-            <Sparkles className="h-3.5 w-3.5" />
+            <Sparkles className="h-4 w-4" />
             {badge}
           </div>
           <h2
             className={cn(
-              "mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl",
+              "mt-2.5 text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl",
               isDark ? "text-white" : "text-neutral-900"
             )}
           >
@@ -168,7 +168,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
           {subtitle && (
             <p
               className={cn(
-                "mt-1.5 max-w-xl mx-auto text-xs sm:text-sm md:text-base font-medium leading-normal",
+                "mt-2 max-w-xl mx-auto text-xs sm:text-sm md:text-base font-medium leading-normal",
                 isDark ? "text-neutral-400" : "text-neutral-600"
               )}
             >
@@ -177,10 +177,10 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
           )}
         </div>
 
-        {/* Card stack frame - Optimized height so card & CTA button are 100% visible on Mobile, Tablet & Laptop */}
+        {/* Card stack frame - Spacious, Large & 100% Opaque */}
         <div
           ref={cardFrameRef}
-          className="relative z-10 w-full max-w-5xl h-[510px] sm:h-[490px] md:h-[480px] lg:h-[500px] mx-auto overflow-hidden rounded-3xl shadow-2xl"
+          className="relative z-10 w-full max-w-6xl h-[550px] sm:h-[550px] md:h-[560px] lg:h-[580px] mx-auto overflow-hidden rounded-3xl shadow-2xl"
         >
           {cards.map((card, i) => {
             const cardSlug = card.slug || `case-study-${card.id}`;
@@ -198,21 +198,21 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                   cardRefs.current[i] = el;
                 }}
                 className={cn(
-                  "absolute inset-0 w-full h-full rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl border flex flex-col justify-between transition-shadow duration-300",
+                  "absolute inset-0 w-full h-full rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl border flex flex-col justify-between transition-shadow duration-300 opacity-100",
                   isDark
-                    ? "bg-neutral-900 border-neutral-700 text-white shadow-black/70"
-                    : "bg-white border-neutral-200/90 text-neutral-900 shadow-slate-200/90 ring-1 ring-black/5",
+                    ? "bg-neutral-900 border-neutral-700 text-white shadow-black/80"
+                    : "bg-white border-neutral-200/90 text-neutral-900 shadow-slate-300/80 ring-1 ring-black/5",
                   containerClassName
                 )}
                 style={{
-                  willChange: "transform, opacity",
+                  willChange: "transform",
                 }}
               >
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 lg:gap-8 items-stretch h-full w-full">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-10 items-stretch h-full w-full">
                   {/* LEFT SIDE: Image Preview (5 cols) */}
                   <div
                     className={cn(
-                      "md:col-span-5 relative w-full h-36 sm:h-44 md:h-full overflow-hidden rounded-2xl border group shadow-sm shrink-0",
+                      "md:col-span-5 relative w-full h-44 sm:h-52 md:h-full overflow-hidden rounded-2xl border group shadow-sm shrink-0",
                       isDark
                         ? "border-white/10 bg-neutral-950"
                         : "border-neutral-200 bg-neutral-100"
@@ -230,13 +230,13 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90" />
 
                     {card.category && (
-                      <span className="absolute top-3 left-3 rounded-full bg-primary px-3 py-1 text-xs font-extrabold text-white uppercase tracking-wider shadow-md">
+                      <span className="absolute top-4 left-4 rounded-full bg-primary px-3.5 py-1 text-xs sm:text-sm font-extrabold text-white uppercase tracking-wider shadow-md">
                         {card.category}
                       </span>
                     )}
 
                     {card.result && (
-                      <div className="absolute bottom-3 left-3 right-3 rounded-xl bg-slate-900/95 p-3 border border-white/20 flex items-center gap-2.5 shadow-xl backdrop-blur-md">
+                      <div className="absolute bottom-4 left-4 right-4 rounded-xl bg-slate-900/95 p-3.5 border border-white/20 flex items-center gap-3 shadow-xl backdrop-blur-md">
                         <ShieldCheck className="h-5 w-5 text-emerald-400 shrink-0" />
                         <span className="text-xs sm:text-sm font-extrabold text-emerald-300 leading-snug line-clamp-1">
                           {card.result}
@@ -245,11 +245,11 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                     )}
                   </div>
 
-                  {/* RIGHT SIDE: Rich Content Details with Perfect Visibility (7 cols) */}
-                  <div className="md:col-span-7 flex flex-col justify-between h-full py-0.5 min-w-0 space-y-2.5 sm:space-y-3">
-                    <div className="space-y-2.5 sm:space-y-3">
+                  {/* RIGHT SIDE: Spacious & Clear Content Details (7 cols) */}
+                  <div className="md:col-span-7 flex flex-col justify-between h-full py-1 min-w-0 space-y-3.5 sm:space-y-4">
+                    <div className="space-y-3.5 sm:space-y-4">
                       {/* Client Header */}
-                      <div className="flex items-center justify-between gap-3 border-b border-slate-100 dark:border-neutral-800 pb-1.5">
+                      <div className="flex items-center justify-between gap-3 border-b border-slate-100 dark:border-neutral-800 pb-2">
                         {card.client && (
                           <span className="text-xs sm:text-sm font-black uppercase tracking-widest text-primary">
                             CLIENT: {card.client}
@@ -265,7 +265,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                       {/* Case Study Title */}
                       <h3
                         className={cn(
-                          "text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight leading-tight break-words",
+                          "text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight break-words",
                           isDark ? "text-white" : "text-neutral-900"
                         )}
                       >
@@ -308,13 +308,13 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
 
                       {/* Feature Bullet Points / Key Highlights */}
                       {featureList.length > 0 && (
-                        <div className="space-y-1.5 pt-0.5">
+                        <div className="space-y-2 pt-0.5">
                           {featureList.map((ft, fIdx) => (
                             <div
                               key={fIdx}
-                              className="flex items-start gap-2 text-xs sm:text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+                              className="flex items-start gap-2.5 text-xs sm:text-sm font-semibold text-neutral-800 dark:text-neutral-200"
                             >
-                              <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                              <CheckCircle2 className="h-4.5 w-4.5 text-primary shrink-0 mt-0.5" />
                               <span className="line-clamp-1">{ft}</span>
                             </div>
                           ))}
@@ -323,14 +323,14 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                     </div>
 
                     {/* Bottom Footer Row: Tech Stack Tags & CTA Button */}
-                    <div className="space-y-2.5 pt-2 border-t border-slate-100 dark:border-neutral-800 shrink-0">
+                    <div className="space-y-3 pt-2.5 border-t border-slate-100 dark:border-neutral-800 shrink-0">
                       {card.tags && card.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5">
+                        <div className="flex flex-wrap gap-2">
                           {card.tags.map((tag, tIdx) => (
                             <span
                               key={tIdx}
                               className={cn(
-                                "rounded-lg px-2.5 py-1 text-xs font-bold border shadow-xs transition-colors",
+                                "rounded-xl px-3 py-1 text-xs font-bold border shadow-xs transition-colors",
                                 isDark
                                   ? "border-white/10 bg-white/5 text-neutral-200"
                                   : "border-slate-200 bg-slate-100 text-slate-800"
@@ -342,20 +342,20 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                         </div>
                       )}
 
-                      {/* Action CTA - Always 100% visible on screen */}
+                      {/* Action CTA Button */}
                       <div className="pt-0.5">
                         {hasLink ? (
                           <Link
                             to={card.link || `/case-studies/${cardSlug}`}
                             className={cn(
-                              "inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-xs sm:text-sm font-extrabold transition-all shadow-md hover:scale-105 w-fit",
+                              "inline-flex items-center gap-2 rounded-full px-7 py-3 text-xs sm:text-sm font-extrabold transition-all shadow-md hover:scale-105 w-fit",
                               isDark
                                 ? "bg-white text-neutral-900 hover:bg-primary hover:text-white"
                                 : "bg-neutral-900 text-white hover:bg-primary hover:text-white"
                             )}
                           >
                             Explore Case Study
-                            <ArrowUpRight className="h-4 w-4" />
+                            <ArrowUpRight className="h-4.5 w-4.5" />
                           </Link>
                         ) : (
                           <div
