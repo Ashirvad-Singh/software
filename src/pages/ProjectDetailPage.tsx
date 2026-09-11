@@ -100,7 +100,7 @@ export default function ProjectDetailPage() {
   }
 
   return (
-    <main className="pt-32 md:pt-40 pb-20">
+    <main className="pt-24 md:pt-32 pb-20">
       <div className="container mx-auto px-4 max-w-5xl">
         <Link
           to="/work"

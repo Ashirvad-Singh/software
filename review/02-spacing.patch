@@ -1,0 +1,543 @@
+diff -ru /tmp/adat-step1/components/site/AboutSection.tsx src/components/site/AboutSection.tsx
+--- /tmp/adat-step1/components/site/AboutSection.tsx	2026-09-11 17:01:37.022244120 +0530
++++ src/components/site/AboutSection.tsx	2026-09-11 17:01:41.224840093 +0530
+@@ -3,7 +3,7 @@
+ 
+ export default function AboutSection({ hideHeader = false }: { hideHeader?: boolean }) {
+   return (
+-    <section id="about" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background overflow-hidden w-full">
++    <section id="about" className="py-10 md:py-16 bg-background overflow-hidden w-full">
+       <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 text-center">
+         {!hideHeader && (
+           <>
+diff -ru /tmp/adat-step1/components/site/CTASection.tsx src/components/site/CTASection.tsx
+--- /tmp/adat-step1/components/site/CTASection.tsx	2026-09-11 17:01:37.022317358 +0530
++++ src/components/site/CTASection.tsx	2026-09-11 17:01:41.200403759 +0530
+@@ -25,7 +25,7 @@
+   };
+ 
+   return (
+-    <section className="py-10 sm:py-12 md:py-16 bg-white text-neutral-900 relative overflow-hidden font-sans border-t border-neutral-100">
++    <section className="py-10 md:py-16 bg-white text-neutral-900 relative overflow-hidden font-sans border-t border-neutral-100">
+       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-8 max-w-7xl">
+         {/* Dashed Box Container */}
+         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] border-y border-dashed border-neutral-300">
+diff -ru /tmp/adat-step1/components/site/CoreValuesSection.tsx src/components/site/CoreValuesSection.tsx
+--- /tmp/adat-step1/components/site/CoreValuesSection.tsx	2026-09-11 17:01:37.022355038 +0530
++++ src/components/site/CoreValuesSection.tsx	2026-09-11 17:01:41.214452846 +0530
+@@ -50,7 +50,7 @@
+ 
+ export default function CoreValuesSection() {
+   return (
+-    <section className="py-16 sm:py-20 md:py-24 bg-background overflow-hidden w-full border-t border-border/40">
++    <section className="py-10 md:py-16 bg-background overflow-hidden w-full border-t border-border/40">
+       <div className="container max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
+           <motion.h2
+diff -ru /tmp/adat-step1/components/site/FaqSection.tsx src/components/site/FaqSection.tsx
+--- /tmp/adat-step1/components/site/FaqSection.tsx	2026-09-11 17:01:37.022423398 +0530
++++ src/components/site/FaqSection.tsx	2026-09-11 17:01:41.189176156 +0530
+@@ -60,7 +60,7 @@
+       : faqs.filter((faq) => faq.category === selectedCategory);
+ 
+   return (
+-    <section className="py-12 md:py-16 bg-white dark:bg-neutral-950 font-sans border-t border-neutral-200 dark:border-neutral-800">
++    <section className="py-10 md:py-16 bg-white dark:bg-neutral-950 font-sans border-t border-neutral-200 dark:border-neutral-800">
+       <div className="container mx-auto px-4 max-w-5xl">
+         {/* Header */}
+         <div className="text-center max-w-3xl mx-auto mb-12">
+diff -ru /tmp/adat-step1/components/site/HeroModern.tsx src/components/site/HeroModern.tsx
+--- /tmp/adat-step1/components/site/HeroModern.tsx	2026-09-11 17:01:37.022485083 +0530
++++ src/components/site/HeroModern.tsx	2026-09-11 17:01:41.227267725 +0530
+@@ -9,7 +9,7 @@
+ 
+   return (
+     <section 
+-      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-black"
++      className="relative min-h-[36rem] md:min-h-[40rem] flex items-center justify-center pt-24 pb-10 md:pt-32 md:pb-16 overflow-hidden bg-black"
+     >
+       {/* Background Video */}
+       <video 
+diff -ru /tmp/adat-step1/components/site/HomeCaseStudiesAndBlog.tsx src/components/site/HomeCaseStudiesAndBlog.tsx
+--- /tmp/adat-step1/components/site/HomeCaseStudiesAndBlog.tsx	2026-09-11 17:01:37.022543305 +0530
++++ src/components/site/HomeCaseStudiesAndBlog.tsx	2026-09-11 17:01:41.186814634 +0530
+@@ -249,7 +249,7 @@
+       {!caseStudiesOnly && (
+         <section
+           style={{ fontFamily: '"Geist Variable", sans-serif' }}
+-          className="border-t border-border bg-secondary/30 px-5 py-16 font-sans sm:px-8 sm:py-24 lg:px-12 lg:py-28"
++          className="py-10 md:py-16 border-t border-border bg-secondary/30 px-5 font-sans sm:px-8 lg:px-12"
+         >
+           <div className="mx-auto max-w-7xl">
+             <div className="mb-10 flex items-end justify-between gap-6 sm:mb-14">
+diff -ru /tmp/adat-step1/components/site/HomeServicesSection.tsx src/components/site/HomeServicesSection.tsx
+--- /tmp/adat-step1/components/site/HomeServicesSection.tsx	2026-09-11 17:01:37.022620212 +0530
++++ src/components/site/HomeServicesSection.tsx	2026-09-11 17:01:41.200250755 +0530
+@@ -64,7 +64,7 @@
+       id="services"
+       aria-label={hideHeader ? "Services" : undefined}
+       aria-labelledby={hideHeader ? undefined : "home-services-heading"}
+-      className="bg-white px-5 py-14 font-sans text-neutral-900 dark:bg-neutral-950 dark:text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24"
++      className="py-10 md:py-16 bg-white px-5 font-sans text-neutral-900 dark:bg-neutral-950 dark:text-white sm:px-8 lg:px-12"
+     >
+       <div className="mx-auto max-w-[1280px]">
+         {!hideHeader && (
+diff -ru /tmp/adat-step1/components/site/Portfolio.tsx src/components/site/Portfolio.tsx
+--- /tmp/adat-step1/components/site/Portfolio.tsx	2026-09-11 17:01:37.116020680 +0530
++++ src/components/site/Portfolio.tsx	2026-09-11 17:01:41.225257743 +0530
+@@ -104,7 +104,7 @@
+   })
+ 
+   return (
+-    <section id="work" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background overflow-x-hidden">
++    <section id="work" className="py-10 md:py-16 bg-background overflow-x-hidden">
+       <div className="container mx-auto px-4 sm:px-6 md:px-8">
+         
+         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4 sm:gap-6 md:gap-8">
+diff -ru /tmp/adat-step1/components/site/ProcessTimeline.tsx src/components/site/ProcessTimeline.tsx
+--- /tmp/adat-step1/components/site/ProcessTimeline.tsx	2026-09-11 17:01:37.117714328 +0530
++++ src/components/site/ProcessTimeline.tsx	2026-09-11 17:01:41.199239531 +0530
+@@ -35,7 +35,7 @@
+   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+ 
+   return (
+-    <section id="process" className={`w-full bg-gradient-to-b from-white via-sky-50/50 to-slate-100/90 dark:from-[#060D27] dark:via-[#050B1E] dark:to-[#020617] border-y border-neutral-200/80 dark:border-sky-500/20 text-foreground relative overflow-hidden ${hideHeader ? "py-12 sm:py-16 md:py-20" : "py-16 sm:py-20 md:py-24"}`}>
++    <section id="process" className={`w-full bg-gradient-to-b from-white via-sky-50/50 to-slate-100/90 dark:from-[#060D27] dark:via-[#050B1E] dark:to-[#020617] border-y border-neutral-200/80 dark:border-sky-500/20 text-foreground relative overflow-hidden py-10 md:py-16`}>
+       <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 lg:px-16 relative z-10">
+         {!hideHeader && (
+           <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+@@ -48,7 +48,7 @@
+           </div>
+         )}
+ 
+-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start pb-28 md:pb-32">
++        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start pb-10 md:pb-16">
+           {/* Left Column */}
+           <div className="lg:col-span-5 flex flex-col justify-between h-full">
+             <div>
+diff -ru /tmp/adat-step1/components/site/SubBanner.tsx src/components/site/SubBanner.tsx
+--- /tmp/adat-step1/components/site/SubBanner.tsx	2026-09-11 17:01:37.117885922 +0530
++++ src/components/site/SubBanner.tsx	2026-09-11 17:01:41.186262316 +0530
+@@ -16,7 +16,7 @@
+   className = "",
+ }: SubBannerProps) {
+   return (
+-    <div className={`relative pt-32 sm:pt-36 md:pt-40 pb-8 md:pb-12 overflow-hidden bg-gradient-to-b from-sky-50/50 via-sky-50/10 to-transparent dark:from-sky-950/20 dark:via-transparent dark:to-transparent ${className}`}>
++    <div className={`relative pt-24 md:pt-32 pb-8 md:pb-12 overflow-hidden bg-gradient-to-b from-sky-50/50 via-sky-50/10 to-transparent dark:from-sky-950/20 dark:via-transparent dark:to-transparent ${className}`}>
+       {/* Ambient Glowing Light Orb */}
+       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-sky-400/15 rounded-full blur-[110px] pointer-events-none z-0" />
+ 
+diff -ru /tmp/adat-step1/components/site/TeamShowcaseScroll.tsx src/components/site/TeamShowcaseScroll.tsx
+--- /tmp/adat-step1/components/site/TeamShowcaseScroll.tsx	2026-09-11 17:01:37.117914436 +0530
++++ src/components/site/TeamShowcaseScroll.tsx	2026-09-11 17:01:41.215004612 +0530
+@@ -55,7 +55,7 @@
+ export default function TeamShowcaseScroll({ members }: { members: TeamMember[] }) {
+   return (
+     <>
+-      <section aria-labelledby="team-grid-heading" className="relative isolate px-4 pb-24 pt-6 sm:px-8 md:px-12 md:pb-48 lg:px-16">
++      <section aria-labelledby="team-grid-heading" className="relative isolate px-4 pb-10 pt-6 sm:px-8 md:px-12 md:pb-16 lg:px-16">
+         <h2 id="team-grid-heading" className="sr-only">The people behind Adat</h2>
+         <div className="mx-auto mb-10 flex max-w-[1600px] items-center justify-between border-t border-neutral-200 pt-5 text-xs text-neutral-500 dark:border-neutral-800 sm:mb-16">
+           <p className="font-bold uppercase tracking-widest text-primary">Different minds. Shared ambition.</p>
+@@ -75,7 +75,7 @@
+         </div>
+       </section>
+ 
+-      <section className="border-t border-neutral-200 bg-white px-4 py-16 text-center dark:border-neutral-800 dark:bg-neutral-900 sm:py-24">
++      <section className="py-10 md:py-16 border-t border-neutral-200 bg-white px-4 text-center dark:border-neutral-800 dark:bg-neutral-900">
+         <p className="mb-4 text-sm font-bold uppercase tracking-widest text-primary">Build with us</p>
+         <h2 className="text-2xl font-bold text-neutral-900 dark:text-white sm:text-3xl md:text-4xl lg:text-5xl">Great work starts with great people.</h2>
+         <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-neutral-500 dark:text-neutral-400 sm:text-base">Bring your curiosity, your craft, and your ideas. Find your place on the Adat team.</p>
+diff -ru /tmp/adat-step1/components/site/Testimonials.tsx src/components/site/Testimonials.tsx
+--- /tmp/adat-step1/components/site/Testimonials.tsx	2026-09-11 17:01:37.117963113 +0530
++++ src/components/site/Testimonials.tsx	2026-09-11 17:01:41.214281128 +0530
+@@ -127,7 +127,7 @@
+ 
+   if (loading) {
+     return (
+-      <section className="py-12 flex justify-center items-center bg-[#fafafa] min-h-[200px]">
++      <section className="py-10 md:py-16 flex justify-center items-center bg-[#fafafa] min-h-[200px]">
+         <Loader2 className="w-8 h-8 animate-spin text-primary" />
+       </section>
+     )
+@@ -143,7 +143,7 @@
+   const bottomRow = displayTestimonials.slice(midPoint);
+ 
+   return (
+-    <section className="py-12 md:py-16 bg-[#fafafa] w-full overflow-hidden font-sans">
++    <section className="py-10 md:py-16 bg-[#fafafa] w-full overflow-hidden font-sans">
+       
+       <div className="text-center mb-8 relative z-20 px-8">
+         <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-5 tracking-tight text-balance">
+diff -ru /tmp/adat-step1/components/site/UpgradeBrandCta.tsx src/components/site/UpgradeBrandCta.tsx
+--- /tmp/adat-step1/components/site/UpgradeBrandCta.tsx	2026-09-11 17:01:37.294020988 +0530
++++ src/components/site/UpgradeBrandCta.tsx	2026-09-11 17:01:41.224355476 +0530
+@@ -45,7 +45,7 @@
+ 
+ export default function UpgradeBrandCta() {
+   return (
+-    <section className="relative w-full overflow-hidden bg-[#ffe885] py-20 lg:py-32">
++    <section className="py-10 md:py-16 relative w-full overflow-hidden bg-[#ffe885]">
+       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center min-h-[400px]">
+         
+         {/* Center Content */}
+diff -ru /tmp/adat-step1/components/site/WhatSetsUsApart.tsx src/components/site/WhatSetsUsApart.tsx
+--- /tmp/adat-step1/components/site/WhatSetsUsApart.tsx	2026-09-11 17:01:37.295209456 +0530
++++ src/components/site/WhatSetsUsApart.tsx	2026-09-11 17:01:41.214637239 +0530
+@@ -4,7 +4,7 @@
+ 
+ export default function WhatSetsUsApart() {
+   return (
+-    <section className="py-10 sm:py-12 md:py-16 relative overflow-hidden bg-white w-full">
++    <section className="py-10 md:py-16 relative overflow-hidden bg-white w-full">
+       {/* Background Wireframe Elements */}
+       <div className="absolute top-10 left-10 opacity-30 pointer-events-none hidden lg:block">
+         <svg width="180" height="180" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+diff -ru /tmp/adat-step1/components/v1/skiper17.tsx src/components/v1/skiper17.tsx
+--- /tmp/adat-step1/components/v1/skiper17.tsx	2026-09-11 17:01:37.357673271 +0530
++++ src/components/v1/skiper17.tsx	2026-09-11 17:01:41.225728476 +0530
+@@ -93,7 +93,7 @@
+         scrollTrigger: {
+           trigger: cardFrameRef.current,
+           start: "center center",
+-          end: `+=${Math.max((totalCards - 1) * 380, 800)}`,
++          end: `+=${Math.max((totalCards - 1) * 280, 280)}`,
+           pin: true,
+           pinSpacing: true,
+           scrub: 0.6,
+@@ -146,7 +146,7 @@
+     <section
+       ref={containerRef}
+       className={cn(
+-        "relative w-full font-sans transition-colors duration-300 py-8 md:py-12 min-h-[95vh] flex flex-col justify-center items-center overflow-hidden",
++        "relative w-full font-sans transition-colors duration-300 py-10 md:py-16 flex flex-col justify-center items-center overflow-hidden",
+         isDark
+           ? "bg-neutral-950 text-white"
+           : "bg-slate-50 text-neutral-900 border-y border-neutral-200/80",
+diff -ru /tmp/adat-step1/pages/BlogPage.tsx src/pages/BlogPage.tsx
+--- /tmp/adat-step1/pages/BlogPage.tsx	2026-09-11 17:01:37.485971425 +0530
++++ src/pages/BlogPage.tsx	2026-09-11 17:01:41.137558366 +0530
+@@ -86,7 +86,7 @@
+   const regularPosts = displayPosts.filter(post => post.id !== featuredPost?.id);
+ 
+   return (
+-    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen pb-24">
++    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen pb-10 md:pb-16">
+       <SubBanner
+         badge="Blog & Articles"
+         title="Our Latest"
+@@ -94,7 +94,7 @@
+         subtitle="Thoughts, tutorials, and insights on design, development, and building successful digital products."
+       />
+ 
+-      <div className="container mx-auto px-4 md:px-6 max-w-7xl pt-12 md:pt-16">
++      <div className="container mx-auto px-4 md:px-6 max-w-7xl pt-10 md:pt-16">
+ 
+         {loading ? (
+           <div className="flex justify-center items-center h-64">
+diff -ru /tmp/adat-step1/pages/BlogPostPage.tsx src/pages/BlogPostPage.tsx
+--- /tmp/adat-step1/pages/BlogPostPage.tsx	2026-09-11 17:01:37.486003378 +0530
++++ src/pages/BlogPostPage.tsx	2026-09-11 17:01:41.144621780 +0530
+@@ -64,7 +64,7 @@
+   return (
+     <main className="bg-white dark:bg-neutral-950 min-h-screen">
+       {/* Hero Section */}
+-      <div className="w-full bg-gradient-to-r from-blue-500 to-sky-600 pt-36 pb-24">
++      <div className="w-full bg-gradient-to-r from-blue-500 to-sky-600 pt-36 pb-10 md:pb-16">
+         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+           <Link to="/blog" className="inline-flex items-center text-white/90 hover:text-white mb-10 transition-colors text-sm font-medium">
+             <ArrowLeft className="w-4 h-4 mr-2" /> Back to main blog
+diff -ru /tmp/adat-step1/pages/CareersPage.tsx src/pages/CareersPage.tsx
+--- /tmp/adat-step1/pages/CareersPage.tsx	2026-09-11 17:01:37.486049406 +0530
++++ src/pages/CareersPage.tsx	2026-09-11 17:01:41.145137795 +0530
+@@ -195,7 +195,7 @@
+       </section>
+ 
+       {/* 2. Why Work At Adat */}
+-      <section className="py-24 bg-white">
++      <section className="py-10 md:py-16 bg-white">
+         <div className="container mx-auto px-4 max-w-6xl">
+           <div className="text-center mb-16">
+             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Why Work At Adat</h2>
+@@ -224,7 +224,7 @@
+       </section>
+ 
+       {/* 3. Teams We Hire For */}
+-      <section className="py-24 bg-[#Fdfbf8]">
++      <section className="py-10 md:py-16 bg-[#Fdfbf8]">
+         <div className="container mx-auto px-4 max-w-6xl">
+           <div className="text-center mb-16">
+             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Teams We Hire For</h2>
+@@ -274,7 +274,7 @@
+       </section>
+ 
+       {/* 4. How We Work */}
+-      <section className="py-24 bg-white">
++      <section className="py-10 md:py-16 bg-white">
+         <div className="container mx-auto px-4 max-w-6xl">
+           <div className="flex flex-col lg:flex-row gap-16">
+             <div className="w-full lg:w-1/3">
+@@ -303,7 +303,7 @@
+       </section>
+ 
+       {/* 5. What We Look For */}
+-      <section className="py-24 bg-[#Fdfbf8] overflow-hidden">
++      <section className="py-10 md:py-16 bg-[#Fdfbf8] overflow-hidden">
+         <div className="container mx-auto px-4 max-w-6xl text-center relative z-10">
+           <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">What We Look For</h2>
+           <p className="text-lg text-neutral-500 mb-16 max-w-2xl mx-auto">Skills can be taught, character cannot. We value those who show up every day with:</p>
+@@ -343,7 +343,7 @@
+       </section>
+ 
+       {/* 6. Open Roles */}
+-      <section id="open-roles" className="py-24 bg-white">
++      <section id="open-roles" className="py-10 md:py-16 bg-white">
+         <div className="container mx-auto px-4 max-w-5xl text-center">
+           <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-12">Open Roles</h2>
+           
+@@ -398,7 +398,7 @@
+       </section>
+ 
+       {/* 7. How To Apply */}
+-      <section className="py-24 bg-[#Fdfbf8]">
++      <section className="py-10 md:py-16 bg-[#Fdfbf8]">
+         <div className="container mx-auto px-4 max-w-5xl">
+           <div className="text-center mb-16">
+             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900">How To Apply</h2>
+@@ -443,7 +443,7 @@
+       </section>
+ 
+       {/* 7.5. Application Form */}
+-      <section id="apply-form" className="py-24 bg-white border-t border-neutral-100">
++      <section id="apply-form" className="py-10 md:py-16 bg-white border-t border-neutral-100">
+         <div className="container mx-auto px-4 max-w-3xl">
+           <div className="text-center mb-12">
+             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900">Submit Application</h2>
+diff -ru /tmp/adat-step1/pages/CaseStudiesPage.tsx src/pages/CaseStudiesPage.tsx
+--- /tmp/adat-step1/pages/CaseStudiesPage.tsx	2026-09-11 17:01:37.486115351 +0530
++++ src/pages/CaseStudiesPage.tsx	2026-09-11 17:01:41.145867079 +0530
+@@ -100,7 +100,7 @@
+   }, []);
+ 
+   return (
+-    <main className="min-h-screen bg-background pb-24 font-sans text-foreground">
++    <main className="min-h-screen bg-background pb-10 md:pb-16 font-sans text-foreground">
+       <SEO
+         title="Case Studies | Adat Soft Solutions"
+         description="Explore Adat Soft Solutions case studies, outcomes, and digital product work."
+diff -ru /tmp/adat-step1/pages/CaseStudyDetailPage.tsx src/pages/CaseStudyDetailPage.tsx
+--- /tmp/adat-step1/pages/CaseStudyDetailPage.tsx	2026-09-11 17:01:37.486163457 +0530
++++ src/pages/CaseStudyDetailPage.tsx	2026-09-11 17:01:41.147033110 +0530
+@@ -208,7 +208,7 @@
+       : [];
+ 
+   return (
+-    <main className="min-h-screen bg-background pb-24 pt-32 font-sans text-foreground sm:pt-40">
++    <main className="min-h-screen bg-background pb-10 md:pb-16 pt-32 font-sans text-foreground sm:pt-40">
+       <SEO
+         title={`${caseStudy.title} | Case Studies`}
+         description={
+diff -ru /tmp/adat-step1/pages/ContactPage.tsx src/pages/ContactPage.tsx
+--- /tmp/adat-step1/pages/ContactPage.tsx	2026-09-11 17:01:37.486235760 +0530
++++ src/pages/ContactPage.tsx	2026-09-11 17:01:41.142444722 +0530
+@@ -58,7 +58,7 @@
+   };
+ 
+   return (
+-    <main className="min-h-screen relative overflow-x-hidden bg-white pb-16 lg:pb-24">
++    <main className="min-h-screen relative overflow-x-hidden bg-white pb-16 lg:pb-10 md:pb-16">
+       <SubBanner
+         badge="Contact Us"
+         title="Get in"
+@@ -66,7 +66,7 @@
+         subtitle="Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions."
+       />
+ 
+-      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl relative z-10 pt-12 md:pt-16">
++      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl relative z-10 pt-10 md:pt-16">
+         
+           <motion.div 
+           initial={{ opacity: 0, y: 40 }}
+diff -ru /tmp/adat-step1/pages/HomePage.tsx src/pages/HomePage.tsx
+--- /tmp/adat-step1/pages/HomePage.tsx	2026-09-11 17:01:37.486411816 +0530
++++ src/pages/HomePage.tsx	2026-09-11 17:01:41.136563272 +0530
+@@ -29,7 +29,7 @@
+       <HeroModern />
+ 
+       {/* Mini About Section */}
+-      <section className="py-10 sm:py-12 md:py-14 bg-neutral-50 relative overflow-hidden">
++      <section className="py-10 md:py-16 bg-neutral-50 relative overflow-hidden">
+         <FloatingShapes />
+         <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
+           <motion.div
+diff -ru /tmp/adat-step1/pages/JobDetailPage.tsx src/pages/JobDetailPage.tsx
+--- /tmp/adat-step1/pages/JobDetailPage.tsx	2026-09-11 17:01:37.486457182 +0530
++++ src/pages/JobDetailPage.tsx	2026-09-11 17:01:41.138013592 +0530
+@@ -52,7 +52,7 @@
+   }
+ 
+   return (
+-    <main className="bg-white dark:bg-neutral-950 min-h-screen pt-32 pb-24">
++    <main className="bg-white dark:bg-neutral-950 min-h-screen pt-32 pb-10 md:pb-16">
+       <div className="container mx-auto px-4 max-w-4xl">
+         <Link to="/careers" className="inline-flex items-center text-sm font-medium text-neutral-500 hover:text-primary transition-colors mb-8">
+           <ArrowLeft className="w-4 h-4 mr-2" />
+diff -ru /tmp/adat-step1/pages/PrivacyPolicyPage.tsx src/pages/PrivacyPolicyPage.tsx
+--- /tmp/adat-step1/pages/PrivacyPolicyPage.tsx	2026-09-11 17:01:37.486546817 +0530
++++ src/pages/PrivacyPolicyPage.tsx	2026-09-11 17:01:41.137766971 +0530
+@@ -54,7 +54,7 @@
+   ]
+ 
+   return (
+-    <main className="pt-32 sm:pt-36 md:pt-40 pb-20 min-h-screen bg-background text-foreground">
++    <main className="pt-24 md:pt-32 pb-20 min-h-screen bg-background text-foreground">
+       {/* Header */}
+       <div className="bg-gradient-to-b from-sky-50/50 via-background to-background border-b border-border/40 py-12 md:py-16">
+         <div className="container mx-auto px-4 max-w-4xl text-center">
+diff -ru /tmp/adat-step1/pages/ProjectDetailPage.tsx src/pages/ProjectDetailPage.tsx
+--- /tmp/adat-step1/pages/ProjectDetailPage.tsx	2026-09-11 17:01:37.486603298 +0530
++++ src/pages/ProjectDetailPage.tsx	2026-09-11 17:01:41.145690216 +0530
+@@ -100,7 +100,7 @@
+   }
+ 
+   return (
+-    <main className="pt-32 md:pt-40 pb-20">
++    <main className="pt-24 md:pt-32 pb-20">
+       <div className="container mx-auto px-4 max-w-5xl">
+         <Link
+           to="/work"
+diff -ru /tmp/adat-step1/pages/ServiceDetailPage.tsx src/pages/ServiceDetailPage.tsx
+--- /tmp/adat-step1/pages/ServiceDetailPage.tsx	2026-09-11 17:01:37.486670284 +0530
++++ src/pages/ServiceDetailPage.tsx	2026-09-11 17:01:41.142643792 +0530
+@@ -76,7 +76,7 @@
+   }
+ 
+   return (
+-    <main className="pt-32 md:pt-40 pb-20">
++    <main className="pt-24 md:pt-32 pb-20">
+       <div className="container mx-auto px-4 max-w-4xl">
+         <Link to="/services" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8">
+           <ArrowLeft className="w-4 h-4 mr-2" />
+diff -ru /tmp/adat-step1/pages/ServicesPage.tsx src/pages/ServicesPage.tsx
+--- /tmp/adat-step1/pages/ServicesPage.tsx	2026-09-11 17:01:37.486717540 +0530
++++ src/pages/ServicesPage.tsx	2026-09-11 17:01:41.088424773 +0530
+@@ -64,7 +64,7 @@
+       />
+ 
+       {/* Metrics & Guarantees Strip */}
+-      <section className="py-10 bg-neutral-900 text-white border-y border-neutral-800">
++      <section className="py-10 md:py-16 bg-neutral-900 text-white border-y border-neutral-800">
+         <div className="container mx-auto px-4 max-w-6xl">
+           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+             <div>
+@@ -99,7 +99,7 @@
+       <HomeServicesSection showAll hideHeader />
+ 
+       {/* Detailed Capabilities Grid */}
+-      <section className="py-20 md:py-28 bg-neutral-50 dark:bg-neutral-900/40 border-t border-neutral-200 dark:border-neutral-800">
++      <section className="py-10 md:py-16 bg-neutral-50 dark:bg-neutral-900/40 border-t border-neutral-200 dark:border-neutral-800">
+         <div className="container mx-auto px-4 max-w-6xl">
+           <div className="text-center max-w-3xl mx-auto mb-16">
+             <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-3.5 py-1.5 rounded-full border border-primary/20">
+diff -ru /tmp/adat-step1/pages/TechnologiesPage.tsx src/pages/TechnologiesPage.tsx
+--- /tmp/adat-step1/pages/TechnologiesPage.tsx	2026-09-11 17:01:37.486814112 +0530
++++ src/pages/TechnologiesPage.tsx	2026-09-11 17:01:41.137245822 +0530
+@@ -251,7 +251,7 @@
+       />
+ 
+       {/* Value Pillars Strip */}
+-      <section className="py-12 bg-neutral-900 text-white border-y border-neutral-800">
++      <section className="py-10 md:py-16 bg-neutral-900 text-white border-y border-neutral-800">
+         <div className="container mx-auto px-4 max-w-6xl">
+           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+             {pillars.map((pillar, idx) => {
+@@ -311,7 +311,7 @@
+       </section>
+ 
+       {/* Main Technology Grid Section */}
+-      <section className="py-12 md:py-16 bg-white dark:bg-neutral-950 relative overflow-hidden">
++      <section className="py-10 md:py-16 bg-white dark:bg-neutral-950 relative overflow-hidden">
+         <FloatingShapes />
+         <div className="container relative z-10 mx-auto max-w-7xl px-4">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+@@ -417,7 +417,7 @@
+       </section>
+ 
+       {/* Agile 5-Step Process Timeline Section */}
+-      <section className="py-12 md:py-16 bg-neutral-50 dark:bg-neutral-900/40 border-t border-neutral-200 dark:border-neutral-800">
++      <section className="py-10 md:py-16 bg-neutral-50 dark:bg-neutral-900/40 border-t border-neutral-200 dark:border-neutral-800">
+         <div className="container mx-auto px-4 max-w-5xl">
+           <div className="text-center max-w-3xl mx-auto mb-12">
+             <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-3.5 py-1.5 rounded-full border border-primary/20">
+@@ -466,7 +466,7 @@
+       </section>
+ 
+       {/* Tech Stack FAQ Accordion */}
+-      <section className="py-12 md:py-16 bg-white dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-800">
++      <section className="py-10 md:py-16 bg-white dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-800">
+         <div className="container mx-auto px-4 max-w-4xl">
+           <div className="text-center max-w-2xl mx-auto mb-12">
+             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-xs font-semibold uppercase tracking-wider mb-3 border border-neutral-200 dark:border-neutral-800">
+@@ -514,7 +514,7 @@
+       </section>
+ 
+       {/* CTA Consultation Card */}
+-      <section className="py-12 bg-neutral-50 dark:bg-neutral-900/50 border-t border-neutral-200 dark:border-neutral-800">
++      <section className="py-10 md:py-16 bg-neutral-50 dark:bg-neutral-900/50 border-t border-neutral-200 dark:border-neutral-800">
+         <div className="container mx-auto px-4 max-w-5xl">
+           <div className="p-8 md:p-12 rounded-3xl bg-neutral-900 text-white border border-neutral-800 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl relative overflow-hidden">
+             <div className="space-y-3 text-center md:text-left z-10 max-w-2xl">
+diff -ru /tmp/adat-step1/pages/TechnologyDetailPage.tsx src/pages/TechnologyDetailPage.tsx
+--- /tmp/adat-step1/pages/TechnologyDetailPage.tsx	2026-09-11 17:01:37.486856439 +0530
++++ src/pages/TechnologyDetailPage.tsx	2026-09-11 17:01:41.141915033 +0530
+@@ -586,7 +586,7 @@
+   const relatedProjects = staticProjects.slice(0, 3);
+ 
+   return (
+-    <main className="min-h-screen bg-white dark:bg-neutral-950 font-sans text-neutral-900 dark:text-white pb-24">
++    <main className="min-h-screen bg-white dark:bg-neutral-950 font-sans text-neutral-900 dark:text-white pb-10 md:pb-16">
+       <SEO
+         title={`${techDetail.name} | Technology Expertise`}
+         description={techDetail.overview}
+@@ -613,7 +613,7 @@
+       />
+ 
+       {/* Overview & Key Benefits Section */}
+-      <section className="py-12 md:py-16 bg-white dark:bg-neutral-950">
++      <section className="py-10 md:py-16 bg-white dark:bg-neutral-950">
+         <div className="container mx-auto px-4 max-w-6xl">
+           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 items-center mb-16">
+             <div className="space-y-6">
+diff -ru /tmp/adat-step1/pages/TermsOfServicePage.tsx src/pages/TermsOfServicePage.tsx
+--- /tmp/adat-step1/pages/TermsOfServicePage.tsx	2026-09-11 17:01:37.486898476 +0530
++++ src/pages/TermsOfServicePage.tsx	2026-09-11 17:01:41.142197292 +0530
+@@ -51,7 +51,7 @@
+   ]
+ 
+   return (
+-    <main className="pt-32 sm:pt-36 md:pt-40 pb-20 min-h-screen bg-background text-foreground">
++    <main className="pt-24 md:pt-32 pb-20 min-h-screen bg-background text-foreground">
+       {/* Header */}
+       <div className="bg-gradient-to-b from-sky-50/50 via-background to-background border-b border-border/40 py-12 md:py-16">
+         <div className="container mx-auto px-4 max-w-4xl text-center">
+diff -ru /tmp/adat-step1/pages/WorkPage.tsx src/pages/WorkPage.tsx
+--- /tmp/adat-step1/pages/WorkPage.tsx	2026-09-11 17:01:37.486929601 +0530
++++ src/pages/WorkPage.tsx	2026-09-11 17:01:41.147445456 +0530
+@@ -229,7 +229,7 @@
+ 
+   return (
+     <main
+-      className="min-h-screen bg-background pb-28 pt-28 font-sans text-foreground selection:bg-primary selection:text-primary-foreground sm:pt-32 md:pt-36"
++      className="min-h-screen bg-background pb-10 md:pb-16 pt-24 font-sans text-foreground selection:bg-primary selection:text-primary-foreground sm:pt-32 md:pt-36"
+       style={{ fontFamily: '"Geist Variable", sans-serif' }}
+     >
+       <SEO
+@@ -291,7 +291,7 @@
+           </AnimatePresence>
+         </div>
+ 
+-        <section className="mt-28 grid grid-cols-1 gap-12 border-t border-border pt-16 lg:grid-cols-[1fr_1.35fr] lg:gap-20 lg:pt-24">
++        <section className="mt-10 md:mt-16 grid grid-cols-1 gap-12 border-t border-border pt-16 lg:grid-cols-[1fr_1.35fr] lg:gap-20 lg:pt-16">
+           <div>
+             <span className="text-xs font-sans font-bold uppercase tracking-widest text-muted-foreground">
+               About the work

@@ -13,26 +13,7 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1600,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('three') || id.includes('@react-three') || id.includes('three-globe') || id.includes('three-stdlib') || id.includes('dotted-map')) {
-              return 'three-vendor'
-            }
-            if (id.includes('@tabler/icons-react') || id.includes('lucide-react')) {
-              return 'icons-vendor'
-            }
-            if (id.includes('framer-motion')) {
-              return 'motion-vendor'
-            }
-            if (id.includes('firebase')) {
-              return 'firebase-vendor'
-            }
-            return 'vendor'
-          }
-        },
-      },
-    },
+    // Let Vite keep dynamic imports and their dependencies lazy. The previous
+    // catch-all vendor groups pulled the optional Spline runtime into preload.
   },
 })

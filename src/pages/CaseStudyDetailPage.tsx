@@ -208,7 +208,7 @@ export default function CaseStudyDetailPage() {
       : [];
 
   return (
-    <main className="min-h-screen bg-background pb-24 pt-32 font-sans text-foreground sm:pt-40">
+    <main className="min-h-screen bg-background pb-10 md:pb-16 pt-32 font-sans text-foreground sm:pt-40">
       <SEO
         title={`${caseStudy.title} | Case Studies`}
         description={

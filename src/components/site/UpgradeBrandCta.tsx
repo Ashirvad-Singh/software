@@ -45,7 +45,7 @@ const FloatingCursor = ({
 
 export default function UpgradeBrandCta() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#ffe885] py-20 lg:py-32">
+    <section className="py-10 md:py-16 relative w-full overflow-hidden bg-[#ffe885]">
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center min-h-[400px]">
         
         {/* Center Content */}

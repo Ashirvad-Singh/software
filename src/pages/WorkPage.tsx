@@ -229,7 +229,7 @@ export default function WorkPage() {
 
   return (
     <main
-      className="min-h-screen bg-background pb-28 pt-28 font-sans text-foreground selection:bg-primary selection:text-primary-foreground sm:pt-32 md:pt-36"
+      className="min-h-screen bg-background pb-10 md:pb-16 pt-24 font-sans text-foreground selection:bg-primary selection:text-primary-foreground sm:pt-32 md:pt-36"
       style={{ fontFamily: '"Geist Variable", sans-serif' }}
     >
       <SEO
@@ -273,7 +273,7 @@ export default function WorkPage() {
               )}
             </button>
           ))}
-          <span className="ml-auto text-xs font-sans text-neutral-400">
+          <span className="ml-auto text-xs font-sans text-neutral-600 dark:text-neutral-400">
             SHOWING ({filteredProjects.length}) PROJECTS
           </span>
         </div>
@@ -291,7 +291,7 @@ export default function WorkPage() {
           </AnimatePresence>
         </div>
 
-        <section className="mt-28 grid grid-cols-1 gap-12 border-t border-border pt-16 lg:grid-cols-[1fr_1.35fr] lg:gap-20 lg:pt-24">
+        <section className="mt-10 md:mt-16 grid grid-cols-1 gap-12 border-t border-border pt-16 lg:grid-cols-[1fr_1.35fr] lg:gap-20 lg:pt-16">
           <div>
             <span className="text-xs font-sans font-bold uppercase tracking-widest text-muted-foreground">
               About the work

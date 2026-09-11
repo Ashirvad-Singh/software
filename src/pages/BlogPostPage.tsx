@@ -64,7 +64,7 @@ export default function BlogPostPage() {
   return (
     <main className="bg-white dark:bg-neutral-950 min-h-screen">
       {/* Hero Section */}
-      <div className="w-full bg-gradient-to-r from-blue-500 to-sky-600 pt-36 pb-24">
+      <div className="w-full bg-gradient-to-r from-blue-500 to-sky-600 pt-36 pb-10 md:pb-16">
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <Link to="/blog" className="inline-flex items-center text-white/90 hover:text-white mb-10 transition-colors text-sm font-medium">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to main blog

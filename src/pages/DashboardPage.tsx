@@ -409,7 +409,7 @@ export default function DashboardPage() {
               Adat Admin
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             </div>
-            <p className="text-[11px] font-medium text-neutral-400">
+            <p className="text-[11px] font-medium text-neutral-600">
               Control Panel v2.0
             </p>
           </div>
@@ -427,7 +427,7 @@ export default function DashboardPage() {
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 scrollbar-thin scrollbar-thumb-neutral-200">
         {navGroups.map((group, idx) => (
           <div key={idx} className="space-y-1.5">
-            <h2 className="px-3 text-[11px] font-bold uppercase tracking-wider text-neutral-400">
+            <h2 className="px-3 text-[11px] font-bold uppercase tracking-wider text-neutral-600">
               {group.groupName}
             </h2>
             <div className="space-y-1 mt-1">
@@ -450,7 +450,7 @@ export default function DashboardPage() {
                     <div className="flex items-center gap-3">
                       <Icon
                         className={`w-4 h-4 shrink-0 transition-colors ${
-                          isActive ? "text-primary" : "text-neutral-400"
+                          isActive ? "text-primary" : "text-neutral-600"
                         }`}
                       />
                       <span>{item.label}</span>
@@ -485,7 +485,7 @@ export default function DashboardPage() {
             <Globe className="w-3.5 h-3.5 text-neutral-500" />
             View Live Website
           </span>
-          <ExternalLink className="w-3 h-3 text-neutral-400" />
+          <ExternalLink className="w-3 h-3 text-neutral-600" />
         </Link>
 
         <div className="pt-2 flex items-center justify-between">
@@ -497,7 +497,7 @@ export default function DashboardPage() {
               <p className="text-xs font-bold text-neutral-800 truncate">
                 Admin User
               </p>
-              <p className="text-[10px] text-neutral-400 truncate">
+              <p className="text-[10px] text-neutral-600 truncate">
                 Active Session
               </p>
             </div>
@@ -787,7 +787,7 @@ export default function DashboardPage() {
                         </div>
                         <button
                           onClick={() => setSelectedApp(null)}
-                          className="p-2 text-neutral-400 hover:text-neutral-900 rounded-xl hover:bg-neutral-100 transition-colors"
+                          className="p-2 text-neutral-600 hover:text-neutral-900 rounded-xl hover:bg-neutral-100 transition-colors"
                         >
                           <X className="w-5 h-5" />
                         </button>

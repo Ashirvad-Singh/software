@@ -3,7 +3,7 @@ import WorldMap from "@/components/ui/world-map"
 
 export default function AboutSection({ hideHeader = false }: { hideHeader?: boolean }) {
   return (
-    <section id="about" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background overflow-hidden w-full">
+    <section id="about" className="py-10 md:py-16 bg-background overflow-hidden w-full">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 text-center">
         {!hideHeader && (
           <>

@@ -104,7 +104,7 @@ export default function Portfolio() {
   })
 
   return (
-    <section id="work" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background overflow-x-hidden">
+    <section id="work" className="py-10 md:py-16 bg-background overflow-x-hidden">
       <div className="container mx-auto px-4 sm:px-6 md:px-8">
         
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4 sm:gap-6 md:gap-8">

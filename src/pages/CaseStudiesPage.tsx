@@ -100,7 +100,7 @@ export default function CaseStudiesPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-background pb-24 font-sans text-foreground">
+    <main className="min-h-screen bg-background pb-10 md:pb-16 font-sans text-foreground">
       <SEO
         title="Case Studies | Adat Soft Solutions"
         description="Explore Adat Soft Solutions case studies, outcomes, and digital product work."

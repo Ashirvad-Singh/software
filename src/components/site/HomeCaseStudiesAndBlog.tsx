@@ -249,7 +249,7 @@ export default function HomeCaseStudiesAndBlog({
       {!caseStudiesOnly && (
         <section
           style={{ fontFamily: '"Geist Variable", sans-serif' }}
-          className="border-t border-border bg-secondary/30 px-5 py-16 font-sans sm:px-8 sm:py-24 lg:px-12 lg:py-28"
+          className="py-10 md:py-16 border-t border-border bg-secondary/30 px-5 font-sans sm:px-8 lg:px-12"
         >
           <div className="mx-auto max-w-7xl">
             <div className="mb-10 flex items-end justify-between gap-6 sm:mb-14">

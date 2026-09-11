@@ -58,7 +58,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen relative overflow-x-hidden bg-white pb-16 lg:pb-24">
+    <main className="min-h-screen relative overflow-x-hidden bg-white pb-16 lg:pb-10 md:pb-16">
       <SubBanner
         badge="Contact Us"
         title="Get in"
@@ -66,7 +66,7 @@ export default function ContactPage() {
         subtitle="Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions."
       />
 
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl relative z-10 pt-12 md:pt-16">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl relative z-10 pt-10 md:pt-16">
         
           <motion.div 
           initial={{ opacity: 0, y: 40 }}

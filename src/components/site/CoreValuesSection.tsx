@@ -50,7 +50,7 @@ const coreValues = [
 
 export default function CoreValuesSection() {
   return (
-    <section className="py-16 sm:py-20 md:py-24 bg-background overflow-hidden w-full border-t border-border/40">
+    <section className="py-10 md:py-16 bg-background overflow-hidden w-full border-t border-border/40">
       <div className="container max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
           <motion.h2

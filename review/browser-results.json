@@ -1,0 +1,440 @@
+[
+  {
+    "width": 390,
+    "route": "/",
+    "title": "Build software.Scale your business.business.",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/services",
+    "title": "Custom Digital Services & Solutions",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/services/web-development",
+    "title": "Web Development",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/technologies",
+    "title": "Modern Engineering Tools & Frameworks",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/technologies/react",
+    "title": "React.js Engineering Frontend Architecture",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/work",
+    "title": "Selected work andthe results behind it.",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/work/test",
+    "title": "Project not found",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/case-studies",
+    "title": "Our Case Studies",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/case-studies/global-fintech-platform",
+    "title": "Global FinTech & Trading Platform",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/process",
+    "title": "About Adat Soft Solutions",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/about",
+    "title": "About Adat Soft Solutions",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/contact",
+    "title": "Get in touch",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/team",
+    "title": "Meet the Minds Behind the Magic",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/gallery",
+    "title": "Our Gallery",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/careers",
+    "title": "Build Systems  With A Team",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/careers/test",
+    "title": "Job not found or no longer active",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/dashboard",
+    "title": "Admin Portal",
+    "overflow": false,
+    "footer": false,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/blog",
+    "title": "Our Latest Thinking",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/blog/future-of-web-development-2026",
+    "title": "The Future of Web Development in 2026",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/privacy",
+    "title": "Privacy Policy",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/terms",
+    "title": "Terms of Service",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 390,
+    "route": "/missing-page",
+    "title": "404",
+    "overflow": false,
+    "footer": true,
+    "marquee": 52,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/",
+    "title": "Build software.Scale your business.business.",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/services",
+    "title": "Custom Digital Services & Solutions",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/services/web-development",
+    "title": "Web Development",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/technologies",
+    "title": "Modern Engineering Tools & Frameworks",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/technologies/react",
+    "title": "React.js Engineering Frontend Architecture",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/work",
+    "title": "Selected work andthe results behind it.",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/work/test",
+    "title": "Project not found",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/case-studies",
+    "title": "Our Case Studies",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/case-studies/global-fintech-platform",
+    "title": "Global FinTech & Trading Platform",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/process",
+    "title": "About Adat Soft Solutions",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/about",
+    "title": "About Adat Soft Solutions",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/contact",
+    "title": "Get in touch",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/team",
+    "title": "Meet the Minds Behind the Magic",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/gallery",
+    "title": "Our Gallery",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/careers",
+    "title": "Build Systems  With A Team",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/careers/test",
+    "title": "Job not found or no longer active",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/dashboard",
+    "title": "Admin Portal",
+    "overflow": false,
+    "footer": false,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/blog",
+    "title": "Our Latest Thinking",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/blog/future-of-web-development-2026",
+    "title": "The Future of Web Development in 2026",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/privacy",
+    "title": "Privacy Policy",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/terms",
+    "title": "Terms of Service",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  },
+  {
+    "width": 1440,
+    "route": "/missing-page",
+    "title": "404",
+    "overflow": false,
+    "footer": true,
+    "marquee": 56,
+    "errors": [],
+    "logs": []
+  }
+]

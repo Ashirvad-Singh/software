@@ -106,7 +106,7 @@ const IndustriesMegaMenu = () => {
         {/* Left 2 Columns of Industries */}
         <div className="lg:col-span-8 p-6 sm:p-7 bg-white dark:bg-neutral-950 flex flex-col justify-between">
           <div>
-            <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400">
+            <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-600 dark:text-neutral-400">
               Industries
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
@@ -413,7 +413,7 @@ const TechnologyMegaMenu = () => {
     <div className="w-[min(860px,calc(100vw-2rem))] overflow-hidden text-neutral-900 dark:text-white">
       <div className="flex min-h-[300px]">
         <aside className="w-[215px] shrink-0 bg-slate-50/90 p-5 dark:bg-neutral-950/80">
-          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-400">
+          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-600 dark:text-neutral-400">
             Technologies
           </p>
           {loading ? (

@@ -35,7 +35,7 @@ export default function ProcessTimeline({ hideHeader = false }: { hideHeader?: b
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section id="process" className={`w-full bg-gradient-to-b from-white via-sky-50/50 to-slate-100/90 dark:from-[#060D27] dark:via-[#050B1E] dark:to-[#020617] border-y border-neutral-200/80 dark:border-sky-500/20 text-foreground relative overflow-hidden ${hideHeader ? "py-12 sm:py-16 md:py-20" : "py-16 sm:py-20 md:py-24"}`}>
+    <section id="process" className={`w-full bg-gradient-to-b from-white via-sky-50/50 to-slate-100/90 dark:from-[#060D27] dark:via-[#050B1E] dark:to-[#020617] border-y border-neutral-200/80 dark:border-sky-500/20 text-foreground relative overflow-hidden py-10 md:py-16`}>
       <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 lg:px-16 relative z-10">
         {!hideHeader && (
           <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
@@ -48,7 +48,7 @@ export default function ProcessTimeline({ hideHeader = false }: { hideHeader?: b
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start pb-28 md:pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start pb-10 md:pb-16">
           {/* Left Column */}
           <div className="lg:col-span-5 flex flex-col justify-between h-full">
             <div>

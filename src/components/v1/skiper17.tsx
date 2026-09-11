@@ -93,7 +93,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
         scrollTrigger: {
           trigger: cardFrameRef.current,
           start: "center center",
-          end: `+=${Math.max((totalCards - 1) * 380, 800)}`,
+          end: `+=${Math.max((totalCards - 1) * 280, 280)}`,
           pin: true,
           pinSpacing: true,
           scrub: 0.6,
@@ -146,7 +146,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
     <section
       ref={containerRef}
       className={cn(
-        "relative w-full font-sans transition-colors duration-300 py-8 md:py-12 min-h-[95vh] flex flex-col justify-center items-center overflow-hidden",
+        "relative w-full font-sans transition-colors duration-300 py-10 md:py-16 flex flex-col justify-center items-center overflow-hidden",
         isDark
           ? "bg-neutral-950 text-white"
           : "bg-slate-50 text-neutral-900 border-y border-neutral-200/80",

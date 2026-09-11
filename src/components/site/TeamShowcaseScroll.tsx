@@ -55,7 +55,7 @@ function TeamPortrait({ member, index }: { member: TeamMember; index: number }) 
 export default function TeamShowcaseScroll({ members }: { members: TeamMember[] }) {
   return (
     <>
-      <section aria-labelledby="team-grid-heading" className="relative isolate px-4 pb-24 pt-6 sm:px-8 md:px-12 md:pb-48 lg:px-16">
+      <section aria-labelledby="team-grid-heading" className="relative isolate px-4 pb-10 pt-6 sm:px-8 md:px-12 md:pb-16 lg:px-16">
         <h2 id="team-grid-heading" className="sr-only">The people behind Adat</h2>
         <div className="mx-auto mb-10 flex max-w-[1600px] items-center justify-between border-t border-neutral-200 pt-5 text-xs text-neutral-500 dark:border-neutral-800 sm:mb-16">
           <p className="font-bold uppercase tracking-widest text-primary">Different minds. Shared ambition.</p>
@@ -75,7 +75,7 @@ export default function TeamShowcaseScroll({ members }: { members: TeamMember[] 
         </div>
       </section>
 
-      <section className="border-t border-neutral-200 bg-white px-4 py-16 text-center dark:border-neutral-800 dark:bg-neutral-900 sm:py-24">
+      <section className="py-10 md:py-16 border-t border-neutral-200 bg-white px-4 text-center dark:border-neutral-800 dark:bg-neutral-900">
         <p className="mb-4 text-sm font-bold uppercase tracking-widest text-primary">Build with us</p>
         <h2 className="text-2xl font-bold text-neutral-900 dark:text-white sm:text-3xl md:text-4xl lg:text-5xl">Great work starts with great people.</h2>
         <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-neutral-500 dark:text-neutral-400 sm:text-base">Bring your curiosity, your craft, and your ideas. Find your place on the Adat team.</p>

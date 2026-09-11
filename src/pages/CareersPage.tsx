@@ -195,11 +195,11 @@ export default function CareersPage() {
       </section>
 
       {/* 2. Why Work At Adat */}
-      <section className="py-24 bg-white">
+      <section className="py-10 md:py-16 bg-white">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Why Work At Adat</h2>
-            <p className="text-lg text-neutral-500">Learn by building for the best in class. Uncover your true potential.</p>
+            <p className="text-lg text-neutral-600">Learn by building for the best in class. Uncover your true potential.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -215,7 +215,7 @@ export default function CareersPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-neutral-900 mb-2">{feature.title}</h3>
-                  <p className="text-neutral-500 leading-relaxed">{feature.desc}</p>
+                  <p className="text-neutral-600 leading-relaxed">{feature.desc}</p>
                 </div>
               </div>
             ))}
@@ -224,11 +224,11 @@ export default function CareersPage() {
       </section>
 
       {/* 3. Teams We Hire For */}
-      <section className="py-24 bg-[#Fdfbf8]">
+      <section className="py-10 md:py-16 bg-[#Fdfbf8]">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Teams We Hire For</h2>
-            <p className="text-lg text-neutral-500">Find your dream role across any of our major functions.</p>
+            <p className="text-lg text-neutral-600">Find your dream role across any of our major functions.</p>
           </div>
 
           <div className="flex flex-col lg:flex-row gap-12 items-center">
@@ -245,7 +245,7 @@ export default function CareersPage() {
                   className={`cursor-pointer rounded-2xl p-5 border transition-all duration-300 ${activeTeam === team.id ? 'bg-white border-orange-200 shadow-lg shadow-orange-100/50' : 'bg-transparent border-transparent hover:bg-white/50'}`}
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${activeTeam === team.id ? 'bg-orange-500 text-white' : 'bg-neutral-200 text-neutral-500'}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${activeTeam === team.id ? 'bg-orange-500 text-white' : 'bg-neutral-200 text-neutral-600'}`}>
                       {team.id.toString().padStart(2, '0')}
                     </div>
                     <h3 className={`text-xl font-bold ${activeTeam === team.id ? 'text-neutral-900' : 'text-neutral-600'}`}>
@@ -260,7 +260,7 @@ export default function CareersPage() {
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                       >
-                        <p className="text-neutral-500 mt-4 pl-12 leading-relaxed">
+                        <p className="text-neutral-600 mt-4 pl-12 leading-relaxed">
                           {team.desc}
                         </p>
                       </motion.div>
@@ -274,12 +274,12 @@ export default function CareersPage() {
       </section>
 
       {/* 4. How We Work */}
-      <section className="py-24 bg-white">
+      <section className="py-10 md:py-16 bg-white">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex flex-col lg:flex-row gap-16">
             <div className="w-full lg:w-1/3">
               <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">How We Work</h2>
-              <p className="text-lg text-neutral-500 mb-8">Our core values inform every decision we make.</p>
+              <p className="text-lg text-neutral-600 mb-8">Our core values inform every decision we make.</p>
             </div>
             
             <div className="w-full lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -294,7 +294,7 @@ export default function CareersPage() {
                     <val.icon size={24} />
                   </div>
                   <h3 className="text-xl font-bold text-neutral-900 mb-3">{val.title}</h3>
-                  <p className="text-neutral-500 leading-relaxed">{val.desc}</p>
+                  <p className="text-neutral-600 leading-relaxed">{val.desc}</p>
                 </div>
               ))}
             </div>
@@ -303,10 +303,10 @@ export default function CareersPage() {
       </section>
 
       {/* 5. What We Look For */}
-      <section className="py-24 bg-[#Fdfbf8] overflow-hidden">
+      <section className="py-10 md:py-16 bg-[#Fdfbf8] overflow-hidden">
         <div className="container mx-auto px-4 max-w-6xl text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">What We Look For</h2>
-          <p className="text-lg text-neutral-500 mb-16 max-w-2xl mx-auto">Skills can be taught, character cannot. We value those who show up every day with:</p>
+          <p className="text-lg text-neutral-600 mb-16 max-w-2xl mx-auto">Skills can be taught, character cannot. We value those who show up every day with:</p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
             {/* Background Decorative SVG simulating the squiggly lines */}
@@ -343,7 +343,7 @@ export default function CareersPage() {
       </section>
 
       {/* 6. Open Roles */}
-      <section id="open-roles" className="py-24 bg-white">
+      <section id="open-roles" className="py-10 md:py-16 bg-white">
         <div className="container mx-auto px-4 max-w-5xl text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-12">Open Roles</h2>
           
@@ -388,7 +388,7 @@ export default function CareersPage() {
                   </button>
                 </motion.div>
               )) : (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12 text-neutral-500">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12 text-neutral-600">
                   No open roles in this category right now. Check back later!
                 </motion.div>
               )}
@@ -398,7 +398,7 @@ export default function CareersPage() {
       </section>
 
       {/* 7. How To Apply */}
-      <section className="py-24 bg-[#Fdfbf8]">
+      <section className="py-10 md:py-16 bg-[#Fdfbf8]">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900">How To Apply</h2>
@@ -433,7 +433,7 @@ export default function CareersPage() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-neutral-900">Application</p>
-                    <p className="text-xs text-neutral-500">Submitted Successfully</p>
+                    <p className="text-xs text-neutral-600">Submitted Successfully</p>
                   </div>
                 </div>
               </div>
@@ -443,11 +443,11 @@ export default function CareersPage() {
       </section>
 
       {/* 7.5. Application Form */}
-      <section id="apply-form" className="py-24 bg-white border-t border-neutral-100">
+      <section id="apply-form" className="py-10 md:py-16 bg-white border-t border-neutral-100">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900">Submit Application</h2>
-            <p className="text-neutral-500 mt-4 text-lg">Take the next step in your career. Fill out the form below to apply.</p>
+            <p className="text-neutral-600 mt-4 text-lg">Take the next step in your career. Fill out the form below to apply.</p>
           </div>
           <div className="bg-white border border-neutral-200 rounded-[2rem] p-6 md:p-10 shadow-2xl">
             <JobApplicationForm key={selectedPosition} defaultPosition={selectedPosition} />

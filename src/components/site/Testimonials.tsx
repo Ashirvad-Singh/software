@@ -51,8 +51,8 @@ const staticTestimonials = [
 ]
 
 const TestimonialCard = ({ testimonial }: { testimonial: any }) => (
-  <div className="w-[240px] sm:w-[300px] md:w-[360px] lg:w-[400px] p-4 sm:p-5 md:p-7 flex flex-col justify-between bg-white rounded-2xl border border-neutral-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] hover:shadow-md transition-shadow h-[180px] sm:h-[210px] md:h-[240px] select-none">
-    <p className="leading-relaxed font-medium mb-4 text-[11px] sm:text-[12px] md:text-[14px] text-neutral-700 pointer-events-none line-clamp-4">
+  <div className="w-[240px] sm:w-[300px] md:w-[360px] lg:w-[400px] p-4 sm:p-5 md:p-7 flex flex-col justify-between bg-white rounded-2xl border border-neutral-300 shadow-sm hover:shadow-md transition-shadow min-h-60 select-none">
+    <p className="leading-relaxed font-medium mb-4 text-sm md:text-base text-neutral-700 pointer-events-none">
       "{testimonial.content}"
     </p>
     
@@ -63,8 +63,8 @@ const TestimonialCard = ({ testimonial }: { testimonial: any }) => (
         className="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full object-cover border border-neutral-100 shrink-0"
       />
       <div>
-        <h4 className="font-bold text-neutral-900 text-[11px] sm:text-xs md:text-sm tracking-tight">{testimonial.name}</h4>
-        <p className="text-[10px] sm:text-xs text-neutral-500 font-medium">{testimonial.role}</p>
+        <h4 className="font-bold text-neutral-900 text-sm tracking-tight">{testimonial.name}</h4>
+        <p className="text-xs sm:text-sm text-neutral-600 font-medium">{testimonial.role}</p>
       </div>
     </div>
   </div>
@@ -127,7 +127,7 @@ export default function Testimonials() {
 
   if (loading) {
     return (
-      <section className="py-12 flex justify-center items-center bg-[#fafafa] min-h-[200px]">
+      <section className="py-10 md:py-16 flex justify-center items-center bg-[#fafafa] min-h-[200px]">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </section>
     )
@@ -143,13 +143,13 @@ export default function Testimonials() {
   const bottomRow = displayTestimonials.slice(midPoint);
 
   return (
-    <section className="py-12 md:py-16 bg-[#fafafa] w-full overflow-hidden font-sans">
+    <section className="py-10 md:py-16 bg-[#fafafa] w-full overflow-hidden font-sans">
       
       <div className="text-center mb-8 relative z-20 px-8">
         <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-5 tracking-tight text-balance">
           Trusted in production, not just in demos.
         </h2>
-        <p className="text-neutral-500 font-medium max-w-2xl mx-auto text-sm md:text-base">
+        <p className="text-neutral-600 font-medium max-w-2xl mx-auto text-sm md:text-base">
           Short notes from teams who ship with the same polish they show customers.
         </p>
       </div>
@@ -160,8 +160,8 @@ export default function Testimonials() {
         <ScrollingRow items={bottomRow} speed={0.5} direction="backward" />
         
         {/* Side Gradients for smooth fade out */}
-        <div className="absolute inset-y-0 left-0 w-10 sm:w-16 xl:w-40 bg-gradient-to-r from-[#fafafa] to-transparent z-30 pointer-events-none"></div>
-        <div className="absolute inset-y-0 right-0 w-10 sm:w-16 xl:w-40 bg-gradient-to-l from-[#fafafa] to-transparent z-30 pointer-events-none"></div>
+        <div className="absolute inset-y-0 left-0 w-4 sm:w-8 xl:w-12 bg-gradient-to-r from-[#fafafa] to-transparent z-30 pointer-events-none"></div>
+        <div className="absolute inset-y-0 right-0 w-4 sm:w-8 xl:w-12 bg-gradient-to-l from-[#fafafa] to-transparent z-30 pointer-events-none"></div>
       </div>
       
     </section>

@@ -52,7 +52,7 @@ export default function JobDetailPage() {
   }
 
   return (
-    <main className="bg-white dark:bg-neutral-950 min-h-screen pt-32 pb-24">
+    <main className="bg-white dark:bg-neutral-950 min-h-screen pt-32 pb-10 md:pb-16">
       <div className="container mx-auto px-4 max-w-4xl">
         <Link to="/careers" className="inline-flex items-center text-sm font-medium text-neutral-500 hover:text-primary transition-colors mb-8">
           <ArrowLeft className="w-4 h-4 mr-2" />

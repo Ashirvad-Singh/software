@@ -4,7 +4,7 @@ import { Search, Lightbulb, Rocket } from "lucide-react";
 
 export default function WhatSetsUsApart() {
   return (
-    <section className="py-10 sm:py-12 md:py-16 relative overflow-hidden bg-white w-full">
+    <section className="py-10 md:py-16 relative overflow-hidden bg-white w-full">
       {/* Background Wireframe Elements */}
       <div className="absolute top-10 left-10 opacity-30 pointer-events-none hidden lg:block">
         <svg width="180" height="180" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +82,7 @@ export default function WhatSetsUsApart() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-[#dcfce7] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 shadow-sm flex flex-col sm:flex-row md:flex-col xl:flex-row items-center sm:items-start gap-4 sm:gap-6 ml-0 xl:ml-12 hover:shadow-md transition-shadow relative overflow-hidden group"
+              className="bg-[#dcfce7] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 border border-black/15 shadow-sm flex flex-col sm:flex-row md:flex-col xl:flex-row items-center sm:items-start gap-4 sm:gap-6 ml-0 xl:ml-12 hover:shadow-md transition-shadow relative overflow-hidden group"
             >
               <div className="bg-white/60 p-4 rounded-full shrink-0 relative z-10 group-hover:scale-110 transition-transform duration-300">
                 <Search className="w-10 h-10 text-green-600" />
@@ -105,7 +105,7 @@ export default function WhatSetsUsApart() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-[#bfdbfe] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 shadow-sm flex flex-col sm:flex-row md:flex-col xl:flex-row items-center sm:items-start gap-4 sm:gap-6 mr-0 xl:mr-12 hover:shadow-md transition-shadow relative overflow-hidden group"
+              className="bg-[#bfdbfe] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 border border-black/15 shadow-sm flex flex-col sm:flex-row md:flex-col xl:flex-row items-center sm:items-start gap-4 sm:gap-6 mr-0 xl:mr-12 hover:shadow-md transition-shadow relative overflow-hidden group"
             >
               <div className="bg-white/60 p-4 rounded-full shrink-0 relative z-10 group-hover:scale-110 transition-transform duration-300">
                 <Lightbulb className="w-10 h-10 text-blue-600" />
@@ -128,7 +128,7 @@ export default function WhatSetsUsApart() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="bg-[#e9d5ff] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 shadow-sm flex flex-col sm:flex-row md:flex-col xl:flex-row items-center sm:items-start gap-4 sm:gap-6 ml-0 xl:ml-24 hover:shadow-md transition-shadow relative overflow-hidden group md:col-span-2 xl:col-span-1"
+              className="bg-[#e9d5ff] rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 border border-black/15 shadow-sm flex flex-col sm:flex-row md:flex-col xl:flex-row items-center sm:items-start gap-4 sm:gap-6 ml-0 xl:ml-24 hover:shadow-md transition-shadow relative overflow-hidden group md:col-span-2 xl:col-span-1"
             >
               <div className="bg-white/60 p-4 rounded-full shrink-0 relative z-10 group-hover:scale-110 transition-transform duration-300">
                 <Rocket className="w-10 h-10 text-purple-600" />

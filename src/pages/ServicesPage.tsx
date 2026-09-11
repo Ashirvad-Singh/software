@@ -64,7 +64,7 @@ export default function ServicesPage() {
       />
 
       {/* Metrics & Guarantees Strip */}
-      <section className="py-10 bg-neutral-900 text-white border-y border-neutral-800">
+      <section className="py-10 md:py-16 bg-neutral-900 text-white border-y border-neutral-800">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
@@ -99,7 +99,7 @@ export default function ServicesPage() {
       <HomeServicesSection showAll hideHeader />
 
       {/* Detailed Capabilities Grid */}
-      <section className="py-20 md:py-28 bg-neutral-50 dark:bg-neutral-900/40 border-t border-neutral-200 dark:border-neutral-800">
+      <section className="py-10 md:py-16 bg-neutral-50 dark:bg-neutral-900/40 border-t border-neutral-200 dark:border-neutral-800">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-3.5 py-1.5 rounded-full border border-primary/20">
@@ -137,7 +137,7 @@ export default function ServicesPage() {
                     </p>
 
                     <div className="space-y-2.5 pt-4 border-t border-neutral-100 dark:border-neutral-800">
-                      <div className="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-3">
+                      <div className="text-xs font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 mb-3">
                         Key Deliverables Included:
                       </div>
                       {capability.deliverables.map((item, itemIdx) => (

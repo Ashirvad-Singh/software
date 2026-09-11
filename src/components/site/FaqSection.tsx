@@ -60,7 +60,7 @@ export default function FaqSection() {
       : faqs.filter((faq) => faq.category === selectedCategory);
 
   return (
-    <section className="py-12 md:py-16 bg-white dark:bg-neutral-950 font-sans border-t border-neutral-200 dark:border-neutral-800">
+    <section className="py-10 md:py-16 bg-white dark:bg-neutral-950 font-sans border-t border-neutral-200 dark:border-neutral-800">
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">

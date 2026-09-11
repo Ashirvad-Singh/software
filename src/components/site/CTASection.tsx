@@ -25,7 +25,7 @@ export default function CTASection() {
   };
 
   return (
-    <section className="py-10 sm:py-12 md:py-16 bg-white text-neutral-900 relative overflow-hidden font-sans border-t border-neutral-100">
+    <section className="py-10 md:py-16 bg-white text-neutral-900 relative overflow-hidden font-sans border-t border-neutral-100">
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-8 max-w-7xl">
         {/* Dashed Box Container */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] border-y border-dashed border-neutral-300">

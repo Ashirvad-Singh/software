@@ -586,7 +586,7 @@ export default function TechnologyDetailPage() {
   const relatedProjects = staticProjects.slice(0, 3);
 
   return (
-    <main className="min-h-screen bg-white dark:bg-neutral-950 font-sans text-neutral-900 dark:text-white pb-24">
+    <main className="min-h-screen bg-white dark:bg-neutral-950 font-sans text-neutral-900 dark:text-white pb-10 md:pb-16">
       <SEO
         title={`${techDetail.name} | Technology Expertise`}
         description={techDetail.overview}
@@ -613,7 +613,7 @@ export default function TechnologyDetailPage() {
       />
 
       {/* Overview & Key Benefits Section */}
-      <section className="py-12 md:py-16 bg-white dark:bg-neutral-950">
+      <section className="py-10 md:py-16 bg-white dark:bg-neutral-950">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 items-center mb-16">
             <div className="space-y-6">

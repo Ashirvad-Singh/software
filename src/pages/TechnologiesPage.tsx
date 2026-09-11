@@ -251,7 +251,7 @@ export default function TechnologiesPage() {
       />
 
       {/* Value Pillars Strip */}
-      <section className="py-12 bg-neutral-900 text-white border-y border-neutral-800">
+      <section className="py-10 md:py-16 bg-neutral-900 text-white border-y border-neutral-800">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {pillars.map((pillar, idx) => {
@@ -311,7 +311,7 @@ export default function TechnologiesPage() {
       </section>
 
       {/* Main Technology Grid Section */}
-      <section className="py-12 md:py-16 bg-white dark:bg-neutral-950 relative overflow-hidden">
+      <section className="py-10 md:py-16 bg-white dark:bg-neutral-950 relative overflow-hidden">
         <FloatingShapes />
         <div className="container relative z-10 mx-auto max-w-7xl px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -417,7 +417,7 @@ export default function TechnologiesPage() {
       </section>
 
       {/* Agile 5-Step Process Timeline Section */}
-      <section className="py-12 md:py-16 bg-neutral-50 dark:bg-neutral-900/40 border-t border-neutral-200 dark:border-neutral-800">
+      <section className="py-10 md:py-16 bg-neutral-50 dark:bg-neutral-900/40 border-t border-neutral-200 dark:border-neutral-800">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-3.5 py-1.5 rounded-full border border-primary/20">
@@ -466,7 +466,7 @@ export default function TechnologiesPage() {
       </section>
 
       {/* Tech Stack FAQ Accordion */}
-      <section className="py-12 md:py-16 bg-white dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-800">
+      <section className="py-10 md:py-16 bg-white dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-800">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-xs font-semibold uppercase tracking-wider mb-3 border border-neutral-200 dark:border-neutral-800">
@@ -514,7 +514,7 @@ export default function TechnologiesPage() {
       </section>
 
       {/* CTA Consultation Card */}
-      <section className="py-12 bg-neutral-50 dark:bg-neutral-900/50 border-t border-neutral-200 dark:border-neutral-800">
+      <section className="py-10 md:py-16 bg-neutral-50 dark:bg-neutral-900/50 border-t border-neutral-200 dark:border-neutral-800">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="p-8 md:p-12 rounded-3xl bg-neutral-900 text-white border border-neutral-800 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl relative overflow-hidden">
             <div className="space-y-3 text-center md:text-left z-10 max-w-2xl">
@@ -524,7 +524,7 @@ export default function TechnologiesPage() {
               <h2 className="text-2xl md:text-4xl font-bold tracking-tight">
                 Ready to Build Your Digital Product With Our Stack?
               </h2>
-              <p className="text-sm text-neutral-400 leading-relaxed">
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
                 Book a 30-minute technical architecture discovery session with our Lead Solutions Architect to discuss your database, framework, and cloud deployment requirements.
               </p>
             </div>

@@ -86,7 +86,7 @@ export default function BlogPage() {
   const regularPosts = displayPosts.filter(post => post.id !== featuredPost?.id);
 
   return (
-    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen pb-24">
+    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen pb-10 md:pb-16">
       <SubBanner
         badge="Blog & Articles"
         title="Our Latest"
@@ -94,7 +94,7 @@ export default function BlogPage() {
         subtitle="Thoughts, tutorials, and insights on design, development, and building successful digital products."
       />
 
-      <div className="container mx-auto px-4 md:px-6 max-w-7xl pt-12 md:pt-16">
+      <div className="container mx-auto px-4 md:px-6 max-w-7xl pt-10 md:pt-16">
 
         {loading ? (
           <div className="flex justify-center items-center h-64">

@@ -29,7 +29,7 @@ export default function HomePage() {
       <HeroModern />
 
       {/* Mini About Section */}
-      <section className="py-10 sm:py-12 md:py-14 bg-neutral-50 relative overflow-hidden">
+      <section className="py-10 md:py-16 bg-neutral-50 relative overflow-hidden">
         <FloatingShapes />
         <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
           <motion.div

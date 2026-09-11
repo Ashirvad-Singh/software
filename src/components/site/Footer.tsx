@@ -1,7 +1,6 @@
-import { Mail, MapPin, Phone } from "lucide-react"
+import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react"
 import { IconBrandGithub, IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
-import { MagneticButton } from "@/components/ui/magnetic-button"
 
 export default function Footer() {
   return (
@@ -10,22 +9,18 @@ export default function Footer() {
       {/* Decorative gradient background for marquee */}
       <div className="absolute inset-0 bg-gradient-to-r from-sky-50 via-white to-sky-100 opacity-60 pointer-events-none"></div>
 
-      {/* Marquee Section */}
-      <div className="w-full overflow-hidden border-b border-border/30 py-6 sm:py-10 relative z-10">
-        <div className="flex w-max animate-marquee">
-          {[...Array(6)].map((_, i) => (
-            <Link key={i} to="/contact" className="flex items-center px-4 sm:px-8 group">
-              <span className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 tracking-tight leading-none pr-4 sm:pr-8 group-hover:text-blue-700 transition-colors">
-                Let's Chat
-              </span>
-              <MagneticButton>
-                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-blue-600 rounded-full flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-              </MagneticButton>
-            </Link>
+      {/* Two identical groups make the -50% animation seamless. */}
+      <div className="group/marquee relative z-10 flex h-24 sm:h-32 w-full items-center overflow-hidden border-b border-blue-200 bg-blue-50">
+        <div className="flex w-max animate-marquee group-hover/marquee:[animation-play-state:paused] group-focus-within/marquee:[animation-play-state:paused] motion-reduce:animate-none">
+          {[0, 1].map((group) => (
+            <div key={group} aria-hidden={group === 1 ? true : undefined} className="flex shrink-0 items-center gap-8 pr-8">
+              {Array.from({ length: 6 }, (_, item) => (
+                <Link key={item} to="/contact" tabIndex={group === 0 && item === 0 ? 0 : -1} className="inline-flex shrink-0 items-center gap-4 rounded-full bg-blue-600 px-6 py-3 text-xl sm:text-2xl font-semibold whitespace-nowrap text-white shadow-sm transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-800">
+                  Let's Chat
+                  <ArrowUpRight aria-hidden="true" className="size-6 shrink-0" />
+                </Link>
+              ))}
+            </div>
           ))}
         </div>
       </div>
