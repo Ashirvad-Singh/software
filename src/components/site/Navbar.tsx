@@ -49,6 +49,7 @@ const navLinks = [
   { name: "Technologies", href: "/technologies" },
   { name: "About", href: "/about" },
   { name: "Resources", href: "#resources" },
+  { name: "Our Work", href: "/work" },
 ];
 
 const industriesList = [

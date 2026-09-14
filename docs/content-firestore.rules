@@ -1,0 +1,26 @@
+// Merge these matches into the existing /databases/{database}/documents block.
+// Use the SAME admin authorization predicate as the existing private dashboard.
+// Example isContentAdmin() below uses a Firebase Auth custom claim; provision
+// that claim for approved administrators before enabling these rules.
+function isContentAdmin() {
+  return request.auth != null && request.auth.token.admin == true;
+}
+match /projects/{entryId} {
+  allow read: if isContentAdmin() || resource.data.status == 'published';
+  allow create, update: if isContentAdmin()
+    && request.resource.data.status in ['draft', 'published']
+    && request.resource.data.slug is string
+    && request.resource.data.title is string;
+  allow delete: if isContentAdmin();
+}
+match /case_studies/{entryId} {
+  allow read: if isContentAdmin() || resource.data.status == 'published';
+  allow create, update: if isContentAdmin()
+    && request.resource.data.status in ['draft', 'published']
+    && request.resource.data.slug is string
+    && request.resource.data.title is string;
+  allow delete: if isContentAdmin();
+}
+match /content_slugs/{reservationId} {
+  allow read, write: if isContentAdmin();
+}

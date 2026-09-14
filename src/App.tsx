@@ -82,6 +82,8 @@ function App() {
                 <Route path="/technologies/:slug" element={<TechnologyDetailPage />} />
                 <Route path="/services/:slug" element={<ServiceDetailPage />} />
                 <Route path="/work" element={<WorkPage />} />
+                <Route path="/projects" element={<WorkPage />} />
+                <Route path="/projects/:slug" element={<ProjectDetailPage />} />
                 <Route path="/work/:slug" element={<ProjectDetailPage />} />
                 <Route path="/case-studies" element={<CaseStudiesPage />} />
                 <Route

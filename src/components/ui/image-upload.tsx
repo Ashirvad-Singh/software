@@ -6,9 +6,10 @@ interface ImageUploadProps {
   value: string;
   onChange: (value: string) => void;
   multiple?: boolean;
+  onUploadingChange?: (uploading: boolean) => void;
 }
 
-export function ImageUpload({ value, onChange, multiple = false }: ImageUploadProps) {
+export function ImageUpload({ value, onChange, multiple = false, onUploadingChange }: ImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -17,6 +18,7 @@ export function ImageUpload({ value, onChange, multiple = false }: ImageUploadPr
     if (!files || files.length === 0) return;
 
     setIsUploading(true);
+    onUploadingChange?.(true);
     setProgress(0);
 
     const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -25,6 +27,7 @@ export function ImageUpload({ value, onChange, multiple = false }: ImageUploadPr
     if (!cloudName || !uploadPreset) {
       toast.error("Cloudinary setup is incomplete.");
       setIsUploading(false);
+      onUploadingChange?.(false);
       return;
     }
     const uploadedUrls: string[] = [];
@@ -81,6 +84,7 @@ export function ImageUpload({ value, onChange, multiple = false }: ImageUploadPr
     }
 
     setIsUploading(false);
+    onUploadingChange?.(false);
     setProgress(0);
     // Reset file input
     e.target.value = '';
@@ -128,6 +132,8 @@ export function ImageUpload({ value, onChange, multiple = false }: ImageUploadPr
               <img src={url} alt={`Uploaded ${index + 1}`} className="w-full h-full object-cover" />
               <button
                 type="button"
+                disabled={isUploading}
+                aria-label={`Remove image ${index + 1}`}
                 onClick={() => {
                   const newUrls = urls.filter((_, i) => i !== index);
                   onChange(newUrls.join('\n'));

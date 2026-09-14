@@ -5,6 +5,7 @@ import { ArrowRight, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { db } from "@/lib/firebase";
+import { useContent } from "@/lib/content/useContent";
 import { StickyCard002 } from "@/components/v1/skiper17";
 
 type BlogPost = {
@@ -61,104 +62,6 @@ const staticPosts: BlogPost[] = [
   },
 ];
 
-const sampleCaseStudies = [
-  {
-    id: "sample-fintech",
-    slug: "global-fintech-platform",
-    title: "Global FinTech Transaction Platform",
-    category: "Web Application & Microservices",
-    client: "FinServe Global Inc.",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=85&w=1200",
-    challenge:
-      "FinServe Global faced severe sub-second latency spikes, database locks, and auditing compliance friction when processing over 50,000 concurrent international transactions during peak trading hours across 12 countries.",
-    solution:
-      "We architected a high-throughput React 19 micro-frontend ecosystem backed by WebSocket data streaming pipelines, automated zero-downtime cluster failover, and automated AES-256 ledger auditing.",
-    features: [
-      "Sub-10ms real-time market data & transaction processing",
-      "Automated SOC-2 & PCI-DSS compliance telemetry audit logs",
-    ],
-    result: "⚡ 150% Increase in Transaction Capacity",
-    tags: ["React 19", "TypeScript", "Node.js", "WebSockets", "AWS Lambda"],
-  },
-  {
-    id: "sample-healthcare",
-    slug: "healthcare-booking-app",
-    title: "Telehealth & Doctor Discovery App",
-    category: "Mobile App & Telehealth",
-    client: "MediCare Plus Health",
-    image:
-      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=85&w=1200",
-    challenge:
-      "Patients suffered from long clinic queues, cumbersome specialist discovery, and fragmented communication between local healthcare providers and digital prescription portals.",
-    solution:
-      "Engineered an all-in-one cross-platform mobile suite featuring live doctor calendar synchronization, HIPAA-compliant HD video consultation, automated SMS reminders, and instant digital prescription delivery.",
-    features: [
-      "1-Click instant specialist search & video booking",
-      "HIPAA-compliant WebRTC encrypted telehealth calls",
-    ],
-    result: "🌟 10,000+ Active Daily Patients",
-    tags: ["React Native", "Firebase", "Node.js", "WebRTC", "GraphQL"],
-  },
-  {
-    id: "sample-ecommerce",
-    slug: "luxury-fashion-store",
-    title: "Luxury E-Commerce 3D Experience",
-    category: "Headless E-Commerce",
-    client: "Aura Boutique Paris",
-    image:
-      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=85&w=1200",
-    challenge:
-      "An outdated monolithic shopping platform produced high cart drop-off rates on mobile devices and failed to project the brand's high-end luxury craftsmanship.",
-    solution:
-      "Developed a headless storefront powered by Next.js and Three.js 3D interactive product preview, AI-driven personal style recommendations, and optimized 1-click Apple Pay checkout integration.",
-    features: [
-      "Interactive 360° 3D garment visualization in browser",
-      "Sub-second page rendering with Next.js edge caching",
-    ],
-    result: "📈 30% Higher Mobile Conversion Rate",
-    tags: ["Next.js", "Tailwind CSS", "Shopify API", "Three.js", "Stripe"],
-  },
-  {
-    id: "sample-logistics",
-    slug: "logistics-dashboard",
-    title: "Real-Time Fleet Command Center",
-    category: "Enterprise Web App",
-    client: "Swift Freight Systems",
-    image:
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=85&w=1200",
-    challenge:
-      "Logistics dispatchers relied on disconnected legacy tracking systems, leading to unoptimized route planning, delayed driver assignments, and rising fuel expenditures.",
-    solution:
-      "Built a unified operations command dashboard featuring live GPS vehicle telemetry, AI dynamic route optimization algorithms, driver load assignment tools, and instant exception alerts.",
-    features: [
-      "Live GPS tracking for 500+ active delivery vehicles",
-      "AI dynamic route recalculation reducing fuel waste",
-    ],
-    result: "🚀 40% Reduction in Route Transit Times",
-    tags: ["React", "Mapbox GL", "Node.js", "PostgreSQL", "Redis"],
-  },
-  {
-    id: "sample-fitness",
-    slug: "fitness-tracker-app",
-    title: "AI Fitness & Wearable Analytics",
-    category: "Mobile App & IoT",
-    client: "FitLife Technologies",
-    image:
-      "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&q=85&w=1200",
-    challenge:
-      "Fitness enthusiasts struggled to aggregate workout metrics across disparate smartwatches, heart rate monitors, and custom fitness equipment.",
-    solution:
-      "Created a high-energy mobile application with real-time Bluetooth smartwatch sync, biometric health data analytics, personalized AI workout coaching, and gamified community leaderboards.",
-    features: [
-      "Instant Bluetooth BLE sync across 20+ wearable devices",
-      "Real-time biometric analytics & performance scoring",
-    ],
-    result: "⭐ 4.8/5 App Store Rating (50k+ Reviews)",
-    tags: ["React Native", "GraphQL", "BleManager", "Tailwind CSS"],
-  },
-];
-
 export default function HomeCaseStudiesAndBlog({
   caseStudiesOnly = false,
   blogOnly = false,
@@ -166,7 +69,8 @@ export default function HomeCaseStudiesAndBlog({
   caseStudiesOnly?: boolean;
   blogOnly?: boolean;
 }) {
-  const [caseStudies, setCaseStudies] = useState<any[]>(sampleCaseStudies);
+  const { entries: publishedStudies } = useContent("case_studies");
+  const caseStudies = publishedStudies.slice(0, 5);
   const [posts, setPosts] = useState<BlogPost[]>(staticPosts);
   const [activeBlog, setActiveBlog] = useState(0);
   const blogSwipe = useSwipe((direction) => {
@@ -178,31 +82,8 @@ export default function HomeCaseStudiesAndBlog({
     let cancelled = false;
     const fetchContent = async () => {
       try {
-        const [caseStudySnapshot, blogSnapshot] = await Promise.all([
-          getDocs(
-            query(
-              collection(db, "case_studies"),
-              orderBy("createdAt", "desc"),
-              limit(5),
-            ),
-          ),
-          getDocs(
-            query(
-              collection(db, "blogs"),
-              orderBy("createdAt", "desc"),
-              limit(5),
-            ),
-          ),
-        ]);
+        const blogSnapshot = await getDocs(query(collection(db, "blogs"), orderBy("createdAt", "desc"), limit(5)));
         if (cancelled) return;
-        if (!caseStudySnapshot.empty) {
-          setCaseStudies(
-            caseStudySnapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            })),
-          );
-        }
         if (!blogSnapshot.empty) {
           setPosts(
             blogSnapshot.docs.map((doc) => ({
@@ -223,7 +104,7 @@ export default function HomeCaseStudiesAndBlog({
 
   return (
     <>
-      {!blogOnly && (
+      {!blogOnly && caseStudies.length > 0 && (
         <StickyCard002
           showWave
           cards={caseStudies.map((cs) => ({
@@ -236,9 +117,9 @@ export default function HomeCaseStudiesAndBlog({
             challenge: cs.challenge || cs.description || "Solving complex digital challenges with scalable engineering.",
             solution: cs.solution || "Custom software engineered for high performance, reliability, and growth.",
             features: cs.features,
-            result: cs.result,
+            result: cs.outcomes,
             slug: cs.slug,
-            tags: cs.tags || [cs.category || "Digital Product", "Case Study", "Engineering"],
+            tags: cs.technologies,
           }))}
           badge="Selected Case Studies"
           title="Case Studies That Drive Growth"

@@ -19,11 +19,9 @@ export const ParallaxScroll = ({
   const translateSecond = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const translateThird = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
-  const third = Math.ceil(images.length / 3);
-
-  const firstPart = images.slice(0, third);
-  const secondPart = images.slice(third, 2 * third);
-  const thirdPart = images.slice(2 * third);
+  const firstPart = images.filter((_, index) => index % 3 === 0);
+  const secondPart = images.filter((_, index) => index % 3 === 1);
+  const thirdPart = images.filter((_, index) => index % 3 === 2);
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -52,9 +50,9 @@ export const ParallaxScroll = ({
       ref={gridRef}
     >
       <div
-        className="grid grid-cols-1 md:grid-cols-3 items-start max-w-7xl mx-auto gap-4 lg:gap-10 py-24 lg:py-40 px-6 lg:px-10"
+        className={cn("grid grid-cols-1 items-start w-full gap-4 lg:gap-6 py-12 lg:py-16 px-4 lg:px-8", images.length === 2 ? "md:grid-cols-2" : images.length >= 3 ? "md:grid-cols-3" : "")}
       >
-        <div className="grid gap-10">
+        <div className="grid gap-6">
           {firstPart.map((el, idx) => (
             <motion.div
               style={{ y: translateFirst }} // Apply the translateY motion value here
@@ -62,7 +60,7 @@ export const ParallaxScroll = ({
             >
               <img
                 src={el}
-                onClick={() => setSelectedIndex(idx)}
+                onClick={() => setSelectedIndex(idx * 3)}
                 className="h-56 lg:h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0 cursor-pointer hover:opacity-90 transition-opacity shadow-sm"
                 height="400"
                 width="400"
@@ -71,12 +69,12 @@ export const ParallaxScroll = ({
             </motion.div>
           ))}
         </div>
-        <div className="grid gap-10">
+        {secondPart.length > 0 && <div className="grid gap-6">
           {secondPart.map((el, idx) => (
             <motion.div style={{ y: translateSecond }} key={"grid-2" + idx}>
               <img
                 src={el}
-                onClick={() => setSelectedIndex(third + idx)}
+                onClick={() => setSelectedIndex(idx * 3 + 1)}
                 className="h-56 lg:h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0 cursor-pointer hover:opacity-90 transition-opacity shadow-sm"
                 height="400"
                 width="400"
@@ -84,13 +82,13 @@ export const ParallaxScroll = ({
               />
             </motion.div>
           ))}
-        </div>
-        <div className="grid gap-10">
+        </div>}
+        {thirdPart.length > 0 && <div className="grid gap-6">
           {thirdPart.map((el, idx) => (
             <motion.div style={{ y: translateThird }} key={"grid-3" + idx}>
               <img
                 src={el}
-                onClick={() => setSelectedIndex(2 * third + idx)}
+                onClick={() => setSelectedIndex(idx * 3 + 2)}
                 className="h-56 lg:h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0 cursor-pointer hover:opacity-90 transition-opacity shadow-sm"
                 height="400"
                 width="400"
@@ -98,7 +96,7 @@ export const ParallaxScroll = ({
               />
             </motion.div>
           ))}
-        </div>
+        </div>}
       </div>
 
       {/* Lightbox Modal */}

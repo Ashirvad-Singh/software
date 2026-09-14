@@ -164,7 +164,7 @@ export default function JobsTab() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input placeholder="Job Title" name="title" value={formData.title} onChange={handleInputChange} required />
-                  <Input placeholder="Department (e.g. Engineering)" name="department" value={formData.department} onChange={handleInputChange} required />
+                  <Input aria-label="Job category / department" placeholder="Category / Department (e.g. Engineering)" name="department" value={formData.department} onChange={handleInputChange} required />
                   <Input placeholder="Location (e.g. Remote, India)" name="location" value={formData.location} onChange={handleInputChange} required />
                   <select 
                     name="type" 
@@ -181,7 +181,7 @@ export default function JobsTab() {
                   <Input placeholder="Salary Range (e.g. $100k - $120k)" name="salaryRange" value={formData.salaryRange} onChange={handleInputChange} />
                   
                   <textarea 
-                    placeholder="Short Description" 
+                    aria-label="Job description" placeholder="Job description (shown on the careers page)"
                     name="description" 
                     value={formData.description} 
                     onChange={handleInputChange} 

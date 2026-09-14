@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import SEO from "@/components/site/SEO";
 import SubBanner from "@/components/site/SubBanner";
-import { projects as staticProjects } from "@/data/projects";
+import { useContent } from "@/lib/content/useContent";
 
 interface TechnologyDetail {
   slug: string;
@@ -583,7 +583,8 @@ export default function TechnologyDetailPage() {
     Object.values(technologiesData).find((t) => t.slug === slug || t.name.toLowerCase().includes(slug?.toLowerCase() || "")) ||
     technologiesData.react; // Default fallback
 
-  const relatedProjects = staticProjects.slice(0, 3);
+  const { entries: publishedProjects } = useContent("projects");
+  const relatedProjects = publishedProjects.filter(p => p.technologies.some(t => t.toLowerCase().includes(techDetail.name.toLowerCase()))).slice(0, 3);
 
   return (
     <main className="min-h-screen bg-white dark:bg-neutral-950 font-sans text-neutral-900 dark:text-white pb-10 md:pb-16">
@@ -799,7 +800,7 @@ export default function TechnologyDetailPage() {
                       {project.title}
                     </h3>
                     <p className="text-xs text-neutral-500 line-clamp-2">
-                      {project.challenge}
+                      {project.description}
                     </p>
                   </div>
                 </Link>

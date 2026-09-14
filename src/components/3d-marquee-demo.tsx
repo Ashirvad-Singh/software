@@ -24,19 +24,19 @@ export default function ThreeDMarqueeDemo() {
   const images = [...baseImages, ...baseImages, ...baseImages];
 
   return (
-    <div className="relative w-full flex h-[80vh] flex-col items-center justify-center overflow-hidden bg-neutral-50 dark:bg-neutral-900 border-y border-neutral-200">
-      <h2 className="relative z-20 mx-auto max-w-5xl text-center text-4xl font-bold text-balance text-black md:text-5xl lg:text-7xl dark:text-white px-4 tracking-tight">
+    <div className="relative w-full flex flex-col items-center justify-center overflow-hidden bg-neutral-50 dark:bg-neutral-900 border-y border-neutral-200 py-10 md:py-12">
+      <h2 className="relative z-20 mx-auto max-w-4xl text-center text-3xl font-bold text-balance text-black md:text-4xl lg:text-5xl dark:text-white px-4 tracking-tight">
         Build digital products that redefine your{" "}
         <span className="relative z-20 inline-block rounded-2xl bg-primary/10 px-4 py-2 text-primary underline decoration-primary/40 decoration-[4px] underline-offset-[12px] backdrop-blur-sm">
           Industry
         </span>
       </h2>
-      <p className="relative z-20 mx-auto max-w-2xl py-8 text-center text-base text-neutral-600 dark:text-neutral-300 md:text-lg px-4 leading-relaxed">
+      <p className="relative z-20 mx-auto max-w-2xl py-4 text-center text-base text-neutral-600 dark:text-neutral-300 md:text-lg px-4 leading-relaxed">
         We specialize in modern web and mobile applications that scale effortlessly. 
         Partner with Adat Soft Solutions to transform your boldest ideas into reality.
       </p>
 
-      <div className="relative z-20 flex flex-wrap items-center justify-center gap-4 pt-4">
+      <div className="relative z-20 flex flex-wrap items-center justify-center gap-3 px-4 pt-2">
         <Link 
           to="/contact"
           className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:scale-105 focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none shadow-lg"

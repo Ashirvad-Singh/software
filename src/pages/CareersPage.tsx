@@ -32,19 +32,9 @@ interface JobOpening {
   type: string;
   location: string;
   department?: string;
+  description?: string;
   experience?: string;
 }
-
-const staticJobOpenings: JobOpening[] = [
-  { title: "Product Design", type: "Full Time", location: "Pune", department: "Design", experience: "3 to 5 Years Exp." },
-  { title: "Senior Frontend Developer", type: "Full Time", location: "Remote", department: "Tech", experience: "4 to 6 Years Exp." },
-  { title: "Graphic Design", type: "Full Time", location: "Delhi", department: "Design", experience: "2 to 4 Years Exp." },
-  { title: "Product Management", type: "Full Time", location: "Pune", department: "Tech", experience: "5+ Years Exp." },
-  { title: "Performance Marketing", type: "Full Time", location: "Remote", department: "Marketing", experience: "3+ Years Exp." },
-  { title: "Sales Executive", type: "Full Time", location: "Delhi", department: "Sales", experience: "1 to 3 Years Exp." },
-];
-
-const departments = ["All", "Offline", "Tech", "Sales", "HR", "Support", "Design", "Marketing"];
 
 const teams = [
   {
@@ -80,6 +70,8 @@ const teams = [
 ];
 
 export default function CareersPage() {
+  const [jobsLoading, setJobsLoading] = useState(true);
+  const [jobsError, setJobsError] = useState(false);
   const [jobOpenings, setJobOpenings] = useState<JobOpening[]>([]);
   const [emblaRef] = useEmblaCarousel({ loop: true, dragFree: true }, [
     AutoScroll({ playOnInit: true, speed: 1.5, stopOnInteraction: false, stopOnMouseEnter: true })
@@ -123,23 +115,25 @@ export default function CareersPage() {
         const q = query(collection(db, "jobs"), where("active", "==", true));
         const snapshot = await getDocs(q);
         const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as JobOpening[];
-        if (data.length > 0) {
-          setJobOpenings(data);
-        } else {
-          setJobOpenings(staticJobOpenings);
-        }
+        setJobOpenings(data);
       } catch (error) {
         console.error("Error fetching jobs:", error);
-        setJobOpenings(staticJobOpenings);
+        setJobsError(true);
+      } finally {
+        setJobsLoading(false);
       }
     };
     fetchJobs();
   }, []);
 
+  const departments = ["All", ...Array.from(new Map(
+    jobOpenings.map(job => job.department?.trim()).filter((value): value is string => Boolean(value) && value!.toLowerCase() !== "all")
+      .map(value => [value.toLowerCase(), value])
+  ).values())];
+
   const filteredJobs = jobOpenings.filter(job => {
     if (activeTab === "All") return true;
-    if (activeTab === "Offline") return job.location !== "Remote";
-    return job.department?.toLowerCase() === activeTab.toLowerCase();
+    return job.department?.trim().toLowerCase() === activeTab.toLowerCase();
   });
 
   const scrollToRoles = () => {
@@ -353,6 +347,7 @@ export default function CareersPage() {
               <button
                 key={dept}
                 onClick={() => setActiveTab(dept)}
+                aria-pressed={activeTab === dept}
                 className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${activeTab === dept ? 'bg-neutral-900 text-white shadow-md' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}
               >
                 {dept}
@@ -370,15 +365,16 @@ export default function CareersPage() {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
                   key={job.id || idx} 
-                  className="group flex flex-col md:flex-row md:items-center justify-between p-6 md:p-8 rounded-3xl border border-neutral-200 bg-white hover:border-neutral-300 hover:shadow-xl transition-all"
+                  className="group flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 md:p-8 rounded-3xl border border-neutral-200 bg-white hover:border-neutral-300 hover:shadow-xl transition-all"
                 >
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <h3 className="text-2xl font-bold text-neutral-900 mb-4 group-hover:text-orange-500 transition-colors">{job.title}</h3>
                     <div className="flex flex-wrap gap-4 text-sm font-medium text-neutral-600">
                       <span className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1 rounded-full"><MapPin size={14} /> {job.location}</span>
                       {job.experience && <span className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1 rounded-full"><Clock size={14} /> {job.experience}</span>}
                       <span className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1 rounded-full"><Briefcase size={14} /> {job.type}</span>
                     </div>
+                    {job.description?.trim() && <p className="mt-4 whitespace-pre-line break-words text-sm leading-relaxed text-neutral-600">{job.description}</p>}
                   </div>
                   <button 
                     onClick={() => handleApplyClick(job.title)}
@@ -389,7 +385,7 @@ export default function CareersPage() {
                 </motion.div>
               )) : (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12 text-neutral-600">
-                  No open roles in this category right now. Check back later!
+                  {jobsLoading ? "Loading open roles…" : jobsError ? "Unable to load open roles. Please refresh and try again." : "No open roles in this category right now. Check back later!"}
                 </motion.div>
               )}
             </AnimatePresence>

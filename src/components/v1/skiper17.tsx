@@ -276,8 +276,8 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                   </div>
 
                   {/* RIGHT SIDE: Spacious & Clear Content Details (7 cols) */}
-                  <div className="md:col-span-7 flex flex-col justify-between h-full py-1 min-w-0 min-h-0 space-y-3 md:space-y-3">
-                    <div className="space-y-3 md:space-y-3">
+                  <div className="md:col-span-7 flex flex-col h-full py-1 min-w-0 min-h-0 gap-3">
+                    <div className="min-h-0 flex-1 overflow-hidden space-y-3">
                       {/* Client Header */}
                       <div className="flex items-center justify-between gap-3 border-b border-slate-100 dark:border-neutral-800 pb-2">
                         {card.client && (
@@ -295,7 +295,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                       {/* Case Study Title */}
                       <h3
                         className={cn(
-                          "text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight leading-tight break-words",
+                          "text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight leading-tight break-words line-clamp-3",
                           isDark ? "text-white" : "text-neutral-900"
                         )}
                       >
@@ -310,7 +310,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                           </p>
                           <p
                             className={cn(
-                              "text-xs sm:text-sm lg:text-base leading-relaxed font-normal line-clamp-2 sm:line-clamp-3",
+                              "text-xs sm:text-sm lg:text-base leading-relaxed font-normal line-clamp-2",
                               isDark ? "text-neutral-300" : "text-neutral-700"
                             )}
                           >
@@ -327,7 +327,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                           </p>
                           <p
                             className={cn(
-                              "text-xs sm:text-sm lg:text-base leading-relaxed font-normal line-clamp-2 sm:line-clamp-3",
+                              "text-xs sm:text-sm lg:text-base leading-relaxed font-normal line-clamp-2",
                               isDark ? "text-neutral-300" : "text-neutral-700"
                             )}
                           >
@@ -339,7 +339,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                       {/* Feature Bullet Points / Key Highlights */}
                       {featureList.length > 0 && (
                         <div className="hidden lg:block space-y-2 pt-0.5">
-                          {featureList.map((ft, fIdx) => (
+                          {featureList.slice(0, 3).map((ft, fIdx) => (
                             <div
                               key={fIdx}
                               className="flex items-start gap-2.5 text-xs sm:text-sm font-semibold text-neutral-800 dark:text-neutral-200"
@@ -355,12 +355,12 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                     {/* Bottom Footer Row: Tech Stack Tags & CTA Button */}
                     <div className="space-y-3 pt-2.5 border-t border-slate-100 dark:border-neutral-800 shrink-0">
                       {card.tags && card.tags.length > 0 && (
-                        <div className="hidden lg:flex flex-wrap gap-2">
-                          {card.tags.map((tag, tIdx) => (
+                        <div className="hidden lg:flex gap-2 overflow-hidden">
+                          {card.tags.slice(0, 5).map((tag, tIdx) => (
                             <span
                               key={tIdx}
                               className={cn(
-                                "rounded-xl px-3 py-1 text-xs font-bold border shadow-xs transition-colors",
+                                "shrink-0 max-w-32 truncate rounded-xl px-3 py-1 text-xs font-bold border shadow-xs transition-colors",
                                 isDark
                                   ? "border-white/10 bg-white/5 text-neutral-200"
                                   : "border-slate-200 bg-slate-100 text-slate-800"
