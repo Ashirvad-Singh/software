@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
-import JobApplicationForm from "@/components/site/JobApplicationForm";
+import { Link } from "react-router-dom";
+import HiringProcess from "@/components/site/HiringProcess";
 import { 
   ArrowDown, 
   MapPin, 
@@ -85,14 +86,7 @@ export default function CareersPage() {
   ]);
   const [activeTab, setActiveTab] = useState("All");
   const [activeTeam, setActiveTeam] = useState(1);
-  const [selectedPosition, setSelectedPosition] = useState("");
-
-  const handleApplyClick = (title: string = "") => {
-    setSelectedPosition(title);
-    setTimeout(() => {
-      document.getElementById("apply-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
-  };
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const fetchGallery = async () => {
@@ -239,7 +233,7 @@ export default function CareersPage() {
                   className={`cursor-pointer rounded-2xl p-5 border transition-all duration-300 ${activeTeam === team.id ? 'bg-white border-orange-200 shadow-lg shadow-orange-100/50' : 'bg-transparent border-transparent hover:bg-white/50'}`}
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${activeTeam === team.id ? 'bg-orange-500 text-white' : 'bg-neutral-200 text-neutral-600'}`}>
+                    <div className={`site-step-badge w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${activeTeam === team.id ? 'bg-orange-500 text-white' : 'bg-neutral-200 text-neutral-600'}`}>
                       {team.id.toString().padStart(2, '0')}
                     </div>
                     <h3 className={`text-xl font-bold ${activeTeam === team.id ? 'text-neutral-900' : 'text-neutral-600'}`}>
@@ -360,15 +354,16 @@ export default function CareersPage() {
             <AnimatePresence>
               {filteredJobs.length > 0 ? filteredJobs.map((job, idx) => (
                 <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
                   exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.4 }}
                   key={job.id || idx} 
                   className="group flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 md:p-8 rounded-3xl border border-neutral-200 bg-white hover:border-neutral-300 hover:shadow-xl transition-all"
                 >
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-2xl font-bold text-neutral-900 mb-4 group-hover:text-orange-500 transition-colors">{job.title}</h3>
+                    <h3 className="text-2xl font-bold text-neutral-900 mb-4 group-hover:text-orange-500 transition-colors"><Link to={`/careers/${job.id}`}>{job.title}</Link></h3>
                     <div className="flex flex-wrap gap-4 text-sm font-medium text-neutral-600">
                       <span className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1 rounded-full"><MapPin size={14} /> {job.location}</span>
                       {job.experience && <span className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1 rounded-full"><Clock size={14} /> {job.experience}</span>}
@@ -376,12 +371,12 @@ export default function CareersPage() {
                     </div>
                     {job.description?.trim() && <p className="mt-4 whitespace-pre-line break-words text-sm leading-relaxed text-neutral-600">{job.description}</p>}
                   </div>
-                  <button 
-                    onClick={() => handleApplyClick(job.title)}
+                  <Link
+                    to={`/careers/${job.id}`}
                     className="mt-6 md:mt-0 flex items-center justify-center gap-2 px-6 py-3 bg-neutral-900 text-white rounded-full font-medium hover:bg-orange-500 transition-colors shrink-0"
                   >
-                    Apply Now <ArrowRight size={16} />
-                  </button>
+                    View Job & Apply <ArrowRight size={16} />
+                  </Link>
                 </motion.div>
               )) : (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12 text-neutral-600">
@@ -393,63 +388,7 @@ export default function CareersPage() {
         </div>
       </section>
 
-      {/* 7. How To Apply */}
-      <section className="py-10 md:py-16 bg-[#Fdfbf8]">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900">How To Apply</h2>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center gap-16">
-            <div className="w-full md:w-1/2 relative pl-8">
-              {/* Connecting line */}
-              <div className="absolute left-10 top-6 bottom-6 w-0.5 bg-orange-200" />
-              
-              <div className="space-y-12">
-                {[
-                  "Apply To Open Roles",
-                  "HR Screening",
-                  "Technical Interview",
-                  "Final HR Discussion"
-                ].map((step, i) => (
-                  <div key={i} className="relative flex items-center bg-white p-5 rounded-2xl shadow-sm border border-neutral-100">
-                    <div className="absolute -left-6 w-8 h-8 rounded-full bg-white border-4 border-orange-500 flex items-center justify-center shrink-0 z-10" />
-                    <h3 className="text-lg font-bold text-neutral-900 pl-4">{step}</h3>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="w-full md:w-1/2 flex justify-center">
-              <div className="relative w-full max-w-sm">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600" alt="Apply process" className="rounded-3xl shadow-2xl" />
-                <div className="absolute -bottom-6 right-0 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3">
-                  <div className="w-10 h-10 bg-green-100 text-green-500 rounded-full flex items-center justify-center">
-                    <CheckCircle size={20} />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-neutral-900">Application</p>
-                    <p className="text-xs text-neutral-600">Submitted Successfully</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7.5. Application Form */}
-      <section id="apply-form" className="py-10 md:py-16 bg-white border-t border-neutral-100">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900">Submit Application</h2>
-            <p className="text-neutral-600 mt-4 text-lg">Take the next step in your career. Fill out the form below to apply.</p>
-          </div>
-          <div className="bg-white border border-neutral-200 rounded-[2rem] p-6 md:p-10 shadow-2xl">
-            <JobApplicationForm key={selectedPosition} defaultPosition={selectedPosition} />
-          </div>
-        </div>
-      </section>
+      <HiringProcess />
 
     </main>
   );

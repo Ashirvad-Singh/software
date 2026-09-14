@@ -126,7 +126,7 @@ export default function ServicesPage() {
                   className="bg-white dark:bg-neutral-950 p-8 rounded-3xl border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
                 >
                   <div>
-                    <div className="w-12 h-12 rounded-2xl bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 flex items-center justify-center mb-6">
+                    <div className="w-12 h-12 rounded-2xl bg-sky-50 dark:bg-sky-950 text-sky-600 flex items-center justify-center mb-6">
                       <Icon className="w-6 h-6" />
                     </div>
                     <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-2">

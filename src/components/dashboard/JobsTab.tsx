@@ -16,6 +16,8 @@ export interface JobPost {
   experience: string;
   salaryRange: string;
   description: string;
+  role?: string;
+  benefits?: string;
   requirements: string;
   responsibilities: string;
   active: boolean;
@@ -36,6 +38,8 @@ export default function JobsTab() {
     experience: "",
     salaryRange: "",
     description: "",
+    role: "",
+    benefits: "",
     requirements: "",
     responsibilities: "",
     active: true,
@@ -113,7 +117,9 @@ export default function JobsTab() {
       type: job.type,
       experience: job.experience || "",
       salaryRange: job.salaryRange || "",
-      description: job.description,
+      description: job.description || "",
+      role: job.role || "",
+      benefits: job.benefits || "",
       requirements: job.requirements,
       responsibilities: job.responsibilities || "",
       active: job.active,
@@ -130,6 +136,8 @@ export default function JobsTab() {
       experience: "",
       salaryRange: "",
       description: "",
+    role: "",
+    benefits: "",
       requirements: "",
       responsibilities: "",
       active: true,
@@ -188,7 +196,14 @@ export default function JobsTab() {
                     required 
                     className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm md:col-span-2"
                   />
+                  <label className="md:col-span-2 text-sm font-medium">About the role
+                    <textarea name="role" value={formData.role || ""} onChange={handleInputChange} placeholder="Role purpose, team, and scope" className="mt-2 min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm" />
+                  </label>
+                  <label className="md:col-span-2 text-sm font-medium">Benefits (optional)
+                    <textarea name="benefits" value={formData.benefits || ""} onChange={handleInputChange} placeholder="Benefits and perks, one per line" className="mt-2 min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm" />
+                  </label>
                   <textarea 
+                    aria-label="Responsibilities"
                     placeholder="Responsibilities (one per line or paragraph)" 
                     name="responsibilities" 
                     value={formData.responsibilities} 
@@ -197,7 +212,7 @@ export default function JobsTab() {
                     className="flex min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm md:col-span-2"
                   />
                   <textarea 
-                    placeholder="Requirements (one per line)" 
+                    aria-label="Requirements" placeholder="Requirements (one per line)"
                     name="requirements" 
                     value={formData.requirements} 
                     onChange={handleInputChange} 

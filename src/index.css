@@ -177,3 +177,42 @@ html.lenis, html.lenis body {
     animation: none;
   }
 }
+
+/* Shared icon color across all pages, including hover and dark themes. */
+:root {
+  --site-icon-color: #0284c7;
+}
+
+svg.lucide,
+svg.icon-tabler {
+  color: var(--site-icon-color) !important;
+}
+
+/* Keep icon tiles consistent on every page, including dark and hover states. */
+:root {
+  --site-icon-background: #e0f2fe;
+  --site-icon-border: #bae6fd;
+}
+
+:is(div, span, a, button):is(
+  [class~="w-8"], [class~="w-9"], [class~="w-10"],
+  [class~="w-11"], [class~="w-12"], [class~="w-14"],
+  [class~="w-16"], [class~="w-20"], [class~="size-8"],
+  [class~="size-10"], [class~="size-12"]
+)[class*="rounded"]:has(> svg:is(.lucide, .icon-tabler):only-child),
+.site-icon-tile {
+  background-color: var(--site-icon-background) !important;
+  background-image: none !important;
+  border-color: var(--site-icon-border) !important;
+}
+
+/* Shared numbering style for process, service, FAQ, and hiring steps. */
+.site-step-badge {
+  background-color: var(--site-icon-background) !important;
+  border-color: var(--site-icon-border) !important;
+}
+
+.site-step-badge,
+.site-step-number {
+  color: var(--site-icon-color) !important;
+}

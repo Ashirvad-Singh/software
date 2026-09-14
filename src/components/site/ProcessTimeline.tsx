@@ -99,7 +99,7 @@ export default function ProcessTimeline({ hideHeader = false }: { hideHeader?: b
                 >
                   {/* Number Circle & Step Title */}
                   <div className="md:col-span-6 flex items-center gap-4 sm:gap-6">
-                    <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full border flex items-center justify-center text-xs sm:text-sm font-semibold shrink-0 transition-colors ${
+                    <div className={`site-step-badge w-10 h-10 sm:w-11 sm:h-11 rounded-full border flex items-center justify-center text-xs sm:text-sm font-semibold shrink-0 transition-colors ${
                       isHovered
                         ? "border-sky-500 bg-sky-500 text-white shadow-md shadow-sky-500/30"
                         : "border-sky-200 dark:border-sky-400/30 text-sky-600 dark:text-sky-200 bg-sky-50 dark:bg-sky-950/30"

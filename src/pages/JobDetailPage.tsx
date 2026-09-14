@@ -6,20 +6,28 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import type { JobPost } from "@/components/dashboard/JobsTab";
 import { motion } from "framer-motion";
+import SEO from "@/components/site/SEO";
 import JobApplicationForm from "@/components/site/JobApplicationForm";
 
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [job, setJob] = useState<JobPost | null>(null);
+  const [error, setError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let active = true;
+    setJob(null);
+    setLoading(true);
+    setError(false);
     const fetchJob = async () => {
       try {
         if (!id) return;
         const docRef = doc(db, "jobs", id);
         const docSnap = await getDoc(docRef);
+        if (!active) return;
         if (docSnap.exists()) {
           setJob({ id: docSnap.id, ...docSnap.data() } as JobPost);
         } else {
@@ -27,12 +35,14 @@ export default function JobDetailPage() {
         }
       } catch (error) {
         console.error("Error fetching job details:", error);
+        if (active) setError(true);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     };
     fetchJob();
-  }, [id]);
+    return () => { active = false; };
+  }, [id, attempt]);
 
   if (loading) {
     return (
@@ -41,6 +51,8 @@ export default function JobDetailPage() {
       </main>
     );
   }
+
+  if (error) return <main className="min-h-screen px-5 pt-36 text-center"><h1 className="text-2xl font-bold">Unable to load this job</h1><Button className="mt-6" onClick={() => setAttempt(value => value + 1)}>Try again</Button></main>;
 
   if (!job || !job.active) {
     return (
@@ -53,6 +65,7 @@ export default function JobDetailPage() {
 
   return (
     <main className="bg-white dark:bg-neutral-950 min-h-screen pt-32 pb-10 md:pb-16">
+      <SEO title={`${job.title} Careers`} description={job.description} />
       <div className="container mx-auto px-4 max-w-4xl">
         <Link to="/careers" className="inline-flex items-center text-sm font-medium text-neutral-500 hover:text-primary transition-colors mb-8">
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -96,29 +109,16 @@ export default function JobDetailPage() {
             </div>
           </div>
 
-          <div className="prose prose-lg max-w-none text-neutral-600 mb-12">
-            <h2 className="text-2xl font-bold text-neutral-900 mb-4">About the Role</h2>
-            <p className="whitespace-pre-wrap">{job.description}</p>
-            
-            <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">What You'll Do</h2>
-            <ul className="list-disc pl-6 space-y-2 marker:text-primary">
-              {job.responsibilities?.split('\n').filter(r => r.trim().length > 0).map((req, i) => (
-                <li key={i}>{req}</li>
-              ))}
-            </ul>
-
-            <h2 className="text-2xl font-bold text-neutral-900 mt-10 mb-4">What You Need</h2>
-            <ul className="list-disc pl-6 space-y-2 marker:text-primary">
-              {job.requirements?.split('\n').filter(r => r.trim().length > 0).map((req, i) => (
-                <li key={i}>{req}</li>
-              ))}
-            </ul>
+          <a href="#job-application" className="mb-10 inline-flex rounded-full bg-primary px-7 py-3 font-semibold text-primary-foreground">Apply for this job</a>
+          <div className="space-y-10 text-neutral-600 mb-12">
+            {[["Job description", job.description], ["About the role", job.role]].map(([heading, content]) => content?.trim() && <section key={heading}><h2 className="mb-4 text-2xl font-bold text-neutral-900">{heading}</h2><p className="whitespace-pre-wrap break-words leading-relaxed">{content}</p></section>)}
+            {[["Responsibilities", job.responsibilities], ["Requirements", job.requirements], ["Benefits", job.benefits]].map(([heading, content]) => content?.trim() && <section key={heading}><h2 className="mb-4 text-2xl font-bold text-neutral-900">{heading}</h2><ul className="list-disc pl-6 space-y-2 marker:text-primary">{content.split("\n").map(line => line.trim()).filter(Boolean).map((line, index) => <li key={index} className="break-words leading-relaxed">{line}</li>)}</ul></section>)}
           </div>
 
-          <div className="bg-neutral-50 p-8 rounded-2xl border border-neutral-200 mt-16">
+          <div id="job-application" className="scroll-mt-28 bg-neutral-50 p-4 sm:p-8 rounded-2xl border border-neutral-200 mt-16">
             <h3 className="text-2xl font-bold text-neutral-900 mb-2">Apply for this Role</h3>
             <p className="text-neutral-600 mb-8">Please fill out the form below to apply for the {job.title} position.</p>
-            <JobApplicationForm defaultPosition={job.title} readOnlyPosition={true} />
+            <JobApplicationForm key={job.id} jobId={job.id} defaultPosition={job.title} readOnlyPosition={true} />
           </div>
         </motion.div>
       </div>

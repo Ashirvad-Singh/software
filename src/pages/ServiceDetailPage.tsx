@@ -115,7 +115,7 @@ export default function ServiceDetailPage() {
                   service.process.map((step: any, index: number) => (
                     <div key={index} className="flex">
                       <div className="flex-shrink-0 mr-4">
-                        <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
+                        <div className="site-step-badge w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
                           {index + 1}
                         </div>
                       </div>

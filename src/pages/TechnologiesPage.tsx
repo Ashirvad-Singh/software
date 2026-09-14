@@ -22,6 +22,7 @@ import {
 import { Link } from "react-router-dom";
 
 interface TechItem {
+  slug?: string;
   name: string;
   iconUrl: string;
   description?: string;
@@ -355,7 +356,7 @@ export default function TechnologiesPage() {
                           ? (TablerIcons as any)[tech.iconUrl] ||
                             TablerIcons.IconCode
                           : null;
-                        const techSlug = tech.name.toLowerCase().replace(/[^a-z0-9]/g, "");
+                        const techSlug = (tech.slug || tech.name).toLowerCase().replace(/[^a-z0-9]/g, "");
 
                         return (
                           <Link
@@ -442,7 +443,7 @@ export default function TechnologiesPage() {
                 className="p-6 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm"
               >
                 <div className="flex items-center gap-4">
-                  <span className="w-12 h-12 rounded-2xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-extrabold flex items-center justify-center text-sm shrink-0">
+                  <span className="site-step-badge w-12 h-12 rounded-2xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-extrabold flex items-center justify-center text-sm shrink-0">
                     {item.step}
                   </span>
                   <div>

@@ -16,10 +16,14 @@ import { toast } from "sonner";
 import { Loader2, Plus, Pencil, Trash2, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import TechnologyPageEditor from "./TechnologyPageEditor";
+import { defaultTechnologyPage, technologySlug, type TechnologyDetail } from "@/data/technologyDetails";
 import * as TablerIcons from "@tabler/icons-react";
 import * as LucideIcons from "lucide-react";
 
 export interface TechTechnology {
+  slug?: string;
+  page?: TechnologyDetail;
   name: string;
   iconUrl: string;
   iconType: "library" | "custom";
@@ -317,6 +321,13 @@ export default function TechStackTab() {
     e.preventDefault();
     setLoading(true);
     try {
+      const snapshot = await getDocs(collection(db, "tech_stack"));
+      const taken = new Set(snapshot.docs.filter(item => item.id !== editingId).flatMap(item => (item.data().technologies || []).map((tech: TechTechnology) => technologySlug(tech.slug || tech.name))));
+      for (const tech of formData.technologies) {
+        const slug = technologySlug(tech.slug || tech.name);
+        if (!slug || taken.has(slug)) { toast.error(`A unique page slug is required for ${tech.name || "each technology"}.`); return; }
+        taken.add(slug);
+      }
       if (editingId) {
         await updateDoc(doc(db, "tech_stack", editingId), { ...formData });
         toast.success("Tech stack category updated");
@@ -609,6 +620,14 @@ export default function TechStackTab() {
                             />
                           )}
                         </div>
+                        <details className="w-full rounded-xl border border-sky-100 bg-sky-50/30 p-4">
+                          <summary className="cursor-pointer font-semibold text-sky-700">Edit technology detail page</summary>
+                          <label className="mt-4 block text-sm font-medium">Page slug
+                            <Input className="mt-2" value={tech.slug ?? technologySlug(tech.name)} onChange={event => handleTechChange(index, "slug", technologySlug(event.target.value))} />
+                          </label>
+                          <p className="mt-2 text-xs text-neutral-500">/technologies/{tech.slug || technologySlug(tech.name)}</p>
+                          <TechnologyPageEditor value={tech.page || defaultTechnologyPage(tech.name, formData.title)} onChange={page => handleTechChange(index, "page", page)} />
+                        </details>
                       </div>
                     ))}
                     {formData.technologies.length === 0 && (

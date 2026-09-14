@@ -136,7 +136,7 @@ export default function FaqSection() {
                   className="w-full px-6 py-5 flex items-center justify-between gap-4 text-left font-semibold text-neutral-900 dark:text-white text-base md:text-lg"
                 >
                   <span className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-500 dark:text-neutral-400 flex items-center justify-center text-xs font-mono font-bold shrink-0">
+                    <span className="site-step-badge w-7 h-7 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-500 dark:text-neutral-400 flex items-center justify-center text-xs font-mono font-bold shrink-0">
                       0{idx + 1}
                     </span>
                     {faq.question}

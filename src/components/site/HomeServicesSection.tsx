@@ -106,7 +106,7 @@ export default function HomeServicesSection({
               >
                 {/* Left: Number & Title (4 cols) */}
                 <div className="flex items-center gap-5 md:col-span-5 lg:col-span-4">
-                  <span className="font-mono text-base font-bold tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <span className="site-step-number font-mono text-base font-bold tracking-wider text-neutral-400 dark:text-neutral-500">
                     {paddedIndex}
                   </span>
                   <h3 className="text-2xl font-extrabold tracking-tight text-neutral-900 transition-all duration-300 group-hover:translate-x-2 group-hover:text-primary dark:text-white sm:text-3xl lg:text-4xl">

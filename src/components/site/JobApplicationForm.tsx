@@ -46,11 +46,12 @@ const careerSchema = z.object({
 type CareerFormValues = z.infer<typeof careerSchema>;
 
 interface JobApplicationFormProps {
+  jobId?: string;
   defaultPosition?: string;
   readOnlyPosition?: boolean;
 }
 
-export default function JobApplicationForm({ defaultPosition = "", readOnlyPosition = false }: JobApplicationFormProps) {
+export default function JobApplicationForm({ jobId, defaultPosition = "", readOnlyPosition = false }: JobApplicationFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -101,9 +102,10 @@ export default function JobApplicationForm({ defaultPosition = "", readOnlyPosit
               const response = JSON.parse(xhr.responseText);
               const downloadURL = response.secure_url;
               
-              const { resume, ...restData } = data;
+              const { resume: _resume, ...restData } = data;
               await addDoc(collection(db, "job_applications"), {
                 ...restData,
+                ...(jobId ? { jobId } : {}),
                 position: readOnlyPosition ? defaultPosition : restData.position,
                 resumeFileName: file.name,
                 resumeDownloadURL: downloadURL,
