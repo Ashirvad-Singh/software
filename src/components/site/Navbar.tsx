@@ -576,8 +576,8 @@ export default function Navbar({ className }: { className?: string }) {
           className,
         )}
       >
-        {/* Mobile Logo & Toggle - shown on mobile AND tablet */}
-        <div className="xl:hidden [@media(pointer:coarse)]:flex flex items-center justify-between w-full bg-white/80 backdrop-blur-md px-4 sm:px-6 h-14 sm:h-16 rounded-full border border-neutral-200 shadow-sm">
+        {/* Mobile Logo & Toggle - shown on screens below lg (1024px) */}
+        <div className="lg:hidden flex items-center justify-between w-full bg-white/80 backdrop-blur-md px-4 sm:px-6 h-14 sm:h-16 rounded-full border border-neutral-200 shadow-sm">
           <Link to="/" className="flex items-center">
             <img
               src="/adat-logo.png"
@@ -590,21 +590,21 @@ export default function Navbar({ className }: { className?: string }) {
           </button>
         </div>
 
-        {/* Wide-screen navigation for mouse and trackpad input. */}
-        <div className="hidden xl:block [@media(pointer:coarse)]:hidden w-full px-4">
+        {/* Desktop navigation for screens 1024px and up */}
+        <div className="hidden lg:block w-full px-2 sm:px-4">
           <Menu setActive={setActive}>
             <div className="flex items-center justify-between w-full">
               {/* Logo */}
-              <Link to="/" className="flex items-center gap-2 relative z-20">
+              <Link to="/" className="flex items-center gap-2 relative z-20 shrink-0">
                 <img
                   src="/adat-logo.png"
                   alt="Adat Soft Solutions"
-                  className="h-8 md:h-10 w-auto"
+                  className="h-7 md:h-9 w-auto"
                 />
               </Link>
 
               {/* Links */}
-              <div className="flex items-center justify-center space-x-4 xl:space-x-5 text-sm font-medium flex-1">
+              <div className="flex items-center justify-center space-x-2 lg:space-x-3 xl:space-x-5 text-xs lg:text-sm font-medium flex-1">
                 {navLinks.map((link) =>
                   link.name === "Industries" ? (
                     <MenuItem

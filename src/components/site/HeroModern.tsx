@@ -85,7 +85,7 @@ export default function HeroModern() {
       <FloatingShapes className="-z-10" />
       <div className="adat-hero-viewport" ref={emblaRef}>
         <div className="adat-hero-track">
-          {[0, 2, 1].map((dataIndex, index) => {
+          {[0, 1, 2].map((dataIndex, index) => {
             const slide = slides[dataIndex];
             return (
             <div className={`adat-hero-slide adat-slide-${index}`} key={slide.title} role="group" aria-roledescription="slide"

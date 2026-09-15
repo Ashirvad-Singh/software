@@ -1,71 +1,63 @@
-.adat-hero { position: relative; isolation: isolate; background: radial-gradient(ellipse at 78% 20%, #d7efff 0%, transparent 48%), radial-gradient(ellipse at 6% 95%, #e6f6ff 0%, transparent 48%), linear-gradient(120deg, #ffffff 15%, #f6faff 65%, #eef3ff); color: #0c304a; padding: 110px 0 20px; overflow: hidden; }
-.adat-hero-viewport { overflow: hidden; padding-block: 10px 16px; }
-.adat-hero-track { display: flex; touch-action: pan-y pinch-zoom; }
-.adat-hero-slide { flex: 0 0 100%; min-width: 0; display: grid; grid-template-columns: 1fr 1.08fr; gap: clamp(35px, 5vw, 95px); padding: 0 max(5vw, calc((100vw - 1680px) / 2)); }
+.adat-hero { position: relative; isolation: isolate; background: radial-gradient(ellipse at 78% 20%, #d7efff 0%, transparent 48%), radial-gradient(ellipse at 6% 95%, #e6f6ff 0%, transparent 48%), linear-gradient(120deg, #ffffff 15%, #f6faff 65%, #eef3ff); color: #0c304a; padding: clamp(110px, 13vh, 140px) 0 16px; overflow: hidden; }
+.adat-hero-viewport { overflow: hidden; padding-block: 0; }
+.adat-hero-track { display: flex; align-items: flex-start; touch-action: pan-y pinch-zoom; }
+.adat-hero-slide { flex: 0 0 100%; min-width: 0; display: grid; grid-template-columns: 1fr 1.08fr; gap: clamp(24px, 3.5vw, 70px); padding: 0 max(5vw, calc((100vw - 1680px) / 2)); }
 .adat-hero-copy { display: flex; flex-direction: column; align-items: flex-start; }
-.adat-hero-eyebrow { font-size: clamp(13px, 1.2vw, 20px); color: #526b7d; margin: 0 0 20px; }
+.adat-hero-eyebrow { font-size: clamp(12px, 1.1vw, 17px); color: #526b7d; margin: 0 0 12px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 0; }
+.adat-hero-eyebrow::before { content: ''; width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: #0ea5e9; box-shadow: 0 0 0 4px #0ea5e914; margin-right: 10px; }
 .adat-hero-eyebrow span { color: #075985; }
 .adat-hero-eyebrow span::before { content: ' / '; color: #0284c7; padding: 0 5px; }
-.adat-hero h1, .adat-hero-title { font-family: inherit; font-size: clamp(34px, 3vw, 56px); font-weight: 600; line-height: 1.13; letter-spacing: -.025em; margin: 0; max-width: 720px; }
-.adat-hero-intro { margin-top: auto; padding-top: 32px; }
-.adat-hero-intro h2 { font-family: inherit; font-size: clamp(23px, 1.7vw, 28px); font-weight: 600; line-height: 1.25; margin-bottom: 15px; }
-.adat-hero-intro p { color: #476174; font-size: clamp(15px, 1.1vw, 18px); line-height: 1.65; max-width: 640px; }
-.adat-hero-cta { display: inline-flex; align-items: center; gap: 18px; border: 1px solid #0284c7; background: #ffffff; color: #075985; border-radius: 99px; padding: 11px 24px; margin-top: 18px; font-size: 14px; transition: background .2s, color .2s; }
+
+.adat-hero h1, .adat-hero-title { font-family: inherit; font-size: clamp(28px, 2.5vw, 48px); font-weight: 600; line-height: 1.12; letter-spacing: -.025em; margin: 0; max-width: 720px; }
+.adat-title-accent { color: #087fb4; background: linear-gradient(110deg, #075985, #0284c7 60%, #3478c0); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.adat-hero-intro { margin-top: auto; padding-top: 16px; }
+.adat-hero-intro h2 { font-family: inherit; font-size: clamp(19px, 1.4vw, 24px); font-weight: 600; line-height: 1.22; margin-bottom: 8px; }
+.adat-hero-intro p { color: #476174; font-size: clamp(13px, 0.95vw, 16px); line-height: 1.5; max-width: 640px; }
+.adat-hero-cta { display: inline-flex; align-items: center; gap: 14px; border: 1px solid #0284c7; background: #ffffff; color: #075985; border-radius: 99px; padding: 8px 18px; margin-top: 12px; font-size: 13px; transition: background .2s, color .2s; }
 .adat-hero-cta:hover { background: #0284c7; color: #ffffff; }
-.adat-hero-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(2, minmax(130px, 1fr)) auto; gap: 12px; min-height: 470px; }
-.adat-hero-card { position: relative; overflow: hidden; border-radius: 18px; padding: 20px; border: 1px solid #b9ddf1; display: flex; flex-direction: column; transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; isolation: isolate; }
+
+/* Desktop Hero Grid & Cards */
+.adat-hero-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(2, minmax(105px, 1fr)) auto; gap: 10px; min-height: 0; }
+.adat-hero-card { position: relative; overflow: hidden; border-radius: 14px; padding: 14px; border: 1px solid #b9ddf1; display: flex; flex-direction: column; transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; isolation: isolate; box-shadow: inset 0 1px 0 #ffffff70, 0 8px 20px -16px #164d7b35; }
 .adat-hero-card:focus-visible { box-shadow: 0 14px 28px -12px rgb(12 74 110 / 30%); }
 .adat-hero-card-link svg { transition: transform .3s ease; }
+
 @media (hover: hover) and (pointer: fine) {
-  .adat-hero-card:hover { transform: translateY(-6px); box-shadow: 0 18px 30px -14px rgb(12 74 110 / 32%); border-color: currentColor; }
+  .adat-hero-card:hover { transform: translateY(-4px); box-shadow: 0 14px 24px -12px rgb(12 74 110 / 30%); border-color: currentColor; }
   .adat-hero-card:hover .adat-hero-card-link svg { transform: translateX(4px); }
 }
-.adat-hero-card h3 { font-size: clamp(21px, 1.6vw, 28px); line-height: 1.35; font-weight: 600; max-width: 240px; }
-.adat-hero-card-0 { background: radial-gradient(ellipse at 100% 0%, #38bdf8a6, transparent 60%), linear-gradient(145deg, #086fac, #075985 65%, #0b3e66); color: #ffffff; border-color: #3197c1; grid-row: span 2; }
+
+.adat-hero-card h3, .adat-card-heading { font-size: clamp(17px, 1.3vw, 22px); line-height: 1.3; font-weight: 600; max-width: 240px; }
+.adat-hero-card-0 { background: radial-gradient(ellipse at 100% 0%, #38bdf8a6, transparent 60%), linear-gradient(145deg, #086fac, #075985 65%, #0b3e66); color: #ffffff; border-color: #3197c1; grid-row: span 2; box-shadow: inset 0 1px 0 #ffffff40, 0 10px 24px -16px #07598570; }
+.adat-hero-card-0 p { color: #e0f2fe; }
 .adat-hero-card-1 { background: linear-gradient(135deg, #f3edff, #e0d5f7); color: #513477; border-color: #d4c5ed; }
 .adat-hero-card-2 { background: linear-gradient(135deg, #d8f5ff, #a8def6); color: #0b4b70; border-color: #91d1ec; }
 .adat-hero-card-3 { background: linear-gradient(135deg, #fff0e5, #f8dcc6); color: #7d452b; border-color: #f0cdb3; }
 .adat-hero-card-4 { background: linear-gradient(135deg, #ffffff, #edf6ff); color: #0c4a6e; }
-.adat-hero-card-4 h3 { font-size: 19px; }
-.adat-hero-card p { font-size: 13px; line-height: 1.5; margin: 10px 0 12px; color: #476174; }
-.adat-hero-card-link { display: flex; align-items: center; justify-content: flex-end; gap: 7px; margin-top: auto; padding-top: 14px; color: inherit; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
-.adat-hero-pattern { position: absolute; z-index: -1; pointer-events: none; width: 245px; height: 294px; right: -65px; top: -55px; opacity: .13; }
-.adat-hero-card-0 .adat-hero-pattern { width: 300px; height: 360px; top: auto; bottom: -48px; right: auto; left: -90px; transform: rotate(12deg); }
-.adat-hero-card-1 .adat-hero-pattern { width: 240px; height: 288px; right: -46px; top: -52px; }
-.adat-hero-card-2 .adat-hero-pattern { width: 190px; height: 265px; top: -35px; right: -90px; }
-.adat-hero-card-3 .adat-hero-pattern { width: 245px; height: 330px; top: -55px; right: -105px; }
-.adat-hero-card-4 .adat-hero-pattern { width: 210px; height: 252px; top: -90px; right: -25px; opacity: .12; }
-.adat-hero-controls { display: flex; align-items: center; gap: 24px; margin: 8px max(5vw, calc((100vw - 1680px) / 2)) 0; }
-.adat-hero-count { font-size: 12px; letter-spacing: .12em; }
-.adat-hero-count span { color: #526b7d; margin-left: 8px; }
-.adat-hero-dots, .adat-hero-arrows { display: flex; align-items: center; gap: 8px; }
-.adat-hero-dots button { width: 32px; height: 44px; position: relative; cursor: pointer; }
-.adat-hero-dots button::after { content: ''; position: absolute; inset: 21px 0; background: #a4cee5; border-radius: 3px; }
-.adat-hero-dots button[aria-current]::after { background: #0284c7; }
-.adat-hero-arrows { margin-left: auto; }
-.adat-hero-arrows button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #a4cee5; border-radius: 50%; cursor: pointer; }
-.adat-hero-arrows button:hover { background: #bae6fd; }
-.adat-hero :focus-visible { outline: 2px solid #0369a1; outline-offset: 4px; }
-@media (min-width: 1500px) { .adat-hero { padding-top: 115px; } }
-@media (max-width: 1023px) { .adat-hero { padding-top: 105px; } .adat-hero-slide { grid-template-columns: 1fr; gap: 35px; } .adat-hero-copy { max-width: 760px; } .adat-hero-intro { padding-top: 30px; } .adat-hero-grid { min-height: 450px; } }
-@media (max-width: 540px) { .adat-hero { padding-top: 95px; padding-bottom: 18px; } .adat-hero-eyebrow span { display: block; margin-top: 5px; } .adat-hero-eyebrow span::before { content: none; } .adat-hero-grid { gap: 10px; grid-template-rows: repeat(3, minmax(155px, auto)); min-height: 0; } .adat-hero-card { padding: 18px 14px; border-radius: 13px; } .adat-hero-card h3 { font-size: 21px; } .adat-hero-card-4 h3 { font-size: 17px; } .adat-hero-card p { font-size: 12px; } .adat-hero-card-link { font-size: 11px; gap: 4px; } .adat-hero-controls { gap: 12px; } .adat-hero-dots button { width: 22px; } }
-@media (prefers-reduced-motion: reduce) { .adat-hero * { transition: none !important; } }
+.adat-hero-card-4 h3, .adat-flip-card-4 .adat-card-heading { font-size: 16px; }
+.adat-hero-card p { font-size: 12px; line-height: 1.45; margin: 6px 0 8px; color: #476174; }
+.adat-hero-card-link { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: auto; padding-top: 6px; color: inherit; font-size: 11px; text-decoration: none; font-weight: 500; }
+.adat-hero-card-link:hover { text-decoration: underline; }
 
-@media (prefers-reduced-motion: reduce) { .adat-hero-card:hover, .adat-hero-card:hover .adat-hero-card-link svg { transform: none; } }
+.adat-hero-pattern { position: absolute; z-index: -1; pointer-events: none; width: 220px; height: 260px; right: -55px; top: -45px; opacity: .12; }
+.adat-hero-card-0 .adat-hero-pattern { width: 260px; height: 320px; top: auto; bottom: -40px; right: auto; left: -80px; transform: rotate(12deg); opacity: .18; }
+.adat-hero-card-1 .adat-hero-pattern { width: 210px; height: 250px; right: -40px; top: -45px; }
+.adat-hero-card-2 .adat-hero-pattern { width: 170px; height: 230px; top: -30px; right: -80px; }
+.adat-hero-card-3 .adat-hero-pattern { width: 220px; height: 290px; top: -45px; right: -95px; }
+.adat-hero-card-4 .adat-hero-pattern { width: 190px; height: 230px; top: -80px; right: -20px; opacity: .11; }
 
-
-.adat-flip-card { position: relative; min-width: 0; perspective: 1100px; }
+/* Flip Card Behavior */
+.adat-flip-card { position: relative; min-width: 0; perspective: 1100px; min-height: 130px; }
 .adat-flip-card-0 { grid-row: span 2; }
 .adat-flip-inner { display: grid; height: 100%; transform-style: preserve-3d; transition: transform .65s cubic-bezier(.2,.7,.2,1); }
 .adat-flip-inner > .adat-hero-card { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; min-width: 0; }
 .adat-flip-front { width: 100%; text-align: left; cursor: pointer; }
-.adat-card-heading { font-size: clamp(21px, 1.6vw, 28px); line-height: 1.35; font-weight: 600; }
-.adat-flip-card-4 .adat-card-heading { font-size: 19px; }
-.adat-flip-back { transform: rotateY(180deg); visibility: hidden; }
-.adat-flip-back h3 { font-size: 16px; line-height: 1.3; max-width: none; }
-.adat-flip-back p { font-size: 13px; line-height: 1.4; }
-.adat-flip-actions { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
-.adat-flip-actions > button { min-width: 36px; min-height: 36px; display: grid; place-items: center; cursor: pointer; }
+.adat-flip-back { transform: rotateY(180deg); visibility: hidden; position: relative; overflow: hidden; padding: 12px; }
+.adat-flip-back h3 { font-size: 15px; line-height: 1.25; max-width: none; }
+.adat-flip-back p { font-size: 11px; line-height: 1.35; margin-block: 4px; }
+.adat-flip-actions { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: auto; }
+.adat-flip-actions > button { min-width: 30px; min-height: 30px; display: grid; place-items: center; cursor: pointer; }
 .adat-flip-actions .adat-hero-card-link { padding-top: 0; margin-top: 0; }
 .adat-flip-card.is-flipped .adat-flip-inner { transform: rotateY(180deg); }
 .adat-flip-card.is-flipped .adat-flip-front { visibility: hidden; }
@@ -77,169 +69,304 @@
   .adat-flip-card:hover .adat-flip-front { visibility: hidden; }
   .adat-flip-card:hover .adat-flip-back { visibility: visible; }
 }
-@media (prefers-reduced-motion: reduce) { .adat-flip-inner { transition: none; } }
-/* Both faces size the shared grid cell so descriptions fit without internal scrolling. */
-.adat-flip-card { min-height: 170px; }
-.adat-flip-inner > .adat-flip-back { position: relative; overflow: hidden; }
-.adat-flip-back { padding: 14px; }
-.adat-flip-back p { margin-block: 6px; }
-.adat-flip-card:has(.adat-flip-back :focus-visible) .adat-flip-inner { transform: rotateY(180deg); }
-.adat-flip-card:has(.adat-flip-back :focus-visible) .adat-flip-front { visibility: hidden; }
-.adat-flip-card:has(.adat-flip-back :focus-visible) .adat-flip-back { visibility: visible; }
 
-/* Soft color depth keeps the foreground clear. */
-.adat-title-accent { color: #087fb4; background: linear-gradient(110deg, #075985, #0284c7 60%, #3478c0); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.adat-hero-eyebrow { display: flex; align-items: center; flex-wrap: wrap; gap: 5px 0; font-size: clamp(12px, 1vw, 16px); }
-.adat-hero-eyebrow::before { content: ''; width: 7px; height: 7px; flex-shrink: 0; border-radius: 50%; background: #0ea5e9; box-shadow: 0 0 0 5px #0ea5e914; margin-right: 14px; }
-.adat-hero-card { box-shadow: inset 0 1px 0 #ffffff70, 0 8px 24px -18px #164d7b40; }
-.adat-hero-card-0 { box-shadow: inset 0 1px 0 #ffffff40, 0 12px 30px -18px #07598580; }
-.adat-hero-card-0 p { color: #e0f2fe; }
-.adat-hero-card-0 .adat-hero-pattern { opacity: .19; }
-.adat-hero-card-link { text-decoration: none; font-weight: 500; }
-.adat-hero-card-link:hover { text-decoration: underline; }
-.adat-hero-controls { padding-top: 12px; border-top: 1px solid #c8e2f080; }
-@media (max-width: 540px) { .adat-hero-eyebrow { display: block; } .adat-hero-eyebrow::before { display: none; } }
+/* Controls */
+.adat-hero-controls { display: flex; align-items: center; gap: 20px; margin: 2px max(5vw, calc((100vw - 1680px) / 2)) 0; padding-top: 6px; border-top: 1px solid #c8e2f080; }
+.adat-hero-count { font-size: 11px; letter-spacing: .12em; }
+.adat-hero-count span { color: #526b7d; margin-left: 6px; }
+.adat-hero-dots, .adat-hero-arrows { display: flex; align-items: center; gap: 6px; }
+.adat-hero-dots button { width: 28px; height: 36px; position: relative; cursor: pointer; }
+.adat-hero-dots button::after { content: ''; position: absolute; inset: 17px 0; background: #a4cee5; border-radius: 3px; }
+.adat-hero-dots button[aria-current]::after { background: #0284c7; }
+.adat-hero-arrows { margin-left: auto; }
+.adat-hero-arrows button { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid #a4cee5; border-radius: 50%; cursor: pointer; }
+.adat-hero-arrows button:hover { background: #bae6fd; }
+.adat-hero :focus-visible { outline: 2px solid #0369a1; outline-offset: 4px; }
 
 .adat-hero.adat-hero-simple { background: #f8fcff; }
 
-/* Each service story has its own composition. */
+/* Slide Specific Desktop Compositions */
 .adat-showcase { min-width: 0; }
-.adat-showcase-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; color: #42677d; font-size: 12px; }
-.adat-showcase-bar > span { display: inline-flex; align-items: center; gap: 8px; }
-.adat-showcase-label { font-size: 9px; letter-spacing: .1em; }
-.adat-browser-dots { gap: 5px !important; }
-.adat-browser-dots i { width: 7px; height: 7px; border-radius: 50%; background: #bad9e9; }
-.adat-browser-dots i:first-child { background: #72bce4; }
-/* Website: a browser window with a wide feature and four supporting tiles. */
-.adat-showcase-0 { background: #ffffffc9; border: 1px solid #cfe3ef; border-radius: 20px; box-shadow: 0 20px 50px -35px #07598560; overflow: hidden; }
-.adat-showcase-0 .adat-showcase-bar { border-bottom: 1px solid #dcecf4; background: #f1f8fc; }
-.adat-showcase-0 .adat-hero-grid { padding: 14px; min-height: 0; grid-template-rows: auto; gap: 10px; }
-.adat-showcase-0 .adat-flip-card-0 { grid-column: 1 / -1; grid-row: auto; min-height: 138px; }
-.adat-showcase-0 .adat-flip-card:not(.adat-flip-card-0) { min-height: 132px; }
-.adat-showcase-0 .adat-card-heading { font-size: 21px; }
-.adat-showcase-0 .adat-hero-card { border-radius: 12px; padding: 16px; }
-.adat-showcase-0 .adat-hero-card-0 .adat-hero-pattern { left: auto; right: 8px; bottom: -150px; }
-/* Commerce: storefront on the left, narrative on the right. */
-.adat-slide-1 { grid-template-columns: 1.12fr 1fr; }
-.adat-slide-1 .adat-hero-copy { order: 2; }
-.adat-showcase-1 { order: 1; }
-.adat-showcase-1 .adat-showcase-bar { border-bottom: 2px solid #9fd7f1; margin-bottom: 14px; padding-inline: 0; }
-.adat-showcase-1 .adat-hero-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: auto auto; min-height: 0; }
-.adat-showcase-1 .adat-flip-card { grid-column: span 2; min-height: 200px; }
-.adat-showcase-1 .adat-flip-card-0, .adat-showcase-1 .adat-flip-card-1 { grid-column: span 3; grid-row: auto; min-height: 260px; }
-.adat-showcase-1 .adat-card-heading { font-size: 21px; }
-.adat-showcase-1 .adat-flip-card-0 .adat-card-heading, .adat-showcase-1 .adat-flip-card-1 .adat-card-heading { font-size: 27px; }
-.adat-showcase-1 .adat-hero-card { padding: 18px; }
-.adat-showcase-1 .adat-hero-card-0 { background: linear-gradient(145deg, #dff4ff, #abdff8); color: #075985; border-color: #92d1ed; }
-.adat-showcase-1 .adat-hero-card-0 p { color: #365f78; }
-/* UI/UX: a wide studio board beneath a split editorial heading. */
-.adat-slide-2 { grid-template-columns: 1fr; gap: 30px; }
-.adat-slide-2 .adat-hero-copy { display: grid; grid-template-columns: 1.1fr 1fr; gap: 0 7%; align-items: start; }
-.adat-slide-2 .adat-hero-eyebrow { grid-column: 1 / -1; }
-.adat-slide-2 .adat-hero-intro { margin: 0; padding: 0; }
-.adat-slide-2 .adat-hero-intro h2 { font-size: 22px; margin-bottom: 10px; }
-.adat-slide-2 .adat-hero-intro p { font-size: 15px; }
-.adat-showcase-2 { padding: 0 18px 18px; border: 1px solid #d5dff0; border-radius: 20px; background: linear-gradient(130deg, #edf5ff, #f5f0ff); }
-.adat-showcase-2 .adat-showcase-bar { padding-inline: 2px; }
-.adat-showcase-2 .adat-hero-grid { grid-template-columns: 1.2fr repeat(4, 1fr); grid-template-rows: auto; min-height: 0; }
-.adat-showcase-2 .adat-flip-card { grid-row: auto; min-height: 230px; }
-.adat-showcase-2 .adat-card-heading { font-size: 22px; }
-.adat-showcase-2 .adat-hero-card { padding: 18px; }
-.adat-showcase-2 .adat-hero-card-0 { background: linear-gradient(145deg, #2c6392, #25486e); }
-@media (max-width: 1200px) and (min-width: 1024px) {
-  .adat-showcase-1 .adat-hero-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .adat-showcase-1 .adat-flip-card, .adat-showcase-1 .adat-flip-card-0, .adat-showcase-1 .adat-flip-card-1 { grid-column: auto; min-height: 150px; }
-  .adat-showcase-1 .adat-flip-card-4 { grid-column: 1 / -1; }
-}
-@media (max-width: 1023px) {
-  .adat-slide-1 { grid-template-columns: 1fr; }
-  .adat-slide-1 .adat-hero-copy, .adat-showcase-1 { order: initial; }
-  .adat-slide-2 .adat-hero-copy { grid-template-columns: 1fr; gap: 20px; }
-  .adat-slide-2 .adat-hero-eyebrow { margin-bottom: 0; }
-  .adat-showcase-2 .adat-hero-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .adat-showcase-2 .adat-flip-card { min-height: 180px; }
-  .adat-showcase-2 .adat-flip-card-0 { grid-column: 1 / -1; min-height: 135px; }
-}
-@media (max-width: 540px) {
-  .adat-showcase-label { display: none !important; }
-  .adat-showcase-bar { font-size: 11px; }
-  .adat-showcase-1 .adat-hero-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .adat-showcase-1 .adat-flip-card, .adat-showcase-1 .adat-flip-card-0, .adat-showcase-1 .adat-flip-card-1 { grid-column: auto; min-height: 170px; }
-  .adat-showcase-1 .adat-flip-card-4 { grid-column: 1 / -1; min-height: 130px; }
-  .adat-showcase-1 .adat-flip-card .adat-card-heading { font-size: 21px; }
-  .adat-showcase-2 { padding: 0 10px 10px; }
-  .adat-showcase-2 .adat-card-heading { font-size: 19px; }
-}
+.adat-showcase-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; color: #42677d; font-size: 11px; }
+.adat-showcase-bar > span { display: inline-flex; align-items: center; gap: 6px; }
+.adat-showcase-label { font-size: 8px; letter-spacing: .08em; }
 
-/* Opening slide: centered editorial hero and layered website concepts. */
+/* Slide 0: Website Editorial Hero */
 .adat-slide-0 { display: block; }
 .website-hero { text-align: center; max-width: 1260px; margin-inline: auto; }
-.website-hero-label { display: inline-flex; align-items: center; gap: 10px; font-size: 10px; font-weight: 600; letter-spacing: .18em; color: #52758d; margin: 0 0 16px; }
-.website-hero-label > span { width: 6px; height: 6px; background: #0ea5e9; border-radius: 50%; box-shadow: 0 0 0 5px #0ea5e912; }
-.adat-hero .website-hero h1 { margin: 0 auto; max-width: 1000px; font-size: clamp(40px, 4.5vw, 76px); font-weight: 650; line-height: 1.06; letter-spacing: -.045em; }
+.website-hero-label { display: inline-flex; align-items: center; gap: 8px; font-size: 9px; font-weight: 600; letter-spacing: .16em; color: #52758d; margin: 0 0 10px; }
+.website-hero-label > span { width: 5px; height: 5px; background: #0ea5e9; border-radius: 50%; box-shadow: 0 0 0 4px #0ea5e912; }
+.adat-hero .website-hero h1 { margin: 0 auto; max-width: 960px; font-size: clamp(30px, 3.5vw, 56px); font-weight: 650; line-height: 1.08; letter-spacing: -.04em; }
 .website-hero h1 > span { color: #0284c7; }
-.website-hero-description { font-size: 16px; line-height: 1.65; color: #557084; margin: 18px auto 20px; max-width: 620px; }
-.website-hero-actions { display: flex; align-items: center; justify-content: center; gap: 25px; }
-.website-work-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #184863; }
+.website-hero-description { font-size: 14px; line-height: 1.5; color: #557084; margin: 10px auto 14px; max-width: 600px; }
+.website-hero-actions { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.website-work-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #184863; }
 .website-work-link:hover { color: #0284c7; }
-.website-platforms { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px; color: #698191; font-size: 11px; margin: 22px 0 0; }
+.website-platforms { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; color: #698191; font-size: 10px; margin: 12px 0 0; }
 .website-platforms i { width: 3px; height: 3px; background: #9fc4d7; border-radius: 50%; }
-.website-stage { height: 248px; position: relative; max-width: 1100px; margin: 25px auto 8px; text-align: left; }
+.website-stage { height: 210px; position: relative; max-width: 1000px; margin: 14px auto 4px; text-align: left; }
 .website-orbit { position: absolute; inset: 20% -6% -10%; border-radius: 50%; background: radial-gradient(ellipse, #bde8fc85, #dcedff30 65%, transparent 70%); }
-.website-main-preview { width: 48%; position: absolute; left: 26%; top: 0; z-index: 2; background: #fff; border: 1px solid #bcd8e8; border-radius: 12px; overflow: hidden; box-shadow: 0 18px 38px -20px #124b7a60; }
-.website-window-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 8px; color: #829aa8; padding: 8px 12px; background: #f8fbfd; border-bottom: 1px solid #e1ebf1; }
-.website-window-bar > span { display: flex; gap: 6px; align-items: center; }
+.website-main-preview { width: 48%; position: absolute; left: 26%; top: 0; z-index: 2; background: #fff; border: 1px solid #bcd8e8; border-radius: 12px; overflow: hidden; box-shadow: 0 16px 32px -18px #124b7a50; }
+.website-window-bar { display: flex; justify-content: space-between; align-items: center; gap: 6px; font-size: 8px; color: #829aa8; padding: 6px 10px; background: #f8fbfd; border-bottom: 1px solid #e1ebf1; }
+.website-window-bar > span { display: flex; gap: 5px; align-items: center; }
 .website-window-dots { color: #bed2dd; letter-spacing: 2px; font-size: 7px; }
-.website-main-content { padding: 13px 22px 22px; }
+.website-main-content { padding: 10px 16px 16px; }
 .website-preview-nav { display: flex; align-items: center; justify-content: space-between; }
-.website-preview-nav b { font-size: 18px; letter-spacing: -.05em; }
+.website-preview-nav b { font-size: 15px; letter-spacing: -.05em; }
 .website-preview-nav b span { color: #0ea5e9; }
 .website-preview-nav > span { font-size: 7px; color: #7490a0; }
-.website-preview-body { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; margin-top: 18px; gap: 10px; }
+.website-preview-body { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; margin-top: 10px; gap: 8px; }
 .website-preview-body small { font-size: 6px; letter-spacing: .1em; color: #718e9f; }
-.website-preview-body strong { display: block; font-size: clamp(17px, 2vw, 29px); line-height: 1.15; margin-top: 8px; letter-spacing: -.035em; }
+.website-preview-body strong { display: block; font-size: clamp(14px, 1.5vw, 22px); line-height: 1.15; margin-top: 4px; letter-spacing: -.035em; }
 .website-preview-body em { font-style: normal; color: #0284c7; }
-.website-preview-cta { display: inline-block; background: #0c5279; color: white; padding: 7px 10px; border-radius: 20px; font-size: 7px; margin-top: 12px; }
-.website-art { height: 130px; position: relative; background: #eaf7ff; overflow: hidden; border-radius: 50% 50% 12px 12px; }
+.website-preview-cta { display: inline-block; background: #0c5279; color: white; padding: 5px 8px; border-radius: 20px; font-size: 7px; margin-top: 8px; }
+.website-art { height: 95px; position: relative; background: #eaf7ff; overflow: hidden; border-radius: 50% 50% 10px 10px; }
 .website-art div { position: absolute; width: 68%; height: 100%; border-radius: 90px 90px 0 0; transform: rotate(32deg); background: linear-gradient(110deg, #ddf6ff, #4eafdf 60%, #0879b9); top: 20%; left: -2%; }
 .website-art div:nth-child(2) { left: 35%; top: 35%; background: linear-gradient(110deg, #a9def4, #136eaa); }
 .website-art div:nth-child(3) { width: 45%; height: 50%; left: 70%; top: -10%; background: #c4e9ff; }
-.website-mini { position: absolute; width: 29%; border: 1px solid #d7e2e9; border-radius: 10px; overflow: hidden; background: #fff; box-shadow: 0 14px 30px -22px #175b8570; }
-.website-mini-left { left: 1%; top: 28px; transform: rotate(-7deg); }
-.website-mini-right { right: 1%; top: 30px; transform: rotate(7deg); }
-.website-brand-preview { position: relative; height: 158px; padding: 14px 18px; background: #f6ece0; color: #695040; overflow: hidden; }
+.website-mini { position: absolute; width: 28%; border: 1px solid #d7e2e9; border-radius: 10px; overflow: hidden; background: #fff; box-shadow: 0 12px 24px -18px #175b8560; }
+.website-mini-left { left: 2%; top: 18px; transform: rotate(-6deg); }
+.website-mini-right { right: 2%; top: 20px; transform: rotate(6deg); }
+.website-brand-preview { position: relative; height: 125px; padding: 10px 14px; background: #f6ece0; color: #695040; overflow: hidden; }
 .website-preview-wordmark { display: block; font-size: 7px; font-weight: 600; letter-spacing: .13em; }
-.website-brand-preview strong { display: block; font-size: 25px; line-height: 1.1; margin-top: 24px; font-weight: 500; }
-.website-preview-link { display: block; font-size: 6px; margin-top: 15px; }
-.website-sculpture { position: absolute; width: 74px; height: 110px; right: 20px; bottom: 0; border: 20px solid #cba888; border-bottom: none; border-radius: 70px 70px 0 0; box-shadow: inset 5px 0 9px #7d604220, 5px 3px 9px #7d604215; }
-.website-store-preview { padding: 12px 16px; height: 158px; background: #f2effa; color: #645277; }
-.website-products { display: flex; align-items: flex-end; justify-content: center; gap: 24px; height: 94px; }
-.website-products > div { width: 45px; height: 65px; background: linear-gradient(90deg, #91a9d5, #c3d6ef 55%, #8fa8d1); border-radius: 9px 9px 6px 6px; border-top: 9px solid #526e9d; box-shadow: 5px 8px 10px #526e9d20; }
-.website-products .website-product-two { height: 48px; width: 55px; background: linear-gradient(90deg, #c9b5d8, #eadff0, #bba7ce); border-top-color: #8f759f; border-radius: 5px 5px 12px 12px; }
-.website-store-caption { display: flex; justify-content: space-between; align-items: center; font-size: 8px; margin-top: 14px; }
-.website-detail-pill { position: absolute; left: 50%; bottom: -2px; transform: translateX(-50%); z-index: 3; white-space: nowrap; display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #cfe5f1; border-radius: 30px; padding: 9px 15px; font-size: 10px; color: #42697d; box-shadow: 0 5px 15px #07598509; }
-/* Second slide retains the reference's copy-left / bento-right composition. */
-.adat-slide-1 { grid-template-columns: 1fr 1.08fr; }
-.adat-slide-1 .adat-hero-copy { order: 0; }
-.adat-showcase-1 { order: 0; }
-.adat-showcase-1 .adat-showcase-bar { display: none; }
-.adat-showcase-1 .adat-hero-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(2, minmax(130px, 1fr)) auto; min-height: 470px; }
-.adat-showcase-1 .adat-flip-card, .adat-showcase-1 .adat-flip-card-1, .adat-showcase-1 .adat-flip-card-4 { grid-column: auto; grid-row: auto; min-height: 170px; }
-.adat-showcase-1 .adat-flip-card-0 { grid-column: auto; grid-row: span 2; min-height: 170px; }
-.adat-showcase-1 .adat-hero-card-0 { background: radial-gradient(ellipse at 100% 0%, #38bdf8a6, transparent 60%), linear-gradient(145deg, #086fac, #075985 65%, #0b3e66); color: white; }
-.adat-showcase-1 .adat-hero-card-0 p { color: #e0f2fe; }
-@media (max-width: 1023px) { .adat-slide-1 { grid-template-columns: 1fr; } }
-@media (max-width: 600px) {
-  .website-hero-description { font-size: 14px; }
-  .website-hero-actions { gap: 16px; flex-wrap: wrap; }
-  .website-platforms { gap: 9px; font-size: 10px; }
-  .website-stage { height: 205px; margin-top: 25px; }
-  .website-main-preview { width: 84%; left: 8%; }
-  .website-mini { width: 45%; top: 22px; opacity: .6; }
-  .website-mini-left { left: -14%; }.website-mini-right { right: -14%; }
-  .website-main-content { padding: 12px; }
-  .website-art { height: 100px; }
-  .website-detail-pill { font-size: 8px; padding: 7px 10px; bottom: -4px; }
-  .website-preview-body { margin-top: 8px; }
-  .adat-showcase-1 .adat-flip-card .adat-card-heading { font-size: 21px; }
+.website-brand-preview strong { display: block; font-size: 18px; line-height: 1.1; margin-top: 14px; font-weight: 500; }
+.website-preview-link { display: block; font-size: 6px; margin-top: 10px; }
+.website-sculpture { position: absolute; width: 56px; height: 85px; right: 12px; bottom: 0; border: 15px solid #cba888; border-bottom: none; border-radius: 60px 60px 0 0; box-shadow: inset 4px 0 7px #7d604220, 4px 3px 7px #7d604215; }
+.website-store-preview { padding: 10px 14px; height: 125px; background: #f2effa; color: #645277; }
+.website-products { display: flex; align-items: flex-end; justify-content: center; gap: 16px; height: 72px; }
+.website-products > div { width: 36px; height: 50px; background: linear-gradient(90deg, #91a9d5, #c3d6ef 55%, #8fa8d1); border-radius: 7px 7px 5px 5px; border-top: 7px solid #526e9d; box-shadow: 4px 6px 8px #526e9d20; }
+.website-products .website-product-two { height: 38px; width: 44px; background: linear-gradient(90deg, #c9b5d8, #eadff0, #bba7ce); border-top-color: #8f759f; border-radius: 4px 4px 10px 10px; }
+.website-store-caption { display: flex; justify-content: space-between; align-items: center; font-size: 8px; margin-top: 8px; }
+.website-detail-pill { position: absolute; left: 50%; bottom: 2px; transform: translateX(-50%); z-index: 3; white-space: nowrap; display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid #cfe5f1; border-radius: 30px; padding: 6px 14px; font-size: 9px; color: #42697d; box-shadow: 0 4px 12px #07598509; }
+
+/* Slide 1 Desktop Composition (Shopify & WooCommerce) - Content Top, 4 Cards Bottom */
+.adat-slide-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 26px;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+.adat-slide-1 .adat-hero-copy {
+  order: 1;
+  align-items: center;
+  text-align: center;
+  max-width: 960px;
+}
+.adat-slide-1 .adat-hero-title {
+  font-size: clamp(30px, 2.8vw, 46px);
+  line-height: 1.14;
+  max-width: 920px;
+  margin-inline: auto;
+}
+.adat-slide-1 .adat-hero-intro {
+  margin-top: 8px;
+  padding-top: 0;
+  text-align: center;
+}
+.adat-slide-1 .adat-hero-intro h2 {
+  font-size: 19px;
+  font-weight: 600;
+  color: #075985;
+  margin-bottom: 6px;
+}
+.adat-slide-1 .adat-hero-intro p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: #476174;
+  margin-inline: auto;
+  max-width: 760px;
+}
+.adat-slide-1 .adat-hero-cta {
+  margin-top: 14px;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.adat-showcase-1 {
+  order: 2;
+  width: 100%;
+}
+.adat-showcase-1 .adat-showcase-bar {
+  display: none;
+}
+.adat-showcase-1 .adat-hero-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+  gap: 16px;
+  min-height: 185px;
+}
+.adat-showcase-1 .adat-flip-card-0,
+.adat-showcase-1 .adat-flip-card {
+  grid-column: auto;
+  grid-row: auto;
+  min-height: 185px;
+}
+.adat-showcase-1 .adat-flip-card-4 {
+  display: none; /* Display 4 cards below in 4 equal columns */
+}
+.adat-showcase-1 .adat-card-heading {
+  font-size: 18px;
+}
+.adat-showcase-1 .adat-hero-card {
+  padding: 16px;
+  height: 100%;
+}
+
+/* Slide 2 Desktop Composition (UI/UX Design) - Framed Studio Canvas (3 Cards Total) */
+.adat-slide-2 {
+  grid-template-columns: 1fr 1.08fr;
+  gap: clamp(24px, 3.5vw, 60px);
+  align-items: center; /* Vertically center left copy with right showcase canvas */
+}
+.adat-slide-2 .adat-hero-copy {
+  order: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+}
+.adat-slide-2 .adat-hero-intro {
+  margin-top: 10px;
+  padding-top: 0;
+}
+.adat-slide-2 .adat-hero-intro h2 {
+  font-size: 19px;
+  font-weight: 600;
+  color: #075985;
+  margin-bottom: 6px;
+}
+.adat-slide-2 .adat-hero-intro p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #476174;
+}
+.adat-slide-2 .adat-hero-cta {
+  margin-top: 12px;
+}
+.adat-showcase-2 { order: 2; padding: 0 10px 10px; border: 1px solid #d5dff0; border-radius: 16px; background: linear-gradient(130deg, #edf5ff, #f5f0ff); }
+.adat-showcase-2 .adat-showcase-bar { padding-inline: 2px; padding-block: 6px; }
+.adat-showcase-2 .adat-hero-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; min-height: 0; gap: 8px; }
+.adat-showcase-2 .adat-flip-card-0 { grid-column: span 2; min-height: 95px; }
+.adat-showcase-2 .adat-flip-card-1,
+.adat-showcase-2 .adat-flip-card-2 { grid-column: auto; min-height: 105px; }
+.adat-showcase-2 .adat-flip-card-3,
+.adat-showcase-2 .adat-flip-card-4 { display: none; } /* Display 3 cards total for perfect laptop viewport fit */
+.adat-showcase-2 .adat-card-heading { font-size: 16px; }
+.adat-showcase-2 .adat-hero-card { padding: 11px; }
+.adat-showcase-2 .adat-hero-card-0 { background: linear-gradient(145deg, #2c6392, #25486e); }
+
+/* --- RESPONSIVE MEDIA QUERIES (DEFINED AT THE END FOR ABSOLUTE PRECEDENCE) --- */
+
+@media (min-width: 1500px) {
+  .adat-hero { padding-top: 125px; }
+}
+
+@media (max-width: 1023px) {
+  .adat-hero { padding-top: 105px; }
+  .adat-slide-1, .adat-slide-2 { grid-template-columns: 1fr; gap: 16px; }
+  .adat-slide-1 .adat-hero-copy, .adat-showcase-1,
+  .adat-slide-2 .adat-hero-copy, .adat-showcase-2 { order: initial; }
+}
+
+/* Mobile Devices (< 768px): Equalized ~320px slide height, clear header space & horizontal card swipe */
+@media (max-width: 767px) {
+  .adat-hero { padding-top: 105px !important; padding-bottom: 10px !important; }
+  .adat-hero-slide { gap: 10px !important; }
+  
+  .adat-hero h1, .adat-hero-title { font-size: 21px !important; line-height: 1.2 !important; margin: 0 0 4px 0 !important; }
+  .adat-hero-eyebrow { display: block !important; font-size: 11px !important; margin-bottom: 6px !important; }
+  .adat-hero-eyebrow::before { display: none !important; }
+  .adat-hero-eyebrow span { display: inline-block !important; margin-top: 2px !important; }
+  .adat-hero-eyebrow span::before { content: ' / ' !important; display: inline !important; }
+
+  .adat-hero-intro { padding-top: 2px !important; margin-top: 2px !important; }
+  .adat-hero-intro h2 { font-size: 14px !important; margin-bottom: 2px !important; }
+  .adat-hero-intro p { display: none !important; } /* Hide long text on mobile to equalize slide height with Slide 1 */
+  .adat-hero-cta { padding: 5px 12px !important; font-size: 11px !important; margin-top: 6px !important; }
+
+  /* Show ONLY 1 Featured Card (Card 0) for Slide 2 & Slide 3 on Mobile */
+  .adat-showcase-1 .adat-flip-card:not(.adat-flip-card-0),
+  .adat-showcase-2 .adat-flip-card:not(.adat-flip-card-0) {
+    display: none !important;
+  }
+
+  .adat-showcase-1 .adat-hero-grid,
+  .adat-showcase-2 .adat-hero-grid {
+    display: block !important;
+    margin-top: 6px !important;
+  }
+
+  .adat-showcase-1 .adat-flip-card-0,
+  .adat-showcase-2 .adat-flip-card-0 {
+    width: 100% !important;
+    min-height: 105px !important;
+    max-height: none !important;
+    flex: none !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  .adat-hero-card {
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+    height: 100% !important;
+  }
+
+  .adat-card-heading,
+  .adat-showcase-1 .adat-flip-card .adat-card-heading,
+  .adat-showcase-2 .adat-flip-card .adat-card-heading,
+  .adat-showcase-1 .adat-flip-card-0 .adat-card-heading,
+  .adat-showcase-2 .adat-flip-card-0 .adat-card-heading {
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .adat-hero-card p {
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+    margin: 3px 0 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .adat-hero-card-link {
+    font-size: 10px !important;
+    padding-top: 4px !important;
+  }
+
+  .adat-showcase-label { display: none !important; }
+  .adat-showcase-bar { font-size: 9px !important; padding: 4px 8px !important; border: none !important; margin-bottom: 0 !important; }
+  .adat-showcase-2 { padding: 0 6px 6px !important; background: transparent !important; border: none !important; }
+
+  /* Slide 0 (Website Hero) Mobile Adjustments */
+  .website-hero-label { margin: 0 0 4px !important; font-size: 8px !important; }
+  .adat-hero .website-hero h1 { font-size: 21px !important; line-height: 1.2 !important; }
+  .website-hero-description { font-size: 11px !important; margin: 4px auto 8px !important; line-height: 1.4 !important; }
+  .website-hero-actions { flex-direction: row !important; justify-content: center !important; gap: 8px !important; width: 100% !important; }
+  .website-hero-actions .site-button { padding: 5px 12px !important; font-size: 11px !important; }
+  .website-hero-actions .website-work-link { font-size: 11px !important; }
+  .website-platforms { gap: 6px !important; font-size: 9px !important; margin-top: 6px !important; }
+  .website-stage { height: 145px !important; margin: 8px auto 2px !important; }
+  .website-main-preview { width: 92% !important; left: 4% !important; }
+  .website-mini { display: none !important; }
+  .website-main-content { padding: 8px !important; }
+  .website-art { height: 60px !important; }
+  .website-detail-pill { font-size: 8px !important; padding: 4px 10px !important; bottom: 2px !important; }
+  .website-preview-body { margin-top: 4px !important; }
+  
+  .adat-hero-controls { gap: 10px !important; margin-top: 6px !important; }
+  .adat-hero-dots button { width: 20px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .adat-hero *, .adat-hero-card:hover, .adat-hero-card:hover .adat-hero-card-link svg, .adat-flip-inner { transition: none !important; transform: none !important; }
 }

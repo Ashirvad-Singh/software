@@ -13,6 +13,7 @@ const defaultLabels = [
 
 export default function Cursor() {
   const [isVisible, setIsVisible] = useState(false)
+  const [hasMoved, setHasMoved] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const [hoverText, setHoverText] = useState<string | null>(null)
   const [labelIndex, setLabelIndex] = useState(0)
@@ -34,13 +35,21 @@ export default function Cursor() {
   }, [])
 
   useEffect(() => {
-    // Hide cursor on touch devices
-    if (window.matchMedia("(pointer: coarse)").matches) return
+    // Hide cursor on mobile devices, small screens, or touch devices
+    if (
+      typeof window === "undefined" ||
+      window.innerWidth < 768 ||
+      window.matchMedia("(pointer: coarse)").matches ||
+      "ontouchstart" in window
+    ) {
+      setIsVisible(false)
+      return
+    }
 
     setIsVisible(true)
-    document.body.style.cursor = "none"
 
     const handleMouseMove = (e: MouseEvent) => {
+      setHasMoved(true)
       mouseX.set(e.clientX)
       mouseY.set(e.clientY)
     }
@@ -52,7 +61,6 @@ export default function Cursor() {
       // 1. Check for data-cursor-text attribute
       const cursorAttr = target.closest("[data-cursor-text]")?.getAttribute("data-cursor-text")
       if (cursorAttr) {
-        // Strip any emoji from data-cursor-text if present
         setHoverText(cursorAttr.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, "").trim())
         setIsHovered(true)
         return
@@ -99,13 +107,12 @@ export default function Cursor() {
     window.addEventListener("mouseover", handleMouseOver)
 
     return () => {
-      document.body.style.cursor = "default"
       window.removeEventListener("mousemove", handleMouseMove)
       window.removeEventListener("mouseover", handleMouseOver)
     }
   }, [mouseX, mouseY])
 
-  if (!isVisible) return null
+  if (!isVisible || !hasMoved) return null
 
   const displayText = hoverText ? hoverText : defaultLabels[labelIndex]
   const badgeBg = isHovered ? "#6366F1" : "#0EA5E9" // Indigo on hover, Sky Blue default
