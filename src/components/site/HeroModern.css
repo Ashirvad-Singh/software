@@ -1,0 +1,88 @@
+.adat-hero { position: relative; isolation: isolate; background: #ffffff; color: #0c304a; padding: 110px 0 20px; overflow: hidden; }
+.adat-hero-viewport { overflow: hidden; padding-block: 10px 16px; }
+.adat-hero-track { display: flex; touch-action: pan-y pinch-zoom; }
+.adat-hero-slide { flex: 0 0 100%; min-width: 0; display: grid; grid-template-columns: 1fr 1.08fr; gap: clamp(35px, 5vw, 95px); padding: 0 max(5vw, calc((100vw - 1680px) / 2)); }
+.adat-hero-copy { display: flex; flex-direction: column; align-items: flex-start; }
+.adat-hero-eyebrow { font-size: clamp(13px, 1.2vw, 20px); color: #526b7d; margin: 0 0 20px; }
+.adat-hero-eyebrow span { color: #075985; }
+.adat-hero-eyebrow span::before { content: ' / '; color: #0284c7; padding: 0 5px; }
+.adat-hero h1, .adat-hero-title { font-family: inherit; font-size: clamp(34px, 3vw, 56px); font-weight: 600; line-height: 1.13; letter-spacing: -.025em; margin: 0; max-width: 720px; }
+.adat-hero-intro { margin-top: auto; padding-top: 32px; }
+.adat-hero-intro h2 { font-family: inherit; font-size: clamp(23px, 1.7vw, 28px); font-weight: 600; line-height: 1.25; margin-bottom: 15px; }
+.adat-hero-intro p { color: #476174; font-size: clamp(15px, 1.1vw, 18px); line-height: 1.65; max-width: 640px; }
+.adat-hero-cta { display: inline-flex; align-items: center; gap: 18px; border: 1px solid #0284c7; background: #ffffff; color: #075985; border-radius: 99px; padding: 11px 24px; margin-top: 18px; font-size: 14px; transition: background .2s, color .2s; }
+.adat-hero-cta:hover { background: #0284c7; color: #ffffff; }
+.adat-hero-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(2, minmax(130px, 1fr)) auto; gap: 12px; min-height: 470px; }
+.adat-hero-card { position: relative; overflow: hidden; border-radius: 18px; padding: 20px; border: 1px solid #b9ddf1; display: flex; flex-direction: column; transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; isolation: isolate; }
+.adat-hero-card:focus-visible { box-shadow: 0 14px 28px -12px rgb(12 74 110 / 30%); }
+.adat-hero-card-link svg { transition: transform .3s ease; }
+@media (hover: hover) and (pointer: fine) {
+  .adat-hero-card:hover { transform: translateY(-6px); box-shadow: 0 18px 30px -14px rgb(12 74 110 / 32%); border-color: currentColor; }
+  .adat-hero-card:hover .adat-hero-card-link svg { transform: translateX(4px); }
+}
+.adat-hero-card h3 { font-size: clamp(21px, 1.6vw, 28px); line-height: 1.35; font-weight: 600; max-width: 240px; }
+.adat-hero-card-0 { background: #d5eee2; color: #24543e; border-color: #b9ddc9; grid-row: span 2; }
+.adat-hero-card-1 { background: #e9dff7; color: #593779; border-color: #d5c4eb; }
+.adat-hero-card-2 { background: #bae6fd; color: #0c4a6e; border-color: #94d3f3; }
+.adat-hero-card-3 { background: #fbe4d3; color: #804525; border-color: #efcfb8; }
+.adat-hero-card-4 { background: #ffffff; color: #0c4a6e; }
+.adat-hero-card-4 h3 { font-size: 19px; }
+.adat-hero-card p { font-size: 13px; line-height: 1.5; margin: 10px 0 12px; color: #476174; }
+.adat-hero-card-link { display: flex; align-items: center; justify-content: flex-end; gap: 7px; margin-top: auto; padding-top: 14px; color: inherit; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
+.adat-hero-pattern { position: absolute; z-index: -1; pointer-events: none; width: 245px; height: 294px; right: -65px; top: -55px; opacity: .19; }
+.adat-hero-card-0 .adat-hero-pattern { width: 300px; height: 360px; top: auto; bottom: -48px; right: auto; left: -90px; transform: rotate(12deg); }
+.adat-hero-card-1 .adat-hero-pattern { width: 240px; height: 288px; right: -46px; top: -52px; }
+.adat-hero-card-2 .adat-hero-pattern { width: 190px; height: 265px; top: -35px; right: -90px; }
+.adat-hero-card-3 .adat-hero-pattern { width: 245px; height: 330px; top: -55px; right: -105px; }
+.adat-hero-card-4 .adat-hero-pattern { width: 210px; height: 252px; top: -90px; right: -25px; opacity: .12; }
+.adat-hero-controls { display: flex; align-items: center; gap: 24px; margin: 8px max(5vw, calc((100vw - 1680px) / 2)) 0; }
+.adat-hero-count { font-size: 12px; letter-spacing: .12em; }
+.adat-hero-count span { color: #526b7d; margin-left: 8px; }
+.adat-hero-dots, .adat-hero-arrows { display: flex; align-items: center; gap: 8px; }
+.adat-hero-dots button { width: 32px; height: 44px; position: relative; cursor: pointer; }
+.adat-hero-dots button::after { content: ''; position: absolute; inset: 21px 0; background: #a4cee5; border-radius: 3px; }
+.adat-hero-dots button[aria-current]::after { background: #0284c7; }
+.adat-hero-arrows { margin-left: auto; }
+.adat-hero-arrows button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #a4cee5; border-radius: 50%; cursor: pointer; }
+.adat-hero-arrows button:hover { background: #bae6fd; }
+.adat-hero :focus-visible { outline: 2px solid #0369a1; outline-offset: 4px; }
+@media (min-width: 1500px) { .adat-hero { padding-top: 115px; } }
+@media (max-width: 1023px) { .adat-hero { padding-top: 105px; } .adat-hero-slide { grid-template-columns: 1fr; gap: 35px; } .adat-hero-copy { max-width: 760px; } .adat-hero-intro { padding-top: 30px; } .adat-hero-grid { min-height: 450px; } }
+@media (max-width: 540px) { .adat-hero { padding-top: 95px; padding-bottom: 18px; } .adat-hero-eyebrow span { display: block; margin-top: 5px; } .adat-hero-eyebrow span::before { content: none; } .adat-hero-grid { gap: 10px; grid-template-rows: repeat(3, minmax(155px, auto)); min-height: 0; } .adat-hero-card { padding: 18px 14px; border-radius: 13px; } .adat-hero-card h3 { font-size: 21px; } .adat-hero-card-4 h3 { font-size: 17px; } .adat-hero-card p { font-size: 12px; } .adat-hero-card-link { font-size: 11px; gap: 4px; } .adat-hero-controls { gap: 12px; } .adat-hero-dots button { width: 22px; } }
+@media (prefers-reduced-motion: reduce) { .adat-hero * { transition: none !important; } }
+
+@media (prefers-reduced-motion: reduce) { .adat-hero-card:hover, .adat-hero-card:hover .adat-hero-card-link svg { transform: none; } }
+
+
+.adat-flip-card { position: relative; min-width: 0; perspective: 1100px; }
+.adat-flip-card-0 { grid-row: span 2; }
+.adat-flip-inner { display: grid; height: 100%; transform-style: preserve-3d; transition: transform .65s cubic-bezier(.2,.7,.2,1); }
+.adat-flip-inner > .adat-hero-card { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; min-width: 0; }
+.adat-flip-front { width: 100%; text-align: left; cursor: pointer; }
+.adat-card-heading { font-size: clamp(21px, 1.6vw, 28px); line-height: 1.35; font-weight: 600; }
+.adat-flip-card-4 .adat-card-heading { font-size: 19px; }
+.adat-flip-back { transform: rotateY(180deg); visibility: hidden; }
+.adat-flip-back h3 { font-size: 16px; line-height: 1.3; max-width: none; }
+.adat-flip-back p { font-size: 13px; line-height: 1.4; }
+.adat-flip-actions { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
+.adat-flip-actions > button { min-width: 36px; min-height: 36px; display: grid; place-items: center; cursor: pointer; }
+.adat-flip-actions .adat-hero-card-link { padding-top: 0; margin-top: 0; }
+.adat-flip-card.is-flipped .adat-flip-inner { transform: rotateY(180deg); }
+.adat-flip-card.is-flipped .adat-flip-front { visibility: hidden; }
+.adat-flip-card.is-flipped .adat-flip-back { visibility: visible; }
+.adat-flip-inner .adat-hero-card:hover { transform: none; }
+.adat-flip-inner .adat-flip-back:hover { transform: rotateY(180deg); }
+@media (hover: hover) and (pointer: fine) {
+  .adat-flip-card:hover .adat-flip-inner { transform: rotateY(180deg); }
+  .adat-flip-card:hover .adat-flip-front { visibility: hidden; }
+  .adat-flip-card:hover .adat-flip-back { visibility: visible; }
+}
+@media (prefers-reduced-motion: reduce) { .adat-flip-inner { transition: none; } }
+/* Both faces size the shared grid cell so descriptions fit without internal scrolling. */
+.adat-flip-card { min-height: 170px; }
+.adat-flip-inner > .adat-flip-back { position: relative; overflow: hidden; }
+.adat-flip-back { padding: 14px; }
+.adat-flip-back p { margin-block: 6px; }
+.adat-flip-card:has(.adat-flip-back :focus-visible) .adat-flip-inner { transform: rotateY(180deg); }
+.adat-flip-card:has(.adat-flip-back :focus-visible) .adat-flip-front { visibility: hidden; }
+.adat-flip-card:has(.adat-flip-back :focus-visible) .adat-flip-back { visibility: visible; }

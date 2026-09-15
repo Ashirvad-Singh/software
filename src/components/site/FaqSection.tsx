@@ -189,7 +189,7 @@ export default function FaqSection() {
           </div>
           <Link
             to="/contact"
-            className="z-10 bg-white hover:bg-neutral-100 text-neutral-900 font-bold px-6 py-3.5 rounded-full text-sm shrink-0 transition-colors shadow-lg flex items-center gap-2"
+            className="site-button z-10 bg-white hover:bg-neutral-100 text-neutral-900 font-bold px-6 py-3.5 rounded-full text-sm shrink-0 transition-colors shadow-lg flex items-center gap-2"
           >
             <MessageSquare className="w-4 h-4 text-primary" />
             Book Architecture Call

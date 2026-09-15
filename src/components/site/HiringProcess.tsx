@@ -49,7 +49,7 @@ export default function HiringProcess() {
           <h2 id="hiring-process-heading" className="text-3xl font-bold tracking-tight text-neutral-950 md:text-5xl">How To Apply</h2>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-neutral-600">Four steps to explore what we could build together.</p>
         </div>
-        <a href="#open-roles" className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-orange-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-600">Explore open roles <ArrowUpRight aria-hidden="true" size={18} /></a>
+        <a href="#open-roles" className="site-button inline-flex items-center gap-2 rounded-full bg-neutral-950 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-orange-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-600">Explore open roles <ArrowUpRight aria-hidden="true" size={18} /></a>
       </div>
 
       <ol className="grid items-start gap-5 md:grid-cols-2 md:gap-6">

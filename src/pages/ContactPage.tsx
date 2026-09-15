@@ -169,7 +169,7 @@ export default function ContactPage() {
 
               <div className="pt-6 flex justify-end">
                 <button
-                  className="w-full sm:w-auto group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-sky-600 px-8 font-medium text-white transition-all duration-300 hover:bg-sky-700 hover:scale-105 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-[0_4px_14px_0_rgba(2,132,199,0.39)]"
+                  className="site-button w-full sm:w-auto group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-sky-600 px-8 font-medium text-white transition-all duration-300 hover:bg-sky-700 hover:scale-105 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-[0_4px_14px_0_rgba(2,132,199,0.39)]"
                   type="submit"
                   disabled={isSubmitting}
                 >

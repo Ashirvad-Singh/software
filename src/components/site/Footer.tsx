@@ -15,7 +15,7 @@ export default function Footer() {
           {[0, 1].map((group) => (
             <div key={group} aria-hidden={group === 1 ? true : undefined} className="flex shrink-0 items-center gap-8 pr-8">
               {Array.from({ length: 6 }, (_, item) => (
-                <Link key={item} to="/contact" tabIndex={group === 0 && item === 0 ? 0 : -1} className="inline-flex shrink-0 items-center gap-4 rounded-full bg-blue-600 px-6 py-3 text-xl sm:text-2xl font-semibold whitespace-nowrap text-white shadow-sm transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-800">
+                <Link key={item} to="/contact" tabIndex={group === 0 && item === 0 ? 0 : -1} className="site-button inline-flex shrink-0 items-center gap-4 rounded-full bg-blue-600 px-6 py-3 text-xl sm:text-2xl font-semibold whitespace-nowrap text-white shadow-sm transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-800">
                   Let's Chat
                   <ArrowUpRight aria-hidden="true" className="size-6 shrink-0" />
                 </Link>

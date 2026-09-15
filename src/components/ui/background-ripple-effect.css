@@ -1,0 +1,4 @@
+.background-ripple-grid { position: absolute; inset: 0; z-index: -1; display: grid; overflow: hidden; pointer-events: none; mask-image: radial-gradient(ellipse at center, #000 20%, transparent 100%); }
+.background-ripple-cell { border: .5px solid #dce5eb; background: transparent; transition: background-color .25s; }
+.background-ripple-cell[data-hovered] { background: rgb(56 189 248 / 20%); }
+@media (prefers-reduced-motion: reduce) { .background-ripple-cell { transition: none; } }

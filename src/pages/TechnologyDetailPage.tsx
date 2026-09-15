@@ -106,14 +106,14 @@ export default function TechnologyDetailPage() {
               <div className="pt-1 flex flex-wrap gap-3">
                 <Link
                   to="/contact"
-                  className="bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-bold px-6 py-3.5 rounded-full text-sm hover:scale-105 transition-transform shadow-lg flex items-center gap-2"
+                  className="site-button bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-bold px-6 py-3.5 rounded-full text-sm hover:scale-105 transition-transform shadow-lg flex items-center gap-2"
                 >
                   <MessageSquare className="w-4 h-4 text-primary" />
                   Consult {techDetail.name} Team
                 </Link>
                 <Link
                   to="/work"
-                  className="border border-neutral-300 dark:border-neutral-800 text-neutral-800 dark:text-neutral-200 font-bold px-6 py-3.5 rounded-full text-sm hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors flex items-center gap-2"
+                  className="site-button border border-neutral-300 dark:border-neutral-800 text-neutral-800 dark:text-neutral-200 font-bold px-6 py-3.5 rounded-full text-sm hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors flex items-center gap-2"
                 >
                   View Featured Work <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -355,7 +355,7 @@ export default function TechnologyDetailPage() {
             </div>
             <Link
               to="/contact"
-              className="z-10 bg-white hover:bg-neutral-100 text-neutral-900 font-bold px-8 py-4 rounded-full text-sm shrink-0 transition-all shadow-lg hover:scale-105 flex items-center gap-2"
+              className="site-button z-10 bg-white hover:bg-neutral-100 text-neutral-900 font-bold px-8 py-4 rounded-full text-sm shrink-0 transition-all shadow-lg hover:scale-105 flex items-center gap-2"
             >
               <MessageSquare className="w-4 h-4 text-primary" />
               {techDetail.ctaLabel || "Discuss Your Project"}

@@ -281,7 +281,7 @@ export default function ContentListing({ kind }: { kind: ContentKind }) {
               <div className="mt-10 text-center">
                 <button
                   onClick={() => setCount((n) => n + 6)}
-                  className="rounded-full border border-border px-8 py-3 font-medium hover:bg-secondary"
+                  className="site-button rounded-full border border-border px-8 py-3 font-medium hover:bg-secondary"
                 >
                   Load more
                 </button>
@@ -298,7 +298,7 @@ export default function ContentListing({ kind }: { kind: ContentKind }) {
           </p>
           <Link
             to="/contact"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground"
+            className="site-button mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground [--site-icon-color:var(--color-primary-foreground)]"
           >
             Start a conversation
             <ArrowUpRight size={17} />

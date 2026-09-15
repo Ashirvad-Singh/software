@@ -120,7 +120,7 @@ export default function TermsOfServicePage() {
             </p>
             <a
               href="mailto:legal@adatsoft.com"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-sm transition-all shadow-md"
+              className="site-button inline-flex items-center justify-center px-6 py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-sm transition-all shadow-md"
             >
               Contact Legal Department
             </a>

@@ -156,7 +156,7 @@ const IndustriesMegaMenu = () => {
 
           <Link
             to="/contact"
-            className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-neutral-950 px-5 py-3 text-xs font-bold text-white transition-colors hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-200"
+            className="site-button mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-neutral-950 px-5 py-3 text-xs font-bold text-white transition-colors hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-200"
           >
             Let's Connect <ArrowRight className="h-4 w-4" />
           </Link>

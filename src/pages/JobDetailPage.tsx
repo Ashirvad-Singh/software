@@ -109,7 +109,7 @@ export default function JobDetailPage() {
             </div>
           </div>
 
-          <a href="#job-application" className="mb-10 inline-flex rounded-full bg-primary px-7 py-3 font-semibold text-primary-foreground">Apply for this job</a>
+          <a href="#job-application" className="site-button mb-10 inline-flex rounded-full bg-primary px-7 py-3 font-semibold text-primary-foreground">Apply for this job</a>
           <div className="space-y-10 text-neutral-600 mb-12">
             {[["Job description", job.description], ["About the role", job.role]].map(([heading, content]) => content?.trim() && <section key={heading}><h2 className="mb-4 text-2xl font-bold text-neutral-900">{heading}</h2><p className="whitespace-pre-wrap break-words leading-relaxed">{content}</p></section>)}
             {[["Responsibilities", job.responsibilities], ["Requirements", job.requirements], ["Benefits", job.benefits]].map(([heading, content]) => content?.trim() && <section key={heading}><h2 className="mb-4 text-2xl font-bold text-neutral-900">{heading}</h2><ul className="list-disc pl-6 space-y-2 marker:text-primary">{content.split("\n").map(line => line.trim()).filter(Boolean).map((line, index) => <li key={index} className="break-words leading-relaxed">{line}</li>)}</ul></section>)}

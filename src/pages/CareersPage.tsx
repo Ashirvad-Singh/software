@@ -160,7 +160,7 @@ export default function CareersPage() {
           <motion.button 
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
             onClick={scrollToRoles}
-            className="mx-auto flex items-center gap-2 bg-neutral-900 text-white px-8 py-3.5 rounded-full font-medium hover:bg-neutral-800 transition-colors shadow-lg shadow-neutral-900/20"
+            className="site-button mx-auto flex items-center gap-2 bg-neutral-900 text-white px-8 py-3.5 rounded-full font-medium hover:bg-neutral-800 transition-colors shadow-lg shadow-neutral-900/20"
           >
             Join Our Team <ArrowDown size={18} />
           </motion.button>
@@ -373,7 +373,7 @@ export default function CareersPage() {
                   </div>
                   <Link
                     to={`/careers/${job.id}`}
-                    className="mt-6 md:mt-0 flex items-center justify-center gap-2 px-6 py-3 bg-neutral-900 text-white rounded-full font-medium hover:bg-orange-500 transition-colors shrink-0"
+                    className="site-button mt-6 md:mt-0 flex items-center justify-center gap-2 px-6 py-3 bg-neutral-900 text-white rounded-full font-medium hover:bg-orange-500 transition-colors shrink-0"
                   >
                     View Job & Apply <ArrowRight size={16} />
                   </Link>

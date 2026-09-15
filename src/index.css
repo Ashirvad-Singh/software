@@ -194,7 +194,7 @@ svg.icon-tabler {
   --site-icon-border: #bae6fd;
 }
 
-:is(div, span, a, button):is(
+:is(div, span):not(a *, button *):is(
   [class~="w-8"], [class~="w-9"], [class~="w-10"],
   [class~="w-11"], [class~="w-12"], [class~="w-14"],
   [class~="w-16"], [class~="w-20"], [class~="size-8"],
@@ -215,4 +215,10 @@ svg.icon-tabler {
 .site-step-badge,
 .site-step-number {
   color: var(--site-icon-color) !important;
+}
+
+/* Interactive icons follow their immediate text color on every surface. */
+:is(a, button, [role="button"]) svg:is(.lucide, .icon-tabler) {
+  color: inherit !important;
+  flex-shrink: 0;
 }

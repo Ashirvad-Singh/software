@@ -89,7 +89,7 @@ export default function UpgradeBrandCta() {
           >
             <Link
               to="/contact"
-              className="inline-block bg-[#f36c31] hover:bg-[#e05a1f] text-white font-medium py-3 px-8 text-lg transition-colors shadow-lg"
+              className="site-button inline-block bg-[#f36c31] hover:bg-[#e05a1f] text-white font-medium py-3 px-8 text-lg transition-colors shadow-lg"
             >
               Request a Consultation
             </Link>

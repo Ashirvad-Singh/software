@@ -203,7 +203,7 @@ export default function HomeCaseStudiesAndBlog({
                       Math.min(posts.length, 3),
                   )
                 }
-                className="absolute left-2 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-foreground shadow-sm transition-colors hover:bg-primary hover:text-primary-foreground sm:left-5"
+                className="site-button site-button-icon absolute left-2 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-foreground shadow-sm transition-colors hover:bg-primary hover:text-primary-foreground sm:left-5"
               >
                 <ArrowRight className="h-5 w-5 rotate-180" />
               </button>
@@ -215,7 +215,7 @@ export default function HomeCaseStudiesAndBlog({
                     (index) => (index + 1) % Math.min(posts.length, 3),
                   )
                 }
-                className="absolute right-2 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-foreground shadow-sm transition-colors hover:bg-primary hover:text-primary-foreground sm:right-5"
+                className="site-button site-button-icon absolute right-2 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-foreground shadow-sm transition-colors hover:bg-primary hover:text-primary-foreground sm:right-5"
               >
                 <ArrowRight className="h-5 w-5" />
               </button>

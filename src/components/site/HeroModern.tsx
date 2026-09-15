@@ -1,123 +1,118 @@
-import { motion } from "framer-motion";
+import { useCallback, useEffect, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { MagneticButton } from "@/components/ui/magnetic-button";
-import { ContainerTextFlip } from "@/components/ui/container-text-flip";
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
+import { BackgroundBeams } from "@/components/ui/background-beams";
+import HeroServiceCard from "./HeroServiceCard";
+import "./HeroModern.css";
+
+const slides = [
+  {
+    eyebrow: "Website Design & Development",
+    focus: "Built around your business",
+    title: "Great Websites Do More Than Look Good",
+    intro: "Hi! We're ADAT.",
+    description: "We build beautiful, easy-to-use websites and online stores with Shopify, WooCommerce, and WordPress. From your first website to a complete redesign, we help your business stand out online.",
+    cards: ["Website Development", "Shopify Stores", "WooCommerce Stores", "WordPress Websites", "From idea to launch"],
+    note: "Design, development, and launch support for a website that reflects your brand and works for your customers.",
+  },
+  {
+    eyebrow: "Shopify & WooCommerce",
+    focus: "Built for better shopping",
+    title: "Turn Your Store Into a Better Shopping Experience",
+    intro: "Let's build your online store.",
+    description: "Launch or refresh your Shopify or WooCommerce store with thoughtful design, clear product pages, and a smooth checkout. We help you create a shopping experience that keeps customers coming back.",
+    cards: ["eCommerce Websites", "Shopify Development", "WooCommerce Development", "Store Redesign", "Ready to sell online?"],
+    note: "From product catalogs to payment and shipping setup, we bring the details of your online store together.",
+  },
+  {
+    eyebrow: "UI/UX Design",
+    focus: "Designed around your users",
+    title: "Thoughtful Design. Effortless Experiences.",
+    intro: "Beautiful interfaces. Clear journeys.",
+    description: "We bring user needs and business goals together through research, intuitive interfaces, and interactive prototypes. From websites to online stores, we design experiences that feel simple and natural to use.",
+    cards: ["UI/UX Design", "User Research", "Wireframes & Prototypes", "Design Systems", "Let's design your experience"],
+    note: "From understanding your users to testing the details, we help shape a consistent, accessible experience for your brand.",
+    destinations: ["/services", "/services", "/services", "/services", "/contact"],
+  },
+];
+const cardDescriptions = [
+  ["Responsive websites shaped around your brand, with clear navigation and a strong foundation for growth.", "Custom Shopify storefronts with thoughtful product pages, easy checkout, and the integrations your store needs.", "Flexible WooCommerce stores with product catalogs, payment gateways, and shipping options tailored to your business.", "Easy-to-manage WordPress websites with custom layouts, responsive design, and room to grow."],
+  ["Online stores designed to make browsing, choosing products, and checking out feel effortless.", "Shopify theme development and store setup that bring your brand to life across every shopping touchpoint.", "WooCommerce development for a shopping experience you can customize and manage with confidence.", "Refresh your store with clearer navigation, stronger product presentation, and a smoother purchase journey."],
+  ["Intuitive interfaces that connect your business goals with what your users need.", "Understand your audience through research, journey mapping, and usability insights.", "Explore layouts and test interactive prototypes before moving into development.", "Reusable components and design guidelines that keep your digital experience consistent."],
+];
+const destinations = ["/services/web-development", "/services", "/services", "/services/web-development", "/contact"];
 
 export default function HeroModern() {
-  const baseDelay = 0;
+  const reducedMotion = useReducedMotion();
+  const [emblaRef, embla] = useEmblaCarousel({ loop: true, duration: reducedMotion ? 0 : 35 });
+  const [selected, setSelected] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const syncSlide = useCallback(() => { if (embla) setSelected(embla.selectedScrollSnap()); }, [embla]);
+
+  useEffect(() => {
+    if (!embla) return;
+    syncSlide();
+    embla.on("select", syncSlide);
+    return () => { embla.off("select", syncSlide); };
+  }, [embla, syncSlide]);
+
+  useEffect(() => {
+    if (!embla || paused || hovered || focused || reducedMotion) return;
+    const timer = window.setInterval(() => { if (!document.hidden) embla.scrollNext(); }, 7000);
+    return () => window.clearInterval(timer);
+  }, [embla, paused, hovered, focused, reducedMotion]);
 
   return (
-    <section 
-      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-black"
-    >
-      {/* Background Video */}
-      <video 
-        autoPlay 
-        loop 
-        muted 
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
-      >
-        <source src="/75668ad5438032989d3af79b8264dce2_720w.mp4" type="video/mp4" />
-      </video>
-      {/* Dark Overlay for Text Readability */}
-      <div className="absolute inset-0 bg-black/60 z-0"></div>
-
-      <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center py-2">
-        <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
-          
-          {/* Pill Badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8"
-          >
-            <div className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md font-bold text-xs sm:text-sm shadow-sm text-center max-w-[90%] md:max-w-none mx-auto leading-relaxed md:leading-normal">
-              <span className="relative flex h-3 w-3 md:h-3.5 md:w-3.5 flex-shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-50"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 md:h-3.5 md:w-3.5 bg-sky-400 border-[2.5px] border-transparent"></span>
-              </span>
-              <span>New! We build AI-powered Web & Mobile Applications</span>
+    <section className="adat-hero" aria-label="Discover ADAT" aria-roledescription="carousel"
+      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
+      onKeyDown={(event) => {
+        if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+          event.preventDefault();
+          setPaused(true);
+          if (event.key === "ArrowLeft") embla?.scrollPrev(); else embla?.scrollNext();
+        }
+      }}>
+      <BackgroundBeams className="-z-10" />
+      <div className="adat-hero-viewport" ref={emblaRef}>
+        <div className="adat-hero-track">
+          {slides.map((slide, index) => (
+            <div className="adat-hero-slide" key={slide.title} role="group" aria-roledescription="slide"
+              aria-label={`${index + 1} of ${slides.length}`} aria-hidden={selected !== index} inert={selected !== index}>
+              <div className="adat-hero-copy">
+                <p className="adat-hero-eyebrow">{slide.eyebrow} <span>{slide.focus}</span></p>
+                {index === 0 ? <h1>{slide.title}</h1> : <h2 className="adat-hero-title">{slide.title}</h2>}
+                <div className="adat-hero-intro">
+                  <h2>{slide.intro}</h2>
+                  <p>{slide.description}</p>
+                  <Link className="adat-hero-cta site-button" to="/about">Learn more <ArrowRight size={15} /></Link>
+                </div>
+              </div>
+              <div className="adat-hero-grid">
+                {slide.cards.map((card, cardIndex) => (
+                  <HeroServiceCard key={card} title={card} index={cardIndex} destination={(slide.destinations ?? destinations)[cardIndex]} description={cardIndex === 4 ? slide.note : cardDescriptions[index][cardIndex]} />
+                ))}
+              </div>
             </div>
-          </motion.div>
-
-          {/* Heading */}
-          <motion.h1 
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: {
-                  duration: 0.8,
-                  ease: "easeOut",
-                  staggerChildren: 0.2,
-                },
-              },
-            }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-4 sm:mb-6 md:mb-8 leading-[1.3] md:leading-[1.1]"
-          >
-            {/* Line 1 */}
-            <motion.span 
-              className="block"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
-              }}
-            >
-              Build software.
-            </motion.span>
-            
-            {/* Line 2 */}
-            <motion.span 
-              className="block mt-2 md:mt-4"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
-              }}
-            >
-              Scale your{" "}
-              <ContainerTextFlip
-                words={["business.", "brand.", "growth."]}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white dark:text-white from-[#072439]/90 to-[#0b3956]/90 dark:from-[#072439]/90 dark:to-[#0b3956]/90 shadow-[inset_0_0_0_1px_#ffffff26,0_8px_30px_#00000066] dark:shadow-[inset_0_0_0_1px_#ffffff26,0_8px_30px_#00000066] backdrop-blur-md"
-              />
-            </motion.span>
-          </motion.h1>
-
-          {/* Subheading */}
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: baseDelay + 0.2 }}
-            className="text-sm sm:text-base md:text-lg text-neutral-200 mb-8 md:mb-10 max-w-2xl mx-auto px-4 md:px-0 leading-relaxed font-medium"
-          >
-            We architect scalable, future-proof web and mobile apps. Focus on what matters - growing your business.
-          </motion.p>
-
-          {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: baseDelay + 0.3 }}
-          >
-            <MagneticButton>
-              <Link 
-                to="/contact"
-                className="inline-flex items-center justify-center h-10 px-5 text-sm md:h-14 md:px-8 md:text-lg rounded-full bg-sky-600 hover:bg-sky-700 text-white font-bold shadow-[0_4px_14px_0_rgba(2,132,199,0.39)] transition-all hover:shadow-[0_6px_20px_rgba(2,132,199,0.23)]"
-              >
-                Start a Project - Let's Talk <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-            </MagneticButton>
-          </motion.div>
-
-
+          ))}
         </div>
       </div>
-
-
+      <div className="adat-hero-controls">
+        <span className="adat-hero-count" aria-live="polite">0{selected + 1} <span>/ 0{slides.length}</span></span>
+        <div className="adat-hero-dots">
+          {slides.map((slide, index) => <button key={slide.title} aria-label={`Go to slide ${index + 1}`} aria-current={selected === index ? "true" : undefined} onClick={() => { setPaused(true); embla?.scrollTo(index); }} />)}
+        </div>
+        <div className="adat-hero-arrows">
+          {!reducedMotion && <button className="site-button site-button-icon" aria-label={paused ? "Play slideshow" : "Pause slideshow"} onClick={() => setPaused(!paused)}>{paused ? <Play size={15} /> : <Pause size={15} />}</button>}
+          <button className="site-button site-button-icon" aria-label="Previous slide" onClick={() => { setPaused(true); embla?.scrollPrev(); }}><ArrowLeft size={19} /></button>
+          <button className="site-button site-button-icon" aria-label="Next slide" onClick={() => { setPaused(true); embla?.scrollNext(); }}><ArrowRight size={19} /></button>
+        </div>
+      </div>
     </section>
   );
 }

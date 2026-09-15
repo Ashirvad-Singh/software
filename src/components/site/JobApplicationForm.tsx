@@ -244,7 +244,7 @@ export default function JobApplicationForm({ jobId, defaultPosition = "", readOn
       </LabelInputContainer>
 
       <button
-        className="group/btn relative block h-12 w-full flex items-center justify-center rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] disabled:opacity-70 disabled:cursor-not-allowed"
+        className="site-button group/btn relative block h-12 w-full flex items-center justify-center rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] disabled:opacity-70 disabled:cursor-not-allowed"
         type="submit"
         disabled={isSubmitting}
       >

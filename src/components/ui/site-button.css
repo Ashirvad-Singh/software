@@ -1,0 +1,44 @@
+/* One raised surface for action buttons, links styled as buttons, and icon actions. */
+.site-button {
+  --button-top: #0284c7;
+  --button-bottom: #0369a1;
+  --button-edge: #075985;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 44px;
+  height: auto;
+  padding: .65rem 1.5rem !important;
+  border: 1px solid #ffffff35 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(180deg, var(--button-top), var(--button-bottom)) !important;
+  color: #fff !important;
+  font-family: inherit;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  text-decoration: none !important;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 #ffffff55, 0 4px 0 var(--button-edge), 0 7px 14px #0369a125 !important;
+  transform: translateY(0) !important;
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease !important;
+}
+.site-button-icon { width: 40px; min-width: 40px; min-height: 40px; height: 40px; padding: 0 !important; flex-shrink: 0; }
+.site-button[data-variant="destructive"] { --button-top: #dc2626; --button-bottom: #b91c1c; --button-edge: #991b1b; }
+.site-button svg:is(.lucide, .icon-tabler) { color: inherit !important; flex-shrink: 0; }
+@media (hover: hover) {
+  .site-button:not(:disabled):not([aria-disabled="true"]):hover {
+    transform: translateY(-1px) !important;
+    filter: brightness(1.06);
+    box-shadow: inset 0 1px 0 #ffffff55, 0 5px 0 var(--button-edge), 0 9px 18px #0369a130 !important;
+  }
+}
+.site-button:not(:disabled):not([aria-disabled="true"]):active {
+  transform: translateY(3px) !important;
+  box-shadow: inset 0 1px 0 #ffffff35, 0 1px 0 var(--button-edge), 0 2px 4px #0369a120 !important;
+}
+.site-button:focus-visible { outline: 3px solid #38bdf8 !important; outline-offset: 5px; }
+.site-button:disabled, .site-button[aria-disabled="true"] { opacity: .5; cursor: not-allowed; transform: none !important; box-shadow: inset 0 1px 0 #ffffff35, 0 2px 0 var(--button-edge) !important; }
+@media (prefers-reduced-motion: reduce) { .site-button { transition: none !important; } .site-button:hover, .site-button:active { translate: none !important; } }

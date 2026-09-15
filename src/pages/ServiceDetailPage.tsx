@@ -70,7 +70,7 @@ export default function ServiceDetailPage() {
     return (
       <main className="bg-white dark:bg-neutral-950 min-h-screen flex flex-col items-center justify-center pt-24 pb-20">
         <h1 className="text-2xl font-bold mb-4">Service not found</h1>
-        <button onClick={() => navigate("/services")} className="bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium">Back to Services</button>
+        <button onClick={() => navigate("/services")} className="site-button bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium">Back to Services</button>
       </main>
     );
   }
@@ -152,7 +152,7 @@ export default function ServiceDetailPage() {
           <div className="bg-primary text-primary-foreground rounded-2xl p-8 md:p-12 text-center">
             <h3 className="text-2xl md:text-3xl font-bold mb-4">Ready to get started?</h3>
             <p className="mb-8 opacity-90 max-w-xl mx-auto">Let's discuss how our {service.title} services can help you achieve your business goals.</p>
-            <Link to="/contact" className="inline-flex items-center justify-center h-12 px-8 rounded-full bg-background text-foreground font-medium hover:scale-105 transition-transform">
+            <Link to="/contact" className="site-button inline-flex items-center justify-center h-12 px-8 rounded-full bg-background text-foreground font-medium hover:scale-105 transition-transform">
               Contact Us Today
             </Link>
           </div>

@@ -286,7 +286,7 @@ export default function ContentDetail({ kind }: { kind: ContentKind }) {
           </h2>
           <Link
             to="/contact"
-            className="mt-6 inline-flex rounded-full bg-primary px-7 py-3 font-medium text-primary-foreground"
+            className="site-button mt-6 inline-flex rounded-full bg-primary px-7 py-3 font-medium text-primary-foreground"
           >
             {(story && entry.ctaLabel) || "Discuss your project"}
           </Link>

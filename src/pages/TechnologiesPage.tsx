@@ -531,7 +531,7 @@ export default function TechnologiesPage() {
             </div>
             <Link
               to="/contact"
-              className="z-10 bg-white hover:bg-neutral-100 text-neutral-900 font-bold px-8 py-4 rounded-full text-sm shrink-0 transition-all shadow-lg hover:scale-105 flex items-center gap-2"
+              className="site-button z-10 bg-white hover:bg-neutral-100 text-neutral-900 font-bold px-8 py-4 rounded-full text-sm shrink-0 transition-all shadow-lg hover:scale-105 flex items-center gap-2"
             >
               <MessageSquare className="w-4 h-4 text-primary" />
               Schedule Tech Call
