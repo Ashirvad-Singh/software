@@ -1,10 +1,19 @@
 import { ArrowRight, ArrowUpRight, Globe2, Check } from "lucide-react";
 import { Link } from "react-router-dom";
+import { LayoutTextFlip } from "@/components/ui/layout-text-flip";
 
 export default function WebsiteHero() {
   return <div className="website-hero">
     <div className="website-hero-label"><span /> WEBSITES THAT MEAN BUSINESS</div>
-    <h1>Your next chapter.<br /><span>A better website.</span></h1>
+    <h1 className="flex flex-col items-center justify-center">
+      <span>Your next chapter.</span>
+      <LayoutTextFlip
+        text=""
+        words={["A better website.", "A Shopify store.", "A custom web app.", "A digital experience."]}
+        wordsClassName="border-none bg-transparent shadow-none ring-0 drop-shadow-none text-[#0284c7] font-semibold px-0 py-0 text-inherit"
+        duration={2600}
+      />
+    </h1>
     <p className="website-hero-description">From a bold first impression to a seamless checkout.<br className="hidden sm:block" /> We design websites and online stores that work for your business.</p>
     <div className="website-hero-actions">
       <Link className="site-button" to="/contact">Let’s build your website <ArrowRight size={17} /></Link>
