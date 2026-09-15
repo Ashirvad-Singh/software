@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, RotateCcw } from "lucide-react";
-import CardOrnament from "@/components/ui/card-ornament";
+import CardVisual from "@/components/ui/card-visual";
 
 export default function HeroServiceCard({ title, description, destination, index }: { title: string; description: string; destination: string; index: number }) {
   const [flipped, setFlipped] = useState(false);
   return <div className={`adat-flip-card adat-flip-card-${index}${flipped ? " is-flipped" : ""}`} onMouseLeave={() => setFlipped(false)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFlipped(false); }} onKeyDown={(event) => { if (event.key === "Escape") setFlipped(false); }}>
     <div className="adat-flip-inner">
       <button type="button" className={`adat-hero-card adat-flip-front adat-hero-card-${index}`} onClick={() => setFlipped(true)} aria-label={`Show details about ${title}`} aria-expanded={flipped}>
-        <CardOrnament variant={index} />
         <span className="adat-card-heading">{title}</span>
+        <CardVisual variant={index} />
         <span className="adat-hero-card-link">View details <ArrowRight size={16} /></span>
       </button>
       <div className={`adat-hero-card adat-flip-back adat-hero-card-${index}`}>

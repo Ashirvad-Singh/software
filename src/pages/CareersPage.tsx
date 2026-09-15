@@ -5,7 +5,6 @@ import { db } from "@/lib/firebase";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { Link } from "react-router-dom";
-import HiringProcess from "@/components/site/HiringProcess";
 import { 
   ArrowDown, 
   MapPin, 
@@ -208,6 +207,23 @@ export default function CareersPage() {
               </div>
             ))}
           </div>
+          <aside aria-labelledby="employee-perspective" className="mx-auto mt-8 max-w-4xl border-t border-neutral-200 pt-6">
+            <a
+              href="https://www.glassdoor.co.in/Overview/Working-at-ADAT-Soft-Solutions-EI_IE2063108.11,30.htm"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col items-center gap-4 rounded-lg py-2 text-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500 sm:flex-row sm:gap-6 sm:text-left"
+            >
+              <img alt="Find us on Glassdoor" src="https://www.glassdoor.co.in/pc-app/static/img/partnerCenter/badges/eng_BASIC_250x90.png" width={250} height={90} loading="lazy" className="h-auto w-[160px] max-w-full shrink-0" />
+              <div className="sm:border-l sm:border-neutral-200 sm:pl-6">
+                <h3 id="employee-perspective" className="text-base font-semibold text-neutral-900">A closer look at life at ADAT</h3>
+                <p className="mt-1 text-sm text-neutral-500">Explore our company and employee reviews on Glassdoor.</p>
+              </div>
+              <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-sky-600 group-hover:text-sky-700 sm:ml-auto">
+                View on Glassdoor <ArrowRight size={16} aria-hidden="true" className="transition-transform group-hover:translate-x-1 motion-reduce:transform-none" />
+              </span>
+            </a>
+          </aside>
         </div>
       </section>
 
@@ -388,7 +404,6 @@ export default function CareersPage() {
         </div>
       </section>
 
-      <HiringProcess />
 
     </main>
   );

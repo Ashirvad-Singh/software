@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react"
+import { Mail, MapPin, Phone } from "lucide-react"
 import { IconBrandGithub, IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
@@ -6,24 +6,8 @@ export default function Footer() {
   return (
     <footer className="border-t border-border/50 bg-white relative overflow-hidden">
       
-      {/* Decorative gradient background for marquee */}
+      {/* Decorative footer background */}
       <div className="absolute inset-0 bg-gradient-to-r from-sky-50 via-white to-sky-100 opacity-60 pointer-events-none"></div>
-
-      {/* Two identical groups make the -50% animation seamless. */}
-      <div className="group/marquee relative z-10 flex h-24 sm:h-32 w-full items-center overflow-hidden border-b border-blue-200 bg-blue-50">
-        <div className="flex w-max animate-marquee group-hover/marquee:[animation-play-state:paused] group-focus-within/marquee:[animation-play-state:paused] motion-reduce:animate-none">
-          {[0, 1].map((group) => (
-            <div key={group} aria-hidden={group === 1 ? true : undefined} className="flex shrink-0 items-center gap-8 pr-8">
-              {Array.from({ length: 6 }, (_, item) => (
-                <Link key={item} to="/contact" tabIndex={group === 0 && item === 0 ? 0 : -1} className="site-button inline-flex shrink-0 items-center gap-4 rounded-full bg-blue-600 px-6 py-3 text-xl sm:text-2xl font-semibold whitespace-nowrap text-white shadow-sm transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-800">
-                  Let's Chat
-                  <ArrowUpRight aria-hidden="true" className="size-6 shrink-0" />
-                </Link>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
 
       <div className="container mx-auto px-4 sm:px-6 md:px-8 pt-10 sm:pt-12 md:pt-16 pb-6 md:pb-8 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-10 mb-8 md:mb-12">

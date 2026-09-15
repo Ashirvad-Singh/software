@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Play, Globe2, ShoppingBag, Layers } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
-import { BackgroundBeams } from "@/components/ui/background-beams";
+import { FloatingShapes } from "@/components/ui/floating-shapes";
+import WebsiteHero from "./WebsiteHero";
 import HeroServiceCard from "./HeroServiceCard";
 import "./HeroModern.css";
 
@@ -70,7 +71,7 @@ export default function HeroModern() {
   }, [embla, paused, hovered, focused, reducedMotion]);
 
   return (
-    <section className="adat-hero" aria-label="Discover ADAT" aria-roledescription="carousel"
+    <section className={`adat-hero${selected === 0 ? " adat-hero-simple" : ""}`} aria-label="Discover ADAT" aria-roledescription="carousel"
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setFocused(true)}
       onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
@@ -81,12 +82,15 @@ export default function HeroModern() {
           if (event.key === "ArrowLeft") embla?.scrollPrev(); else embla?.scrollNext();
         }
       }}>
-      <BackgroundBeams className="adat-hero-beams -z-10" />
+      <FloatingShapes className="-z-10" />
       <div className="adat-hero-viewport" ref={emblaRef}>
         <div className="adat-hero-track">
-          {slides.map((slide, index) => (
-            <div className="adat-hero-slide" key={slide.title} role="group" aria-roledescription="slide"
+          {[0, 2, 1].map((dataIndex, index) => {
+            const slide = slides[dataIndex];
+            return (
+            <div className={`adat-hero-slide adat-slide-${index}`} key={slide.title} role="group" aria-roledescription="slide"
               aria-label={`${index + 1} of ${slides.length}`} aria-hidden={selected !== index} inert={selected !== index}>
+              {index === 0 ? <WebsiteHero /> : <>
               <div className="adat-hero-copy">
                 <p className="adat-hero-eyebrow">{slide.eyebrow} <span>{slide.focus}</span></p>
                 {index === 0 ? <h1>{slide.title.slice(0, -slide.highlight.length)}<span className="adat-title-accent">{slide.highlight}</span></h1> : <h2 className="adat-hero-title">{slide.title.slice(0, -slide.highlight.length)}<span className="adat-title-accent">{slide.highlight}</span></h2>}
@@ -96,13 +100,19 @@ export default function HeroModern() {
                   <Link className="adat-hero-cta site-button" to="/about">Learn more <ArrowRight size={15} /></Link>
                 </div>
               </div>
-              <div className="adat-hero-grid">
+              <div className={`adat-showcase adat-showcase-${index}`}>
+                <div className="adat-showcase-bar">
+                  {index === 0 ? <><span className="adat-browser-dots" aria-hidden="true"><i /><i /><i /></span><span><Globe2 size={14} /> Your next website</span><span className="adat-showcase-label">DESIGN · BUILD · LAUNCH</span></> : dataIndex === 1 ? <><span><ShoppingBag size={17} /> Your digital storefront</span><span className="adat-showcase-label">SHOPIFY / WOOCOMMERCE</span></> : <><span><Layers size={17} /> The design studio</span><span className="adat-showcase-label">RESEARCH → PROTOTYPE → DESIGN</span></>}
+                </div>
+                <div className="adat-hero-grid">
                 {slide.cards.map((card, cardIndex) => (
-                  <HeroServiceCard key={card} title={card} index={cardIndex} destination={(slide.destinations ?? destinations)[cardIndex]} description={cardIndex === 4 ? slide.note : cardDescriptions[index][cardIndex]} />
+                  <HeroServiceCard key={card} title={card} index={cardIndex} destination={(slide.destinations ?? destinations)[cardIndex]} description={cardIndex === 4 ? slide.note : cardDescriptions[dataIndex][cardIndex]} />
                 ))}
+                </div>
               </div>
+              </>}
             </div>
-          ))}
+          ); })}
         </div>
       </div>
       <div className="adat-hero-controls">
