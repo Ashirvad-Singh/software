@@ -12,6 +12,7 @@ const slides = [
     eyebrow: "Website Design & Development",
     focus: "Built around your business",
     title: "Great Websites Do More Than Look Good",
+    highlight: "Look Good",
     intro: "Hi! We're ADAT.",
     description: "We build beautiful, easy-to-use websites and online stores with Shopify, WooCommerce, and WordPress. From your first website to a complete redesign, we help your business stand out online.",
     cards: ["Website Development", "Shopify Stores", "WooCommerce Stores", "WordPress Websites", "From idea to launch"],
@@ -21,6 +22,7 @@ const slides = [
     eyebrow: "Shopify & WooCommerce",
     focus: "Built for better shopping",
     title: "Turn Your Store Into a Better Shopping Experience",
+    highlight: "Shopping Experience",
     intro: "Let's build your online store.",
     description: "Launch or refresh your Shopify or WooCommerce store with thoughtful design, clear product pages, and a smooth checkout. We help you create a shopping experience that keeps customers coming back.",
     cards: ["eCommerce Websites", "Shopify Development", "WooCommerce Development", "Store Redesign", "Ready to sell online?"],
@@ -30,6 +32,7 @@ const slides = [
     eyebrow: "UI/UX Design",
     focus: "Designed around your users",
     title: "Thoughtful Design. Effortless Experiences.",
+    highlight: "Effortless Experiences.",
     intro: "Beautiful interfaces. Clear journeys.",
     description: "We bring user needs and business goals together through research, intuitive interfaces, and interactive prototypes. From websites to online stores, we design experiences that feel simple and natural to use.",
     cards: ["UI/UX Design", "User Research", "Wireframes & Prototypes", "Design Systems", "Let's design your experience"],
@@ -78,7 +81,7 @@ export default function HeroModern() {
           if (event.key === "ArrowLeft") embla?.scrollPrev(); else embla?.scrollNext();
         }
       }}>
-      <BackgroundBeams className="-z-10" />
+      <BackgroundBeams className="adat-hero-beams -z-10" />
       <div className="adat-hero-viewport" ref={emblaRef}>
         <div className="adat-hero-track">
           {slides.map((slide, index) => (
@@ -86,7 +89,7 @@ export default function HeroModern() {
               aria-label={`${index + 1} of ${slides.length}`} aria-hidden={selected !== index} inert={selected !== index}>
               <div className="adat-hero-copy">
                 <p className="adat-hero-eyebrow">{slide.eyebrow} <span>{slide.focus}</span></p>
-                {index === 0 ? <h1>{slide.title}</h1> : <h2 className="adat-hero-title">{slide.title}</h2>}
+                {index === 0 ? <h1>{slide.title.slice(0, -slide.highlight.length)}<span className="adat-title-accent">{slide.highlight}</span></h1> : <h2 className="adat-hero-title">{slide.title.slice(0, -slide.highlight.length)}<span className="adat-title-accent">{slide.highlight}</span></h2>}
                 <div className="adat-hero-intro">
                   <h2>{slide.intro}</h2>
                   <p>{slide.description}</p>

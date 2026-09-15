@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Lenis from "lenis";
 import { Toaster } from "sonner";
+import SiteMagneticButtons from "@/components/ui/site-magnetic-buttons";
 import Cursor from "@/components/site/Cursor";
 import ScrollProgress from "@/components/site/ScrollProgress";
 import Navbar from "@/components/site/Navbar";
@@ -68,6 +69,7 @@ function App() {
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <div className="bg-background text-foreground min-h-screen selection:bg-primary/30 selection:text-primary flex flex-col relative">
           <ScrollToTop />
+          <SiteMagneticButtons />
           {!isDashboard && <Cursor />}
           {!isDashboard && <ScrollProgress />}
           {!isDashboard && <FloatingShapes />}

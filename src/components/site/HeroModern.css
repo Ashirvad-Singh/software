@@ -1,4 +1,4 @@
-.adat-hero { position: relative; isolation: isolate; background: #ffffff; color: #0c304a; padding: 110px 0 20px; overflow: hidden; }
+.adat-hero { position: relative; isolation: isolate; background: radial-gradient(ellipse at 78% 20%, #d7efff 0%, transparent 48%), radial-gradient(ellipse at 6% 95%, #e6f6ff 0%, transparent 48%), linear-gradient(120deg, #ffffff 15%, #f6faff 65%, #eef3ff); color: #0c304a; padding: 110px 0 20px; overflow: hidden; }
 .adat-hero-viewport { overflow: hidden; padding-block: 10px 16px; }
 .adat-hero-track { display: flex; touch-action: pan-y pinch-zoom; }
 .adat-hero-slide { flex: 0 0 100%; min-width: 0; display: grid; grid-template-columns: 1fr 1.08fr; gap: clamp(35px, 5vw, 95px); padding: 0 max(5vw, calc((100vw - 1680px) / 2)); }
@@ -21,15 +21,15 @@
   .adat-hero-card:hover .adat-hero-card-link svg { transform: translateX(4px); }
 }
 .adat-hero-card h3 { font-size: clamp(21px, 1.6vw, 28px); line-height: 1.35; font-weight: 600; max-width: 240px; }
-.adat-hero-card-0 { background: #d5eee2; color: #24543e; border-color: #b9ddc9; grid-row: span 2; }
-.adat-hero-card-1 { background: #e9dff7; color: #593779; border-color: #d5c4eb; }
-.adat-hero-card-2 { background: #bae6fd; color: #0c4a6e; border-color: #94d3f3; }
-.adat-hero-card-3 { background: #fbe4d3; color: #804525; border-color: #efcfb8; }
-.adat-hero-card-4 { background: #ffffff; color: #0c4a6e; }
+.adat-hero-card-0 { background: radial-gradient(ellipse at 100% 0%, #38bdf8a6, transparent 60%), linear-gradient(145deg, #086fac, #075985 65%, #0b3e66); color: #ffffff; border-color: #3197c1; grid-row: span 2; }
+.adat-hero-card-1 { background: linear-gradient(135deg, #f3edff, #e0d5f7); color: #513477; border-color: #d4c5ed; }
+.adat-hero-card-2 { background: linear-gradient(135deg, #d8f5ff, #a8def6); color: #0b4b70; border-color: #91d1ec; }
+.adat-hero-card-3 { background: linear-gradient(135deg, #fff0e5, #f8dcc6); color: #7d452b; border-color: #f0cdb3; }
+.adat-hero-card-4 { background: linear-gradient(135deg, #ffffff, #edf6ff); color: #0c4a6e; }
 .adat-hero-card-4 h3 { font-size: 19px; }
 .adat-hero-card p { font-size: 13px; line-height: 1.5; margin: 10px 0 12px; color: #476174; }
 .adat-hero-card-link { display: flex; align-items: center; justify-content: flex-end; gap: 7px; margin-top: auto; padding-top: 14px; color: inherit; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
-.adat-hero-pattern { position: absolute; z-index: -1; pointer-events: none; width: 245px; height: 294px; right: -65px; top: -55px; opacity: .19; }
+.adat-hero-pattern { position: absolute; z-index: -1; pointer-events: none; width: 245px; height: 294px; right: -65px; top: -55px; opacity: .13; }
 .adat-hero-card-0 .adat-hero-pattern { width: 300px; height: 360px; top: auto; bottom: -48px; right: auto; left: -90px; transform: rotate(12deg); }
 .adat-hero-card-1 .adat-hero-pattern { width: 240px; height: 288px; right: -46px; top: -52px; }
 .adat-hero-card-2 .adat-hero-pattern { width: 190px; height: 265px; top: -35px; right: -90px; }
@@ -86,3 +86,17 @@
 .adat-flip-card:has(.adat-flip-back :focus-visible) .adat-flip-inner { transform: rotateY(180deg); }
 .adat-flip-card:has(.adat-flip-back :focus-visible) .adat-flip-front { visibility: hidden; }
 .adat-flip-card:has(.adat-flip-back :focus-visible) .adat-flip-back { visibility: visible; }
+
+/* Soft color depth keeps the foreground clear while the beams animate behind it. */
+.adat-hero-beams { opacity: .5; mask-image: linear-gradient(100deg, transparent 0%, #000 52%, #000 100%); }
+.adat-title-accent { color: #087fb4; background: linear-gradient(110deg, #075985, #0284c7 60%, #3478c0); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.adat-hero-eyebrow { display: flex; align-items: center; flex-wrap: wrap; gap: 5px 0; font-size: clamp(12px, 1vw, 16px); }
+.adat-hero-eyebrow::before { content: ''; width: 7px; height: 7px; flex-shrink: 0; border-radius: 50%; background: #0ea5e9; box-shadow: 0 0 0 5px #0ea5e914; margin-right: 14px; }
+.adat-hero-card { box-shadow: inset 0 1px 0 #ffffff70, 0 8px 24px -18px #164d7b40; }
+.adat-hero-card-0 { box-shadow: inset 0 1px 0 #ffffff40, 0 12px 30px -18px #07598580; }
+.adat-hero-card-0 p { color: #e0f2fe; }
+.adat-hero-card-0 .adat-hero-pattern { opacity: .19; }
+.adat-hero-card-link { text-decoration: none; font-weight: 500; }
+.adat-hero-card-link:hover { text-decoration: underline; }
+.adat-hero-controls { padding-top: 12px; border-top: 1px solid #c8e2f080; }
+@media (max-width: 540px) { .adat-hero-eyebrow { display: block; } .adat-hero-eyebrow::before { display: none; } }
