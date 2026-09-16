@@ -9,6 +9,69 @@ import { motion } from "framer-motion";
 import SEO from "@/components/site/SEO";
 import JobApplicationForm from "@/components/site/JobApplicationForm";
 
+function renderFormattedList(content: string, jobTitle?: string) {
+  if (!content?.trim()) return null;
+
+  const rawLines = content
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  const elements: React.ReactNode[] = [];
+  let currentList: string[] = [];
+
+  const flushList = (keyPrefix: string) => {
+    if (currentList.length > 0) {
+      elements.push(
+        <ul key={`${keyPrefix}-ul-${elements.length}`} className="list-disc pl-6 space-y-2.5 marker:text-primary my-3">
+          {currentList.map((item, idx) => (
+            <li key={idx} className="break-words leading-relaxed text-neutral-700 dark:text-neutral-300">
+              {item}
+            </li>
+          ))}
+        </ul>
+      );
+      currentList = [];
+    }
+  };
+
+  rawLines.forEach((line, index) => {
+    const isBulletLine = /^[-*•\d+\.]\s*/.test(line);
+    const cleanedLine = line.replace(/^[-*•]\s*/, "").replace(/^\d+\.\s*/, "").trim();
+
+    if (!cleanedLine) return;
+
+    // Skip redundant title lines matching the job title
+    if (jobTitle && cleanedLine.toLowerCase() === jobTitle.toLowerCase()) {
+      return;
+    }
+
+    // Identify if the line is a section header (ends with colon, or is a known heading phrase, or short non-bullet title)
+    const isHeader =
+      !isBulletLine &&
+      (line.endsWith(":") ||
+        /^(required skills|key responsibilities|preferred qualifications|what expected from you|qualifications|responsibilities|requirements|skills|education|experience|benefits)/i.test(
+          cleanedLine
+        ) ||
+        (cleanedLine.length < 40 && !cleanedLine.endsWith(".")));
+
+    if (isHeader) {
+      flushList(`section-${index}`);
+      elements.push(
+        <h4 key={`header-${index}`} className="font-bold text-neutral-900 dark:text-white text-base md:text-lg mt-6 mb-2 tracking-tight">
+          {cleanedLine.endsWith(":") ? cleanedLine : `${cleanedLine}:`}
+        </h4>
+      );
+    } else {
+      currentList.push(cleanedLine);
+    }
+  });
+
+  flushList("final");
+
+  return <div className="space-y-1">{elements}</div>;
+}
+
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -112,7 +175,24 @@ export default function JobDetailPage() {
           <a href="#job-application" className="site-button mb-10 inline-flex rounded-full bg-primary px-7 py-3 font-semibold text-primary-foreground">Apply for this job</a>
           <div className="space-y-10 text-neutral-600 mb-12">
             {[["Job description", job.description], ["About the role", job.role]].map(([heading, content]) => content?.trim() && <section key={heading}><h2 className="mb-4 text-2xl font-bold text-neutral-900">{heading}</h2><p className="whitespace-pre-wrap break-words leading-relaxed">{content}</p></section>)}
-            {[["Responsibilities", job.responsibilities], ["Requirements", job.requirements], ["Benefits", job.benefits]].map(([heading, content]) => content?.trim() && <section key={heading}><h2 className="mb-4 text-2xl font-bold text-neutral-900">{heading}</h2><ul className="list-disc pl-6 space-y-2 marker:text-primary">{content.split("\n").map(line => line.trim()).filter(Boolean).map((line, index) => <li key={index} className="break-words leading-relaxed">{line}</li>)}</ul></section>)}
+            {job.responsibilities?.trim() && (
+              <section>
+                <h2 className="mb-4 text-2xl font-bold text-neutral-900">Responsibilities</h2>
+                {renderFormattedList(job.responsibilities, job.title)}
+              </section>
+            )}
+            {job.requirements?.trim() && (
+              <section>
+                <h2 className="mb-4 text-2xl font-bold text-neutral-900">Requirements</h2>
+                {renderFormattedList(job.requirements, job.title)}
+              </section>
+            )}
+            {job.benefits?.trim() && (
+              <section>
+                <h2 className="mb-4 text-2xl font-bold text-neutral-900">Benefits</h2>
+                {renderFormattedList(job.benefits, job.title)}
+              </section>
+            )}
           </div>
 
           <div id="job-application" className="scroll-mt-28 bg-neutral-50 p-4 sm:p-8 rounded-2xl border border-neutral-200 mt-16">
