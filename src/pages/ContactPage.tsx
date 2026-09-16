@@ -87,22 +87,16 @@ export default function ContactPage() {
               <div className="space-y-8">
                 <div className="flex items-center gap-4 group cursor-pointer">
                   <div className="site-icon-tile shrink-0 p-3 rounded-full text-sky-600">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <span className="min-w-0 break-words text-sky-100 hover:text-white transition-colors">+1 (555) 123-4567</span>
-                </div>
-                <div className="flex items-center gap-4 group cursor-pointer">
-                  <div className="site-icon-tile shrink-0 p-3 rounded-full text-sky-600">
                     <Mail className="w-5 h-5" />
                   </div>
-                  <span className="min-w-0 break-words text-sky-100 hover:text-white transition-colors">hello@adatsoft.com</span>
+                  <a href="mailto:info@adatsolutions.com" className="min-w-0 break-words text-sky-100 hover:text-white transition-colors">info@adatsolutions.com</a>
                 </div>
                 <div className="flex items-center gap-4 group cursor-pointer">
                   <div className="site-icon-tile shrink-0 p-3 rounded-full text-sky-600">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <span className="text-sky-100 leading-relaxed group-hover:text-white transition-colors">
-                    123 Tech Lane, Silicon Valley<br/>CA 94043, USA
+                    Plot no - ITC -11, Sector -67,<br/>Mohali (India)
                   </span>
                 </div>
               </div>

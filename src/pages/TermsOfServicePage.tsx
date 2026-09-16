@@ -119,7 +119,7 @@ export default function TermsOfServicePage() {
               Our legal team is happy to assist with any contract or service level questions.
             </p>
             <a
-              href="mailto:legal@adatsoft.com"
+              href="mailto:info@adatsolutions.com"
               className="site-button inline-flex items-center justify-center px-6 py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-sm transition-all shadow-md"
             >
               Contact Legal Department

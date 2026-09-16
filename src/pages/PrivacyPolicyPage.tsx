@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
       id: "your-rights",
       title: "6. Your Privacy Rights",
       icon: CheckCircle2,
-      content: `Depending on your location (including GDPR & CCPA rights), you have the right to request access to, correction of, or deletion of your personal data. You may also opt out of promotional communications at any time by contacting us directly at privacy@adatsoft.com.`
+      content: `Depending on your location (including GDPR & CCPA rights), you have the right to request access to, correction of, or deletion of your personal data. You may also opt out of promotional communications at any time by contacting us directly at info@adatsolutions.com.`
     },
     {
       id: "policy-updates",
@@ -122,7 +122,7 @@ export default function PrivacyPolicyPage() {
               Our legal and security teams are available to address any inquiries or data requests.
             </p>
             <a
-              href="mailto:privacy@adatsoft.com"
+              href="mailto:info@adatsolutions.com"
               className="site-button inline-flex items-center justify-center px-6 py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-sm transition-all shadow-md"
             >
               Contact Privacy Team

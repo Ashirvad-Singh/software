@@ -67,15 +67,11 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-muted-foreground">
                 <Mail className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <span className="min-w-0 break-words">hello@adatsoft.com</span>
-              </li>
-              <li className="flex items-start gap-3 text-muted-foreground">
-                <Phone className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <span>+1 (555) 123-4567</span>
+                <a href="mailto:info@adatsolutions.com" className="min-w-0 break-words hover:text-primary transition-colors">info@adatsolutions.com</a>
               </li>
               <li className="flex items-start gap-3 text-muted-foreground">
                 <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <span>123 Tech Lane, Silicon Valley<br/>CA 94043, USA</span>
+                <span>Plot no - ITC -11, Sector -67,<br/>Mohali (India)</span>
               </li>
             </ul>
           </div>

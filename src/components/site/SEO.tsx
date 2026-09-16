@@ -94,9 +94,8 @@ export default function SEO({
       description: description,
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "+1-555-123-4567",
         contactType: "customer service",
-        email: "hello@adatsoft.com",
+        email: "info@adatsolutions.com",
         availableLanguage: ["English", "Hindi"],
       },
       sameAs: [
