@@ -5,28 +5,33 @@ import { motion } from "framer-motion";
 const processSteps = [
   {
     number: "01",
-    title: "Discovery & Strategy",
-    description: "Deep dive into business goals, user needs, and strategic technical roadmap.",
+    title: "Discovery & Scope",
+    description: "Deep dive into business goals, user needs, target audience, and strategic technical roadmap.",
   },
   {
     number: "02",
-    title: "Architecture & UI/UX",
-    description: "Designing scalable cloud architecture, wireframes, and intuitive user interfaces.",
+    title: "Requirement Analysis",
+    description: "Comprehensive requirement gathering, system architecture planning, and feature specifications.",
   },
   {
     number: "03",
-    title: "Agile Development",
-    description: "Iterative sprint coding, robust API integrations, and clean code standards.",
+    title: "Prototyping & UI/UX",
+    description: "Designing intuitive wireframes, interactive prototypes, and modern responsive user journeys.",
   },
   {
     number: "04",
-    title: "Quality & Security",
-    description: "Rigorous automated testing, security audits, and multi-device performance tuning.",
+    title: "Development & Build",
+    description: "Iterative sprint coding, robust API integrations, and clean performant architecture.",
   },
   {
     number: "05",
-    title: "Deployment & Scaling",
-    description: "Production cloud launch, real-time monitoring, and continuous product evolution.",
+    title: "Testing & QA",
+    description: "Rigorous automated testing, security audits, manual QA, and cross-device performance tuning.",
+  },
+  {
+    number: "06",
+    title: "Launch & Deployment",
+    description: "Smooth cloud deployment, App Store / Play Store submission, and continuous post-launch support.",
   },
 ];
 
