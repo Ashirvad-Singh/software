@@ -39,16 +39,13 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
-              Who We Are
+              About Our Company
             </h2>
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-neutral-900">
-              Building Digital Experiences That Matter
+              Share Our Passion for Performant & Quality Software Solutions
             </h3>
             <p className="text-sm sm:text-base md:text-lg text-neutral-600 mb-8 md:mb-12 leading-relaxed">
-              Adat Soft Solutions is a premier digital agency specializing in
-              cutting-edge web and mobile applications. We connect global
-              businesses with modern technology to help them scale and succeed
-              in the digital era.
+              At ADAT Soft Solutions, we are dedicated to turning your ideas into intuitive web and mobile solutions. We engineer custom software, high-performing websites, scalable mobile applications, and robust e-commerce platforms. From discovery to deployment, we connect global businesses with cutting-edge technology to scale and succeed.
             </p>
           </motion.div>
 

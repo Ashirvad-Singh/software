@@ -22,7 +22,7 @@ export default function HomeServicesSection({
 }) {
   const reduceMotion = useReducedMotion();
   const { entries, loading, error, retry } = useCatalog("services");
-  const featuredServices = showAll ? entries : entries.slice(0, 5);
+  const featuredServices = showAll ? entries : entries.slice(0, 6);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (

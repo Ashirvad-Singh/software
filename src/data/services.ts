@@ -9,10 +9,10 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    slug: "web-development",
-    title: "Web Development",
-    description: "Build robust, responsive, and lightning-fast websites that drive results.",
-    longDescription: "Our web development team builds tailored websites using the latest technologies. From interactive single-page applications (SPAs) to complex enterprise platforms, we ensure your web presence is fast, secure, and optimized for conversions.",
+    slug: "web-app-development",
+    title: "Web App Development",
+    description: "Robust, responsive, and lightning-fast web applications built with modern frameworks to drive performance and growth.",
+    longDescription: "Our web development team builds tailored web applications using React, Next.js, and modern cloud architectures. From interactive single-page applications (SPAs) to complex enterprise platforms, we ensure your web presence is fast, secure, and optimized for conversions.",
     benefits: [
       "Responsive and mobile-first design",
       "High performance and fast load times",
@@ -27,46 +27,28 @@ export const services: Service[] = [
     ]
   },
   {
-    slug: "custom-app-development",
-    title: "Custom App Development",
-    description: "We build scalable, high-performance mobile applications tailored to your business needs.",
-    longDescription: "Our custom application development service brings your unique ideas to life. Whether you need a native iOS, native Android, or a cross-platform solution using Flutter or React Native, our team of expert developers builds robust architectures capable of handling millions of users. We don't just write code; we engineer scalable solutions that grow with your business.",
+    slug: "mobile-app-development",
+    title: "Mobile App Development",
+    description: "Native iOS, Android, and cross-platform mobile solutions (Flutter & React Native) engineered for seamless user experiences.",
+    longDescription: "End-to-end mobile app development for iOS and Android. Whether you need a native iOS/Android solution or cross-platform Flutter/React Native app, our expert developers build scalable architectures capable of handling millions of users.",
     benefits: [
-      "Native and Cross-Platform solutions",
-      "Highly scalable backend architectures",
-      "Seamless API integrations",
-      "Stringent security and data protection"
+      "Native iOS & Android development",
+      "Flutter & React Native cross-platform apps",
+      "Highly scalable cloud backend APIs",
+      "App Store & Google Play Store publishing"
     ],
     process: [
-      { step: "Discovery", detail: "Understanding your goals and target audience." },
-      { step: "Architecture", detail: "Designing the scalable database and cloud infrastructure." },
+      { step: "Discovery", detail: "Understanding goals and target audience." },
+      { step: "Architecture", detail: "Designing scalable database and cloud backend." },
       { step: "Development", detail: "Agile sprints with regular client check-ins." },
       { step: "Deployment", detail: "App Store & Google Play Store submission." }
     ]
   },
   {
-    slug: "search-engine-optimization",
-    title: "Search Engine Optimization (SEO)",
-    description: "Dominate search results and drive organic traffic to your business.",
-    longDescription: "A great website is useless if no one can find it. Our SEO experts use data-driven strategies to improve your search engine rankings, increase organic traffic, and drive qualified leads to your business through on-page optimization, technical SEO, and content strategies.",
-    benefits: [
-      "Higher search engine rankings",
-      "Increased organic traffic",
-      "Targeted keyword optimization",
-      "Comprehensive technical SEO audits"
-    ],
-    process: [
-      { step: "Audit", detail: "Identifying technical and content gaps." },
-      { step: "Strategy", detail: "Keyword research and competitor analysis." },
-      { step: "Implementation", detail: "On-page and technical optimizations." },
-      { step: "Reporting", detail: "Monthly performance and ranking reports." }
-    ]
-  },
-  {
     slug: "ecommerce-development",
-    title: "Ecommerce Development",
-    description: "Scale your online sales with custom, high-converting ecommerce platforms globally.",
-    longDescription: "We build powerful online stores that are designed to convert. Whether you need a custom Shopify build, WooCommerce integration, or a headless ecommerce solution, we create global shopping experiences that keep your customers coming back.",
+    title: "E-Commerce Solutions",
+    description: "High-converting Shopify, WooCommerce, and custom online stores designed to streamline shopping and maximize revenue.",
+    longDescription: "We build powerful online stores designed to convert. Whether you need a custom Shopify build, WooCommerce integration, or a headless e-commerce platform, we create global shopping experiences that keep your customers coming back.",
     benefits: [
       "Custom shopping experiences",
       "Secure payment gateway integrations",
@@ -78,6 +60,60 @@ export const services: Service[] = [
       { step: "Design", detail: "Creating a seamless shopping journey." },
       { step: "Integration", detail: "Connecting payment and shipping providers." },
       { step: "Optimization", detail: "Post-launch conversion rate optimization." }
+    ]
+  },
+  {
+    slug: "cms-solutions",
+    title: "CMS Solutions",
+    description: "Flexible, easy-to-manage WordPress and headless CMS platforms tailored to your brand's content needs.",
+    longDescription: "Empower your team with intuitive Content Management Systems. We specialize in custom WordPress theme development, headless CMS integrations (Strapi, Sanity), and scalable publishing platforms.",
+    benefits: [
+      "Easy content management & editing",
+      "Custom WordPress themes & plugins",
+      "Headless CMS architecture",
+      "High performance & security"
+    ],
+    process: [
+      { step: "Audit", detail: "Content requirements and workflow mapping." },
+      { step: "Setup", detail: "CMS architecture and database design." },
+      { step: "Development", detail: "Custom theme & component development." },
+      { step: "Training", detail: "Team onboarding and launch." }
+    ]
+  },
+  {
+    slug: "ui-ux-design",
+    title: "UI/UX Design",
+    description: "User research, wireframing, intuitive interfaces, and interactive prototypes designed around user needs.",
+    longDescription: "We bring user needs and business goals together through research, intuitive interfaces, and interactive prototypes. From web platforms to mobile apps, we design digital experiences that feel natural and engaging to use.",
+    benefits: [
+      "User research & journey mapping",
+      "Wireframes & interactive prototypes",
+      "Design systems & component libraries",
+      "Usability testing & optimization"
+    ],
+    process: [
+      { step: "Research", detail: "User personas and competitive analysis." },
+      { step: "Wireframes", detail: "UX layouts and navigation flow." },
+      { step: "Visual Design", detail: "High-fidelity UI and design tokens." },
+      { step: "Prototyping", detail: "Interactive testing and handoff." }
+    ]
+  },
+  {
+    slug: "qa-software-testing",
+    title: "QA & Software Testing",
+    description: "Rigorous automated testing, security audits, and manual QA to ensure flawless execution and zero-defect deployments.",
+    longDescription: "Guarantee software quality and reliability before going live. Our QA engineers perform automated regression testing, manual functional testing, security audits, and multi-device performance tuning.",
+    benefits: [
+      "Automated & manual testing",
+      "Cross-browser & cross-device QA",
+      "Security audits & vulnerability scans",
+      "Performance & load testing"
+    ],
+    process: [
+      { step: "Test Plan", detail: "Defining test cases and criteria." },
+      { step: "Execution", detail: "Running automated and manual test suites." },
+      { step: "Reporting", detail: "Bug tracking and fix verification." },
+      { step: "Sign-off", detail: "Final zero-defect release verification." }
     ]
   },
   // Placeholders for Mega Menu Services

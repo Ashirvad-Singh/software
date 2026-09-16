@@ -14,12 +14,12 @@ export default function AboutSection({ hideHeader = false }: { hideHeader?: bool
               transition={{ duration: 0.5 }}
               className="text-sm font-bold text-primary tracking-widest uppercase mb-3"
             >
-              About Us
+              About Our Company
             </motion.h2>
             <p className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl dark:text-white text-black mb-4 sm:mb-6 tracking-tight">
-              Delivering Excellence{" "}
+              Share Our Passion for Performant &{" "}
               <span className="text-primary inline-block whitespace-nowrap">
-                {"Worldwide".split("").map((word, idx) => (
+                {"Quality Software".split("").map((word, idx) => (
                   <motion.span
                     key={idx}
                     className="inline-block"
@@ -38,9 +38,9 @@ export default function AboutSection({ hideHeader = false }: { hideHeader?: bool
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto mb-10 sm:mb-16"
+              className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto mb-10 sm:mb-16 leading-relaxed"
             >
-              At Adat Soft Solutions, we build websites and mobile apps that transcend borders. From startup MVPs to enterprise systems, we connect global businesses with cutting-edge technology.
+              At ADAT Soft Solutions, we are dedicated to turning your ideas into intuitive web and mobile solutions. We engineer custom software, high-performing websites, scalable mobile applications, and robust e-commerce platforms. From discovery to deployment, we connect global businesses with cutting-edge technology.
             </motion.p>
           </>
         )}
