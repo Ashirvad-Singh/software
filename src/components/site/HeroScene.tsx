@@ -1,7 +1,8 @@
 import { Component, lazy, Suspense, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 
-const Spline = lazy(() => import("@splinetool/react-spline"));
+// @ts-ignore - optional 3D Spline scene package
+const Spline = lazy(() => import("@splinetool/react-spline").catch(() => ({ default: () => null })));
 
 function WorkspacePlaceholder() {
   return (

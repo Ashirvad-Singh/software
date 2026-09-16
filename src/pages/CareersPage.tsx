@@ -10,10 +10,8 @@ import {
   MapPin, 
   Clock, 
   Briefcase, 
-  Laptop,
   Sun,
   Heart,
-  Baby,
   Star,
   CheckCircle,
   Target,
@@ -92,7 +90,6 @@ const teams = [
 
 export default function CareersPage() {
   const [jobsLoading, setJobsLoading] = useState(true);
-  const [jobsError, setJobsError] = useState(false);
   const [jobOpenings, setJobOpenings] = useState<JobOpening[]>([]);
   const [emblaRef] = useEmblaCarousel({ loop: true, dragFree: true }, [
     AutoScroll({ playOnInit: true, speed: 1.5, stopOnInteraction: false, stopOnMouseEnter: true })
@@ -433,7 +430,7 @@ export default function CareersPage() {
                 </motion.div>
               )) : (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12 text-neutral-600">
-                  {jobsLoading ? "Loading open roles…" : jobsError ? "Unable to load open roles. Please refresh and try again." : "No open roles in this category right now. Check back later!"}
+                  {jobsLoading ? "Loading open roles…" : "No open roles in this category right now. Check back later!"}
                 </motion.div>
               )}
             </AnimatePresence>

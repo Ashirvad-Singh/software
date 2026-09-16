@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { Mail, Phone, MapPin, Loader2, ArrowRight } from "lucide-react";
+import { Mail, MapPin, Loader2, ArrowRight } from "lucide-react";
 import { IconBrandTwitter, IconBrandLinkedin, IconBrandInstagram } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";

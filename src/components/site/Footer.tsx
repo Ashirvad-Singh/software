@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone } from "lucide-react"
+import { Mail, MapPin } from "lucide-react"
 import { IconBrandFacebook, IconBrandGithub, IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react"
 import { socialProfiles } from "@/data/socialProfiles"
 import { Link } from "react-router-dom"
