@@ -70,27 +70,14 @@ export default function AboutSection({ hideHeader = false }: { hideHeader?: bool
           transition={{ duration: 0.7 }}
           className="mt-12 sm:mt-16 max-w-4xl mx-auto text-left"
         >
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8 md:gap-10 bg-neutral-50 dark:bg-neutral-900 rounded-3xl p-4 sm:p-6 md:p-8 lg:p-12 border border-neutral-200 dark:border-neutral-800">
-            <div className="shrink-0 relative">
-              <div className="w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl relative z-10">
-                <img 
-                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop" 
-                  alt="Founder" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-primary/20 rounded-full blur-2xl z-0"></div>
-            </div>
-            
-            <div className="flex-1 text-center md:text-left">
-              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-800 dark:text-neutral-100 mb-2">Message from the Founder</h3>
-              <p className="text-sm sm:text-base font-medium text-neutral-600 dark:text-neutral-300 italic mb-6 leading-relaxed">
-                "Our mission is simple: to build digital experiences that matter. We started Adat Soft Solutions with a vision to bridge the gap between complex technology and beautiful, user-centric design. Every line of code we write and every pixel we place is dedicated to helping your business grow globally with robust web and mobile applications."
-              </p>
-              <div>
-                <p className="font-bold text-neutral-900 dark:text-white text-lg">Alex Mercer</p>
-                <p className="text-primary font-medium">Founder & CEO</p>
-              </div>
+          <div className="bg-neutral-50 dark:bg-neutral-900 rounded-3xl p-6 sm:p-8 md:p-12 border border-neutral-200 dark:border-neutral-800">
+            <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-800 dark:text-neutral-100 mb-3">Message from the Founder</h3>
+            <p className="text-sm sm:text-base md:text-lg font-medium text-neutral-600 dark:text-neutral-300 italic mb-6 leading-relaxed">
+              &quot;Our mission is simple: to build digital experiences that matter. We started ADAT Soft Solutions with a vision to bridge the gap between complex engineering and intuitive, user-centric design. Every line of code we write and every product we ship is dedicated to helping your business grow globally with robust web and mobile applications.&quot;
+            </p>
+            <div>
+              <p className="font-bold text-neutral-900 dark:text-white text-lg">Vijay Vikram Singh</p>
+              <p className="text-primary font-semibold text-sm">Founder &amp; CEO</p>
             </div>
           </div>
         </motion.div>
