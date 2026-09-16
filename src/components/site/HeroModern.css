@@ -16,7 +16,7 @@
 }
 .adat-hero-track {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   touch-action: pan-y pinch-zoom;
 }
 .adat-hero-slide {
@@ -24,8 +24,10 @@
   min-width: 0;
   display: grid;
   grid-template-columns: 1fr 1.08fr;
+  align-items: stretch;
   gap: clamp(24px, 3.5vw, 70px);
   padding: 0 max(5vw, calc((100vw - 1680px) / 2));
+  height: 100%;
 }
 .adat-hero-copy {
   display: flex;
@@ -453,7 +455,12 @@
 
 /* Slide 0: Website Editorial Hero */
 .adat-slide-0 {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 .website-hero {
   text-align: center;
@@ -1264,4 +1271,6 @@
 .website-hero h1 .relative {
   font-size: inherit;
   line-height: inherit;
+  padding-bottom: 0.2em !important;
+  margin-bottom: -0.2em !important;
 }

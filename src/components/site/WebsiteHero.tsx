@@ -19,7 +19,7 @@ export default function WebsiteHero() {
               "Made to perform.",
               "Ready for what's next.",
             ]}
-            wordsClassName="border-none bg-transparent shadow-none ring-0 drop-shadow-none text-[#0284c7] font-semibold px-0 py-0 text-inherit"
+            wordsClassName="border-none bg-transparent shadow-none ring-0 drop-shadow-none text-[#0284c7] font-semibold px-0 py-0 pb-[0.2em] pt-[0.05em] -mb-[0.2em] -mt-[0.05em] text-inherit"
             duration={2600}
           />
         </span>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Pause, Play, Globe2, ShoppingBag, Layers } from "lucide-react";
@@ -70,22 +70,7 @@ export default function HeroModern() {
     return () => window.clearInterval(timer);
   }, [embla, paused, hovered, focused, reducedMotion]);
 
-  // Keep the viewport fitted to the visible slide, including after responsive
-  // reflows and font loading, rather than reserving the tallest slide's space.
-  useLayoutEffect(() => {
-    if (!embla) return;
-    const viewport = embla.rootNode();
-    const slide = embla.slideNodes()[selected];
-    if (!slide) return;
-    const updateHeight = () => { viewport.style.height = `${slide.getBoundingClientRect().height}px`; };
-    updateHeight();
-    const observer = new ResizeObserver(updateHeight);
-    observer.observe(slide);
-    return () => {
-      observer.disconnect();
-      viewport.style.removeProperty("height");
-    };
-  }, [embla, selected]);
+
 
   return (
     <section className={`adat-hero${selected === 0 ? " adat-hero-simple" : ""}`} aria-label="Discover ADAT" aria-roledescription="carousel"
