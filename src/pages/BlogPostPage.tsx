@@ -35,9 +35,7 @@ export default function BlogPostPage() {
       {/* Hero Section */}
       <div className="w-full bg-gradient-to-r from-blue-500 to-sky-600 pt-36 pb-10 md:pb-16">
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
-          <Link to="/blog" className="inline-flex items-center text-white/90 hover:text-white mb-10 transition-colors text-sm font-medium">
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back to main blog
-          </Link>
+
           
           <h1 className="text-4xl md:text-5xl lg:text-[56px] font-bold text-white mb-10 leading-[1.1] tracking-tight max-w-4xl">
             {postData.title}
@@ -53,6 +51,9 @@ export default function BlogPostPage() {
             <span className="w-1 h-1 rounded-full bg-white/50 mx-1" />
             <span>{postData.readTime}</span>
           </div>
+          <Link to="/blog" className="inline-flex items-center text-white/90 hover:text-white mt-6 transition-colors text-sm font-medium">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to main blog
+          </Link>
         </div>
       </div>
 

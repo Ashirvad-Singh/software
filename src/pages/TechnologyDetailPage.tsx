@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  ArrowLeft,
   ArrowRight,
   Code2,
   Cpu,
@@ -69,19 +68,9 @@ export default function TechnologyDetailPage() {
       />
 
       {/* SubBanner Header */}
-      <div className="pt-28 sm:pt-36">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <Link
-            to="/technologies"
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-neutral-500 hover:text-primary transition-colors mb-6"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back to Technology Stack
-          </Link>
-        </div>
-      </div>
-
       <SubBanner
-        className="!pt-4 md:!pt-6 !pb-6 md:!pb-8"
+        className="!pb-6 md:!pb-8"
+        backLink={{ to: "/technologies", label: "Back to Technology Stack" }}
         badge={techDetail.badge}
         title={techDetail.name}
         highlightTitle={techDetail.category}

@@ -205,7 +205,7 @@
   font-size: 12px;
   line-height: 1.55;
   margin: 6px 0 8px;
-  color: #fff;
+  color: #476174;
 }
 .adat-hero-card-link {
   display: flex;
@@ -304,14 +304,15 @@
   padding: 12px;
 }
 .adat-flip-back h3 {
-  font-size: 15px;
+  font-size: clamp(18px, 1.3vw, 22px);
   line-height: 1.35;
   max-width: none;
 }
-.adat-flip-back p {
-  font-size: 11px;
-  line-height: 1.45;
-  margin-block: 4px;
+.adat-hero-card.adat-flip-back p {
+  font-size: clamp(15px, 1vw, 17px);
+  line-height: 1.6;
+  margin-block: 10px;
+  color: inherit;
 }
 .adat-flip-actions {
   display: flex;
@@ -328,6 +329,7 @@
   cursor: pointer;
 }
 .adat-flip-actions .adat-hero-card-link {
+  font-size: 14px;
   padding-top: 0;
   margin-top: 0;
 }

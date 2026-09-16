@@ -86,19 +86,19 @@ export default function ContactPage() {
 
               <div className="space-y-8">
                 <div className="flex items-center gap-4 group cursor-pointer">
-                  <div className="shrink-0 p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
+                  <div className="site-icon-tile shrink-0 p-3 rounded-full text-sky-600">
                     <Phone className="w-5 h-5" />
                   </div>
                   <span className="min-w-0 break-words text-sky-100 hover:text-white transition-colors">+1 (555) 123-4567</span>
                 </div>
                 <div className="flex items-center gap-4 group cursor-pointer">
-                  <div className="shrink-0 p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
+                  <div className="site-icon-tile shrink-0 p-3 rounded-full text-sky-600">
                     <Mail className="w-5 h-5" />
                   </div>
                   <span className="min-w-0 break-words text-sky-100 hover:text-white transition-colors">hello@adatsoft.com</span>
                 </div>
                 <div className="flex items-center gap-4 group cursor-pointer">
-                  <div className="shrink-0 p-3 bg-white/10 rounded-full text-white backdrop-blur-sm group-hover:bg-sky-400 transition-colors">
+                  <div className="site-icon-tile shrink-0 p-3 rounded-full text-sky-600">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <span className="text-sky-100 leading-relaxed group-hover:text-white transition-colors">
@@ -116,8 +116,8 @@ export default function ContactPage() {
                   { name: 'LinkedIn', icon: IconBrandLinkedin },
                   { name: 'Instagram', icon: IconBrandInstagram }
                 ].map(social => (
-                  <div key={social.name} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-sky-100 hover:bg-white hover:text-sky-600 transition-all cursor-pointer">
-                    <social.icon className="w-4 h-4" />
+                  <div key={social.name} className="site-icon-tile w-10 h-10 rounded-full flex items-center justify-center text-sky-600 hover:scale-110 transition-transform cursor-pointer">
+                    <social.icon className="w-5 h-5" />
                   </div>
                 ))}
               </div>

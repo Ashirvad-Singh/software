@@ -88,18 +88,16 @@ export default function HomeServicesSection({
                   </p>
                 </div>
 
-                {/* Right: Modern Arrow Circle & Floating Image (3 cols) */}
-                <div className="relative flex items-center justify-end md:col-span-2 lg:col-span-3">
-                  {/* Floating Hover Image Preview - Safely located in dedicated right column */}
+                {/* Keep the preview and arrow within their own column. */}
+                <div className="relative flex min-w-0 items-center justify-end md:col-span-2 lg:col-span-3">
                   <AnimatePresence>
                     {isHovered && (
                       <motion.div
-                        initial={reduceMotion ? false : { opacity: 0, scale: 0.88, y: 12, rotate: -2 }}
-                        animate={{ opacity: 1, scale: 1, y: 0, rotate: -2 }}
-                        exit={{ opacity: 0, scale: 0.88, y: 12, rotate: -2 }}
+                        initial={reduceMotion ? false : { opacity: 0, scale: 0.88, y: 12 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.88, y: 12 }}
                         transition={{ duration: 0.25, ease: "easeOut" }}
-                        className="pointer-events-none absolute right-16 top-1/2 z-30 hidden -translate-y-1/2 overflow-hidden rounded-2xl border-4 border-white bg-neutral-900 shadow-2xl dark:border-neutral-800 xl:block"
-                        style={{ width: "280px", height: "175px" }}
+                        className="pointer-events-none absolute left-0 right-20 top-1/2 hidden aspect-[8/5] -translate-y-1/2 overflow-hidden rounded-2xl border-4 border-white bg-neutral-900 shadow-lg dark:border-neutral-800 xl:block"
                       >
                         <img
                           src={service.thumbnailUrl || fallbackImage}
@@ -108,7 +106,7 @@ export default function HomeServicesSection({
                           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                        <span className="absolute bottom-3 left-3 rounded-full bg-primary/95 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-md">
+                        <span className="absolute bottom-2 left-2 right-2 rounded-lg bg-primary/95 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-md">
                           {service.title}
                         </span>
                       </motion.div>
@@ -127,5 +125,4 @@ export default function HomeServicesSection({
     </section>
   );
 }
-
 

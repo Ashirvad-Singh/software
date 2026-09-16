@@ -85,14 +85,8 @@ export default function ContentDetail({ kind }: { kind: ContentKind }) {
         image={entry.image}
       />
       <div className="mx-auto max-w-6xl px-5 md:px-10">
-        <Link
-          to={back}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
-        >
-          <ArrowLeft size={16} />
-          All {story ? "case studies" : "projects"}
-        </Link>
-        <p className="mt-10 text-xs font-semibold uppercase tracking-widest text-primary">
+
+        <p className="text-xs font-semibold uppercase tracking-widest text-primary">
           {story ? "Case study" : "Project"} /{" "}
           {entry.industry || entry.category}
         </p>
@@ -104,6 +98,13 @@ export default function ContentDetail({ kind }: { kind: ContentKind }) {
             {entry.description}
           </p>
         )}
+        <Link
+          to={back}
+          className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
+        >
+          <ArrowLeft size={16} />
+          All {story ? "case studies" : "projects"}
+        </Link>
         <img
           src={entry.image || "/adat_hero_ui.webp"}
           alt={entry.title}

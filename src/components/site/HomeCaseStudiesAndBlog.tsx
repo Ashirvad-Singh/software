@@ -81,11 +81,11 @@ export default function HomeCaseStudiesAndBlog({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: index === activeBlog ? 1 : 0.42, y: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className={`${index === activeBlog ? "relative" : "absolute"} left-1/2 top-0 w-[calc(100%-1rem)] -translate-x-1/2 transition-transform duration-700 xl:w-[58%] ${index === activeBlog ? "z-20" : index === (activeBlog - 1 + Math.min(posts.length, 3)) % Math.min(posts.length, 3) ? "z-10 -translate-x-[112%]" : "z-10 translate-x-[12%]"} ${index !== activeBlog ? "hidden xl:block" : ""}`}
+                  className={`${index === activeBlog ? "relative" : "absolute"} left-1/2 top-0 w-[calc(100%-1rem)] -translate-x-1/2 transition-transform duration-700 sm:w-[440px] ${index === activeBlog ? "z-20" : index === (activeBlog - 1 + Math.min(posts.length, 3)) % Math.min(posts.length, 3) ? "z-10 -translate-x-[112%]" : "z-10 translate-x-[12%]"} ${index !== activeBlog ? "hidden xl:block" : ""}`}
                 >
                   <Link
                     to={`/blog/${post.slug}`}
-                    className="group block h-full rounded-2xl border border-border bg-card p-3 shadow-sm transition-all duration-500 hover:shadow-xl sm:p-4"
+                    className="group block h-full rounded-2xl border border-border bg-card p-3 shadow-sm transition-all duration-500 hover:shadow-xl"
                   >
                     <div className="aspect-[16/9] overflow-hidden rounded-lg bg-muted">
                       <img
@@ -95,7 +95,7 @@ export default function HomeCaseStudiesAndBlog({
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
-                    <div className="p-4 sm:p-6">
+                    <div className="p-4">
                       <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
                         <span className="font-semibold uppercase tracking-wider text-primary">
                           {post.category}
@@ -105,13 +105,13 @@ export default function HomeCaseStudiesAndBlog({
                           {post.readTime}
                         </span>
                       </div>
-                      <h3 className="mt-4 text-xl font-bold leading-tight text-foreground group-hover:text-primary">
+                      <h3 className="mt-3 text-lg font-bold leading-tight text-foreground group-hover:text-primary">
                         {post.title}
                       </h3>
-                      <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                      <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
                         {post.excerpt}
                       </p>
-                      <p className="mt-5 text-xs text-muted-foreground">
+                      <p className="mt-4 text-xs text-muted-foreground">
                         {post.date} · {post.author}
                       </p>
                     </div>

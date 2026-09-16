@@ -67,11 +67,6 @@ export default function JobDetailPage() {
     <main className="bg-white dark:bg-neutral-950 min-h-screen pt-32 pb-10 md:pb-16">
       <SEO title={`${job.title} Careers`} description={job.description} />
       <div className="container mx-auto px-4 max-w-4xl">
-        <Link to="/careers" className="inline-flex items-center text-sm font-medium text-neutral-500 hover:text-primary transition-colors mb-8">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Careers
-        </Link>
-        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -89,6 +84,11 @@ export default function JobDetailPage() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 tracking-tight mb-8">
             {job.title}
           </h1>
+
+          <Link to="/careers" className="inline-flex items-center text-sm font-medium text-neutral-500 hover:text-primary transition-colors mb-8">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Careers
+          </Link>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 py-6 border-y border-neutral-200">
             <div className="flex flex-col gap-1">

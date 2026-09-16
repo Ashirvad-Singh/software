@@ -40,11 +40,6 @@ export default function ServiceDetailPage() {
   return (
     <main className="pt-24 md:pt-32 pb-20">
       <div className="container mx-auto px-4 max-w-4xl">
-        <Link to="/services" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Services
-        </Link>
-        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -52,8 +47,13 @@ export default function ServiceDetailPage() {
         >
           <ServiceIcon aria-hidden="true" className="mb-5 h-10 w-10 text-primary" />
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6">{service.title}</h1>
-          <p className="text-xl text-muted-foreground mb-12">{service.description}</p>
+          <p className="text-xl text-muted-foreground mb-6">{service.description}</p>
           
+          <Link to="/services" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Services
+          </Link>
+
           {service.thumbnailUrl && <img src={service.thumbnailUrl} alt={service.title} className="mb-8 aspect-video w-full rounded-2xl object-cover sm:mb-12" />}
           <div className="prose prose-lg dark:prose-invert max-w-none mb-16">
             <p className="text-lg leading-relaxed text-foreground/80">{service.longDescription}</p>

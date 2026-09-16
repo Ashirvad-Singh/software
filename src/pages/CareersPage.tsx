@@ -136,7 +136,7 @@ export default function CareersPage() {
   return (
     <main className="min-h-screen bg-white">
       {/* 1. Hero Section */}
-      <section className="relative bg-[#Fdfbf8] pt-32 pb-16 overflow-hidden">
+      <section className="relative bg-sky-50 pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }} />
         
         <div className="container mx-auto px-4 relative z-10 text-center max-w-4xl">
@@ -197,7 +197,7 @@ export default function CareersPage() {
               { icon: Baby, title: "Parental Leave", desc: "Paid time off for expecting parents to welcome the newest member of their family." }
             ].map((feature, i) => (
               <div key={i} className="flex gap-4 p-6 rounded-2xl border border-neutral-100 bg-white shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center">
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-50 text-sky-500 flex items-center justify-center">
                   <feature.icon size={24} />
                 </div>
                 <div>
@@ -228,7 +228,7 @@ export default function CareersPage() {
       </section>
 
       {/* 3. Teams We Hire For */}
-      <section className="py-10 md:py-16 bg-[#Fdfbf8]">
+      <section className="py-10 md:py-16 bg-sky-50">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Teams We Hire For</h2>
@@ -246,10 +246,10 @@ export default function CareersPage() {
                 <div 
                   key={team.id}
                   onClick={() => setActiveTeam(team.id)}
-                  className={`cursor-pointer rounded-2xl p-5 border transition-all duration-300 ${activeTeam === team.id ? 'bg-white border-orange-200 shadow-lg shadow-orange-100/50' : 'bg-transparent border-transparent hover:bg-white/50'}`}
+                  className={`cursor-pointer rounded-2xl p-5 border transition-all duration-300 ${activeTeam === team.id ? 'bg-white border-sky-200 shadow-lg shadow-sky-100/50' : 'bg-transparent border-transparent hover:bg-white/50'}`}
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`site-step-badge w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${activeTeam === team.id ? 'bg-orange-500 text-white' : 'bg-neutral-200 text-neutral-600'}`}>
+                    <div className={`site-step-badge w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${activeTeam === team.id ? 'bg-sky-500 text-white' : 'bg-neutral-200 text-neutral-600'}`}>
                       {team.id.toString().padStart(2, '0')}
                     </div>
                     <h3 className={`text-xl font-bold ${activeTeam === team.id ? 'text-neutral-900' : 'text-neutral-600'}`}>
@@ -280,25 +280,25 @@ export default function CareersPage() {
       {/* 4. How We Work */}
       <section className="py-10 md:py-16 bg-white">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="flex flex-col lg:flex-row gap-16">
-            <div className="w-full lg:w-1/3">
+          <div className="flex flex-col items-center gap-10 md:gap-12">
+            <div className="w-full max-w-2xl text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">How We Work</h2>
-              <p className="text-lg text-neutral-600 mb-8">Our core values inform every decision we make.</p>
+              <p className="text-lg text-neutral-600">Our core values inform every decision we make.</p>
             </div>
             
-            <div className="w-full lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { icon: Star, title: "Customer First", desc: "We obsess over our customers, working backwards to deliver what they truly need." },
                 { icon: CheckCircle, title: "Own It, Build It", desc: "We take full accountability for our work, from initial concept to final execution." },
                 { icon: Target, title: "Focus on Impact", desc: "We prioritize work that moves the needle and creates tangible business value." },
                 { icon: RefreshCw, title: "Continuous Improvement", desc: "We are always learning, adapting, and striving to be better than we were yesterday." }
               ].map((val, i) => (
-                <div key={i} className="bg-neutral-50 p-8 rounded-3xl hover:shadow-xl transition-all hover:-translate-y-1">
-                  <div className="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center text-orange-500 mb-6">
-                    <val.icon size={24} />
+                <div key={i} className="bg-neutral-50 p-5 rounded-2xl hover:shadow-xl transition-all hover:-translate-y-1">
+                  <div className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-sky-500 mb-4">
+                    <val.icon size={20} />
                   </div>
-                  <h3 className="text-xl font-bold text-neutral-900 mb-3">{val.title}</h3>
-                  <p className="text-neutral-600 leading-relaxed">{val.desc}</p>
+                  <h3 className="text-lg font-bold text-neutral-900 mb-2">{val.title}</h3>
+                  <p className="text-sm text-neutral-600 leading-relaxed">{val.desc}</p>
                 </div>
               ))}
             </div>
@@ -307,7 +307,7 @@ export default function CareersPage() {
       </section>
 
       {/* 5. What We Look For */}
-      <section className="py-10 md:py-16 bg-[#Fdfbf8] overflow-hidden">
+      <section className="py-10 md:py-16 bg-sky-50 overflow-hidden">
         <div className="container mx-auto px-4 max-w-6xl text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">What We Look For</h2>
           <p className="text-lg text-neutral-600 mb-16 max-w-2xl mx-auto">Skills can be taught, character cannot. We value those who show up every day with:</p>
@@ -319,20 +319,20 @@ export default function CareersPage() {
                   <path d="M0,100 C150,200 350,0 500,100 C650,200 850,0 1000,100" fill="none" stroke="url(#grad)" strokeWidth="40" strokeLinecap="round" />
                   <defs>
                     <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#ec4899" />
-                      <stop offset="33%" stopColor="#f97316" />
-                      <stop offset="66%" stopColor="#10b981" />
-                      <stop offset="100%" stopColor="#3b82f6" />
+                      <stop offset="0%" stopColor="#bae6fd" />
+                      <stop offset="33%" stopColor="#7dd3fc" />
+                      <stop offset="66%" stopColor="#38bdf8" />
+                      <stop offset="100%" stopColor="#0ea5e9" />
                     </linearGradient>
                   </defs>
                </svg>
             </div>
 
             {[
-              { icon: MessageSquare, title: "Strong Communication", color: "text-pink-500", bg: "bg-pink-50" },
-              { icon: Lightbulb, title: "A 'Figure It Out' Mindset", color: "text-orange-500", bg: "bg-orange-50" },
-              { icon: Search, title: "Obsession over details", color: "text-emerald-500", bg: "bg-emerald-50" },
-              { icon: Zap, title: "Bias for Action", color: "text-blue-500", bg: "bg-blue-50" }
+              { icon: MessageSquare, title: "Strong Communication", color: "text-sky-500", bg: "bg-sky-50" },
+              { icon: Lightbulb, title: "A 'Figure It Out' Mindset", color: "text-sky-500", bg: "bg-sky-50" },
+              { icon: Search, title: "Obsession over details", color: "text-sky-500", bg: "bg-sky-50" },
+              { icon: Zap, title: "Bias for Action", color: "text-sky-500", bg: "bg-sky-50" }
             ].map((item, i) => (
               <div key={i} className="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-lg border border-white relative overflow-hidden group hover:-translate-y-2 transition-transform">
                 <div className={`w-14 h-14 rounded-2xl ${item.bg} ${item.color} flex items-center justify-center mb-6`}>
@@ -379,7 +379,7 @@ export default function CareersPage() {
                   className="group flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 md:p-8 rounded-3xl border border-neutral-200 bg-white hover:border-neutral-300 hover:shadow-xl transition-all"
                 >
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-2xl font-bold text-neutral-900 mb-4 group-hover:text-orange-500 transition-colors"><Link to={`/careers/${job.id}`}>{job.title}</Link></h3>
+                    <h3 className="text-2xl font-bold text-neutral-900 mb-4 group-hover:text-sky-500 transition-colors"><Link to={`/careers/${job.id}`}>{job.title}</Link></h3>
                     <div className="flex flex-wrap gap-4 text-sm font-medium text-neutral-600">
                       <span className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1 rounded-full"><MapPin size={14} /> {job.location}</span>
                       {job.experience && <span className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1 rounded-full"><Clock size={14} /> {job.experience}</span>}
@@ -389,7 +389,7 @@ export default function CareersPage() {
                   </div>
                   <Link
                     to={`/careers/${job.id}`}
-                    className="site-button mt-6 md:mt-0 flex items-center justify-center gap-2 px-6 py-3 bg-neutral-900 text-white rounded-full font-medium hover:bg-orange-500 transition-colors shrink-0"
+                    className="site-button mt-6 md:mt-0 flex items-center justify-center gap-2 px-6 py-3 bg-neutral-900 text-white rounded-full font-medium hover:bg-sky-500 transition-colors shrink-0"
                   >
                     View Job & Apply <ArrowRight size={16} />
                   </Link>

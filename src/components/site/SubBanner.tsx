@@ -1,15 +1,19 @@
 import { motion } from "framer-motion"
+import { Link } from "react-router-dom"
+import { ArrowLeft } from "lucide-react"
 
 interface SubBannerProps {
   badge?: string
   title: string
   highlightTitle?: string
   subtitle: string
+  backLink?: { to: string; label: string }
   className?: string
 }
 
 export default function SubBanner({
   badge,
+  backLink,
   title,
   highlightTitle,
   subtitle,
@@ -60,6 +64,12 @@ export default function SubBanner({
           <p className="text-sm sm:text-base md:text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto font-medium leading-relaxed">
             {subtitle}
           </p>
+          {backLink && (
+            <Link to={backLink.to} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-sky-700 hover:text-sky-600 dark:text-sky-400 transition-colors">
+              <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+              {backLink.label}
+            </Link>
+          )}
         </motion.div>
       </div>
     </div>
