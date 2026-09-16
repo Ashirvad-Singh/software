@@ -39,14 +39,22 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
-              About Our Company
+              ABOUT ADAT SOLUTIONS
             </h2>
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-neutral-900">
-              Share Our Passion for Performant & Quality Software Solutions
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-neutral-900 dark:text-white">
+              Share our passion for performant and quality software solutions.
             </h3>
-            <p className="text-sm sm:text-base md:text-lg text-neutral-600 mb-8 md:mb-12 leading-relaxed">
-              At ADAT Soft Solutions, we are dedicated to turning your ideas into intuitive web and mobile solutions. We engineer custom software, high-performing websites, scalable mobile applications, and robust e-commerce platforms. From discovery to deployment, we connect global businesses with cutting-edge technology to scale and succeed.
-            </p>
+            <div className="text-sm sm:text-base md:text-lg text-neutral-600 dark:text-neutral-300 mb-8 md:mb-12 leading-relaxed space-y-4">
+              <p>
+                ADAT Soft Solutions is an internationally-recognized brand for the development of sophisticated web &amp; mobile solutions. Our highly capable team, state-of-the-art processes and supportive infrastructure emphasize our dedication towards cutting-edge engineering solutions and stringent quality standards.
+              </p>
+              <p>
+                We specialize in providing premium development and design services that fit the challenging requirements of our enterprise customers across various industries in the US, Canada, Australia and Europe.
+              </p>
+              <p>
+                As the strategical partner for many SME clients we pride ourselves in assisting our clients throughout the full life cycle of their products.
+              </p>
+            </div>
           </motion.div>
 
           <motion.div

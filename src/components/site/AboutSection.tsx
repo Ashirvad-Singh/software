@@ -14,34 +14,28 @@ export default function AboutSection({ hideHeader = false }: { hideHeader?: bool
               transition={{ duration: 0.5 }}
               className="text-sm font-bold text-primary tracking-widest uppercase mb-3"
             >
-              About Our Company
+              ABOUT ADAT SOLUTIONS
             </motion.h2>
-            <p className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl dark:text-white text-black mb-4 sm:mb-6 tracking-tight">
-              Share Our Passion for Performant &{" "}
-              <span className="text-primary inline-block whitespace-nowrap">
-                {"Quality Software".split("").map((word, idx) => (
-                  <motion.span
-                    key={idx}
-                    className="inline-block"
-                    initial={{ x: -10, opacity: 0 }}
-                    whileInView={{ x: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: idx * 0.04 }}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </span>
+            <p className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl dark:text-white text-black mb-6 tracking-tight max-w-4xl mx-auto">
+              Share our passion for performant and quality software solutions.
             </p>
-            <motion.p 
+            <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto mb-10 sm:mb-16 leading-relaxed"
+              className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-4xl mx-auto mb-10 sm:mb-16 leading-relaxed space-y-4 text-center md:text-center"
             >
-              At ADAT Soft Solutions, we are dedicated to turning your ideas into intuitive web and mobile solutions. We engineer custom software, high-performing websites, scalable mobile applications, and robust e-commerce platforms. From discovery to deployment, we connect global businesses with cutting-edge technology.
-            </motion.p>
+              <p>
+                ADAT Soft Solutions is an internationally-recognized brand for the development of sophisticated web &amp; mobile solutions. Our highly capable team, state-of-the-art processes and supportive infrastructure emphasize our dedication towards cutting-edge engineering solutions and stringent quality standards.
+              </p>
+              <p>
+                We specialize in providing premium development and design services that fit the challenging requirements of our enterprise customers across various industries in the US, Canada, Australia and Europe.
+              </p>
+              <p>
+                As the strategical partner for many SME clients we pride ourselves in assisting our clients throughout the full life cycle of their products.
+              </p>
+            </motion.div>
           </>
         )}
 
