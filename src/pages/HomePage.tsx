@@ -44,14 +44,9 @@ export default function HomePage() {
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-neutral-900 dark:text-white">
               Share our passion for performant and quality software solutions.
             </h3>
-            <p className="text-sm sm:text-base md:text-lg text-neutral-600 dark:text-neutral-300 mb-6 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-neutral-600 dark:text-neutral-300 mb-8 md:mb-12 leading-relaxed max-w-3xl mx-auto">
               ADAT Soft Solutions is an internationally-recognized brand for the development of sophisticated web &amp; mobile solutions. We specialize in providing premium development and design services that fit the challenging requirements of our enterprise customers across various industries in the US, Canada, Australia, and Europe.
             </p>
-            <div className="mb-10">
-              <Link to="/about" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
-                Read full story <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
           </motion.div>
 
           <motion.div
