@@ -7,9 +7,6 @@ export default function AboutSection({ hideHeader = false }: { hideHeader?: bool
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 text-center">
         {!hideHeader && (
           <>
-            <p className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl dark:text-white text-black mb-6 tracking-tight max-w-4xl mx-auto">
-              Share our passion for performant and quality software solutions.
-            </p>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
