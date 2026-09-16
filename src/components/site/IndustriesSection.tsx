@@ -83,7 +83,6 @@ export default function IndustriesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [currentGroup, setCurrentGroup] = useState(0);
   const [visibleGroup, setVisibleGroup] = useState(0);
-  const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
   const galleryRef = useRef<HTMLDivElement>(null);
   const isVisible = useInView(galleryRef, { amount: 0.5 });
@@ -103,7 +102,7 @@ export default function IndustriesSection() {
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
   }, []);
-  const cardsPerGroup = isCompact ? 1 : 6;
+  const cardsPerGroup = isCompact ? 1 : 3;
   const groupCount = industries.length / cardsPerGroup;
   const trackGroups = groupCount + 1;
   const slideAnimation = useRef<{ stop: () => void } | null>(null);
@@ -134,7 +133,6 @@ export default function IndustriesSection() {
       const targetGroup = nextIndex === 0 ? groupCount : nextGroup;
       setVisibleGroup(targetGroup);
       setAutoIndex(nextIndex);
-      setExpandedCard(null);
       setCurrentGroup(nextGroup);
       slideAnimation.current?.stop();
       slideAnimation.current = animate(x, `${targetGroup * (-100 / trackGroups)}%`, {
@@ -161,7 +159,6 @@ export default function IndustriesSection() {
     setCurrentGroup(group);
     setVisibleGroup(group);
     setAutoIndex(group * cardsPerGroup);
-    setExpandedCard(null);
   }, [isCompact, cardsPerGroup, groupCount, trackGroups, scrollYProgress, x]);
 
   useEffect(() => () => slideAnimation.current?.stop(), []);
@@ -192,7 +189,7 @@ export default function IndustriesSection() {
   const industrySwipe = useSwipe(selectAdjacent);
 
   return (
-    <section ref={sectionRef} className={`relative bg-[#f7f7f5] font-sans ${isCompact ? "py-10 sm:py-14" : "h-[130svh]"}`}>
+    <section ref={sectionRef} className={`relative bg-[#f7f7f5] font-sans ${isCompact ? "py-10 sm:py-14" : "h-[280svh]"}`}>
       <div className={isCompact ? "overflow-hidden" : "sticky top-0 flex h-svh items-center overflow-hidden pt-14 md:pt-16 pb-6"}>
       <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 sm:px-8 flex flex-col justify-between h-full max-h-svh py-2">
         <div className="mb-2 text-center md:mb-4">
@@ -250,71 +247,34 @@ export default function IndustriesSection() {
                 key={group}
                 inert={visibleGroup !== group}
                 aria-hidden={visibleGroup !== group}
-                onPointerLeave={(event) => { if (event.pointerType === "mouse") setExpandedCard(null); }}
-                onBlurCapture={(event) => {
-                  if (!event.currentTarget.contains(event.relatedTarget)) setExpandedCard(null);
-                }}
                 style={{ width: `${100 / trackGroups}%` }}
                 className="flex shrink-0 gap-1 px-0.5 sm:gap-2 lg:gap-3"
               >
                 {industries.slice((group % groupCount) * cardsPerGroup, (group % groupCount + 1) * cardsPerGroup).map((industry) => {
                   const Icon = industry.icon;
-                  const hoveredInGroup = industries
-                    .slice((group % groupCount) * cardsPerGroup, (group % groupCount + 1) * cardsPerGroup)
-                    .some((item) => item.name === expandedCard);
-                  const isExpanded = isCompact || (hoveredInGroup
-                    ? expandedCard === industry.name
-                    : industry === industries[autoIndex]);
                   return (
-                    <motion.article
+                    <article
                       key={industry.name}
-                      initial={false}
-                      animate={{ flexGrow: isExpanded ? 2.8 : 1 }}
-                      transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 180, damping: 28 }}
-                      onPointerEnter={(event) => {
-                        if (event.pointerType === "mouse") setExpandedCard(industry.name);
-                      }}
-                      onFocusCapture={() => setExpandedCard(industry.name)}
-                      className="relative min-h-0 min-w-0 overflow-hidden rounded-xl bg-neutral-900 basis-0 cursor-pointer"
+                      className="relative min-h-0 min-w-0 flex-1 overflow-hidden rounded-xl bg-neutral-900"
                     >
                       <motion.img
                         src={industry.image}
                         alt=""
                         loading="lazy"
                         initial={false}
-                        animate={{ scale: isExpanded ? 1.06 : 1 }}
+                        animate={{ scale: 1 }}
                         transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
                         className="absolute inset-0 h-full w-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/10" />
                       
-                      <button
-                        type="button"
-                        onClick={() => setExpandedCard(industry.name)}
-                        aria-label={`Expand ${industry.name}`}
-                        aria-expanded={isExpanded}
-                        className="absolute inset-0 z-10 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white"
-                      />
-
                       {/* Icon */}
-                      <div className={`absolute top-4 z-20 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-xs transition-all duration-300 ${isExpanded ? "left-4" : "left-1/2 -translate-x-1/2"}`}>
+                      <div className="absolute left-4 top-4 z-20 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-xs">
                         <Icon className="h-4 w-4" aria-hidden="true" />
                       </div>
 
-                      {/* Vertical Title when collapsed */}
-                      {!isExpanded && (
-                        <div className="pointer-events-none absolute inset-x-0 bottom-6 z-20 flex justify-center">
-                          <span
-                            aria-hidden="true"
-                            className="rotate-180 whitespace-nowrap text-xs font-bold uppercase tracking-widest text-white/90 drop-shadow-md [writing-mode:vertical-rl] sm:text-sm"
-                          >
-                            {industry.name}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Expanded Content */}
-                      <div className={`pointer-events-none absolute inset-x-0 bottom-0 z-20 p-3 sm:p-4 transition-opacity duration-300 ${isExpanded ? "block opacity-100" : "hidden opacity-0"}`}>
+                      {/* All cards keep their content visible. */}
+                      <div className="absolute inset-x-0 bottom-0 z-20 p-3 sm:p-4">
                         <h3 className="text-base font-bold leading-tight text-white sm:text-lg lg:text-xl">
                           {industry.name}
                         </h3>
@@ -329,7 +289,7 @@ export default function IndustriesSection() {
                           Let's build <ArrowUpRight className="h-3 w-3 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
                         </Link>
                       </div>
-                    </motion.article>
+                    </article>
                   );
                 })}
               </div>

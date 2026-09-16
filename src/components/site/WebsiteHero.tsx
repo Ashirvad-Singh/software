@@ -8,9 +8,9 @@ export default function WebsiteHero() {
       <div className="website-hero-label">
         <span /> WEBSITES THAT MEAN BUSINESS
       </div>
-      <h1 className="flex flex-row items-center justify-center whitespace-nowrap">
+      <h1 className="flex flex-col md:flex-row items-center justify-center text-center whitespace-normal md:whitespace-nowrap">
         Built to stand out
-        <span className="ml-4">
+        <span className="mt-2 md:mt-0 md:ml-4">
           <LayoutTextFlip
             text=""
             words={[
@@ -24,6 +24,7 @@ export default function WebsiteHero() {
           />
         </span>
       </h1>
+
       <p className="website-hero-description">
         From a bold first impression to a seamless checkout.
         <br className="hidden sm:block" /> We design websites and online stores

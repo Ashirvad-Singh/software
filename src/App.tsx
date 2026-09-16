@@ -1,12 +1,11 @@
-import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Lenis from "lenis";
 import { Toaster } from "sonner";
 import SiteMagneticButtons from "@/components/ui/site-magnetic-buttons";
 import Cursor from "@/components/site/Cursor";
 import ScrollProgress from "@/components/site/ScrollProgress";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
+import WebsiteAssistant from "@/components/site/WebsiteAssistant";
 import CTASection from "@/components/site/CTASection";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
@@ -41,30 +40,6 @@ function App() {
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
 
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-    });
-
-    let animationFrame = 0;
-    function raf(time: number) {
-      lenis.raf(time);
-      animationFrame = requestAnimationFrame(raf);
-    }
-
-    animationFrame = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(animationFrame);
-      lenis.destroy();
-    };
-  }, []);
 
   return (
     <ErrorBoundary>
@@ -113,6 +88,7 @@ function App() {
 
           {!isDashboard && <CTASection />}
           {!isDashboard && <Footer />}
+          {!isDashboard && <WebsiteAssistant />}
 
           <Toaster position="bottom-right" theme="system" />
         </div>

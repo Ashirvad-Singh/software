@@ -1,5 +1,6 @@
 import { Mail, MapPin, Phone } from "lucide-react"
-import { IconBrandGithub, IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react"
+import { IconBrandFacebook, IconBrandGithub, IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react"
+import { socialProfiles } from "@/data/socialProfiles"
 import { Link } from "react-router-dom"
 
 export default function Footer() {
@@ -20,8 +21,11 @@ export default function Footer() {
               We build custom software, web apps, and digital solutions to help your business scale globally.
             </p>
             <div className="flex gap-4">
-              <a href="#" aria-label="LinkedIn" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href={socialProfiles.linkedin} target="_blank" rel="noopener noreferrer" aria-label="ADAT on LinkedIn (opens in a new tab)" className="text-muted-foreground hover:text-primary transition-colors">
                 <IconBrandLinkedin className="w-5 h-5" />
+              </a>
+              <a href={socialProfiles.facebook} target="_blank" rel="noopener noreferrer" aria-label="ADAT on Facebook (opens in a new tab)" className="text-muted-foreground hover:text-primary transition-colors">
+                <IconBrandFacebook className="w-5 h-5" />
               </a>
               <a href="#" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
                 <IconBrandInstagram className="w-5 h-5" />

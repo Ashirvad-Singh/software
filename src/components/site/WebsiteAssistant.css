@@ -1,0 +1,58 @@
+.adat-chat { font-family: "Geist Variable", sans-serif; }
+.adat-chat-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(410px, calc(100vw - 32px));
+  height: min(660px, calc(100dvh - 120px));
+  margin-bottom: 12px;
+  overflow: hidden;
+  border: 1px solid #d6eaf5;
+  border-radius: 26px;
+  background: white;
+  color: #0f172a;
+  box-shadow: 0 24px 80px -20px #07598555, 0 4px 16px #0f172a0d;
+  transform-origin: bottom left;
+  animation: adat-chat-enter .25s ease-out;
+}
+.adat-chat-header {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 10px;
+  padding: 18px;
+  color: white;
+  background: radial-gradient(ellipse at 95% 0%, #38bdf860, transparent 70%), linear-gradient(120deg, #075985, #0284c7);
+}
+.adat-chat-avatar { position: relative; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 15px; background: #ffffff18; border: 1px solid #ffffff30; }
+.adat-chat-avatar svg { --site-icon-color: #fff; }
+.adat-chat-avatar > span, .adat-chat-launcher-icon > i { position: absolute; right: -2px; bottom: -2px; width: 10px; height: 10px; border-radius: 50%; background: #7dd3fc; border: 2px solid #0284c7; }
+.adat-chat-header-action { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; color: white; cursor: pointer; }
+.adat-chat-header-action:hover { background: #ffffff20; }
+.adat-chat-body { background: radial-gradient(ellipse at top, #e0f2fe80, transparent 65%), #f8fafc; scrollbar-width: thin; scrollbar-color: #bae6fd transparent; }
+.adat-chat-welcome { text-align: center; padding-top: 4px; }
+.adat-chat-orbit { position: relative; display: grid; place-items: center; width: 98px; height: 98px; margin: 0 auto 16px; border: 1px solid #bae6fd; border-radius: 50%; background: radial-gradient(circle, #e0f2fe, #f0f9ff80); }
+.adat-chat-orbit::before { content: ""; position: absolute; inset: 8px; border: 1px dashed #7dd3fc; border-radius: 50%; }
+.adat-chat-robot { display: grid; place-items: center; width: 65px; height: 65px; border-radius: 23px; background: linear-gradient(145deg, white, #e0f2fe); box-shadow: 0 8px 18px #0284c720, inset 0 1px 0 white; transform: rotate(-7deg); }
+.adat-chat-orbit-spark { position: absolute; top: 0; right: -1px; display: grid; place-items: center; width: 29px; height: 29px; border-radius: 10px; background: #0284c7; box-shadow: 0 4px 10px #0284c730; }
+.adat-chat-orbit-spark svg { --site-icon-color: white; }
+.adat-chat-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: .16em; color: #0369a1; }
+.adat-chat-welcome h3 { margin-top: 9px; font-size: 32px; font-weight: 750; line-height: 1.12; letter-spacing: -.045em; }
+.adat-chat-welcome h3 > span { color: #0284c7; }
+.adat-chat-welcome > p { margin-top: 12px; color: #64748b; font-size: 12px; line-height: 1.6; }
+.adat-chat-quick-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
+.adat-chat-quick-card { display: flex; flex-direction: column; gap: 7px; min-width: 0; padding: 13px; border: 1px solid #e2e8f0; border-radius: 16px; background: #ffffffed; text-align: left; box-shadow: 0 2px 5px #0f172a03; cursor: pointer; transition: border-color .2s, box-shadow .2s, transform .2s; }
+.adat-chat-quick-card:hover { transform: translateY(-2px); border-color: #7dd3fc; box-shadow: 0 6px 16px #0284c712; }
+.adat-chat-quick-icon { display: grid; place-items: center; width: 31px; height: 31px; border-radius: 10px; color: #0284c7; background: #f0f9ff; }
+.adat-chat-quick-title { display: flex; align-items: center; justify-content: space-between; gap: 4px; width: 100%; font-size: 12px; font-weight: 650; color: #0f172a; }
+.adat-chat-quick-title svg { flex-shrink: 0; }
+.adat-chat-quick-detail { color: #64748b; font-size: 10px; }
+.adat-chat-quick-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.adat-chat-message { animation: adat-chat-enter .2s ease-out; }
+.adat-chat-launcher { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; padding: 0; border: 1px solid #38bdf880; border-radius: 50%; background: linear-gradient(120deg, #0284c7, #0369a1); color: white; box-shadow: 0 8px 25px #0284c735, inset 0 1px 0 #ffffff30; cursor: pointer; transition: box-shadow .2s; }
+.adat-chat-launcher:hover { box-shadow: 0 10px 35px #0284c755; }
+.adat-chat-launcher-icon { position: relative; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 15px; background: transparent; }
+.adat-chat button:focus-visible, .adat-chat a:focus-visible { outline: 2px solid #38bdf8; outline-offset: 3px; }
+@keyframes adat-chat-enter { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .adat-chat *, .adat-chat *::before { animation: none !important; transition: none !important; }
+}

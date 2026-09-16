@@ -2,9 +2,10 @@
   position: relative;
   isolation: isolate;
   background:
-    radial-gradient(ellipse at 78% 20%, #d7efff 0%, transparent 48%),
-    radial-gradient(ellipse at 6% 95%, #e6f6ff 0%, transparent 48%),
-    linear-gradient(120deg, #ffffff 15%, #f6faff 65%, #eef3ff);
+    radial-gradient(ellipse at 95% 8%, #bae6fd99 0%, transparent 42%),
+    radial-gradient(ellipse at 4% 85%, #c4eaff99 0%, transparent 38%),
+    radial-gradient(ellipse at 65% 100%, #dbeafe80 0%, transparent 35%),
+    linear-gradient(135deg, #ffffff 12%, #ffffff 45%, #f5fbff 75%, #ffffff);
   color: #0c304a;
   padding: clamp(110px, 13vh, 140px) 0 16px;
   overflow: hidden;
@@ -420,7 +421,11 @@
 }
 
 .adat-hero.adat-hero-simple {
-  background: #f8fcff;
+  background:
+    radial-gradient(ellipse at 95% 8%, #bae6fd99 0%, transparent 42%),
+    radial-gradient(ellipse at 4% 85%, #c4eaff99 0%, transparent 38%),
+    radial-gradient(ellipse at 65% 100%, #dbeafe80 0%, transparent 35%),
+    linear-gradient(135deg, #ffffff 12%, #ffffff 45%, #f5fbff 75%, #ffffff);
 }
 
 /* Slide Specific Desktop Compositions */
