@@ -12,7 +12,7 @@ export default function AboutPage() {
         highlightTitle="Adat Soft Solutions"
         subtitle="We connect global businesses with cutting-edge web & mobile technology, empowering brands to scale and succeed."
       />
-      <AboutSection hideHeader />
+      <AboutSection />
       <CoreValuesSection />
       <ProcessTimeline />
     </main>
