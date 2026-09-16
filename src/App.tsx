@@ -52,14 +52,16 @@ function App() {
       touchMultiplier: 2,
     });
 
+    let animationFrame = 0;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      animationFrame = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    animationFrame = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(animationFrame);
       lenis.destroy();
     };
   }, []);
@@ -67,7 +69,7 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <div className="bg-background text-foreground min-h-screen selection:bg-primary/30 selection:text-primary flex flex-col relative">
+        <div className={`${isDashboard ? "" : "public-site "}bg-background text-foreground min-h-screen selection:bg-primary/30 selection:text-primary flex flex-col relative`}>
           <ScrollToTop />
           <SiteMagneticButtons />
           {!isDashboard && <Cursor />}

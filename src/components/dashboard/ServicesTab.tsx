@@ -1,3 +1,4 @@
+import { validateCatalogSlug } from "@/lib/content/catalogValidation";
 import { useState, useEffect } from "react";
 import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -26,6 +27,7 @@ export interface ServiceItem {
 export default function ServicesTab() {
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -68,13 +70,15 @@ export default function ServicesTab() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading || uploading) return;
     setLoading(true);
     try {
+      const slug = await validateCatalogSlug("services", formData.slug, editingId);
       if (editingId) {
-        await updateDoc(doc(db, "services", editingId), { ...formData });
+        await updateDoc(doc(db, "services", editingId), { ...formData, slug });
         toast.success("Service updated successfully");
       } else {
-        await addDoc(collection(db, "services"), { ...formData, createdAt: Date.now() });
+        await addDoc(collection(db, "services"), { ...formData, slug, createdAt: Date.now() });
         toast.success("Service created successfully");
       }
       setIsFormOpen(false);
@@ -83,7 +87,7 @@ export default function ServicesTab() {
       fetchServices();
     } catch (error) {
       console.error(error);
-      toast.error("Failed to save service");
+      toast.error(error instanceof Error ? error.message : "Failed to save service");
     } finally {
       setLoading(false);
     }
@@ -162,7 +166,11 @@ export default function ServicesTab() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input placeholder="Service Title" name="title" value={formData.title} onChange={handleInputChange} required />
                   <Input placeholder="Slug (e.g. web-development)" name="slug" value={formData.slug} onChange={handleInputChange} required />
-                  <Input placeholder="Icon Name (lucide-react)" name="iconName" value={formData.iconName} onChange={handleInputChange} required className="md:col-span-2" />
+                  <label className="md:col-span-2 text-sm">Service icon
+                    <select name="iconName" value={formData.iconName} onChange={handleInputChange} className="mt-2 w-full rounded-md border p-2">
+                      {["Code", "Smartphone", "Globe", "ShoppingCart", "Layers", "Database", "Cpu"].map(icon => <option key={icon} value={icon}>{icon}</option>)}
+                    </select>
+                  </label>
                   
                   <textarea 
                     placeholder="Short Description" 
@@ -188,29 +196,14 @@ export default function ServicesTab() {
                     className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm"
                   />
 
-                  <div className="md:col-span-2 space-y-2">
-                    <label className="text-sm font-medium text-neutral-700 mb-2 block">Visual Layout Component</label>
-                    <select
-                      name="visualType"
-                      value={formData.visualType}
-                      onChange={handleInputChange}
-                      className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
-                    >
-                      <option value="default">Standard Layout</option>
-                      <option value="globe">3D Globe Component (Great for Cloud/Web)</option>
-                      <option value="staggered_images">UI/UX Interactive Mockup (Great for UI/UX Design)</option>
-                      <option value="tasks_drop">Tech Stack Drop Animation (Great for CMS/Web)</option>
-                      <option value="analytics">Analytics Dashboard Demo (Great for AI/Analytics)</option>
-                      <option value="image">Custom Thumbnail Image</option>
-                    </select>
-                  </div>
 
                   <div className="md:col-span-2 space-y-2">
                     <label className="text-sm font-medium text-neutral-700">Service Thumbnail Image (for Navbar & Cards)</label>
                     <ImageUpload 
                       value={formData.thumbnailUrl || ""} 
                       onChange={(url) => setFormData(prev => ({ ...prev, thumbnailUrl: url }))} 
-                      multiple={false} 
+                      multiple={false}
+                      onUploadingChange={setUploading} 
                     />
                   </div>
 
@@ -229,7 +222,7 @@ export default function ServicesTab() {
                     className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm md:col-span-2"
                   />
                 </div>
-                <Button type="submit" disabled={loading} className="w-full md:w-auto">
+                <Button type="submit" disabled={loading || uploading} className="w-full md:w-auto">
                   {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                   {editingId ? "Update Service" : "Publish Service"}
                 </Button>

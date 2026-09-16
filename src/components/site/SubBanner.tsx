@@ -16,7 +16,7 @@ export default function SubBanner({
   className = "",
 }: SubBannerProps) {
   return (
-    <div className={`relative pt-24 md:pt-32 pb-8 md:pb-12 overflow-hidden bg-gradient-to-b from-sky-50/50 via-sky-50/10 to-transparent dark:from-sky-950/20 dark:via-transparent dark:to-transparent ${className}`}>
+    <div className={`site-sub-banner relative pt-24 md:pt-32 pb-8 md:pb-12 overflow-hidden bg-gradient-to-b from-sky-50/50 via-sky-50/10 to-transparent dark:from-sky-950/20 dark:via-transparent dark:to-transparent ${className}`}>
       {/* Ambient Glowing Light Orb */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-sky-400/15 rounded-full blur-[110px] pointer-events-none z-0" />
 

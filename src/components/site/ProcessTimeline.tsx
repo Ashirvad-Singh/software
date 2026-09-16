@@ -48,7 +48,7 @@ export default function ProcessTimeline({ hideHeader = false }: { hideHeader?: b
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start pb-10 md:pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
           {/* Left Column */}
           <div className="lg:col-span-5 flex flex-col justify-between h-full">
             <div>

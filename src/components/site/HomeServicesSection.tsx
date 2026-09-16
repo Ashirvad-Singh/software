@@ -1,17 +1,9 @@
-import { useEffect, useState } from "react";
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import { db } from "@/lib/firebase";
-import { services } from "@/data/services";
-
-type FeaturedService = {
-  slug: string;
-  title: string;
-  description: string;
-  thumbnailUrl?: string;
-};
+import { useCatalog } from "@/lib/content/useCatalog";
+import CatalogState from "@/components/content/CatalogState";
 
 const fallbackImages = [
   "/adat_hero_ui.webp",
@@ -29,35 +21,9 @@ export default function HomeServicesSection({
   hideHeader?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
-  const [featuredServices, setFeaturedServices] = useState<FeaturedService[]>(
-    showAll ? services : services.slice(0, 5)
-  );
+  const { entries, loading, error, retry } = useCatalog("services");
+  const featuredServices = showAll ? entries : entries.slice(0, 5);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    async function fetchServices() {
-      try {
-        const snapshot = await getDocs(
-          query(
-            collection(db, "services"),
-            orderBy("createdAt", "asc"),
-            ...(showAll ? [] : [limit(5)])
-          )
-        );
-        const data = snapshot.docs.map((doc) => doc.data() as FeaturedService);
-        if (!cancelled && data.length > 0) {
-          setFeaturedServices(data);
-        }
-      } catch (error) {
-        console.error("Error fetching featured services:", error);
-      }
-    }
-    fetchServices();
-    return () => {
-      cancelled = true;
-    };
-  }, [showAll]);
 
   return (
     <section
@@ -88,6 +54,7 @@ export default function HomeServicesSection({
           </div>
         )}
 
+        <CatalogState loading={loading} error={error} empty={!entries.length} label="services" retry={retry} />
         <div className="divide-y divide-neutral-200 border-y border-neutral-200 dark:divide-neutral-800 dark:border-neutral-800">
           {featuredServices.map((service, index) => {
             const paddedIndex = String(index + 1).padStart(2, "0");

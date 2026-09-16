@@ -133,7 +133,7 @@ export default function FaqSection() {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full px-6 py-5 flex items-center justify-between gap-4 text-left font-semibold text-neutral-900 dark:text-white text-base md:text-lg"
+                  className="w-full px-4 sm:px-6 py-5 flex items-center justify-between gap-4 text-left font-semibold text-neutral-900 dark:text-white text-base md:text-lg"
                 >
                   <span className="flex items-center gap-3">
                     <span className="site-step-badge w-7 h-7 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-500 dark:text-neutral-400 flex items-center justify-center text-xs font-mono font-bold shrink-0">
@@ -161,7 +161,7 @@ export default function FaqSection() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-6 pt-2 text-sm md:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed border-t border-neutral-200/50 dark:border-neutral-800/50 ml-10">
+                      <div className="px-4 sm:px-6 pb-6 pt-2 text-sm md:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed border-t border-neutral-200/50 dark:border-neutral-800/50 sm:ml-10">
                         {faq.answer}
                       </div>
                     </motion.div>
@@ -173,7 +173,7 @@ export default function FaqSection() {
         </div>
 
         {/* Bottom Contact Help Card */}
-        <div className="mt-12 p-8 rounded-3xl bg-neutral-900 text-white border border-neutral-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl relative overflow-hidden">
+        <div className="mt-8 sm:mt-12 p-5 sm:p-8 rounded-3xl bg-neutral-900 text-white border border-neutral-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl relative overflow-hidden">
           <div className="absolute -right-16 -bottom-16 w-48 h-48 bg-primary/20 rounded-full blur-3xl" />
           <div className="space-y-2 text-center md:text-left z-10">
             <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary uppercase tracking-wider">

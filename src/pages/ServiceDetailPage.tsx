@@ -1,62 +1,21 @@
 import { useParams, Link, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
-import { ArrowLeft, CheckCircle2, Loader2 } from "lucide-react"
-import { useState, useEffect } from "react"
-import { collection, getDocs, query, where } from "firebase/firestore"
-import { db } from "@/lib/firebase"
-import { services as staticServices } from "@/data/services"
+import { ArrowLeft, CheckCircle2, Loader2, Code, Smartphone, Globe, ShoppingCart, Layers, Database, Cpu } from "lucide-react"
+import { useCatalog } from "@/lib/content/useCatalog";
+import { listValue } from "@/lib/content/model";
+import CatalogState from "@/components/content/CatalogState";
 
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
-  const [service, setService] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchService = async () => {
-      try {
-        const q = query(collection(db, "services"), where("slug", "==", slug));
-        const snapshot = await getDocs(q);
-        if (!snapshot.empty) {
-          const docData = snapshot.docs[0].data();
-          
-          const benefits = docData.benefits ? docData.benefits.split('\n').filter((b: string) => b.trim().length > 0) : [];
-          const process = docData.process ? docData.process.split('\n').filter((p: string) => p.trim().length > 0).map((p: string) => {
-            const parts = p.split(':');
-            return {
-              step: parts[0]?.trim() || 'Step',
-              detail: parts.slice(1).join(':').trim() || ''
-            };
-          }) : [];
-
-          setService({ 
-            id: snapshot.docs[0].id, 
-            ...docData,
-            benefits,
-            process
-          });
-        } else {
-          const staticSvc = staticServices.find(s => s.slug === slug);
-          if (staticSvc) {
-            setService(staticSvc);
-          } else {
-            setService(null);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching service details:", error);
-        const staticSvc = staticServices.find(s => s.slug === slug);
-        if (staticSvc) {
-          setService(staticSvc);
-        } else {
-          setService(null);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (slug) fetchService();
-  }, [slug]);
+  const { entries, loading, error, retry } = useCatalog("services", slug);
+  const record = entries[0];
+  const service = record ? { ...record, benefits: listValue(record.benefits, /\n/),
+    process: listValue(record.process, /\n/).map(line => {
+      const [step, ...detail] = line.split(":");
+      return { step, detail: detail.join(":").trim() };
+    }) } : null;
+  if (error) return <main className="min-h-screen pt-32"><CatalogState loading={false} error empty={false} label="this service" retry={retry} /></main>;
 
   if (loading) {
     return (
@@ -75,6 +34,9 @@ export default function ServiceDetailPage() {
     );
   }
 
+  const icons = { Code, Smartphone, Globe, ShoppingCart, Layers, Database, Cpu };
+  const ServiceIcon = icons[service.iconName as keyof typeof icons] || Code;
+
   return (
     <main className="pt-24 md:pt-32 pb-20">
       <div className="container mx-auto px-4 max-w-4xl">
@@ -88,9 +50,11 @@ export default function ServiceDetailPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          <ServiceIcon aria-hidden="true" className="mb-5 h-10 w-10 text-primary" />
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6">{service.title}</h1>
           <p className="text-xl text-muted-foreground mb-12">{service.description}</p>
           
+          {service.thumbnailUrl && <img src={service.thumbnailUrl} alt={service.title} className="mb-8 aspect-video w-full rounded-2xl object-cover sm:mb-12" />}
           <div className="prose prose-lg dark:prose-invert max-w-none mb-16">
             <p className="text-lg leading-relaxed text-foreground/80">{service.longDescription}</p>
           </div>

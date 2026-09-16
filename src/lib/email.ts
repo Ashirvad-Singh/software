@@ -1,14 +1,15 @@
 import emailjs from '@emailjs/browser';
 
-const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "-4JaAkOFO_LqUJbH0";
-const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_2lkjugn";
-const jobAppTemplateId = import.meta.env.VITE_EMAILJS_JOB_APP_TEMPLATE_ID || "template_i21ferl";
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "";
+const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "";
+const jobAppTemplateId = import.meta.env.VITE_EMAILJS_JOB_APP_TEMPLATE_ID || "";
 const contactTemplateId = import.meta.env.VITE_EMAILJS_CONTACT_TEMPLATE_ID || "";
 const statusTemplateId = import.meta.env.VITE_EMAILJS_STATUS_TEMPLATE_ID || "";
 
-emailjs.init(publicKey);
+if (publicKey) emailjs.init(publicKey);
 
 export const sendJobApplicationEmail = async (applicantName: string, applicantEmail: string, position: string) => {
+  if (!publicKey || !serviceId || !jobAppTemplateId) return false;
   try {
     const templateParams = {
       to_name: applicantName,
@@ -42,6 +43,7 @@ export const sendJobStatusUpdateEmail = async (applicantName: string, applicantE
     message = `Your application for the ${position} role has been updated to: ${status}.`;
   }
 
+  if (!publicKey || !serviceId || !statusTemplateId) return false;
   try {
     const templateParams = {
       to_name: applicantName,
@@ -61,7 +63,8 @@ export const sendJobStatusUpdateEmail = async (applicantName: string, applicantE
   }
 };
 
-export const sendContactEmail = async (name: string, email: string, phone: string, company: string, message: string) => {
+export const sendContactEmail = async (name: string, email: string, phone: string, company: string, message: string, subject = "Website inquiry") => {
+  if (!publicKey || !serviceId || !contactTemplateId) return false;
   try {
     const templateParams = {
       to_name: "Adat Soft Solutions Team",
@@ -69,6 +72,7 @@ export const sendContactEmail = async (name: string, email: string, phone: strin
       from_email: email,
       phone: phone,
       company: company,
+      subject,
       message: message
     };
     await emailjs.send(

@@ -1,48 +1,17 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, User, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-const fallbackPost = {
-  title: "The Future of Web Development in 2026",
-  category: "Technology",
-  author: "Mike Johnson",
-  date: "Oct 24, 2026",
-  readTime: "5 min read",
-  image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800",
-  content: `
-    <p>The landscape of web development has shifted dramatically over the past few years.</p>
-    <h2>Conclusion</h2>
-    <p>The future of web development is incredibly exciting.</p>
-  `
-};
-
+import { useMemo } from "react";
+import { useCatalog } from "@/lib/content/useCatalog";
+import { prepareArticle } from "@/lib/content/article";
+import CatalogState from "@/components/content/CatalogState";
 export default function BlogPostPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const [postData, setPostData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const q = query(collection(db, "blogs"), where("slug", "==", slug));
-        const snapshot = await getDocs(q);
-        if (!snapshot.empty) {
-          setPostData({ id: snapshot.docs[0].id, ...snapshot.docs[0].data() });
-        } else {
-          setPostData(fallbackPost); // Fallback for demo
-        }
-      } catch (error) {
-        console.error("Error fetching blog post:", error);
-        setPostData(fallbackPost);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (slug) fetchPost();
-  }, [slug]);
+  const { entries, loading, error, retry } = useCatalog("blogs", slug);
+  const postData = entries[0];
+  const article = useMemo(() => prepareArticle(postData?.content || ""), [postData?.content]);
+  if (error) return <main className="min-h-screen pt-32"><CatalogState loading={false} error empty={false} label="this article" retry={retry} /></main>;
 
   if (loading) {
     return (
@@ -74,7 +43,7 @@ export default function BlogPostPage() {
             {postData.title}
           </h1>
           
-          <div className="flex items-center gap-3 text-white/90 text-sm font-medium">
+          <div className="flex flex-wrap items-center gap-3 text-white/90 text-sm font-medium">
             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
                <User className="w-5 h-5 text-white" />
             </div>
@@ -92,29 +61,22 @@ export default function BlogPostPage() {
         
         {/* Article Body */}
         <div className="flex-1 min-w-0">
+          {postData.image && <img src={postData.image} alt={postData.title} className="mb-8 aspect-video w-full rounded-2xl object-cover" />}
           <article 
             className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-p:text-neutral-700 dark:prose-p:text-neutral-300 prose-p:leading-relaxed max-w-none"
-            dangerouslySetInnerHTML={{ __html: postData.content }}
+            dangerouslySetInnerHTML={{ __html: article.html }}
           />
         </div>
 
-        {/* Right Sidebar - Table of Content */}
-        <div className="w-full lg:w-[360px] shrink-0">
-          <div className="sticky top-32 bg-slate-50 dark:bg-neutral-900 rounded-xl p-8">
-            <h3 className="font-bold text-lg mb-8 text-neutral-900 dark:text-white">Table of Content</h3>
-            <div className="flex flex-col gap-5 text-sm font-semibold text-neutral-600 dark:text-neutral-400">
-              <a href="#" className="hover:text-blue-600 transition-colors leading-relaxed">What Are Google Ads and Facebook Ads?</a>
-              <div className="h-px bg-neutral-200 dark:bg-neutral-800" />
-              <a href="#" className="hover:text-blue-600 transition-colors leading-relaxed">Key Differences Between Google Ads and Facebook Ads for DTC Brands</a>
-              <div className="h-px bg-neutral-200 dark:bg-neutral-800" />
-              <a href="#" className="hover:text-blue-600 transition-colors leading-relaxed">Google Ads vs Facebook Ads Across the Sales Funnel</a>
-              <div className="h-px bg-neutral-200 dark:bg-neutral-800" />
-              <a href="#" className="hover:text-blue-600 transition-colors leading-relaxed">1. Building Awareness at the Top of the Funnel</a>
-              <div className="h-px bg-neutral-200 dark:bg-neutral-800" />
-              <a href="#" className="hover:text-blue-600 transition-colors leading-relaxed">2. Building Consideration in the Middle of the Funnel</a>
-            </div>
-          </div>
-        </div>
+        {article.headings.length > 0 && <aside className="w-full lg:w-[280px] shrink-0">
+          <nav aria-label="Table of contents" className="sticky top-28 rounded-xl bg-slate-50 p-5 sm:p-8 dark:bg-neutral-900">
+            <h2 className="mb-6 text-lg font-bold">Table of contents</h2>
+            <ul className="space-y-4 text-sm">
+              {article.headings.map(heading => <li key={heading.id}><a className="hover:text-primary" href={`#${heading.id}`}>{heading.title}</a></li>)}
+            </ul>
+          </nav>
+        </aside>}
+
         
       </div>
     </main>

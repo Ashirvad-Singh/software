@@ -146,8 +146,6 @@
   align-items: center;
   text-align: center;
   gap: 26px;
-  max-width: 1440px;
-  margin-inline: auto;
 }
 .adat-slide-1 .adat-hero-copy {
   order: 1;
@@ -188,6 +186,7 @@
 .adat-showcase-1 {
   order: 2;
   width: 100%;
+  max-width: 1200px;
 }
 .adat-showcase-1 .adat-showcase-bar {
   display: none;
@@ -251,7 +250,7 @@
 .adat-showcase-2 { order: 2; padding: 0 10px 10px; border: 1px solid #d5dff0; border-radius: 16px; background: linear-gradient(130deg, #edf5ff, #f5f0ff); }
 .adat-showcase-2 .adat-showcase-bar { padding-inline: 2px; padding-block: 6px; }
 .adat-showcase-2 .adat-hero-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; min-height: 0; gap: 8px; }
-.adat-showcase-2 .adat-flip-card-0 { grid-column: span 2; min-height: 95px; }
+.adat-showcase-2 .adat-flip-card-0 { grid-column: span 2; grid-row: auto; min-height: 95px; }
 .adat-showcase-2 .adat-flip-card-1,
 .adat-showcase-2 .adat-flip-card-2 { grid-column: auto; min-height: 105px; }
 .adat-showcase-2 .adat-flip-card-3,
@@ -260,113 +259,138 @@
 .adat-showcase-2 .adat-hero-card { padding: 11px; }
 .adat-showcase-2 .adat-hero-card-0 { background: linear-gradient(145deg, #2c6392, #25486e); }
 
-/* --- RESPONSIVE MEDIA QUERIES (DEFINED AT THE END FOR ABSOLUTE PRECEDENCE) --- */
-
-@media (min-width: 1500px) {
-  .adat-hero { padding-top: 125px; }
+/* Full-screen composition: header, slide and controls share the viewport. */
+.adat-hero {
+  --hero-top: clamp(100px, 13dvh, 150px);
+  --hero-bottom: max(16px, env(safe-area-inset-bottom));
+  --slide-height: calc(100dvh - var(--hero-top) - var(--hero-bottom) - 64px);
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: var(--hero-top);
+  padding-bottom: var(--hero-bottom);
 }
+.adat-hero-slide { min-height: var(--slide-height); padding-block: 12px; }
+.adat-slide-0 { display: flex; align-items: center; justify-content: center; }
+.adat-slide-1 { justify-content: center; gap: clamp(20px, 4dvh, 56px); }
+.adat-slide-2 { align-content: center; }
+.adat-hero-controls { margin-top: 12px; padding-top: 10px; }
+.adat-hero h1, .adat-hero-title, .adat-slide-1 .adat-hero-title,
+.adat-hero .website-hero h1 {
+  font-size: clamp(30px, min(3.8vw, 6.5dvh), 76px);
+  line-height: 1.14;
+}
+.adat-slide-1 .adat-hero-copy { max-width: 1200px; }
+.adat-slide-1 .adat-hero-title, .adat-hero .website-hero h1 { max-width: 1100px; }
+.adat-hero-intro h2, .adat-slide-1 .adat-hero-intro h2,
+.adat-slide-2 .adat-hero-intro h2 { font-size: clamp(17px, min(1.5vw, 2.7dvh), 28px); }
+.adat-hero-intro p, .adat-slide-1 .adat-hero-intro p,
+.adat-slide-2 .adat-hero-intro p, .website-hero-description {
+  font-size: clamp(14px, min(1.1vw, 2dvh), 20px);
+  line-height: 1.6;
+}
+.adat-showcase-1 { max-width: 1500px; }
+.adat-showcase-1 .adat-hero-grid { min-height: clamp(185px, 30dvh, 420px); }
+.adat-showcase-2 .adat-hero-grid { grid-template-rows: repeat(2, minmax(clamp(165px, 27dvh, 350px), auto)); }
+.adat-showcase-1 .adat-card-heading, .adat-showcase-2 .adat-card-heading { font-size: clamp(16px, 1.25vw, 25px); }
+.adat-hero .card-visual { flex-grow: 1; }
+.website-hero { width: 100%; }
+.website-stage { height: clamp(210px, 30dvh, 380px); max-width: 1200px; margin-top: clamp(18px, 4dvh, 50px); }
+.website-main-content { padding: clamp(12px, 2dvh, 28px); }
+.website-art { height: clamp(95px, 17dvh, 220px); }
+.website-brand-preview, .website-store-preview { height: clamp(125px, 20dvh, 260px); }
+.website-products { height: 65%; }
+.website-hero-label { font-size: clamp(10px, .8vw, 14px); }
+.website-platforms { font-size: clamp(11px, .8vw, 15px); }
 
 @media (max-width: 1023px) {
-  .adat-hero { padding-top: 105px; }
-  .adat-slide-1, .adat-slide-2 { grid-template-columns: 1fr; gap: 16px; }
-  .adat-slide-1 .adat-hero-copy, .adat-showcase-1,
-  .adat-slide-2 .adat-hero-copy, .adat-showcase-2 { order: initial; }
+  .adat-hero { --hero-top: 100px; }
+  .adat-slide-2 { grid-template-columns: 1fr; gap: clamp(20px, 3dvh, 40px); }
+  .adat-slide-2 .adat-hero-copy { max-width: 720px; }
+  .adat-hero h1, .adat-hero-title, .adat-slide-1 .adat-hero-title,
+  .adat-hero .website-hero h1 { font-size: clamp(28px, min(5vw, 5dvh), 50px); }
+  .adat-showcase-1 .adat-hero-grid { grid-template-columns: repeat(2, 1fr); min-height: 0; }
+  .adat-showcase-1 .adat-flip-card { min-height: clamp(165px, 20dvh, 240px); }
+  .adat-showcase-2 .adat-hero-grid { grid-template-rows: repeat(2, minmax(165px, 20dvh)); }
 }
 
-/* Mobile Devices (< 768px): Equalized ~320px slide height, clear header space & horizontal card swipe */
 @media (max-width: 767px) {
-  .adat-hero { padding-top: 105px !important; padding-bottom: 10px !important; }
-  .adat-hero-slide { gap: 10px !important; }
-  
-  .adat-hero h1, .adat-hero-title { font-size: 21px !important; line-height: 1.2 !important; margin: 0 0 4px 0 !important; }
-  .adat-hero-eyebrow { display: block !important; font-size: 11px !important; margin-bottom: 6px !important; }
-  .adat-hero-eyebrow::before { display: none !important; }
-  .adat-hero-eyebrow span { display: inline-block !important; margin-top: 2px !important; }
-  .adat-hero-eyebrow span::before { content: ' / ' !important; display: inline !important; }
-
-  .adat-hero-intro { padding-top: 2px !important; margin-top: 2px !important; }
-  .adat-hero-intro h2 { font-size: 14px !important; margin-bottom: 2px !important; }
-  .adat-hero-intro p { display: none !important; } /* Hide long text on mobile to equalize slide height with Slide 1 */
-  .adat-hero-cta { padding: 5px 12px !important; font-size: 11px !important; margin-top: 6px !important; }
-
-  /* Show ONLY 1 Featured Card (Card 0) for Slide 2 & Slide 3 on Mobile */
+  .adat-hero { --hero-top: 96px; --hero-bottom: max(12px, env(safe-area-inset-bottom)); }
+  .adat-hero-slide { gap: clamp(16px, 3dvh, 32px); }
+  .adat-hero-eyebrow { font-size: 12px; margin-bottom: 10px; }
+  .adat-hero-eyebrow::before { display: none; }
+  .adat-hero-intro, .adat-slide-1 .adat-hero-intro,
+  .adat-slide-2 .adat-hero-intro { margin-top: 10px; padding-top: 0; }
+  .adat-hero-intro p { margin-top: 6px; }
+  .adat-hero-cta { font-size: 13px; margin-top: 12px; }
   .adat-showcase-1 .adat-flip-card:not(.adat-flip-card-0),
-  .adat-showcase-2 .adat-flip-card:not(.adat-flip-card-0) {
-    display: none !important;
+  .adat-showcase-2 .adat-flip-card:not(.adat-flip-card-0) { display: none; }
+  .adat-showcase-1 .adat-hero-grid, .adat-showcase-2 .adat-hero-grid { display: grid; grid-template-columns: 1fr; grid-template-rows: auto; min-height: 0; }
+  .adat-showcase-1 .adat-flip-card-0, .adat-showcase-2 .adat-flip-card-0 {
+    grid-column: auto; grid-row: auto; min-height: clamp(165px, 27dvh, 300px);
   }
+  .adat-showcase-bar .adat-showcase-label { display: none; }
+  .adat-showcase-bar { font-size: 10px; }
+  .adat-hero-card { padding: 14px; }
+  .adat-hero-card-link { font-size: 12px; }
+  .adat-hero-controls { gap: 10px; }
+  .adat-hero-dots button { width: 20px; }
+  .website-hero-description { margin: 12px auto 16px; }
+  .website-hero-actions { gap: 12px; flex-wrap: wrap; }
+  .website-platforms { gap: 8px; }
+  .website-stage { height: clamp(180px, 29dvh, 300px); margin-top: 24px; }
+  .website-main-preview { width: 96%; left: 2%; }
+  .website-mini { display: none; }
+  .website-art { height: clamp(90px, 15dvh, 160px); }
+  .website-detail-pill { font-size: 9px; }
+}
 
-  .adat-showcase-1 .adat-hero-grid,
-  .adat-showcase-2 .adat-hero-grid {
-    display: block !important;
-    margin-top: 6px !important;
-  }
+/* Short phones retain the headline, primary action and featured visual. */
+@media (max-width: 767px) and (max-height: 700px) {
+  .adat-hero-slide { padding-block: 2px; gap: 8px; }
+  .adat-hero h1, .adat-hero-title, .adat-slide-1 .adat-hero-title,
+  .adat-hero .website-hero h1 { font-size: clamp(23px, 6vw, 30px); }
+  .adat-hero-intro p, .website-hero-description { display: none; }
+  .adat-hero-eyebrow { font-size: 11px; margin-bottom: 6px; }
+  .adat-slide-2 .adat-hero-copy { gap: 4px; }
+  .adat-hero-intro h2, .adat-slide-1 .adat-hero-intro h2,
+  .adat-slide-2 .adat-hero-intro h2 { font-size: 15px; }
+  .adat-showcase-1 .adat-flip-card-0, .adat-showcase-2 .adat-flip-card-0 { min-height: 155px; }
+  .adat-hero .card-visual { min-height: 85px; flex-basis: 85px; }
+  .website-stage { height: 155px; margin-top: 16px; }
+  .website-art { height: 70px; }
+  .website-main-content { padding: 10px; }
+  .website-hero-actions { margin-top: 12px; }
+}
 
-  .adat-showcase-1 .adat-flip-card-0,
-  .adat-showcase-2 .adat-flip-card-0 {
-    width: 100% !important;
-    min-height: 105px !important;
-    max-height: none !important;
-    flex: none !important;
-    grid-column: auto !important;
-    grid-row: auto !important;
-  }
-
-  .adat-hero-card {
-    padding: 10px 12px !important;
-    border-radius: 12px !important;
-    height: 100% !important;
-  }
-
-  .adat-card-heading,
-  .adat-showcase-1 .adat-flip-card .adat-card-heading,
-  .adat-showcase-2 .adat-flip-card .adat-card-heading,
-  .adat-showcase-1 .adat-flip-card-0 .adat-card-heading,
-  .adat-showcase-2 .adat-flip-card-0 .adat-card-heading {
-    font-size: 14px !important;
-    line-height: 1.25 !important;
-    word-break: normal !important;
-    overflow-wrap: break-word !important;
-  }
-
-  .adat-hero-card p {
-    font-size: 10px !important;
-    line-height: 1.35 !important;
-    margin: 3px 0 !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-  }
-
-  .adat-hero-card-link {
-    font-size: 10px !important;
-    padding-top: 4px !important;
-  }
-
-  .adat-showcase-label { display: none !important; }
-  .adat-showcase-bar { font-size: 9px !important; padding: 4px 8px !important; border: none !important; margin-bottom: 0 !important; }
-  .adat-showcase-2 { padding: 0 6px 6px !important; background: transparent !important; border: none !important; }
-
-  /* Slide 0 (Website Hero) Mobile Adjustments */
-  .website-hero-label { margin: 0 0 4px !important; font-size: 8px !important; }
-  .adat-hero .website-hero h1 { font-size: 21px !important; line-height: 1.2 !important; }
-  .website-hero-description { font-size: 11px !important; margin: 4px auto 8px !important; line-height: 1.4 !important; }
-  .website-hero-actions { flex-direction: row !important; justify-content: center !important; gap: 8px !important; width: 100% !important; }
-  .website-hero-actions .site-button { padding: 5px 12px !important; font-size: 11px !important; }
-  .website-hero-actions .website-work-link { font-size: 11px !important; }
-  .website-platforms { gap: 6px !important; font-size: 9px !important; margin-top: 6px !important; }
-  .website-stage { height: 145px !important; margin: 8px auto 2px !important; }
-  .website-main-preview { width: 92% !important; left: 4% !important; }
-  .website-mini { display: none !important; }
-  .website-main-content { padding: 8px !important; }
-  .website-art { height: 60px !important; }
-  .website-detail-pill { font-size: 8px !important; padding: 4px 10px !important; bottom: 2px !important; }
-  .website-preview-body { margin-top: 4px !important; }
-  
-  .adat-hero-controls { gap: 10px !important; margin-top: 6px !important; }
-  .adat-hero-dots button { width: 20px !important; }
+/* Compact landscape screens keep content readable and allow natural scrolling. */
+@media (max-height: 600px) and (min-width: 768px) {
+  .adat-hero { --hero-top: 96px; }
+  .adat-slide-2 { grid-template-columns: 1fr 1fr; }
+  .adat-hero h1, .adat-hero-title, .adat-slide-1 .adat-hero-title,
+  .adat-hero .website-hero h1 { font-size: clamp(26px, 3vw, 36px); }
+  .adat-showcase-1 .adat-hero-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .adat-hero *, .adat-hero-card:hover, .adat-hero-card:hover .adat-hero-card-link svg, .adat-flip-inner { transition: none !important; transform: none !important; }
+  .adat-hero * { transition: none !important; }
 }
+
+@media (max-width: 767px) {
+  .website-hero-actions { flex-wrap: nowrap; gap: 10px; }
+  .website-hero-actions .site-button { padding-inline: 14px; font-size: 12px; }
+  .website-work-link { font-size: 12px; white-space: nowrap; }
+}
+@media (max-width: 767px) and (max-height: 700px) {
+  .website-stage { height: 180px; }
+  .website-platforms { font-size: 10px; gap: 5px; }
+}
+@media (max-width: 767px) {
+  .website-hero-actions { flex-wrap: wrap; }
+  .website-hero-actions .site-button { flex-shrink: 0; padding-inline: 14px !important; font-size: 12px !important; white-space: nowrap; }
+}
+@media (max-width: 767px) and (max-height: 700px) {
+  .website-platforms { display: none; }
+  .adat-showcase-1 .adat-hero-card, .adat-showcase-2 .adat-hero-card { padding: 10px; }
+}
+
+.website-hero h1 .relative { font-size: inherit; line-height: inherit; }

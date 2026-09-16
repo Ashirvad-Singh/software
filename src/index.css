@@ -222,3 +222,17 @@ svg.icon-tabler {
   color: inherit !important;
   flex-shrink: 0;
 }
+
+/* Public pages share a fluid section rhythm; carousel/sticky scenes keep their own sizing. */
+.public-site { --section-space: clamp(40px, 5vw, 80px); --content-gutter: clamp(16px, 3vw, 40px); }
+.public-site section[class~="py-10"] { padding-block: var(--section-space); }
+.public-site .site-sub-banner { padding-top: clamp(112px, 12vw, 152px); padding-bottom: clamp(32px, 4vw, 56px); }
+.public-site main :is(h1, h2, h3, p, li) { overflow-wrap: break-word; }
+.public-site main [id] { scroll-margin-top: 112px; }
+.public-site .prose :is(img, video, iframe) { max-width: 100%; }
+.public-site .prose pre { max-width: 100%; overflow-x: auto; }
+.public-site .prose table { display: block; max-width: 100%; overflow-x: auto; }
+@media (max-width: 639px) {
+  .public-site main .container { padding-inline: var(--content-gutter); }
+  .public-site main .site-button:not(.site-button-icon) { max-width: 100%; }
+}

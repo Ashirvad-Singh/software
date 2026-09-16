@@ -137,13 +137,14 @@ export default function DashboardPage() {
 
       const app = careers.find((a) => a.id === appId);
       if (app) {
-        await sendJobStatusUpdateEmail(
+        const emailSent = await sendJobStatusUpdateEmail(
           app.fullName,
           app.email,
           app.position,
           newStatus,
         );
-        toast.success(`Status updated to ${newStatus} and email sent!`);
+        if (emailSent) toast.success(`Status updated to ${newStatus} and email sent!`);
+        else toast.warning(`Status updated to ${newStatus}, but the notification email was not sent.`);
       }
 
       fetchData();

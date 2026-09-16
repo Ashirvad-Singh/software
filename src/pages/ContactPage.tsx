@@ -46,8 +46,8 @@ export default function ContactPage() {
         ...data,
         createdAt: serverTimestamp(),
       });
-      await sendContactEmail(data.fullName, data.email, data.phone || "", data.company || "", data.message);
-      toast.success("Message sent successfully!");
+      await sendContactEmail(data.fullName, data.email, data.phone || "", data.company || "", data.message, data.subject);
+      toast.success("Message submitted successfully!");
       reset();
     } catch (error) {
       console.error("Error submitting contact form:", error);
@@ -58,7 +58,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen relative overflow-x-hidden bg-white pb-16 lg:pb-10 md:pb-16">
+    <main className="min-h-screen relative overflow-x-hidden bg-white pb-10 md:pb-16">
       <SubBanner
         badge="Contact Us"
         title="Get in"

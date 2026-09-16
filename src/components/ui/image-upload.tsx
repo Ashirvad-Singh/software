@@ -35,8 +35,6 @@ export function ImageUpload({ value, onChange, multiple = false, onUploadingChan
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const formData = new FormData();
-      const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dk5y5ksw2";
-      const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "ml_default";
       
       formData.append("file", file);
       formData.append("upload_preset", uploadPreset);
@@ -56,14 +54,19 @@ export function ImageUpload({ value, onChange, multiple = false, onUploadingChan
 
           xhr.onload = () => {
             if (xhr.status === 200) {
-              const response = JSON.parse(xhr.responseText);
-              uploadedUrls.push(response.secure_url);
-              resolve();
+              try {
+                const response = JSON.parse(xhr.responseText);
+                if (typeof response.secure_url !== "string" || !response.secure_url.startsWith("https://")) throw new Error("Invalid upload URL");
+                uploadedUrls.push(response.secure_url);
+                resolve();
+              } catch (error) { reject(error); }
             } else {
               reject(new Error("Upload failed"));
             }
           };
 
+          xhr.timeout = 60000;
+          xhr.ontimeout = () => reject(new Error("Upload timed out"));
           xhr.onerror = () => reject(new Error("Network error"));
           xhr.send(formData);
         });

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Loader2, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { sendJobApplicationEmail } from "@/lib/email";
 
@@ -72,6 +72,13 @@ export default function JobApplicationForm({ jobId, defaultPosition = "", readOn
     setIsSubmitting(true);
     setUploadProgress(0);
     try {
+      if (jobId) {
+        const opening = await getDoc(doc(db, "jobs", jobId));
+        if (!opening.exists() || opening.data().active !== true) {
+          toast.error("This position is no longer accepting applications.");
+          return;
+        }
+      }
       const file = data.resume[0];
       const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
       const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
@@ -101,6 +108,7 @@ export default function JobApplicationForm({ jobId, defaultPosition = "", readOn
             try {
               const response = JSON.parse(xhr.responseText);
               const downloadURL = response.secure_url;
+              if (typeof downloadURL !== "string" || !downloadURL.startsWith("https://")) throw new Error("Upload did not return a valid resume URL");
               
               const { resume: _resume, ...restData } = data;
               await addDoc(collection(db, "job_applications"), {
@@ -127,6 +135,8 @@ export default function JobApplicationForm({ jobId, defaultPosition = "", readOn
           }
         };
 
+        xhr.timeout = 60000;
+        xhr.ontimeout = () => reject(new Error("Resume upload timed out"));
         xhr.onerror = () => reject(new Error("Network error during upload"));
         xhr.send(formData);
       });

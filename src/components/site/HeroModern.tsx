@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Pause, Play, Globe2, ShoppingBag, Layers } from "lucide-react";
@@ -46,7 +46,7 @@ const cardDescriptions = [
   ["Online stores designed to make browsing, choosing products, and checking out feel effortless.", "Shopify theme development and store setup that bring your brand to life across every shopping touchpoint.", "WooCommerce development for a shopping experience you can customize and manage with confidence.", "Refresh your store with clearer navigation, stronger product presentation, and a smoother purchase journey."],
   ["Intuitive interfaces that connect your business goals with what your users need.", "Understand your audience through research, journey mapping, and usability insights.", "Explore layouts and test interactive prototypes before moving into development.", "Reusable components and design guidelines that keep your digital experience consistent."],
 ];
-const destinations = ["/services/web-development", "/services", "/services", "/services/web-development", "/contact"];
+const destinations = ["/services", "/services", "/services", "/services", "/contact"];
 
 export default function HeroModern() {
   const reducedMotion = useReducedMotion();
@@ -69,6 +69,23 @@ export default function HeroModern() {
     const timer = window.setInterval(() => { if (!document.hidden) embla.scrollNext(); }, 7000);
     return () => window.clearInterval(timer);
   }, [embla, paused, hovered, focused, reducedMotion]);
+
+  // Keep the viewport fitted to the visible slide, including after responsive
+  // reflows and font loading, rather than reserving the tallest slide's space.
+  useLayoutEffect(() => {
+    if (!embla) return;
+    const viewport = embla.rootNode();
+    const slide = embla.slideNodes()[selected];
+    if (!slide) return;
+    const updateHeight = () => { viewport.style.height = `${slide.getBoundingClientRect().height}px`; };
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(slide);
+    return () => {
+      observer.disconnect();
+      viewport.style.removeProperty("height");
+    };
+  }, [embla, selected]);
 
   return (
     <section className={`adat-hero${selected === 0 ? " adat-hero-simple" : ""}`} aria-label="Discover ADAT" aria-roledescription="carousel"

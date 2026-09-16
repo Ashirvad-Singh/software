@@ -1,87 +1,11 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, Clock, User, Loader2 } from "lucide-react";
-import { useState, useEffect } from "react";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { useCatalog } from "@/lib/content/useCatalog";
+import CatalogState from "@/components/content/CatalogState";
 import SubBanner from "@/components/site/SubBanner";
 
-const blogPosts = [
-  {
-    id: 1,
-    slug: "future-of-web-development-2026",
-    title: "The Future of Web Development in 2026",
-    excerpt: "Explore the cutting-edge trends shaping the digital landscape, from AI-driven UI generation to WASM-powered web apps.",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200",
-    category: "Technology",
-    author: "Mike Johnson",
-    date: "Oct 24, 2026",
-    readTime: "5 min read",
-    featured: true
-  },
-  {
-    id: 2,
-    slug: "mastering-react-server-components",
-    title: "Mastering React Server Components",
-    excerpt: "A deep dive into how RSCs are fundamentally changing the way we build and optimize React applications.",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=800",
-    category: "Development",
-    author: "Sarah Smith",
-    date: "Oct 20, 2026",
-    readTime: "8 min read",
-    featured: false
-  },
-  {
-    id: 3,
-    slug: "design-systems-for-scale",
-    title: "Building Design Systems for Scale",
-    excerpt: "Learn how to architect a flexible, maintainable design system that grows with your organization.",
-    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=800",
-    category: "Design",
-    author: "John Doe",
-    date: "Oct 15, 2026",
-    readTime: "6 min read",
-    featured: false
-  },
-  {
-    id: 4,
-    slug: "mobile-first-vs-desktop-first",
-    title: "Mobile-First vs Desktop-First in Modern Web",
-    excerpt: "Why the classic debate is evolving and how to adopt an omni-channel responsive strategy.",
-    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800",
-    category: "UX/UI",
-    author: "Lisa Chen",
-    date: "Oct 10, 2026",
-    readTime: "4 min read",
-    featured: false
-  }
-];
-
 export default function BlogPage() {
-  const [dbPosts, setDbPosts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const q = query(collection(db, "blogs"), orderBy("createdAt", "desc"));
-        const snapshot = await getDocs(q);
-        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        if (data.length > 0) {
-          setDbPosts(data);
-        } else {
-          setDbPosts(blogPosts);
-        }
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-        setDbPosts(blogPosts);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBlogs();
-  }, []);
-
-  const displayPosts = dbPosts.length > 0 ? dbPosts : blogPosts;
+  const { entries: displayPosts, loading, error, retry } = useCatalog("blogs");
   const featuredPost = displayPosts.find(post => post.featured);
   const regularPosts = displayPosts.filter(post => post.id !== featuredPost?.id);
 
@@ -96,6 +20,7 @@ export default function BlogPage() {
 
       <div className="container mx-auto px-4 md:px-6 max-w-7xl pt-10 md:pt-16">
 
+        <CatalogState loading={false} error={error} empty={!loading && !displayPosts.length} label="articles" retry={retry} />
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />

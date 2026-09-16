@@ -1,3 +1,4 @@
+import { validateCatalogSlug } from "@/lib/content/catalogValidation";
 import { useState, useEffect } from "react";
 import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -26,6 +27,7 @@ export interface BlogPost {
 export default function BlogsTab() {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -35,7 +37,7 @@ export default function BlogsTab() {
     excerpt: "",
     content: "",
     author: "",
-    date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+    date: new Date().toLocaleDateString("en-CA"),
     readTime: "",
     category: "",
     image: "",
@@ -72,13 +74,15 @@ export default function BlogsTab() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading || uploading) return;
     setLoading(true);
     try {
+      const slug = await validateCatalogSlug("blogs", formData.slug, editingId);
       if (editingId) {
-        await updateDoc(doc(db, "blogs", editingId), { ...formData });
+        await updateDoc(doc(db, "blogs", editingId), { ...formData, slug });
         toast.success("Blog updated successfully");
       } else {
-        await addDoc(collection(db, "blogs"), { ...formData, createdAt: Date.now() });
+        await addDoc(collection(db, "blogs"), { ...formData, slug, createdAt: Date.now() });
         toast.success("Blog created successfully");
       }
       setIsFormOpen(false);
@@ -87,7 +91,7 @@ export default function BlogsTab() {
       fetchBlogs();
     } catch (error) {
       console.error(error);
-      toast.error("Failed to save blog");
+      toast.error(error instanceof Error ? error.message : "Failed to save blog");
     } finally {
       setLoading(false);
     }
@@ -113,7 +117,7 @@ export default function BlogsTab() {
       excerpt: blog.excerpt,
       content: blog.content,
       author: blog.author,
-      date: blog.date,
+      date: /^\d{4}-\d{2}-\d{2}$/.test(blog.date) ? blog.date : (Number.isNaN(Date.parse(blog.date)) ? "" : new Date(blog.date).toISOString().slice(0, 10)),
       readTime: blog.readTime,
       category: blog.category,
       image: blog.image,
@@ -129,7 +133,7 @@ export default function BlogsTab() {
       excerpt: "",
       content: "",
       author: "",
-      date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+      date: new Date().toLocaleDateString("en-CA"),
       readTime: "",
       category: "",
       image: "",
@@ -176,7 +180,8 @@ export default function BlogsTab() {
                     <ImageUpload 
                       value={formData.image} 
                       onChange={(url) => setFormData(prev => ({ ...prev, image: url }))} 
-                      multiple={false} 
+                      multiple={false}
+                      onUploadingChange={setUploading} 
                     />
                   </div>
                   
@@ -201,7 +206,7 @@ export default function BlogsTab() {
                     <label htmlFor="featured" className="text-sm font-medium">Featured Post</label>
                   </div>
                 </div>
-                <Button type="submit" disabled={loading} className="w-full md:w-auto">
+                <Button type="submit" disabled={loading || uploading} className="w-full md:w-auto">
                   {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                   {editingId ? "Update Blog" : "Publish Blog"}
                 </Button>

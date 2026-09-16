@@ -24,7 +24,8 @@ import {
 } from "lucide-react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { services as staticServices } from "@/data/services";
+import { useCatalog } from "@/lib/content/useCatalog";
+import CatalogState from "@/components/content/CatalogState";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -190,38 +191,12 @@ const defaultThumbnails = [
 ];
 
 const MegaMenuContent = () => {
-  const [dbServices, setDbServices] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const q = query(
-          collection(db, "services"),
-          orderBy("createdAt", "asc"),
-        );
-        const snapshot = await getDocs(q);
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        if (data.length > 0) {
-          setDbServices(data);
-        } else {
-          setDbServices(staticServices);
-        }
-      } catch (error) {
-        console.error("Error fetching services:", error);
-        setDbServices(staticServices);
-      }
-    };
-    fetchServices();
-  }, []);
-
-  const displayServices = dbServices.length > 0 ? dbServices : staticServices;
-  const itemsToDisplay = displayServices.slice(0, 4);
+  const { entries, loading, error, retry } = useCatalog("services");
+  const itemsToDisplay = entries.slice(0, 4);
 
   return (
     <div className="w-[640px] sm:w-[720px] max-w-[92vw] p-3 sm:p-4 text-neutral-900 dark:text-white">
+      <CatalogState loading={loading} error={error} empty={!entries.length} label="services" retry={retry} />
       <div className="grid grid-cols-2 gap-4 sm:gap-6">
         {itemsToDisplay.map((service, idx) => (
           <ProductItem
@@ -231,8 +206,6 @@ const MegaMenuContent = () => {
             href={`/services/${service.slug}`}
             src={
               service.thumbnailUrl ||
-              service.image ||
-              service.thumbnail ||
               defaultThumbnails[idx % defaultThumbnails.length]
             }
           />

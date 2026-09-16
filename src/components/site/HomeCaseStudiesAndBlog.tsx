@@ -1,66 +1,12 @@
 import { useSwipe } from "@/hooks/useSwipe";
-import { useEffect, useState } from "react";
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { useState } from "react";
 import { ArrowRight, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { db } from "@/lib/firebase";
+import { useCatalog } from "@/lib/content/useCatalog";
+import CatalogState from "@/components/content/CatalogState";
 import { useContent } from "@/lib/content/useContent";
 import { StickyCard002 } from "@/components/v1/skiper17";
-
-type BlogPost = {
-  id: string | number;
-  slug: string;
-  title: string;
-  excerpt: string;
-  image: string;
-  category: string;
-  author: string;
-  date: string;
-  readTime: string;
-};
-
-const staticPosts: BlogPost[] = [
-  {
-    id: 1,
-    slug: "future-of-web-development-2026",
-    title: "The Future of Web Development in 2026",
-    excerpt:
-      "Explore the trends shaping digital products, from AI-driven interfaces to faster, smarter web experiences.",
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=900",
-    category: "Technology",
-    author: "Adat Team",
-    date: "Oct 24, 2026",
-    readTime: "5 min read",
-  },
-  {
-    id: 2,
-    slug: "mastering-react-server-components",
-    title: "Mastering React Server Components",
-    excerpt:
-      "A practical look at building faster, more scalable React applications with a thoughtful component architecture.",
-    image:
-      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=900",
-    category: "Development",
-    author: "Adat Team",
-    date: "Oct 20, 2026",
-    readTime: "8 min read",
-  },
-  {
-    id: 3,
-    slug: "design-systems-for-scale",
-    title: "Building Design Systems for Scale",
-    excerpt:
-      "How flexible design foundations help teams create consistent, maintainable digital products.",
-    image:
-      "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=900",
-    category: "Design",
-    author: "Adat Team",
-    date: "Oct 15, 2026",
-    readTime: "6 min read",
-  },
-];
 
 export default function HomeCaseStudiesAndBlog({
   caseStudiesOnly = false,
@@ -71,36 +17,14 @@ export default function HomeCaseStudiesAndBlog({
 }) {
   const { entries: publishedStudies } = useContent("case_studies");
   const caseStudies = publishedStudies.slice(0, 5);
-  const [posts, setPosts] = useState<BlogPost[]>(staticPosts);
+  const { entries: allPosts, loading, error, retry } = useCatalog("blogs");
+  const posts = allPosts.slice(0, 5);
   const [activeBlog, setActiveBlog] = useState(0);
   const blogSwipe = useSwipe((direction) => {
     const count = Math.min(posts.length, 3);
     if (count > 1) setActiveBlog((index) => (index + direction + count) % count);
   });
 
-  useEffect(() => {
-    let cancelled = false;
-    const fetchContent = async () => {
-      try {
-        const blogSnapshot = await getDocs(query(collection(db, "blogs"), orderBy("createdAt", "desc"), limit(5)));
-        if (cancelled) return;
-        if (!blogSnapshot.empty) {
-          setPosts(
-            blogSnapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            })) as BlogPost[],
-          );
-        }
-      } catch (error) {
-        console.error("Error fetching homepage content:", error);
-      }
-    };
-    fetchContent();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   return (
     <>
@@ -133,7 +57,8 @@ export default function HomeCaseStudiesAndBlog({
           className="py-10 md:py-16 border-t border-border bg-secondary/30 px-5 font-sans sm:px-8 lg:px-12"
         >
           <div className="mx-auto max-w-7xl">
-            <div className="mb-10 flex items-end justify-between gap-6 sm:mb-14">
+            <CatalogState loading={loading} error={error} empty={!posts.length} label="articles" retry={retry} />
+            <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:mb-12 sm:flex-row sm:items-end">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
                   From the journal
@@ -193,7 +118,7 @@ export default function HomeCaseStudiesAndBlog({
                   </Link>
                 </motion.div>
               ))}
-              <button
+              {posts.length > 1 && <><button
                 type="button"
                 aria-label="Previous blog post"
                 onClick={() =>
@@ -219,6 +144,7 @@ export default function HomeCaseStudiesAndBlog({
               >
                 <ArrowRight className="h-5 w-5" />
               </button>
+              </>}
             </div>
             <div className="mt-6 flex items-center justify-center gap-2">
               {posts.slice(0, 3).map((post, index) => (
