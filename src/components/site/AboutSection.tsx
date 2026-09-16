@@ -7,15 +7,6 @@ export default function AboutSection({ hideHeader = false }: { hideHeader?: bool
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 text-center">
         {!hideHeader && (
           <>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5 }}
-              className="text-sm font-bold text-primary tracking-widest uppercase mb-3"
-            >
-              ABOUT ADAT SOLUTIONS
-            </motion.h2>
             <p className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl dark:text-white text-black mb-6 tracking-tight max-w-4xl mx-auto">
               Share our passion for performant and quality software solutions.
             </p>
