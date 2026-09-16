@@ -36,37 +36,58 @@ interface JobOpening {
   experience?: string;
 }
 
+// Default Fallback Job Openings from ADAT Soft Solutions
+const defaultJobs: JobOpening[] = [
+  {
+    id: "sr-shopify-developer",
+    title: "Sr. Shopify Developer",
+    experience: "4+ years",
+    type: "Full Time",
+    location: "Mohali (India)",
+    department: "Development",
+    description: "We are looking for a Senior Shopify Developer with 4+ years of experience in custom Liquid theme development, Storefront API, App integrations, and e-commerce optimization.",
+  },
+  {
+    id: "sr-wordpress-developer",
+    title: "Sr. WordPress Developer",
+    experience: "4+ years",
+    type: "Full Time",
+    location: "Mohali, Punjab",
+    department: "Development",
+    description: "Seeking a Senior WordPress Developer with 4+ years experience in custom PHP theme & plugin development, WooCommerce customization, and web performance optimization.",
+  },
+  {
+    id: "business-development-executive",
+    title: "Business Development Executive",
+    experience: "2-3 years",
+    type: "Full Time",
+    location: "Mohali",
+    department: "Sales & Marketing",
+    description: "Looking for a proactive Business Development Executive with 2-3 years experience in IT services sales, client communication, lead generation, and closing deals in US, EU & global markets.",
+  },
+];
+
 const teams = [
   {
     id: 1,
-    name: "Engineering",
-    desc: "Build scalable and performant systems. Our engineering teams cover Backend, Frontend, QA, and Infrastructure.",
+    name: "Engineering & Development",
+    desc: "Build scalable and performant systems. Our engineering teams cover Frontend, Backend, Shopify, WordPress, Mobile Apps, and Cloud Infrastructure.",
   },
   {
     id: 2,
-    name: "Product Management",
-    desc: "Drive product strategy and execution to deliver features that customers love.",
+    name: "Product & UI/UX Design",
+    desc: "Craft intuitive, accessible, and high-converting user experiences across web and mobile touchpoints.",
   },
   {
     id: 3,
-    name: "Customer Success & Support",
-    desc: "Help our customers achieve their goals and solve complex issues with our platform.",
+    name: "Sales & Business Development",
+    desc: "Drive growth by building relationships with enterprise and SME clients across US, Canada, Europe, and Australia.",
   },
   {
     id: 4,
-    name: "Sales & Marketing",
-    desc: "Spread the word and drive growth by showcasing the value of our solutions.",
+    name: "Quality Assurance & Testing",
+    desc: "Guarantee zero-defect releases through automated regression testing, manual QA, and performance audits.",
   },
-  {
-    id: 5,
-    name: "Human Resources & Operations",
-    desc: "Support our most valuable asset—our people—and keep operations running smoothly.",
-  },
-  {
-    id: 6,
-    name: "Design",
-    desc: "Craft intuitive, beautiful, and accessible user experiences across all touchpoints.",
-  }
 ];
 
 export default function CareersPage() {
@@ -108,10 +129,14 @@ export default function CareersPage() {
         const q = query(collection(db, "jobs"), where("active", "==", true));
         const snapshot = await getDocs(q);
         const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as JobOpening[];
-        setJobOpenings(data);
+        if (data.length > 0) {
+          setJobOpenings(data);
+        } else {
+          setJobOpenings(defaultJobs);
+        }
       } catch (error) {
         console.error("Error fetching jobs:", error);
-        setJobsError(true);
+        setJobOpenings(defaultJobs);
       } finally {
         setJobsLoading(false);
       }
@@ -181,29 +206,36 @@ export default function CareersPage() {
         </motion.div>
       </section>
 
-      {/* 2. Why Work At Adat */}
+      {/* 2. Perks & Culture */}
       <section className="py-10 md:py-16 bg-white">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Why Work At Adat</h2>
-            <p className="text-lg text-neutral-600">Learn by building for the best in class. Uncover your true potential.</p>
+            <span className="text-xs font-bold text-sky-600 tracking-widest uppercase mb-2 block">
+              WORK HARD AND BE YOURSELF
+            </span>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-neutral-900 mb-4">
+              Pay a visit &amp; have some coffee!
+            </h2>
+            <p className="text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto">
+              We empower our team with strong leadership, continuous growth, and an inspiring work environment.
+            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
-              { icon: Laptop, title: "Flexi Work Mode", desc: "Work from anywhere. Flexible timings to help you balance work and life." },
-              { icon: Sun, title: "Paid Time Off (PTO)", desc: "Generous PTO policies to help you relax, recharge, and return to work fully refreshed." },
-              { icon: Heart, title: "Health & Well-being", desc: "Comprehensive health insurance coverage for you and your dependents." },
-              { icon: Baby, title: "Parental Leave", desc: "Paid time off for expecting parents to welcome the newest member of their family." }
+              { icon: Zap, title: "Leader's Support", desc: "Direct mentorship and guidance from experienced leaders to accelerate your career." },
+              { icon: Heart, title: "Great Team", desc: "Collaborative, friendly, and passionate engineering atmosphere." },
+              { icon: Lightbulb, title: "Knowledge Sharing", desc: "Regular internal workshops, tech talks, and continuous learning opportunities." },
+              { icon: Clock, title: "Flexible Hours", desc: "Work-life balance with flexible working hours to help you stay productive." },
+              { icon: Star, title: "12-month increment", desc: "Structured annual performance appraisals and merit-based salary increments." },
+              { icon: Sun, title: "Annual Retreat", desc: "Company-sponsored annual trips, retreats, and team celebrations." }
             ].map((feature, i) => (
-              <div key={i} className="flex gap-4 p-6 rounded-2xl border border-neutral-100 bg-white shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-50 text-sky-500 flex items-center justify-center">
-                  <feature.icon size={24} />
+              <div key={i} className="flex flex-col items-center text-center p-8 rounded-2xl border border-neutral-100 bg-white shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center mb-4">
+                  <feature.icon size={28} />
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-neutral-900 mb-2">{feature.title}</h3>
-                  <p className="text-neutral-600 leading-relaxed">{feature.desc}</p>
-                </div>
+                <h3 className="text-xl font-bold text-neutral-900 mb-2">{feature.title}</h3>
+                <p className="text-sm text-neutral-600 leading-relaxed">{feature.desc}</p>
               </div>
             ))}
           </div>
@@ -349,7 +381,12 @@ export default function CareersPage() {
       {/* 6. Open Roles */}
       <section id="open-roles" className="py-10 md:py-16 bg-white">
         <div className="container mx-auto px-4 max-w-5xl text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-12">Open Roles</h2>
+          <span className="text-xs font-bold text-sky-600 tracking-widest uppercase mb-2 block">
+            WORK HARD AND BE YOURSELF
+          </span>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-neutral-900 mb-12">
+            Showing current offers and jobs available
+          </h2>
           
           {/* Tabs */}
           <div className="flex flex-wrap justify-center gap-2 mb-12">
