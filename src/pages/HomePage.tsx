@@ -18,10 +18,9 @@ const HomeServicesSection = lazy(
 const ThreeDMarqueeDemo = lazy(() => import("@/components/3d-marquee-demo"));
 const WhatSetsUsApart = lazy(() => import("@/components/site/WhatSetsUsApart"));
 const Testimonials = lazy(() => import("@/components/site/Testimonials"));
-const HomeCaseStudiesSection = lazy(
-  () => import("@/components/site/HomeCaseStudiesSection"),
+const HomeCaseStudiesAndBlog = lazy(
+  () => import("@/components/site/HomeCaseStudiesAndBlog"),
 );
-const HomeBlogSection = lazy(() => import("@/components/site/HomeBlogSection"));
 const FaqSection = lazy(() => import("@/components/site/FaqSection"));
 export default function HomePage() {
   return (
@@ -119,7 +118,7 @@ export default function HomePage() {
       </section>
 
       <Suspense fallback={<div className="min-h-[200px]" />}>
-        <HomeCaseStudiesSection />
+        <HomeCaseStudiesAndBlog caseStudiesOnly />
       </Suspense>
 
       <Suspense fallback={<div className="min-h-[200px]" />}>
@@ -132,7 +131,7 @@ export default function HomePage() {
         <WhatSetsUsApart />
         <Testimonials />
         <FaqSection />
-        <HomeBlogSection />
+        <HomeCaseStudiesAndBlog blogOnly />
       </Suspense>
     </main>
   );
