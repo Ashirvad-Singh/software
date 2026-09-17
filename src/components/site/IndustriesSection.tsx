@@ -284,9 +284,9 @@ export default function IndustriesSection() {
                         <Link
                           to="/contact"
                           aria-label={`Start a ${industry.name} project`}
-                          className="site-button pointer-events-auto mt-2 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold text-neutral-900 transition-colors hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:mt-4 sm:py-2 sm:text-xs"
+                          className="pointer-events-auto mt-2 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold text-neutral-900 transition-colors hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:mt-4 sm:py-2 sm:text-xs"
                         >
-                          Let's build <ArrowUpRight className="h-3 w-3 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
+                          Let's build <ArrowUpRight className="h-3 w-3 shrink-0 text-neutral-900 sm:h-4 sm:w-4" aria-hidden="true" />
                         </Link>
                       </div>
                     </article>
