@@ -68,6 +68,11 @@ export default function WebsiteHero() {
             <span>↗</span>
           </div>
           <div className="website-main-content">
+            <div className="website-simulated-cursor" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="#0284c7" stroke="#ffffff" strokeWidth="2">
+                <path d="M3 3l7 18 3-7 7-3L3 3z" />
+              </svg>
+            </div>
             <div className="website-preview-nav">
               <b>
                 studio<span>.</span>

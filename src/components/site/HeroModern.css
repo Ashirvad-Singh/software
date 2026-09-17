@@ -552,7 +552,13 @@
     #dcedff30 65%,
     transparent 70%
   );
+  animation: websiteOrbitPulse 7s ease-in-out infinite alternate;
 }
+@keyframes websiteOrbitPulse {
+  0% { transform: scale(0.98); opacity: 0.8; }
+  100% { transform: scale(1.04); opacity: 1; }
+}
+
 .website-main-preview {
   width: 48%;
   position: absolute;
@@ -563,8 +569,25 @@
   border: 1px solid #bcd8e8;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 16px 32px -18px #124b7a50;
+  box-shadow: 0 16px 36px -18px #124b7a50;
+  animation: websiteMainGlow 5.5s ease-in-out infinite alternate;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
+.website-main-preview:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 24px 48px -16px rgba(14, 116, 175, 0.4);
+}
+@keyframes websiteMainGlow {
+  0% {
+    transform: translateY(0);
+    box-shadow: 0 16px 36px -18px rgba(18, 75, 122, 0.35);
+  }
+  100% {
+    transform: translateY(-5px);
+    box-shadow: 0 22px 46px -14px rgba(14, 165, 233, 0.32), 0 0 18px 2px rgba(14, 165, 233, 0.15);
+  }
+}
+
 .website-window-bar {
   display: flex;
   justify-content: space-between;
@@ -588,7 +611,27 @@
 }
 .website-main-content {
   padding: 10px 16px 16px;
+  position: relative;
 }
+.website-simulated-cursor {
+  position: absolute;
+  top: 35%;
+  left: 15%;
+  pointer-events: none;
+  z-index: 10;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.22));
+  animation: cursorGlide 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes cursorGlide {
+  0% { transform: translate(100px, 35px); opacity: 0; }
+  12% { transform: translate(80px, 15px); opacity: 1; }
+  42% { transform: translate(10px, 22px); opacity: 1; }
+  48% { transform: translate(10px, 22px) scale(0.82); opacity: 1; }
+  56% { transform: translate(10px, 22px) scale(1); opacity: 1; }
+  82% { transform: translate(95px, 8px); opacity: 1; }
+  100% { transform: translate(100px, 35px); opacity: 0; }
+}
+
 .website-preview-nav {
   display: flex;
   align-items: center;
@@ -600,6 +643,11 @@
 }
 .website-preview-nav b span {
   color: #0ea5e9;
+  animation: pulseDot 2s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 .website-preview-nav > span {
   font-size: 7px;
@@ -636,7 +684,14 @@
   border-radius: 20px;
   font-size: 7px;
   margin-top: 8px;
+  animation: websiteCtaClick 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transition: transform 0.2s, background 0.2s;
 }
+@keyframes websiteCtaClick {
+  0%, 44%, 60%, 100% { transform: scale(1); background: #0c5279; box-shadow: none; }
+  48% { transform: scale(1.08); background: #0284c7; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.4); }
+}
+
 .website-art {
   height: 95px;
   position: relative;
@@ -653,11 +708,13 @@
   background: linear-gradient(110deg, #ddf6ff, #4eafdf 60%, #0879b9);
   top: 20%;
   left: -2%;
+  animation: artFluid1 7.5s ease-in-out infinite alternate;
 }
 .website-art div:nth-child(2) {
   left: 35%;
   top: 35%;
   background: linear-gradient(110deg, #a9def4, #136eaa);
+  animation: artFluid2 9s ease-in-out 0.8s infinite alternate;
 }
 .website-art div:nth-child(3) {
   width: 45%;
@@ -665,7 +722,21 @@
   left: 70%;
   top: -10%;
   background: #c4e9ff;
+  animation: artFluid3 6s ease-in-out 0.4s infinite alternate;
 }
+@keyframes artFluid1 {
+  0% { transform: rotate(32deg) scale(1) translateY(0); }
+  100% { transform: rotate(39deg) scale(1.07) translateY(-5px); }
+}
+@keyframes artFluid2 {
+  0% { transform: scale(1) translateX(0); }
+  100% { transform: scale(1.12) translateX(-6px); }
+}
+@keyframes artFluid3 {
+  0% { transform: scale(1) translateY(0); }
+  100% { transform: scale(1.18) translateY(6px); }
+}
+
 .website-mini {
   position: absolute;
   width: 28%;
@@ -674,17 +745,35 @@
   overflow: hidden;
   background: #fff;
   box-shadow: 0 12px 24px -18px #175b8560;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 .website-mini-left {
   left: 2%;
   top: 18px;
-  transform: rotate(-6deg);
+  animation: websiteFloatLeft 5.5s ease-in-out infinite alternate;
 }
 .website-mini-right {
   right: 2%;
   top: 20px;
-  transform: rotate(6deg);
+  animation: websiteFloatRight 6.5s ease-in-out 0.6s infinite alternate;
 }
+.website-mini-left:hover {
+  transform: rotate(-3deg) translateY(-8px) scale(1.03) !important;
+  box-shadow: 0 18px 36px -14px rgba(23, 91, 133, 0.4);
+}
+.website-mini-right:hover {
+  transform: rotate(3deg) translateY(-8px) scale(1.03) !important;
+  box-shadow: 0 18px 36px -14px rgba(23, 91, 133, 0.4);
+}
+@keyframes websiteFloatLeft {
+  0% { transform: rotate(-6deg) translateY(0); }
+  100% { transform: rotate(-4.5deg) translateY(-8px); }
+}
+@keyframes websiteFloatRight {
+  0% { transform: rotate(6deg) translateY(0); }
+  100% { transform: rotate(4.5deg) translateY(-8px); }
+}
+
 .website-brand-preview {
   position: relative;
   height: 125px;
@@ -723,7 +812,13 @@
   box-shadow:
     inset 4px 0 7px #7d604220,
     4px 3px 7px #7d604215;
+  animation: sculptureMotion 4.2s ease-in-out infinite alternate;
 }
+@keyframes sculptureMotion {
+  0% { transform: translateY(0); box-shadow: inset 4px 0 7px #7d604220, 4px 3px 7px #7d604215; }
+  100% { transform: translateY(-5px); box-shadow: inset 4px 0 7px #7d604220, 4px 8px 14px #7d604228; }
+}
+
 .website-store-preview {
   padding: 10px 14px;
   height: 125px;
@@ -744,6 +839,7 @@
   border-radius: 7px 7px 5px 5px;
   border-top: 7px solid #526e9d;
   box-shadow: 4px 6px 8px #526e9d20;
+  animation: productBounce1 4.5s ease-in-out infinite alternate;
 }
 .website-products .website-product-two {
   height: 38px;
@@ -751,7 +847,17 @@
   background: linear-gradient(90deg, #c9b5d8, #eadff0, #bba7ce);
   border-top-color: #8f759f;
   border-radius: 4px 4px 10px 10px;
+  animation: productBounce2 5.2s ease-in-out 0.6s infinite alternate;
 }
+@keyframes productBounce1 {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+@keyframes productBounce2 {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
 .website-store-caption {
   display: flex;
   justify-content: space-between;
@@ -776,6 +882,11 @@
   font-size: 9px;
   color: #42697d;
   box-shadow: 0 4px 12px #07598509;
+  animation: websitePillBounce 4s ease-in-out infinite alternate;
+}
+@keyframes websitePillBounce {
+  0% { transform: translateX(-50%) translateY(0); box-shadow: 0 4px 12px rgba(7, 89, 133, 0.1); }
+  100% { transform: translateX(-50%) translateY(-4px); box-shadow: 0 8px 18px rgba(7, 89, 133, 0.2); }
 }
 
 /* Slide 1 Desktop Composition (Shopify & WooCommerce) - Content Top, 4 Cards Bottom */
@@ -856,9 +967,10 @@
 
 /* Slide 2 Desktop Composition (UI/UX Design) - Framed Studio Canvas (3 Cards Total) */
 .adat-slide-2 {
-  grid-template-columns: 1fr 1.08fr;
-  gap: clamp(24px, 3.5vw, 60px);
-  align-items: center; /* Vertically center left copy with right showcase canvas */
+  display: grid;
+  grid-template-columns: 0.8fr 1.4fr;
+  gap: clamp(24px, 3.5vw, 56px);
+  align-items: center;
 }
 .adat-slide-2 .adat-hero-copy {
   order: 1;
@@ -866,80 +978,150 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 10px;
+  text-align: left;
+  gap: 12px;
 }
 .adat-slide-2 .adat-hero-intro {
   margin-top: 10px;
   padding-top: 0;
+  text-align: left;
 }
 .adat-slide-2 .adat-hero-intro h2 {
-  font-size: 19px;
+  font-size: clamp(19px, 1.6vw, 26px);
   font-weight: 600;
   color: #075985;
   margin-bottom: 6px;
 }
 .adat-slide-2 .adat-hero-intro p {
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: clamp(14px, 1.1vw, 17px);
+  line-height: 1.6;
   color: #476174;
 }
 .adat-slide-2 .adat-hero-cta {
-  margin-top: 12px;
+  margin-top: 14px;
 }
 .adat-showcase-2 {
   order: 2;
-  padding: 0 10px 10px;
-  border: 1px solid #d5dff0;
-  border-radius: 16px;
-  background: linear-gradient(130deg, #edf5ff, #f5f0ff);
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: min(520px, var(--slide-height));
+  box-sizing: border-box;
 }
 .adat-showcase-2 .adat-showcase-bar {
-  padding-inline: 2px;
-  padding-block: 6px;
+  display: none !important;
 }
 .adat-showcase-2 .adat-hero-grid {
+  display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: 1.15fr 1fr;
+  gap: 14px;
+  flex: 1;
   min-height: 0;
-  gap: 8px;
+}
+.adat-showcase-2 .adat-flip-card {
+  min-height: 0;
+  height: 100%;
 }
 .adat-showcase-2 .adat-flip-card-0 {
   grid-column: span 2;
   grid-row: auto;
-  min-height: 95px;
 }
 .adat-showcase-2 .adat-flip-card-1,
 .adat-showcase-2 .adat-flip-card-2 {
-  grid-column: auto;
-  min-height: 105px;
+  grid-column: span 1;
 }
 .adat-showcase-2 .adat-flip-card-3,
 .adat-showcase-2 .adat-flip-card-4 {
   display: none;
-} /* Display 3 cards total for perfect laptop viewport fit */
-.adat-showcase-2 .adat-card-heading {
-  font-size: 16px;
 }
-.adat-showcase-2 .adat-hero-card {
-  padding: 11px;
+.adat-showcase-2 .adat-flip-front.adat-hero-card-0 {
+  background: #f0f9fe;
 }
-.adat-showcase-2 .adat-hero-card-0 {
-  background: linear-gradient(145deg, #2c6392, #25486e);
+.adat-showcase-2 .adat-flip-front.adat-hero-card-1 {
+  background: #f5f0ff;
+}
+.adat-showcase-2 .adat-flip-front.adat-hero-card-2 {
+  background: #edf8ff;
+}
+
+.adat-flip-back.adat-hero-card-0 {
+  background: linear-gradient(135deg, #075985, #0284c7) !important;
+  color: #ffffff !important;
+}
+.adat-flip-back.adat-hero-card-1 {
+  background: linear-gradient(135deg, #4c1d95, #7e22ce) !important;
+  color: #ffffff !important;
+}
+.adat-flip-back.adat-hero-card-2 {
+  background: linear-gradient(135deg, #0369a1, #0284c7) !important;
+  color: #ffffff !important;
+}
+.adat-flip-back.adat-hero-card-3 {
+  background: linear-gradient(135deg, #9a3412, #c2410c) !important;
+  color: #ffffff !important;
+}
+.adat-flip-back.adat-hero-card-4 {
+  background: linear-gradient(135deg, #0f766e, #0d9488) !important;
+  color: #ffffff !important;
+}
+
+.adat-flip-back h3 {
+  color: #ffffff !important;
+}
+.adat-hero-card.adat-flip-back p,
+.adat-flip-back p {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+.adat-flip-back .adat-hero-card-link {
+  color: #ffffff !important;
+}
+.adat-flip-back .site-button-icon {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+.adat-flip-back .site-button-icon:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
 }
 
 /* Full-screen composition: header, slide and controls share the viewport. */
 .adat-hero {
-  --hero-top: clamp(100px, 13dvh, 150px);
-  --hero-bottom: max(16px, env(safe-area-inset-bottom));
-  --slide-height: calc(100dvh - var(--hero-top) - var(--hero-bottom) - 64px);
+  --hero-top: clamp(115px, 14vh, 155px);
+  --hero-bottom: max(20px, env(safe-area-inset-bottom));
+  --slide-height: calc(100dvh - var(--hero-top) - var(--hero-bottom) - 56px);
   min-height: 100vh;
   min-height: 100dvh;
   padding-top: var(--hero-top);
   padding-bottom: var(--hero-bottom);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.adat-hero-viewport {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  min-height: 0;
+}
+.adat-hero-track {
+  width: 100%;
+  align-items: center;
 }
 .adat-hero-slide {
-  min-height: var(--slide-height);
-  padding-block: 12px;
+  height: auto;
+  max-height: var(--slide-height);
+  padding-block: 0;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
 }
 .adat-slide-0 {
   display: flex;
@@ -947,14 +1129,21 @@
   justify-content: center;
 }
 .adat-slide-1 {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: clamp(20px, 4dvh, 56px);
+  align-items: center;
+  height: 100%;
+  gap: clamp(16px, 3dvh, 40px);
 }
 .adat-slide-2 {
-  align-content: center;
+  display: grid;
+  grid-template-columns: 0.8fr 1.4fr;
+  align-items: center;
+  height: 100%;
 }
 .adat-hero-controls {
-  margin-top: 12px;
+  margin-top: auto;
   padding-top: 10px;
 }
 .adat-hero h1,
@@ -987,14 +1176,14 @@
   max-width: 1500px;
 }
 .adat-showcase-1 .adat-hero-grid {
-  min-height: clamp(185px, 30dvh, 420px);
+  min-height: clamp(180px, 28dvh, 360px);
 }
 .adat-showcase-2 .adat-hero-grid {
-  grid-template-rows: repeat(2, minmax(clamp(165px, 27dvh, 350px), auto));
+  grid-template-rows: 1.15fr 1fr;
 }
 .adat-showcase-1 .adat-card-heading,
 .adat-showcase-2 .adat-card-heading {
-  font-size: clamp(16px, 1.25vw, 25px);
+  font-size: clamp(15px, 1.15vw, 22px);
 }
 .adat-hero .card-visual {
   flex-grow: 1;
@@ -1029,77 +1218,191 @@
 
 @media (max-width: 1023px) {
   .adat-hero {
-    --hero-top: 100px;
+    --hero-top: clamp(105px, 13vh, 135px);
+    --hero-bottom: max(16px, env(safe-area-inset-bottom));
+    min-height: 100dvh;
+    height: auto;
+    overflow: visible;
+    padding-top: var(--hero-top);
+    padding-bottom: var(--hero-bottom);
+  }
+  .adat-hero-slide {
+    height: auto;
+    max-height: none;
+    padding-block: 4px;
+  }
+  .adat-slide-1 {
+    gap: clamp(10px, 2dvh, 18px);
+    justify-content: flex-start;
   }
   .adat-slide-2 {
-    grid-template-columns: 1fr;
-    gap: clamp(20px, 3dvh, 40px);
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: center !important;
+    gap: clamp(10px, 2dvh, 18px) !important;
   }
   .adat-slide-2 .adat-hero-copy {
-    max-width: 720px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    margin-inline: auto !important;
+    gap: 8px !important;
   }
+  .adat-hero-eyebrow,
+  .adat-slide-2 .adat-hero-eyebrow {
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-bottom: 6px !important;
+  }
+  .website-hero h1,
   .adat-hero h1,
   .adat-hero-title,
   .adat-slide-1 .adat-hero-title,
-  .adat-hero .website-hero h1 {
-    font-size: clamp(28px, min(5vw, 5dvh), 50px);
+  .adat-slide-2 .adat-hero-title {
+    font-size: clamp(22px, min(4vw, 4dvh), 36px) !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    margin-inline: auto !important;
   }
-  .adat-showcase-1 .adat-hero-grid {
-    grid-template-columns: repeat(2, 1fr);
-    min-height: 0;
+  .website-hero-label {
+    font-size: 10px !important;
+    letter-spacing: 0.12em !important;
+    margin-bottom: 6px !important;
   }
-  .adat-showcase-1 .adat-flip-card {
-    min-height: clamp(165px, 20dvh, 240px);
+  .adat-hero-intro,
+  .adat-slide-2 .adat-hero-intro {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-top: 6px !important;
   }
+  .website-hero-description,
+  .adat-hero-intro h2,
+  .adat-slide-2 .adat-hero-intro h2,
+  .adat-hero-intro p,
+  .adat-slide-1 .adat-hero-intro p,
+  .adat-slide-2 .adat-hero-intro p {
+    font-size: clamp(12px, 1.6vw, 14px) !important;
+    line-height: 1.5 !important;
+    max-width: 520px !important;
+    margin: 4px auto 10px !important;
+    text-align: center !important;
+  }
+  .website-hero-actions .site-button,
+  .adat-hero-cta,
+  .adat-slide-1 .adat-hero-cta,
+  .adat-slide-2 .adat-hero-cta {
+    padding: 8px 18px !important;
+    font-size: 13px !important;
+    border-radius: 99px !important;
+    margin-top: 6px !important;
+    align-self: center !important;
+  }
+  .website-work-link {
+    font-size: 13px !important;
+    gap: 5px !important;
+  }
+  .adat-showcase-1 .adat-flip-card:not(.adat-flip-card-0),
+  .adat-showcase-2 .adat-flip-card:not(.adat-flip-card-0) {
+    display: none !important;
+  }
+  .adat-showcase-1 .adat-hero-grid,
   .adat-showcase-2 .adat-hero-grid {
-    grid-template-rows: repeat(2, minmax(165px, 20dvh));
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    margin-inline: auto !important;
+    min-height: 0 !important;
+  }
+  .adat-showcase-1 .adat-flip-card-0,
+  .adat-showcase-2 .adat-flip-card-0 {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    max-width: 560px !important;
+    aspect-ratio: 16 / 9;
+    height: auto !important;
+    min-height: clamp(160px, 22vh, 240px) !important;
+    max-height: 250px !important;
+  }
+  .adat-hero-card {
+    padding: 10px;
+    border-radius: 12px;
   }
 }
 
 @media (max-width: 767px) {
   .adat-hero {
-    --hero-top: 96px;
+    --hero-top: 100px;
     --hero-bottom: max(12px, env(safe-area-inset-bottom));
   }
   .adat-hero-slide {
-    gap: clamp(16px, 3dvh, 32px);
+    gap: clamp(10px, 1.8dvh, 18px);
   }
   .adat-hero-eyebrow {
-    font-size: 12px;
-    margin-bottom: 10px;
+    font-size: 10px;
+    margin-bottom: 6px;
+    justify-content: center !important;
   }
   .adat-hero-eyebrow::before {
     display: none;
   }
-  .adat-hero-intro,
-  .adat-slide-1 .adat-hero-intro,
-  .adat-slide-2 .adat-hero-intro {
-    margin-top: 10px;
-    padding-top: 0;
+  .website-hero h1,
+  .adat-hero h1,
+  .adat-hero-title,
+  .adat-slide-1 .adat-hero-title {
+    font-size: clamp(19px, 4.6vw, 25px) !important;
+    line-height: 1.22 !important;
+    text-align: center !important;
   }
+  .website-hero-description,
   .adat-hero-intro p {
-    margin-top: 6px;
+    font-size: 12px !important;
+    margin: 6px auto 10px !important;
+    text-align: center !important;
   }
+  .website-hero-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin-top: 8px !important;
+  }
+  .website-hero-actions .site-button,
   .adat-hero-cta {
-    font-size: 13px;
-    margin-top: 12px;
+    font-size: 12px !important;
+    padding: 7px 16px !important;
+    margin-top: 0 !important;
+    width: auto !important;
+    max-width: 260px !important;
+    justify-content: center !important;
+    align-self: center !important;
   }
-  .adat-showcase-1 .adat-flip-card:not(.adat-flip-card-0),
-  .adat-showcase-2 .adat-flip-card:not(.adat-flip-card-0) {
-    display: none;
-  }
-  .adat-showcase-1 .adat-hero-grid,
-  .adat-showcase-2 .adat-hero-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    min-height: 0;
+  .website-work-link {
+    font-size: 12px !important;
+    margin-top: 2px !important;
+    justify-content: center !important;
   }
   .adat-showcase-1 .adat-flip-card-0,
   .adat-showcase-2 .adat-flip-card-0 {
-    grid-column: auto;
-    grid-row: auto;
-    min-height: clamp(165px, 27dvh, 300px);
+    max-width: 100% !important;
+    aspect-ratio: 16 / 9;
+    min-height: clamp(140px, 18vh, 210px) !important;
+    max-height: 220px !important;
   }
   .adat-showcase-bar .adat-showcase-label {
     display: none;
@@ -1107,44 +1410,51 @@
   .adat-showcase-bar {
     font-size: 10px;
   }
-  .adat-hero-card {
-    padding: 14px;
-  }
   .adat-hero-card-link {
-    font-size: 12px;
+    font-size: 11px;
   }
   .adat-hero-controls {
-    gap: 10px;
+    gap: 8px;
+    padding-top: 6px;
   }
   .adat-hero-dots button {
-    width: 20px;
-  }
-  .website-hero-description {
-    margin: 12px auto 16px;
-  }
-  .website-hero-actions {
-    gap: 12px;
-    flex-wrap: wrap;
+    width: 16px;
   }
   .website-platforms {
-    gap: 8px;
+    gap: 6px;
   }
   .website-stage {
-    height: clamp(180px, 29dvh, 300px);
-    margin-top: 24px;
+    height: auto !important;
+    min-height: 150px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .website-main-preview {
-    width: 96%;
-    left: 2%;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+  }
+  .website-simulated-cursor {
+    display: none !important;
   }
   .website-mini {
-    display: none;
+    display: none !important;
   }
   .website-art {
-    height: clamp(90px, 15dvh, 160px);
+    height: 70px !important;
   }
   .website-detail-pill {
-    font-size: 9px;
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    margin: 8px auto 0 !important;
+    font-size: 8px !important;
+    padding: 3px 9px !important;
+    display: inline-flex !important;
   }
 }
 
@@ -1152,21 +1462,21 @@
 @media (max-width: 767px) and (max-height: 700px) {
   .adat-hero-slide {
     padding-block: 2px;
-    gap: 8px;
+    gap: 6px;
   }
   .adat-hero h1,
   .adat-hero-title,
   .adat-slide-1 .adat-hero-title,
   .adat-hero .website-hero h1 {
-    font-size: clamp(23px, 6vw, 30px);
+    font-size: clamp(18px, 5vw, 23px) !important;
   }
   .adat-hero-intro p,
   .website-hero-description {
-    display: none;
+    display: none !important;
   }
   .adat-hero-eyebrow {
-    font-size: 11px;
-    margin-bottom: 6px;
+    font-size: 10px;
+    margin-bottom: 4px;
   }
   .adat-slide-2 .adat-hero-copy {
     gap: 4px;
@@ -1174,28 +1484,28 @@
   .adat-hero-intro h2,
   .adat-slide-1 .adat-hero-intro h2,
   .adat-slide-2 .adat-hero-intro h2 {
-    font-size: 15px;
+    font-size: 14px;
   }
   .adat-showcase-1 .adat-flip-card-0,
   .adat-showcase-2 .adat-flip-card-0 {
-    min-height: 155px;
+    min-height: 140px;
   }
   .adat-hero .card-visual {
-    min-height: 85px;
-    flex-basis: 85px;
+    min-height: 75px;
+    flex-basis: 75px;
   }
   .website-stage {
-    height: 155px;
-    margin-top: 16px;
+    min-height: 130px;
+    margin-top: 10px;
   }
   .website-art {
-    height: 70px;
+    height: 60px !important;
   }
   .website-main-content {
-    padding: 10px;
+    padding: 8px;
   }
   .website-hero-actions {
-    margin-top: 12px;
+    margin-top: 8px !important;
   }
 }
 
@@ -1211,7 +1521,7 @@
   .adat-hero-title,
   .adat-slide-1 .adat-hero-title,
   .adat-hero .website-hero h1 {
-    font-size: clamp(26px, 3vw, 36px);
+    font-size: clamp(24px, 3vw, 34px);
   }
   .adat-showcase-1 .adat-hero-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -1221,21 +1531,6 @@
 @media (prefers-reduced-motion: reduce) {
   .adat-hero * {
     transition: none !important;
-  }
-}
-
-@media (max-width: 767px) {
-  .website-hero-actions {
-    flex-wrap: nowrap;
-    gap: 10px;
-  }
-  .website-hero-actions .site-button {
-    padding-inline: 14px;
-    font-size: 12px;
-  }
-  .website-work-link {
-    font-size: 12px;
-    white-space: nowrap;
   }
 }
 @media (max-width: 767px) and (max-height: 700px) {

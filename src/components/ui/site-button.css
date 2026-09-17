@@ -5,18 +5,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .5rem;
-  min-height: 44px;
+  gap: .45rem;
+  min-height: 36px;
   height: auto;
-  padding: .65rem 1.5rem !important;
+  padding: .4rem 1.1rem !important;
   border: 1px solid #ffffff35 !important;
   border-radius: 999px !important;
   background: linear-gradient(180deg, var(--button-top), var(--button-bottom)) !important;
   color: #fff !important;
   font-family: inherit;
-  font-size: 14px !important;
-  font-weight: 600 !important;
-  line-height: 1.4 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.35 !important;
   text-decoration: none !important;
   text-align: center;
   cursor: pointer;
@@ -24,7 +24,7 @@
   transform: translate(var(--magnetic-x, 0px), var(--magnetic-y, 0px)) scale(var(--button-scale, 1)) !important;
   transition: filter .15s ease !important;
 }
-.site-button-icon { width: 40px; min-width: 40px; min-height: 40px; height: 40px; padding: 0 !important; flex-shrink: 0; }
+.site-button-icon { width: 34px; min-width: 34px; min-height: 34px; height: 34px; padding: 0 !important; flex-shrink: 0; }
 .site-button[data-variant="destructive"] { --button-top: #dc2626; --button-bottom: #b91c1c; }
 .site-button svg:is(.lucide, .icon-tabler) { color: inherit !important; flex-shrink: 0; }
 @media (hover: hover) {
@@ -39,9 +39,35 @@
 }
 .site-button:focus-visible { outline: 3px solid #38bdf8 !important; outline-offset: 5px; }
 .site-button:disabled, .site-button[aria-disabled="true"] { opacity: .5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
-@media (prefers-reduced-motion: reduce) { .site-button { transition: none !important; } .site-button:hover, .site-button:active { translate: none !important; } }
 
-.site-magnetic-footprint { display: none; position: fixed; pointer-events: none; z-index: 50; border: 1px dashed #0ea5e9; background: rgb(14 165 233 / 12%); }
+@media (max-width: 1023px) {
+  .site-button {
+    min-height: 33px !important;
+    padding: 0.35rem 0.9rem !important;
+    font-size: 12px !important;
+  }
+  .site-button-icon {
+    width: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    height: 32px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-button {
+    min-height: 31px !important;
+    padding: 0.3rem 0.8rem !important;
+    font-size: 11.5px !important;
+  }
+  .site-button-icon {
+    width: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    height: 30px !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce), (pointer: coarse) {
   .site-button { transform: none !important; }
   .site-magnetic-footprint { display: none !important; }
