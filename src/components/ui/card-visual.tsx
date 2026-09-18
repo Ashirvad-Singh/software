@@ -37,18 +37,6 @@ function getCardIllustration(title: string, variant: number): { src: string; alt
   return { src: "/illustrations/ecommerce.jpg", alt: "Digital Solutions" };
 }
 
-function getCardBadge(title: string, variant: number): { label: string; colorClass?: string } {
-  const norm = (title || "").toLowerCase();
-  if (norm.includes("shopify")) return { label: "Shopify Plus", colorClass: "green" };
-  if (norm.includes("woocommerce")) return { label: "WooCommerce Core", colorClass: "purple" };
-  if (norm.includes("redesign")) return { label: "Conversion Lab", colorClass: "amber" };
-  if (norm.includes("ecommerce")) return { label: "High-Perf Store", colorClass: "sky" };
-  if (norm.includes("ui/ux")) return { label: "Design Engine", colorClass: "indigo" };
-  if (norm.includes("research")) return { label: "Telemetry & Insights", colorClass: "purple" };
-  if (norm.includes("wireframe")) return { label: "Interactive Prototype", colorClass: "cyan" };
-  if (variant === 4 || norm.includes("launch")) return { label: "Next-Gen Launch", colorClass: "emerald" };
-  return { label: "Digital Core", colorClass: "sky" };
-}
 
 export default function CardVisual({ variant, title = "" }: CardVisualProps) {
   const illustration = getCardIllustration(title, variant);
