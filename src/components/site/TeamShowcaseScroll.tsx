@@ -42,7 +42,7 @@ function TeamPortrait({
   return (
     <figure
       ref={ref}
-      className={`min-w-0 ${index % 3 === 1 ? "md:translate-y-28" : "md:translate-y-0"} ${index % 2 === 1 ? "translate-y-12" : ""}`}
+      className={`min-w-0 ${index % 2 === 1 ? "translate-y-8 md:translate-y-0" : ""} ${index % 3 === 1 ? "md:translate-y-24" : "md:translate-y-0"}`}
     >
       <motion.div
         style={reduceMotion ? undefined : { scale }}

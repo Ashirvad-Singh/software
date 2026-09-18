@@ -18,7 +18,7 @@ export default function BlogPage() {
         subtitle="Thoughts, tutorials, and insights on design, development, and building successful digital products."
       />
 
-      <div className="container mx-auto px-4 md:px-6 max-w-7xl pt-10 md:pt-16">
+      <div className="container mx-auto px-4 md:px-6 max-w-7xl pt-6 sm:pt-8 md:pt-10">
 
         <CatalogState loading={false} error={error} empty={!loading && !displayPosts.length} label="articles" retry={retry} />
         {loading ? (
@@ -29,7 +29,7 @@ export default function BlogPage() {
           <>
             {/* Featured Post */}
             {featuredPost && (
-          <Link to={`/blog/${featuredPost.slug}`} className="group block mb-16">
+          <Link to={`/blog/${featuredPost.slug}`} className="group block mb-12 sm:mb-16">
             <div className="relative rounded-3xl overflow-hidden bg-white shadow-sm border border-neutral-100 flex flex-col lg:flex-row hover:shadow-xl transition-all duration-300">
               <div className="w-full lg:w-1/2 aspect-video lg:aspect-auto relative overflow-hidden">
                 <img 
@@ -43,7 +43,7 @@ export default function BlogPage() {
                   </span>
                 </div>
               </div>
-              <div className="w-full lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+              <div className="w-full lg:w-1/2 p-5 sm:p-8 md:p-10 lg:p-12 flex flex-col justify-center">
                 <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                   <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> {featuredPost.date}</span>
                   <span className="w-1 h-1 rounded-full bg-neutral-300"></span>

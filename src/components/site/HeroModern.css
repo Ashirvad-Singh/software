@@ -101,11 +101,11 @@
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  border: 1px solid #0284c7;
-  background: #ffffff;
-  color: #075985;
+  border: 1px solid #0284c7 !important;
+  background: #ffffff !important;
+  color: #075985 !important;
   border-radius: 99px;
-  padding: 8px 18px;
+  padding: 8px 18px !important;
   margin-top: 12px;
   font-size: 13px;
   transition:
@@ -113,8 +113,8 @@
     color 0.2s;
 }
 .adat-hero-cta:hover {
-  background: #0284c7;
-  color: #ffffff;
+  background: #0284c7 !important;
+  color: #ffffff !important;
 }
 
 /* Desktop Hero Grid & Cards */
@@ -129,7 +129,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 14px;
-  padding: 14px;
+  padding: 0;
   border: 1px solid #b9ddf1;
   display: flex;
   flex-direction: column;
@@ -178,9 +178,7 @@
     inset 0 1px 0 #ffffff40,
     0 10px 24px -16px #07598570;
 }
-.adat-hero-card-0 p {
-  color: #e0f2fe;
-}
+
 .adat-hero-card-1 {
   background: linear-gradient(135deg, #f3edff, #e0d5f7);
   color: #513477;
@@ -208,7 +206,8 @@
   font-size: 12px;
   line-height: 1.55;
   margin: 6px 0 8px;
-  color: #476174;
+  color: inherit;
+  opacity: 0.85;
 }
 .adat-hero-card-link {
   display: flex;
@@ -298,13 +297,14 @@
   width: 100%;
   text-align: left;
   cursor: pointer;
+  padding: 0 !important;
 }
 .adat-flip-back {
   transform: rotateY(180deg);
   visibility: hidden;
   position: relative;
   overflow: hidden;
-  padding: 12px;
+  padding: 20px !important;
 }
 .adat-flip-back h3 {
   font-size: clamp(18px, 1.3vw, 22px);
@@ -929,7 +929,7 @@
 }
 .adat-slide-1 .adat-hero-cta {
   margin-top: 14px;
-  padding: 10px 22px;
+  padding: 10px 22px !important;
   font-size: 14px;
   font-weight: 500;
 }
@@ -946,13 +946,13 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
   gap: 16px;
-  min-height: 185px;
+  min-height: 180px;
 }
 .adat-showcase-1 .adat-flip-card-0,
 .adat-showcase-1 .adat-flip-card {
   grid-column: auto;
   grid-row: auto;
-  min-height: 185px;
+  min-height: 180px;
 }
 .adat-showcase-1 .adat-flip-card-4 {
   display: none; /* Display 4 cards below in 4 equal columns */
@@ -961,16 +961,38 @@
   font-size: 18px;
 }
 .adat-showcase-1 .adat-hero-card {
-  padding: 16px;
+  padding: 0;
   height: 100%;
+}
+.adat-showcase-1 .adat-hero-card-0 {
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  color: #0369a1;
+  border-color: #bae6fd;
+}
+.adat-showcase-1 .adat-hero-card-1 {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+.adat-showcase-1 .adat-hero-card-2 {
+  background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+  color: #7e22ce;
+  border-color: #e9d5ff;
+}
+.adat-showcase-1 .adat-hero-card-3 {
+  background: linear-gradient(135deg, #fff7ed, #ffedd5);
+  color: #c2410c;
+  border-color: #fed7aa;
 }
 
 /* Slide 2 Desktop Composition (UI/UX Design) - Framed Studio Canvas (3 Cards Total) */
 .adat-slide-2 {
   display: grid;
-  grid-template-columns: 0.8fr 1.4fr;
-  gap: clamp(24px, 3.5vw, 56px);
+  grid-template-columns: 1fr 1.15fr;
+  gap: clamp(20px, 3vw, 48px);
   align-items: center;
+  width: 100%;
+  min-width: 0;
 }
 .adat-slide-2 .adat-hero-copy {
   order: 1;
@@ -980,6 +1002,8 @@
   justify-content: center;
   text-align: left;
   gap: 12px;
+  min-width: 0;
+  width: 100%;
 }
 .adat-slide-2 .adat-hero-intro {
   margin-top: 10px;
@@ -1039,54 +1063,20 @@
 .adat-showcase-2 .adat-flip-card-4 {
   display: none;
 }
-.adat-showcase-2 .adat-flip-front.adat-hero-card-0 {
+.adat-showcase-2 .adat-hero-card-0 {
   background: #f0f9fe;
+  color: #0369a1;
+  border-color: #bae6fd;
 }
-.adat-showcase-2 .adat-flip-front.adat-hero-card-1 {
+.adat-showcase-2 .adat-hero-card-1 {
   background: #f5f0ff;
+  color: #7e22ce;
+  border-color: #e9d5ff;
 }
-.adat-showcase-2 .adat-flip-front.adat-hero-card-2 {
+.adat-showcase-2 .adat-hero-card-2 {
   background: #edf8ff;
-}
-
-.adat-flip-back.adat-hero-card-0 {
-  background: linear-gradient(135deg, #075985, #0284c7) !important;
-  color: #ffffff !important;
-}
-.adat-flip-back.adat-hero-card-1 {
-  background: linear-gradient(135deg, #4c1d95, #7e22ce) !important;
-  color: #ffffff !important;
-}
-.adat-flip-back.adat-hero-card-2 {
-  background: linear-gradient(135deg, #0369a1, #0284c7) !important;
-  color: #ffffff !important;
-}
-.adat-flip-back.adat-hero-card-3 {
-  background: linear-gradient(135deg, #9a3412, #c2410c) !important;
-  color: #ffffff !important;
-}
-.adat-flip-back.adat-hero-card-4 {
-  background: linear-gradient(135deg, #0f766e, #0d9488) !important;
-  color: #ffffff !important;
-}
-
-.adat-flip-back h3 {
-  color: #ffffff !important;
-}
-.adat-hero-card.adat-flip-back p,
-.adat-flip-back p {
-  color: rgba(255, 255, 255, 0.95) !important;
-}
-.adat-flip-back .adat-hero-card-link {
-  color: #ffffff !important;
-}
-.adat-flip-back .site-button-icon {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: #ffffff !important;
-}
-.adat-flip-back .site-button-icon:hover {
-  background: rgba(255, 255, 255, 0.35) !important;
+  color: #0369a1;
+  border-color: #bae6fd;
 }
 
 /* Full-screen composition: header, slide and controls share the viewport. */
@@ -1138,9 +1128,12 @@
 }
 .adat-slide-2 {
   display: grid;
-  grid-template-columns: 0.8fr 1.4fr;
+  grid-template-columns: 1fr 1.15fr;
+  gap: clamp(20px, 3vw, 48px);
   align-items: center;
   height: 100%;
+  width: 100%;
+  min-width: 0;
 }
 .adat-hero-controls {
   margin-top: auto;
@@ -1176,7 +1169,7 @@
   max-width: 1500px;
 }
 .adat-showcase-1 .adat-hero-grid {
-  min-height: clamp(180px, 28dvh, 360px);
+  min-height: clamp(120px, 22dvh, 260px);
 }
 .adat-showcase-2 .adat-hero-grid {
   grid-template-rows: 1.15fr 1fr;
@@ -1338,7 +1331,7 @@
     max-height: 250px !important;
   }
   .adat-hero-card {
-    padding: 10px;
+    padding: 0;
     border-radius: 12px;
   }
 }
@@ -1559,7 +1552,7 @@
   }
   .adat-showcase-1 .adat-hero-card,
   .adat-showcase-2 .adat-hero-card {
-    padding: 10px;
+    padding: 0;
   }
 }
 

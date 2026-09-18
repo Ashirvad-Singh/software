@@ -36,7 +36,7 @@ function renderFormattedList(content: string, jobTitle?: string) {
   };
 
   rawLines.forEach((line, index) => {
-    const isBulletLine = /^[-*•\d+\.]\s*/.test(line);
+    const isBulletLine = /^[-*•\d+.]\s*/.test(line);
     const cleanedLine = line.replace(/^[-*•]\s*/, "").replace(/^\d+\.\s*/, "").trim();
 
     if (!cleanedLine) return;
@@ -127,7 +127,7 @@ export default function JobDetailPage() {
   }
 
   return (
-    <main className="bg-white dark:bg-neutral-950 min-h-screen pt-32 pb-10 md:pb-16">
+    <main className="bg-white dark:bg-neutral-950 min-h-screen pt-28 sm:pt-32 pb-10 md:pb-16">
       <SEO title={`${job.title} Careers`} description={job.description} />
       <div className="container mx-auto px-4 max-w-4xl">
         <motion.div
@@ -135,25 +135,25 @@ export default function JobDetailPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="mb-6 flex flex-wrap items-center gap-3">
-            <span className="px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 text-sm font-bold uppercase tracking-wider">
-              {job.department}
-            </span>
-            <span className="px-4 py-1.5 rounded-full bg-neutral-100 text-neutral-700 text-sm font-bold uppercase tracking-wider">
-              {job.type}
-            </span>
-          </div>
-
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 tracking-tight mb-8">
-            {job.title}
-          </h1>
-
-          <Link to="/careers" className="inline-flex items-center text-sm font-medium text-neutral-500 hover:text-primary transition-colors mb-8">
+          <Link to="/careers" className="inline-flex items-center text-sm font-medium text-neutral-500 hover:text-primary transition-colors mb-6">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Careers
           </Link>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 py-6 border-y border-neutral-200">
+          <div className="mb-4 flex flex-wrap items-center gap-2.5">
+            <span className="px-3.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider">
+              {job.department}
+            </span>
+            <span className="px-3.5 py-1 rounded-full bg-neutral-100 text-neutral-700 text-xs font-bold uppercase tracking-wider">
+              {job.type}
+            </span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 tracking-tight mb-8">
+            {job.title}
+          </h1>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-10 md:mb-12 py-6 border-y border-neutral-200">
             <div className="flex flex-col gap-1">
               <span className="flex items-center text-sm text-neutral-500 font-medium"><MapPin className="w-4 h-4 mr-2" /> Location</span>
               <span className="font-semibold text-neutral-900">{job.location}</span>

@@ -440,17 +440,17 @@ export default function TechnologiesPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.08 }}
-                className="p-6 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm"
+                className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm"
               >
-                <div className="flex items-center gap-4">
-                  <span className="site-step-badge w-12 h-12 rounded-2xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-extrabold flex items-center justify-center text-sm shrink-0">
+                <div className="flex items-start sm:items-center gap-3.5 sm:gap-4">
+                  <span className="site-step-badge w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-extrabold flex items-center justify-center text-xs sm:text-sm shrink-0">
                     {item.step}
                   </span>
                   <div>
-                    <h3 className="text-lg font-bold text-neutral-900 dark:text-white">
+                    <h3 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white">
                       {item.title}
                     </h3>
-                    <p className="text-xs md:text-sm text-neutral-600 dark:text-neutral-400 mt-1 max-w-2xl leading-relaxed">
+                    <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 mt-1 max-w-2xl leading-relaxed">
                       {item.detail}
                     </p>
                   </div>
@@ -517,7 +517,7 @@ export default function TechnologiesPage() {
       {/* CTA Consultation Card */}
       <section className="py-10 md:py-16 bg-neutral-50 dark:bg-neutral-900/50 border-t border-neutral-200 dark:border-neutral-800">
         <div className="container mx-auto px-4 max-w-5xl">
-          <div className="p-8 md:p-12 rounded-3xl bg-neutral-900 text-white border border-neutral-800 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl relative overflow-hidden">
+          <div className="p-6 sm:p-8 md:p-12 rounded-3xl bg-neutral-900 text-white border border-neutral-800 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl relative overflow-hidden">
             <div className="space-y-3 text-center md:text-left z-10 max-w-2xl">
               <span className="inline-flex items-center gap-1.5 text-xs font-bold text-primary uppercase tracking-wider">
                 <Sparkles className="w-4 h-4" /> Need Technology Consultation?
@@ -525,7 +525,7 @@ export default function TechnologiesPage() {
               <h2 className="text-2xl md:text-4xl font-bold tracking-tight">
                 Ready to Build Your Digital Product With Our Stack?
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              <p className="text-xs sm:text-sm text-neutral-300 dark:text-neutral-400 leading-relaxed">
                 Book a 30-minute technical architecture discovery session with our Lead Solutions Architect to discuss your database, framework, and cloud deployment requirements.
               </p>
             </div>

@@ -8,8 +8,6 @@ interface HeroServiceCardProps {
   description: string;
   destination: string;
   index: number;
-  image?: string;
-  hideHeading?: boolean;
 }
 
 export default function HeroServiceCard({
@@ -17,11 +15,8 @@ export default function HeroServiceCard({
   description,
   destination,
   index,
-  image,
-  hideHeading,
 }: HeroServiceCardProps) {
   const [flipped, setFlipped] = useState(false);
-  const hasImage = Boolean(image);
 
   return (
     <div
@@ -37,18 +32,12 @@ export default function HeroServiceCard({
       <div className="adat-flip-inner">
         <button
           type="button"
-          className={`adat-hero-card adat-flip-front adat-hero-card-${index}${hasImage ? " adat-card-has-image" : ""}`}
+          className={`adat-hero-card adat-flip-front adat-hero-card-${index}`}
           onClick={() => setFlipped(true)}
           aria-label={`Show details about ${title}`}
           aria-expanded={flipped}
         >
-          {!hasImage && !hideHeading && <span className="adat-card-heading">{title}</span>}
-          <CardVisual variant={index} title={title} image={image} />
-          {!hasImage && (
-            <span className="adat-hero-card-link">
-              View details <ArrowRight size={16} />
-            </span>
-          )}
+          <CardVisual variant={index} title={title} />
         </button>
         <div className={`adat-hero-card adat-flip-back adat-hero-card-${index}`}>
           <h3>{title}</h3>

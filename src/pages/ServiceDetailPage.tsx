@@ -38,21 +38,21 @@ export default function ServiceDetailPage() {
   const ServiceIcon = icons[service.iconName as keyof typeof icons] || Code;
 
   return (
-    <main className="pt-24 md:pt-32 pb-20">
+    <main className="pt-24 sm:pt-28 md:pt-32 pb-16 md:pb-20">
       <div className="container mx-auto px-4 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <ServiceIcon aria-hidden="true" className="mb-5 h-10 w-10 text-primary" />
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6">{service.title}</h1>
-          <p className="text-xl text-muted-foreground mb-6">{service.description}</p>
-          
-          <Link to="/services" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8">
+          <Link to="/services" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-6">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Services
           </Link>
+
+          <ServiceIcon aria-hidden="true" className="mb-4 h-10 w-10 text-primary" />
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-4 sm:mb-6">{service.title}</h1>
+          <p className="text-lg sm:text-xl text-muted-foreground mb-8 leading-relaxed">{service.description}</p>
 
           {service.thumbnailUrl && <img src={service.thumbnailUrl} alt={service.title} className="mb-8 aspect-video w-full rounded-2xl object-cover sm:mb-12" />}
           <div className="prose prose-lg dark:prose-invert max-w-none mb-16">
@@ -72,7 +72,7 @@ export default function ServiceDetailPage() {
               </ul>
             </div>
             
-            <div className="bg-secondary/20 p-8 rounded-2xl border border-border/50">
+            <div className="bg-secondary/20 p-5 sm:p-8 rounded-2xl border border-border/50">
               <h3 className="text-2xl font-bold mb-6">Our Process</h3>
               <div className="space-y-6">
                 {service.process && service.process.length > 0 ? (
@@ -113,9 +113,9 @@ export default function ServiceDetailPage() {
             </div>
           )}
 
-          <div className="bg-primary text-primary-foreground rounded-2xl p-8 md:p-12 text-center">
+          <div className="bg-primary text-primary-foreground rounded-2xl p-6 sm:p-8 md:p-12 text-center">
             <h3 className="text-2xl md:text-3xl font-bold mb-4">Ready to get started?</h3>
-            <p className="mb-8 opacity-90 max-w-xl mx-auto">Let's discuss how our {service.title} services can help you achieve your business goals.</p>
+            <p className="mb-8 opacity-90 max-w-xl mx-auto text-sm sm:text-base">Let's discuss how our {service.title} services can help you achieve your business goals.</p>
             <Link to="/contact" className="site-button inline-flex items-center justify-center h-12 px-8 rounded-full bg-background text-foreground font-medium hover:scale-105 transition-transform">
               Contact Us Today
             </Link>

@@ -1,88 +1,70 @@
-.card-visual {
+/* ==========================================================================
+   Cohesive 3D Themed Service Cards
+   Rich, high-fidelity micro-interactions and tailored color schemes
+   ========================================================================== */
+
+.svg-card-container {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1 1 auto;
-  min-height: 80px;
-  width: 100%;
-  margin: 0;
-  pointer-events: none;
-}
-
-.card-visual::after {
-  display: none;
-}
-
-.adat-card-has-image {
-  padding: 0 !important;
-  overflow: hidden;
-  border-radius: 14px !important;
-  box-shadow: 0 8px 20px -12px rgba(14, 116, 175, 0.15) !important;
-}
-
-.card-visual-image-wrapper {
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
-  border-radius: inherit;
-  flex: none;
-}
-
-.card-visual-image-wrapper::after {
-  display: none;
-}
-
-.hero-service-image-wrap {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+  flex-grow: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: inherit;
+  flex-direction: column;
+  justify-content: space-between;
   box-sizing: border-box;
+  pointer-events: none;
+  border-radius: inherit;
 }
 
-.hero-service-image,
-.service-card-image {
-  display: block;
+
+/* 3D Illustration Frame */
+.card-illustration-frame {
+  position: relative;
+  width: 100%;
+  flex: 1 1 auto;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  margin-block: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-illustration-img {
   width: 100%;
   height: 100%;
-  max-width: 100%;
-  max-height: 100%;
   object-fit: cover;
   object-position: center;
+  display: block;
+  transform: translateZ(0);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+}
+
+.adat-hero-card:hover .card-illustration-img {
+  transform: scale(1.06);
+  filter: saturate(1.06) brightness(1.02);
+}
+
+.card-illustration-shine {
+  position: absolute;
+  inset: 0;
   pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
   border-radius: inherit;
-  transition: transform 0.35s ease;
 }
 
-.adat-card-has-image:hover .hero-service-image,
-.adat-card-has-image:hover .service-card-image {
-  transform: scale(1.03);
-}
 
-.visual-blocks { display: grid; grid-template-columns: repeat(2, 43px); gap: 10px; transform: rotateX(24deg) rotateZ(-24deg); }
-.visual-blocks i { width: 43px; height: 38px; border-radius: 8px; background: linear-gradient(135deg, #fff4e4, #f2bb8e); border: 1px solid #ffe5cf; box-shadow: 0 6px 0 #c28a60, 5px 12px 12px #8a522b22; }
-.visual-blocks i:nth-child(2) { background: linear-gradient(135deg, #7ec9f1, #3193c3); border-color: #9edbfa; box-shadow: 0 6px 0 #256b92, 5px 12px 12px #8a522b22; transform: translateY(-5px); }
-.visual-blocks i:nth-child(3) { border-radius: 50%; }
-.visual-blocks i:nth-child(4) { background: linear-gradient(135deg, #e5d6ff, #b091d0); border-color: #e5d6ff; box-shadow: 0 6px 0 #8764a6, 5px 12px 12px #8a522b22; }
-.visual-launch { position: relative; width: 136px; height: 100px; }
-.visual-sphere { position: absolute; width: 72px; height: 72px; left: 32px; top: 12px; border-radius: 50%; background: radial-gradient(circle at 30% 25%, #e2f8ff, #60c4f0 35%, #0d79b4 72%, #075078); box-shadow: inset -7px -8px 12px #084f7b30, 8px 14px 16px #07598525; }
-.visual-orbit-ring { position: absolute; inset: 12px 0; border: 7px solid #b4dff4; border-top-color: #e6f6ff; border-bottom-color: #72b6db; border-radius: 50%; transform: rotate(-30deg) rotateX(55deg); box-shadow: 0 3px 0 #7faeca; z-index: 1; }
-.visual-satellite { position: absolute; width: 17px; height: 17px; top: 6px; right: 12px; border-radius: 50%; background: radial-gradient(circle at 30% 25%, #fff, #b498d6 70%); box-shadow: 2px 4px 6px #73608c30; }
 
-@media (max-width: 540px) {
-  .card-visual {
-    min-height: 70px;
-    margin-block: 2px;
-  }
+
+
+/* Keyframe Animations */
+@keyframes beaconPulse {
+  0%, 100% { transform: scale(1); opacity: 0.95; }
+  50% { transform: scale(1.4); opacity: 0.35; }
 }

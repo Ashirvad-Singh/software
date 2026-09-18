@@ -66,7 +66,7 @@ export default function ContactPage() {
         subtitle="Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions."
       />
 
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl relative z-10 pt-10 md:pt-16">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl relative z-10 pt-4 sm:pt-6 md:pt-8">
         
           <motion.div 
           initial={{ opacity: 0, y: 40 }}
@@ -76,7 +76,7 @@ export default function ContactPage() {
         >
           
           {/* Left Dark Side - Contact Info */}
-          <div className="xl:w-2/5 min-w-0 bg-gradient-to-br from-sky-500 to-sky-700 p-6 sm:p-8 md:p-10 xl:p-12 text-white relative overflow-hidden flex flex-col justify-between">
+          <div className="xl:w-2/5 min-w-0 bg-gradient-to-br from-sky-500 to-sky-700 p-5 sm:p-8 md:p-10 xl:p-12 text-white relative overflow-hidden flex flex-col justify-between">
             <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-sky-300/30 blur-3xl pointer-events-none"></div>
             
@@ -119,7 +119,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right White Side - Form */}
-          <div className="xl:w-3/5 min-w-0 p-6 sm:p-8 md:p-10 xl:p-12 bg-sky-50 relative">
+          <div className="xl:w-3/5 min-w-0 p-5 sm:p-8 md:p-10 xl:p-12 bg-sky-50 relative">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
               
               <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">

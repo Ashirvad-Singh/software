@@ -9,8 +9,8 @@ const fallbackImages = [
   "/adat_hero_ui.webp",
   "/adat_mobile_app.webp",
   "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=85&w=1000",
-  "/Gemini_Generated_Image_721zvy721zvy721z.png",
-  "/Gemini_Generated_Image_baghl8baghl8bagh.png",
+  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000",
+  "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1000",
 ];
 
 export default function HomeServicesSection({

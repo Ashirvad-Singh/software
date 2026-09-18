@@ -135,11 +135,11 @@ export default function TechnologyDetailPage() {
 
           {/* Key Deliverables & Features List */}
           {techDetail.keyFeatures.some(feature => feature.trim()) && (
-          <div className="p-8 md:p-12 rounded-3xl bg-neutral-900 text-white border border-neutral-800 mb-16">
+          <div className="p-5 sm:p-8 md:p-12 rounded-3xl bg-neutral-900 text-white border border-neutral-800 mb-12 sm:mb-16">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary mb-3">
               <Sparkles className="w-4 h-4" /> Engineering Capabilities
             </div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-8">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 sm:mb-8">
               {techDetail.featuresTitle || `Technical Features of ${techDetail.name}`}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -205,9 +205,9 @@ export default function TechnologyDetailPage() {
               {techDetail.process.map((stepItem, idx) => (
                 <div
                   key={idx}
-                  className="p-6 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm"
+                  className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-start sm:items-center gap-3.5 sm:gap-4">
                     <span className="site-step-badge w-10 h-10 rounded-xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-extrabold flex items-center justify-center text-xs shrink-0">
                       {stepItem.step}
                     </span>

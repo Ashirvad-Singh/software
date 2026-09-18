@@ -6,7 +6,7 @@ import { FloatingShapes } from "@/components/ui/floating-shapes";
 
 export default function NotFoundPage() {
   return (
-    <main className="min-h-[80vh] flex items-center justify-center relative overflow-hidden bg-white">
+    <main className="min-h-screen pt-28 md:pt-36 pb-16 md:pb-24 flex items-center justify-center relative overflow-hidden bg-white">
       {/* Background Shapes */}
       <FloatingShapes />
       

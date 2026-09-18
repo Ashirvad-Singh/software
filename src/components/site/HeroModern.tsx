@@ -6,24 +6,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { FloatingShapes } from "@/components/ui/floating-shapes";
 import WebsiteHero from "./WebsiteHero";
 import HeroServiceCard from "./HeroServiceCard";
-import ecommerceImage from "@/assets/hero/ecommerce.webp";
-import shopifyImage from "@/assets/hero/shopify.webp";
-import woocommerceImage from "@/assets/hero/woocommerce.webp";
-import storeRedesignImage from "@/assets/hero/store-redesign.webp";
-import uiuxImage from "@/assets/hero/uiux-design.webp";
-import userResearchImage from "@/assets/hero/user-research.webp";
-import wireframeImage from "@/assets/hero/wireframes-prototypes.webp";
 import "./HeroModern.css";
-
-const cardImages: Record<string, string> = {
-  "eCommerce Websites": ecommerceImage,
-  "Shopify Development": shopifyImage,
-  "WooCommerce Development": woocommerceImage,
-  "Store Redesign": storeRedesignImage,
-  "UI/UX Design": uiuxImage,
-  "User Research": userResearchImage,
-  "Wireframes & Prototypes": wireframeImage,
-};
 
 const slides = [
   {
@@ -126,7 +109,6 @@ export default function HeroModern() {
                   <HeroServiceCard
                     key={card}
                     title={card}
-                    image={cardImages[card]}
                     index={cardIndex}
                     destination={(slide.destinations ?? destinations)[cardIndex]}
                     description={cardIndex === 4 ? slide.note : cardDescriptions[dataIndex][cardIndex]}
