@@ -60,7 +60,7 @@ export default function TechnologyDetailPage() {
   )).slice(0, 3);
 
   return (
-    <main className="min-h-screen bg-white dark:bg-neutral-950 font-sans text-neutral-900 dark:text-white pb-10 md:pb-16">
+    <main className="min-h-screen bg-white dark:bg-neutral-950 font-sans text-neutral-900 dark:text-white md:">
       <SEO
         title={techDetail.seoTitle || `${techDetail.name} | Technology Expertise`}
         description={techDetail.seoDescription || techDetail.overview}
@@ -78,7 +78,7 @@ export default function TechnologyDetailPage() {
       />
 
       {/* Overview & Key Benefits Section */}
-      <section className="pt-6 md:pt-8 pb-10 md:pb-12 bg-white dark:bg-neutral-950">
+      <section className="pt-6 md:pt-8 bg-white dark:bg-neutral-950">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-10 items-start mb-10 md:mb-12">
             <div className="space-y-5">

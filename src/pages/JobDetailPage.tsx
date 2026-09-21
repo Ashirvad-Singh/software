@@ -127,7 +127,7 @@ export default function JobDetailPage() {
   }
 
   return (
-    <main className="bg-white dark:bg-neutral-950 min-h-screen pt-28 sm:pt-32 pb-10 md:pb-16">
+    <main className="bg-white dark:bg-neutral-950 min-h-screen pt-28 sm:pt-32 md:">
       <SEO title={`${job.title} Careers`} description={job.description} />
       <div className="container mx-auto px-4 max-w-4xl">
         <motion.div

@@ -58,7 +58,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen relative overflow-x-hidden bg-white pb-10 md:pb-16">
+    <main className="min-h-screen relative overflow-x-hidden bg-white md:">
       <SubBanner
         badge="Contact Us"
         title="Get in"
@@ -193,6 +193,23 @@ export default function ContactPage() {
           </div>
 
         </motion.div>
+
+        {/* Google Map Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+          className="mt-12 bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-neutral-100 overflow-hidden w-full h-[400px] md:h-[500px]"
+        >
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3431.3103102169703!2d76.7259426!3d30.681544100000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fefbaaccba1ef%3A0x49ca0988c02a1f4f!2sADAT%20Soft%20Solutions!5e0!3m2!1sen!2sin!4v1789974550501!5m2!1sen!2sin" 
+            className="w-full h-full border-0" 
+            allowFullScreen={false} 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </motion.div>
+
       </div>
     </main>
   );

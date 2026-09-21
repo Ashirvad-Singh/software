@@ -37,7 +37,7 @@ export default function CaseStudiesPage() {
         .includes(search.toLowerCase()),
   );
   return (
-    <main className="min-h-screen bg-background pb-20 pt-28 md:pt-36">
+    <main className="min-h-screen bg-background pt-28 md:pt-36">
       <SEO
         title="Case Studies"
         description="Explore the business challenges, engineering decisions, and outcomes behind our client success stories."

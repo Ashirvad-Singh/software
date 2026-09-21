@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import * as LucideIcons from "lucide-react";
 import * as TablerIcons from "@tabler/icons-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import SubBanner from "@/components/site/SubBanner";
 import SEO from "@/components/site/SEO";
 import { FloatingShapes } from "@/components/ui/floating-shapes";
@@ -97,6 +97,7 @@ const techFaqs = [
 export default function TechnologiesPage() {
   const [categories, setCategories] = useState<TechCategory[]>(staticCategories);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const fetchTechStack = async () => {
@@ -168,108 +169,144 @@ export default function TechnologiesPage() {
       </section>
 
 
-      {/* Main Technology Grid Section */}
+      {/* Main Technology Dashboard Section */}
       <section className="py-10 md:py-16 bg-white dark:bg-neutral-950 relative overflow-hidden">
         <FloatingShapes />
         <div className="container relative z-10 mx-auto max-w-7xl px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {categories.map((category, index) => {
-              const CategoryIcon =
-                (LucideIcons as any)[category.categoryIcon] || Code2;
+          
+          {/* Header Section */}
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-neutral-900 dark:text-white">
+                Technologies & <span className="text-primary">Capabilities</span>
+              </h2>
+              <p className="text-neutral-600 dark:text-neutral-400 text-lg">
+                We use modern technologies and proven tools to build fast, secure, scalable and future-ready digital solutions that help businesses grow.
+              </p>
+            </div>
 
-              return (
-                <motion.article
-                  key={category.id || index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.08 }}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/40 p-6 md:p-8 hover:border-primary/40 hover:bg-white dark:hover:bg-neutral-900 shadow-sm hover:shadow-xl transition-all duration-300"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 rounded-2xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 flex items-center justify-center font-bold shadow-md">
-                        <CategoryIcon className="w-6 h-6 text-primary" />
-                      </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
-                        {category.technologies?.length || 6} Tools
+            <div className="flex flex-wrap gap-4 md:gap-8">
+              {[
+                { icon: Zap, label: "Modern\nTech Stack" },
+                { icon: ShieldCheck, label: "Secure &\nReliable" },
+                { icon: Server, label: "Scalable\nInfrastructure" },
+                { icon: CheckCircle2, label: "Future\nReady" }
+              ].map((badge, i) => (
+                <div key={i} className="flex flex-col items-center text-center gap-2">
+                  <div className="w-12 h-12 bg-neutral-100 dark:bg-neutral-900 rounded-full flex items-center justify-center shadow-sm text-primary">
+                    <badge.icon className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] md:text-xs font-bold text-neutral-700 dark:text-neutral-300 whitespace-pre-line uppercase tracking-wide">
+                    {badge.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 3-Column Main Layout */}
+          <div className="flex flex-col lg:flex-row gap-6 mb-12 items-stretch">
+            
+            {/* Left Sidebar (Categories) */}
+            <div className="w-full lg:w-[300px] shrink-0 flex flex-col gap-2">
+              {categories.map((cat, idx) => {
+                const isActive = idx === activeIndex;
+                const Icon = (LucideIcons as any)[cat.categoryIcon] || Code2;
+                return (
+                  <button
+                    key={cat.id || idx}
+                    onClick={() => setActiveIndex(idx)}
+                    className={`group flex items-center justify-between w-full text-left p-4 rounded-xl transition-all duration-300 border-l-4 ${
+                      isActive 
+                        ? "bg-neutral-50 dark:bg-neutral-900 shadow-sm border-primary text-primary" 
+                        : "border-transparent text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:text-neutral-900 dark:hover:text-white"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className={`text-xs font-bold w-5 ${isActive ? 'text-primary/60' : 'text-neutral-400'}`}>
+                        {String(idx + 1).padStart(2, '0')}
                       </span>
+                      <Icon className={`w-5 h-5 ${isActive ? 'text-primary' : 'text-neutral-400 group-hover:text-neutral-600 dark:group-hover:text-neutral-300'}`} />
+                      <span className="font-bold text-sm md:text-base">{cat.title.replace('Engineering', '').replace('Architecture', '').trim()}</span>
                     </div>
+                    <ArrowRight className={`w-4 h-4 ${isActive ? 'opacity-100' : 'opacity-0 -translate-x-2 group-hover:opacity-50 group-hover:translate-x-0'} transition-all`} />
+                  </button>
+                );
+              })}
+            </div>
 
-                    <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-2">
-                      {category.title}
-                    </h2>
-                    <p className="text-xs md:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
-                      {category.description}
-                    </p>
+            {/* Center Grid (Technologies) */}
+            <div className="flex-1 bg-neutral-50/50 dark:bg-neutral-900/30 rounded-3xl p-6 md:p-8 border border-neutral-200 dark:border-neutral-800 shadow-sm flex flex-col min-w-0">
+              <div className="flex items-center gap-4 mb-8">
+                <h2 className="text-2xl font-extrabold text-neutral-900 dark:text-white">{(categories[activeIndex] || categories[0])?.title}</h2>
+                <div className="h-px bg-neutral-200 dark:bg-neutral-800 flex-1 hidden sm:block" />
+                <p className="text-xs text-neutral-500 font-medium hidden sm:block">Modern tools for building digital solutions.</p>
+              </div>
 
-                    {/* Technologies Grid */}
-                    <div className="space-y-3">
-                      {category.technologies?.map((tech, techIdx) => {
-                        const isImage =
-                          tech.iconUrl?.startsWith("http") ||
-                          tech.iconUrl?.startsWith("data:");
-                        const IconComponent = !isImage
-                          ? (TablerIcons as any)[tech.iconUrl] ||
-                            TablerIcons.IconCode
-                          : null;
-                        const techSlug = (tech.slug || tech.name).toLowerCase().replace(/[^a-z0-9]/g, "");
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+                >
+                  {(categories[activeIndex] || categories[0])?.technologies?.map((tech, idx) => {
+                    const isImage = tech.iconUrl?.startsWith("http") || tech.iconUrl?.startsWith("data:");
+                    const TechIcon = !isImage ? ((TablerIcons as any)[tech.iconUrl] || (LucideIcons as any)[tech.iconUrl] || Code2) : null;
+                    const techSlug = (tech.slug || tech.name).toLowerCase().replace(/[^a-z0-9]/g, "");
+                    return (
+                      <Link 
+                        to={`/technologies/${techSlug}`}
+                        key={idx} 
+                        className="group bg-white dark:bg-neutral-950 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 transition-all duration-300 flex flex-col"
+                      >
+                        <div className="w-12 h-12 rounded-xl bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                          {isImage ? (
+                            <img src={tech.iconUrl} alt={tech.name} className="w-7 h-7 object-contain" />
+                          ) : (
+                            <TechIcon className={`w-7 h-7 ${technologyIconColor(tech.iconUrl)}`} strokeWidth={1.5} />
+                          )}
+                        </div>
+                        <h3 className="font-bold text-neutral-900 dark:text-white text-sm md:text-base mb-1 truncate">{tech.name}</h3>
+                        <p className="text-[11px] md:text-xs text-neutral-500 font-medium leading-relaxed mb-4 flex-1">
+                          {tech.useCase || tech.description}
+                        </p>
+                        <div className="mt-auto flex justify-end">
+                          <div className="w-6 h-6 rounded-full bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:bg-primary/10 transition-all">
+                            <ArrowRight className="w-3 h-3 text-primary" />
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-                        return (
-                          <Link
-                            key={techIdx}
-                            to={`/technologies/${techSlug}`}
-                            className="p-3 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-200/80 dark:border-neutral-800 flex items-center justify-between gap-3 hover:border-primary/40 hover:bg-neutral-100/50 dark:hover:bg-neutral-900/80 transition-all group/item"
-                          >
-                            <div className="flex items-center gap-3 min-w-0">
-                              <div className="w-8 h-8 rounded-xl bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center shrink-0">
-                                {isImage ? (
-                                  <img
-                                    src={tech.iconUrl}
-                                    alt={tech.name}
-                                    className="w-5 h-5 object-contain"
-                                  />
-                                ) : (
-                                  <IconComponent
-                                    className={`w-5 h-5 ${technologyIconColor(tech.iconUrl)}`}
-                                    stroke={1.5}
-                                  />
-                                )}
-                              </div>
-                              <div className="min-w-0">
-                                <h3 className="text-xs font-bold text-neutral-900 dark:text-white truncate group-hover/item:text-primary transition-colors">
-                                  {tech.name}
-                                </h3>
-                                <p className="text-[10px] text-neutral-500 truncate">
-                                  {tech.useCase || tech.description}
-                                </p>
-                              </div>
-                            </div>
-                            {tech.badge && (
-                              <span className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-300 shrink-0">
-                                {tech.badge}
-                              </span>
-                            )}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
+          </div>
 
-                  <div className="mt-8 pt-4 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between">
-                    <span className="text-xs text-neutral-500 font-medium">
-                      Enterprise Grade Stack
-                    </span>
-                    <Link
-                      to="/contact"
-                      className="text-xs font-bold text-primary hover:underline inline-flex items-center gap-1"
-                    >
-                      Consult Stack <ArrowRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-                </motion.article>
-              );
-            })}
+          {/* Final CTA Strip */}
+          <div className="bg-gradient-to-r from-neutral-100 to-neutral-50 dark:from-neutral-900 dark:to-neutral-900/50 rounded-3xl p-6 md:p-8 border border-neutral-200 dark:border-neutral-800 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div className="flex items-center gap-4 z-10">
+              <div className="w-12 h-12 rounded-xl bg-white dark:bg-neutral-950 text-primary flex items-center justify-center shadow-sm shrink-0">
+                <Code2 className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="text-lg font-extrabold text-neutral-900 dark:text-white">Don't see your technology?</h4>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400 font-medium">We're always open to new tools and can work with technologies specific to your project.</p>
+              </div>
+            </div>
+            
+            <Link to="/contact" className="z-10 shrink-0 inline-flex items-center justify-center gap-2 bg-white dark:bg-neutral-950 border-2 border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 font-bold py-3 px-6 rounded-full hover:border-primary hover:text-primary transition-all">
+              Discuss Your Project <ArrowRight className="w-4 h-4" />
+            </Link>
+
+            <div className="absolute right-4 -bottom-6 opacity-5 pointer-events-none transform -rotate-12 hidden md:block">
+              <span className="font-serif text-5xl font-bold">Right Technology</span><br/>
+              <span className="font-serif text-5xl font-bold ml-8">Bigger Possibilities</span>
+            </div>
           </div>
         </div>
       </section>

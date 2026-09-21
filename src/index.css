@@ -222,4 +222,7 @@ svg.icon-tabler {
     font-size: clamp(0.95rem, 1.1vw, 1.125rem);
     line-height: 1.6;
   }
+  .font-handwriting {
+    font-family: 'Caveat', cursive;
+  }
 }

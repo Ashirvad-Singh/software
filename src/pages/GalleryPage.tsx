@@ -73,7 +73,7 @@ export default function GalleryPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-background pb-16">
+    <main className="min-h-screen bg-background">
       <SubBanner
         badge="Showcase"
         title="Our"

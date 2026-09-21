@@ -124,10 +124,7 @@ export default function WebsiteAssistant() {
           <div ref={log} role="log" aria-label="Conversation" aria-live="polite" aria-relevant="additions" data-lenis-prevent className="adat-chat-body min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-5">
             {messages.length === 1 && (
               <div className="adat-chat-welcome">
-                <div className="adat-chat-orbit" aria-hidden="true"><div className="adat-chat-robot"><Bot size={42} strokeWidth={1.5} /></div><span className="adat-chat-orbit-spark"><Sparkles size={15} /></span></div>
-                <span className="adat-chat-eyebrow">A BIG IDEA STARTS WITH A HELLO</span>
-                <h3>What’s your<br /><span>next big idea?</span></h3>
-                <p>Explore, ask, and take the first step.<br />Let’s build something that matters.</p>
+
                 <div className="adat-chat-quick-grid">
                   {suggestions.map(({ label, detail, icon: Icon }) => (
                     <button key={label} type="button" onClick={() => send(label)} className="adat-chat-quick-card">

@@ -15,7 +15,7 @@ export default function ContentDetail({ kind }: { kind: ContentKind }) {
   const back = story ? "/case-studies" : "/work";
   if (loading || error || !entry)
     return (
-      <main className="min-h-screen px-5 pb-20 pt-36 text-center">
+      <main className="min-h-screen px-5 pt-36 text-center">
         <SEO
           title={
             loading
@@ -73,7 +73,7 @@ export default function ContentDetail({ kind }: { kind: ContentKind }) {
     story ? e.id === entry.projectId : e.projectId === entry.id,
   );
   return (
-    <main className="min-h-screen bg-background pb-20 pt-28 md:pt-36">
+    <main className="min-h-screen bg-background pt-28 md:pt-36">
       <SEO
         title={entry.seoTitle || entry.title}
         description={

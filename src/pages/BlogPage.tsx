@@ -10,7 +10,7 @@ export default function BlogPage() {
   const regularPosts = displayPosts.filter(post => post.id !== featuredPost?.id);
 
   return (
-    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen pb-10 md:pb-16">
+    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen md:">
       <SubBanner
         badge="Blog & Articles"
         title="Our Latest"
