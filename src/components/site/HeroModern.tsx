@@ -17,23 +17,6 @@ import "./HeroModern.css";
 
 const slides = [
   {
-    eyebrow: "Shopify & WooCommerce",
-    focus: "Built for better shopping",
-    title: "Turn Your Store Into a Better Shopping Experience",
-    highlight: "Shopping Experience",
-    intro: "Let's build your online store.",
-    description:
-      "Launch or refresh your Shopify, WooCommerce, or custom store with thoughtful design, clear product catalogs, secure payment integrations, and a smooth checkout journey.",
-    cards: [
-      "eCommerce Websites",
-      "Shopify Development",
-      "WooCommerce Development",
-      "Store Redesign",
-      "Ready to sell online?",
-    ],
-    note: "From product catalogs to payment and shipping setup, we bring every detail of your online store together.",
-  },
-  {
     eyebrow: "Web & Mobile Development",
     focus: "Built around your business",
     title: "Turning Ideas Into Intuitive Web and Mobile Solutions",
@@ -49,6 +32,23 @@ const slides = [
       "From idea to launch",
     ],
     note: "End-to-end design, development, and cloud launch support for software built to stand out and scale.",
+  },
+  {
+    eyebrow: "Shopify & WooCommerce",
+    focus: "Built for better shopping",
+    title: "Turn Your Store Into a Better Shopping Experience",
+    highlight: "Shopping Experience",
+    intro: "Let's build your online store.",
+    description:
+      "Launch or refresh your Shopify, WooCommerce, or custom store with thoughtful design, clear product catalogs, secure payment integrations, and a smooth checkout journey.",
+    cards: [
+      "eCommerce Websites",
+      "Shopify Development",
+      "WooCommerce Development",
+      "Store Redesign",
+      "Ready to sell online?",
+    ],
+    note: "From product catalogs to payment and shipping setup, we bring every detail of your online store together.",
   },
   {
     eyebrow: "UI/UX & Dynamic Tech",
@@ -70,16 +70,16 @@ const slides = [
 ];
 const cardDescriptions = [
   [
-    "Online stores designed to make browsing, choosing products, and checking out feel effortless.",
-    "Shopify theme development and store setup that bring your brand to life across every shopping touchpoint.",
-    "WooCommerce development for a shopping experience you can customize and manage with confidence.",
-    "Refresh your store with clearer navigation, stronger product presentation, and a smoother purchase journey.",
-  ],
-  [
     "Responsive websites shaped around your brand, with clear navigation and a strong foundation for growth.",
     "Custom Shopify storefronts with thoughtful product pages, easy checkout, and the integrations your store needs.",
     "Flexible WooCommerce stores with product catalogs, payment gateways, and shipping options tailored to your business.",
     "Easy-to-manage WordPress websites with custom layouts, responsive design, and room to grow.",
+  ],
+  [
+    "Online stores designed to make browsing, choosing products, and checking out feel effortless.",
+    "Shopify theme development and store setup that bring your brand to life across every shopping touchpoint.",
+    "WooCommerce development for a shopping experience you can customize and manage with confidence.",
+    "Refresh your store with clearer navigation, stronger product presentation, and a smoother purchase journey.",
   ],
   [
     "Intuitive interfaces that connect your business goals with what your users need.",
@@ -136,7 +136,7 @@ export default function HeroModern() {
 
   return (
     <section
-      className={`adat-hero${selected === 1 ? " adat-hero-simple" : ""}`}
+      className={`adat-hero${selected === 0 ? " adat-hero-simple" : ""}`}
       aria-label="Discover ADAT"
       aria-roledescription="carousel"
       onMouseEnter={() => setHovered(true)}
@@ -161,7 +161,7 @@ export default function HeroModern() {
           {slides.map((slide, index) => {
             return (
               <div
-                className={`adat-hero-slide adat-slide-${index === 0 ? 1 : index === 1 ? 0 : index}`}
+                className={`adat-hero-slide adat-slide-${index}`}
                 key={slide.title}
                 role="group"
                 aria-roledescription="slide"
@@ -169,7 +169,7 @@ export default function HeroModern() {
                 aria-hidden={selected !== index}
                 inert={selected !== index}
               >
-                {index === 1 ? (
+                {index === 0 ? (
                   <WebsiteHero />
                 ) : (
                   <>
@@ -186,14 +186,14 @@ export default function HeroModern() {
                       <div className="adat-hero-intro">
                         <h2>{slide.intro}</h2>
                         <p>{slide.description}</p>
-                        <Link className={`adat-hero-cta${index === 0 ? "" : " site-button"}`} to="/about">
+                        <Link className={`adat-hero-cta${index === 1 ? "" : " site-button"}`} to="/about">
                           Learn more <ArrowRight size={15} />
                         </Link>
                       </div>
                     </div>
-                    <div className={`adat-showcase adat-showcase-${index === 0 ? 1 : index === 1 ? 0 : index}`}>
+                    <div className={`adat-showcase adat-showcase-${index}`}>
                       <div className="adat-showcase-bar">
-                        {index === 0 ? (
+                        {index === 1 ? (
                           <>
                             <span>
                               <ShoppingBag size={17} /> Your digital storefront
@@ -226,7 +226,7 @@ export default function HeroModern() {
                                 : cardDescriptions[index][cardIndex]
                             }
                             image={
-                              index === 0 && cardIndex < 4
+                              index === 1 && cardIndex < 4
                                 ? ecommerceImages[cardIndex]
                                 : index === 2 && cardIndex < 3
                                   ? uxImages[cardIndex]
