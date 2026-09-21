@@ -7,7 +7,26 @@ export interface ContentBase {
   status: PublicationStatus; featured: boolean; seoTitle: string;
   seoDescription: string; seoKeywords: string; createdAt: number;
 }
-export interface PortfolioProject extends ContentBase { liveUrl: string; }
+export interface ClientReview {
+  enabled: boolean; clientName: string; clientRole: string; clientCompany: string;
+  clientPhoto: string; rating: number; testimonial: string;
+}
+export const emptyClientReview = (): ClientReview => ({ enabled: false, clientName: "", clientRole: "", clientCompany: "", clientPhoto: "", rating: 5, testimonial: "" });
+export function normalizeClientReview(value: unknown): ClientReview {
+  const raw = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  const result = emptyClientReview();
+  for (const key of ["clientName", "clientRole", "clientCompany", "clientPhoto", "testimonial"] as const)
+    result[key] = typeof raw[key] === "string" ? raw[key] : "";
+  result.enabled = raw.enabled === true;
+  result.rating = typeof raw.rating === "number" && Number.isInteger(raw.rating) && raw.rating >= 1 && raw.rating <= 5 ? raw.rating : 5;
+  return result;
+}
+export function validateClientReview(review: ClientReview): string | null {
+  if (!Number.isInteger(review.rating) || review.rating < 1 || review.rating > 5) return "Rating must be a whole number from 1 to 5.";
+  if (review.clientPhoto && !safeUrl(review.clientPhoto) && !/^\/(?!\/)/.test(review.clientPhoto)) return "Client photo must use an HTTP(S) URL or local path.";
+  return null;
+}
+export interface PortfolioProject extends ContentBase { liveUrl: string; clientReview?: ClientReview; }
 export interface CaseStudy extends ContentBase {
   projectId: string; overview: string; background: string; challenge: string;
   goals: string; approach: string; solution: string; process: string;
@@ -33,6 +52,7 @@ export function normalizeEntry(id: string, raw: Record<string, unknown>): Conten
     const [value, ...label] = line.split("|"); return { value: value.trim(), label: label.join("|").trim() };
   });
   return {
+    clientReview: normalizeClientReview(raw.clientReview),
     id, title: str("title"), slug: str("slug"), description: str("description"), image: str("image"),
     category: str("category"), industry: str("industry"), client: str("client"),
     services: listValue(raw.services), technologies: listValue(raw.technologies ?? raw.tags),

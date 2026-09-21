@@ -56,12 +56,12 @@ export default function SubBanner({
           )}
 
           {/* Heading */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-neutral-900 dark:text-white mb-4 leading-tight">
+          <h1 className="text-fluid-h1 font-extrabold tracking-tight text-neutral-900 dark:text-white mb-4">
             {title} {highlightTitle && <span className="text-sky-500 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600">{highlightTitle}</span>}
           </h1>
 
           {/* Subtitle */}
-          <p className="text-sm sm:text-base md:text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto font-medium leading-relaxed">
+          <p className="text-fluid-body text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto font-medium">
             {subtitle}
           </p>
           {backLink && (

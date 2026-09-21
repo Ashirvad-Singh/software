@@ -58,7 +58,7 @@ export default function CoreValuesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-white"
+            className="text-fluid-h2 font-extrabold tracking-tight text-neutral-900 dark:text-white"
           >
             Our <span className="text-sky-500 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600">Core Values</span>
           </motion.h2>
@@ -67,7 +67,7 @@ export default function CoreValuesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-4 text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed font-medium"
+            className="mt-4 text-fluid-body text-muted-foreground font-medium"
           >
             Our values drive how we work, grow and lead individually and as a team. They were shaped by the voices and experiences of the people who make ADAT what it is.
           </motion.p>

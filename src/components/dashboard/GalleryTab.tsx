@@ -8,7 +8,7 @@ import { Loader2, Plus, Trash2, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ImageUpload } from "@/components/ui/image-upload";
 
-export interface GalleryImage {
+interface GalleryImage {
   id?: string;
   imageUrl: string;
   title: string;

@@ -1,7 +1,10 @@
+import { lazy, Suspense } from "react";
+import { FloatingShapes } from "@/components/ui/floating-shapes";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
 import SiteMagneticButtons from "@/components/ui/site-magnetic-buttons";
-import Cursor from "@/components/site/Cursor";
+
 import ScrollProgress from "@/components/site/ScrollProgress";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
@@ -10,16 +13,14 @@ import CTASection from "@/components/site/CTASection";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 import HomePage from "@/pages/HomePage";
-import { lazy, Suspense } from "react";
 import ScrollToTop from "@/components/ScrollToTop";
 const ServicesPage = lazy(() => import("@/pages/ServicesPage"));
 const TechnologiesPage = lazy(() => import("@/pages/TechnologiesPage"));
 const TechnologyDetailPage = lazy(() => import("@/pages/TechnologyDetailPage"));
 const ServiceDetailPage = lazy(() => import("@/pages/ServiceDetailPage"));
 const WorkPage = lazy(() => import("@/pages/WorkPage"));
-const ProjectDetailPage = lazy(() => import("@/pages/ProjectDetailPage"));
+const ContentDetail = lazy(() => import("@/components/content/ContentDetail"));
 const CaseStudiesPage = lazy(() => import("@/pages/CaseStudiesPage"));
-const CaseStudyDetailPage = lazy(() => import("@/pages/CaseStudyDetailPage"));
 const AboutPage = lazy(() => import("@/pages/AboutPage"));
 const ContactPage = lazy(() => import("@/pages/ContactPage"));
 const TeamPage = lazy(() => import("@/pages/TeamPage"));
@@ -32,14 +33,10 @@ const BlogPostPage = lazy(() => import("@/pages/BlogPostPage"));
 const PrivacyPolicyPage = lazy(() => import("@/pages/PrivacyPolicyPage"));
 const TermsOfServicePage = lazy(() => import("@/pages/TermsOfServicePage"));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
-import { FloatingShapes } from "@/components/ui/floating-shapes";
-
-import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 
 function App() {
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
-
 
   return (
     <ErrorBoundary>
@@ -47,7 +44,7 @@ function App() {
         <div className={`${isDashboard ? "" : "public-site "}bg-background text-foreground min-h-screen selection:bg-primary/30 selection:text-primary flex flex-col relative`}>
           <ScrollToTop />
           <SiteMagneticButtons />
-          {!isDashboard && <Cursor />}
+
           {!isDashboard && <ScrollProgress />}
           {!isDashboard && <FloatingShapes />}
           {!isDashboard && <Navbar />}
@@ -62,12 +59,12 @@ function App() {
                 <Route path="/services/:slug" element={<ServiceDetailPage />} />
                 <Route path="/work" element={<WorkPage />} />
                 <Route path="/projects" element={<WorkPage />} />
-                <Route path="/projects/:slug" element={<ProjectDetailPage />} />
-                <Route path="/work/:slug" element={<ProjectDetailPage />} />
+                <Route path="/projects/:slug" element={<ContentDetail key="projects" kind="projects" />} />
+                <Route path="/work/:slug" element={<ContentDetail key="projects" kind="projects" />} />
                 <Route path="/case-studies" element={<CaseStudiesPage />} />
                 <Route
                   path="/case-studies/:slug"
-                  element={<CaseStudyDetailPage />}
+                  element={<ContentDetail key="case_studies" kind="case_studies" />}
                 />
                 <Route path="/process" element={<AboutPage />} />
                 <Route path="/about" element={<AboutPage />} />

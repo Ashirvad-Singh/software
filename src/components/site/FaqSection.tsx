@@ -79,7 +79,7 @@ export default function FaqSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white"
+            className="text-fluid-h2 font-bold tracking-tight text-neutral-900 dark:text-white"
           >
             Frequently Asked Questions
           </motion.h2>
@@ -88,7 +88,7 @@ export default function FaqSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="mt-4 text-base text-neutral-600 dark:text-neutral-400 leading-relaxed"
+            className="mt-4 text-fluid-body text-neutral-600 dark:text-neutral-400"
           >
             Everything you need to know about our engineering methodology, security standards, intellectual property ownership, and client engagement options.
           </motion.p>
@@ -133,7 +133,7 @@ export default function FaqSection() {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full px-4 sm:px-6 py-5 flex items-center justify-between gap-4 text-left font-semibold text-neutral-900 dark:text-white text-base md:text-lg"
+                  className="w-full px-4 sm:px-6 py-5 flex items-center justify-between gap-4 text-left font-semibold text-neutral-900 dark:text-white text-fluid-card-title"
                 >
                   <span className="flex items-center gap-3">
                     <span className="site-step-badge w-7 h-7 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-500 dark:text-neutral-400 flex items-center justify-center text-xs font-mono font-bold shrink-0">

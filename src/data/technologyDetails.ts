@@ -1,3 +1,4 @@
+import { technologyProfiles, technologyUseCases } from "./technologyProfiles.ts";
 export interface TechnologyDetail {
   slug: string;
   name: string;
@@ -23,7 +24,7 @@ export interface TechnologyDetail {
   seoKeywords?: string;
 }
 
-export const technologiesData: Record<string, TechnologyDetail> = {
+const technologiesData: Record<string, TechnologyDetail> = {
   react: {
     slug: "react",
     name: "React.js Engineering",
@@ -566,13 +567,49 @@ export function technologySlug(value: string) {
 }
 export function findDefaultTechnology(value: string) {
   const key = technologySlug(value);
-  const aliases: Record<string, string> = {reactjs:"react", next:"nextjs", node:"nodejs", shopifydevelopment:"shopify"};
+  const aliases: Record<string, string> = {reactjs:"react", next:"nextjs", node:"nodejs", shopifydevelopment:"shopify", shopifyplus:"shopify"};
   return technologiesData[aliases[key] || key] || Object.values(technologiesData).find(item => technologySlug(item.name) === key);
 }
 export function defaultTechnologyPage(name: string, category: string): TechnologyDetail {
   const existing = findDefaultTechnology(name);
-  return existing ? structuredClone(existing) : {
-    slug: technologySlug(name), name, category, badge: "Technology Expertise", tagline: "", overview: "",
-    benefits: [], keyFeatures: [], useCases: [], process: [], faqs: [],
+  const key = technologySlug(name).replace(/development$/, "");
+  const profile = technologyProfiles[({vue:"vuejs",tailwind:"tailwindcss"} as Record<string,string>)[key] || key];
+  const topics = profile?.topics || [[`${name} architecture`, `Define ${name} responsibilities, integration boundaries, and ${category.toLowerCase()} requirements`], [`${name} implementation`, `Build and test the ${name} components required by your application`]];
+  const focus = profile?.focus || `${category.toLowerCase()} solutions using ${name}`;
+  const page: TechnologyDetail = existing ? structuredClone(existing) : {
+    slug: technologySlug(name), name, category, badge: `${name} Expertise`,
+    tagline: `Build ${focus}.`, overview: `Our ${name} development work focuses on ${focus}. We plan the implementation around your data, users, and operational requirements. ${topics.map(([title, desc]) => `${title}: ${desc.toLowerCase()}.`).join(" ")}`,
+    benefits: topics.map(([title,desc], i)=>({title,desc:desc+".",icon:["Layers","Code2","ShieldCheck","Zap"][i%4]})),
+    keyFeatures: topics.map(([title,desc])=>`${title}: ${desc}`),
+    useCases: technologyUseCases[key] || topics.map(([title,desc])=>({title,desc:`Use ${name} for ${desc.charAt(0).toLowerCase()+desc.slice(1)}.`})),
+    process: topics.map(([title,desc],i)=>({step:String(i+1).padStart(2,"0"),title,desc:`${desc}. Review the ${name} implementation against agreed acceptance criteria before moving to the next phase.`})),
+    faqs: [{q:`What can we build with ${name}?`,a:`${name} is suited to ${focus}. We scope the project around ${topics.map(([title])=>title.toLowerCase()).join(", ")}.`},{q:`How do you deliver a ${name} project?`,a:`We assess your existing system, define ${topics[0][0].toLowerCase()}, implement the agreed workflows, and validate ${topics.at(-1)![0].toLowerCase()} before handover.`}],
   };
+  const displayName = name.replace(/\s+Development$/i, "");
+  return {...page, overviewTitle:`Why Build with ${displayName}`, featuresTitle:`${displayName} Development Capabilities`, useCasesTitle:`Use Cases for ${displayName}`, processTitle:`Our ${displayName} Delivery Process`,faqTitle:`${displayName} Questions Answered`,ctaTitle:`Plan Your ${displayName} Project`,ctaDescription:`Discuss your ${displayName} requirements, integrations, and delivery timeline with our team.`,ctaLabel:`Discuss ${displayName} Development`,seoTitle:`${displayName} Development | ADAT Soft Solutions`,seoDescription:page.tagline,seoKeywords:`${displayName}, ${category}, ${displayName} development, ADAT Soft Solutions`};
+}
+
+// Fill missing values without appending to meaningful lists or replacing editorial copy.
+export function fillTechnologyDefaults<T>(current: T, defaults: T): T {
+  if (current == null || (typeof current === "string" && !current.trim())) return structuredClone(defaults);
+  if (Array.isArray(defaults)) {
+    if (!Array.isArray(current) || current.length === 0) return structuredClone(defaults);
+    return current.map((item, index) => {
+      if (!item || typeof item !== "object") return item;
+      const identity = "title" in item ? "title" : "q" in item ? "q" : "step";
+      const match = defaults.find(row => row && typeof row === "object" && row[identity] === item[identity]);
+      // Custom rows retain their identity; only matching starter rows receive missing copy.
+      return match ? fillTechnologyDefaults(item, match) : {...item, ...(identity === "step" && !item.step ? {step:String(index+1).padStart(2,"0")} : {})};
+    }) as T;
+  }
+  if (defaults != null && typeof defaults === "object" && typeof current === "object") {
+    const result = {...current};
+    for (const key of Object.keys(defaults as object) as (keyof T)[]) result[key] = fillTechnologyDefaults(current[key], defaults[key]);
+    return result;
+  }
+  return current;
+}
+export function initializeTechnology<T extends {name:string; slug?:string; page?:TechnologyDetail; starterVersion?:number}>(tech:T, category:string):T {
+  if (tech.starterVersion === 1) return tech;
+  return {...tech, slug:tech.slug || technologySlug(tech.name), page:fillTechnologyDefaults(tech.page,defaultTechnologyPage(tech.name,category)),starterVersion:1};
 }

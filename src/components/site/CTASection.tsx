@@ -58,24 +58,24 @@ export default function CTASection() {
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-4"
+              className="flex flex-row items-stretch sm:items-center gap-3 sm:gap-4"
             >
               <Button
                 asChild
-                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-7 py-6 text-base font-semibold shadow-[0_0_20px_rgba(37,99,235,0.2)] transition-all"
+                className="flex-1 sm:flex-none sm:w-auto bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-3 sm:px-7 py-5 sm:py-6 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(37,99,235,0.2)] transition-all"
               >
-                <Link to="/contact" className="flex items-center justify-center">
-                  Start Project <ArrowRight className="ml-2 w-4 h-4" />
+                <Link to="/contact" className="flex items-center justify-center whitespace-nowrap">
+                  Start Project <ArrowRight className="ml-1.5 sm:ml-2 w-4 h-4" />
                 </Link>
               </Button>
               <Button
                 asChild
                 variant="outline"
-                className="w-full sm:w-auto bg-white hover:bg-neutral-50 border-neutral-300 text-neutral-900 rounded-xl px-7 py-6 text-base font-medium transition-all shadow-sm"
+                className="flex-1 sm:flex-none sm:w-auto bg-white hover:bg-neutral-50 border-neutral-300 text-neutral-900 rounded-xl px-3 sm:px-7 py-5 sm:py-6 text-sm sm:text-base font-medium transition-all shadow-sm"
               >
-                <Link to="/contact" className="flex items-center justify-center">
+                <Link to="/contact" className="flex items-center justify-center whitespace-nowrap">
                   Talk to us{" "}
-                  <MessageCircle className="ml-2 w-4 h-4 text-neutral-500" />
+                  <MessageCircle className="ml-1.5 sm:ml-2 w-4 h-4 text-neutral-500" />
                 </Link>
               </Button>
             </motion.div>

@@ -12,6 +12,8 @@ import { ImageUpload } from "@/components/ui/image-upload";
 import { toast } from "sonner";
 import {
   normalizeEntry,
+  emptyClientReview,
+  validateClientReview,
   slugify,
   safeUrl,
   listValue,
@@ -134,6 +136,8 @@ export default function ProjectsTab({
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<Record<string, string>>(emptyForm);
+  const [reviewUploading, setReviewUploading] = useState(false);
+  const [clientReview, setClientReview] = useState(emptyClientReview);
   const [status, setStatus] = useState("draft");
   const [featured, setFeatured] = useState(false);
   const [search, setSearch] = useState("");
@@ -177,6 +181,7 @@ export default function ProjectsTab({
         : {}),
     }));
   function edit(entry?: ContentEntry, copy = false) {
+    setClientReview(copy ? emptyClientReview() : { ...(entry?.clientReview || emptyClientReview()) });
     setEditingId(copy ? null : entry?.id || null);
     setStatus(copy ? "draft" : entry?.status || "draft");
     setFeatured(copy ? false : entry?.featured || false);
@@ -209,6 +214,9 @@ export default function ProjectsTab({
   }
   async function save(e: React.FormEvent) {
     e.preventDefault();
+    if (reviewUploading) { toast.error("Wait for the client photo upload to finish."); return; }
+    const reviewError = !story && validateClientReview(clientReview);
+    if (reviewError) { toast.error(reviewError); return; }
     const slug = slugify(form.slug);
     if (!slug || !form.title.trim()) {
       toast.error("A title and valid slug are required.");
@@ -278,6 +286,7 @@ export default function ProjectsTab({
         technologies: listValue(form.technologies),
         gallery: listValue(form.gallery, /\n/),
       });
+      if (!story) data.clientReview = clientReview;
       if (story) {
         data.features = listValue(form.features, /\n/);
         data.metrics = normalizeEntry("", { metrics: form.metrics }).metrics;
@@ -510,6 +519,17 @@ export default function ProjectsTab({
                 </div>
               </>
             )}
+            {!story && <section className="space-y-4 border-t border-neutral-200 pt-6">
+              <h4 className="font-semibold">Client Review / Testimonial</h4>
+              <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={clientReview.enabled} onChange={e => setClientReview({...clientReview, enabled:e.target.checked})} />Enable Client Review</label>
+              <div className="grid gap-4 md:grid-cols-2">
+                {([['clientName','Client Name'],['clientRole','Client Role'],['clientCompany','Client Company']] as const).map(([key,label]) => <label key={key} className="block space-y-2 text-sm font-medium">{label}<input className="block w-full rounded-lg border bg-white p-3" value={clientReview[key]} onChange={e=>setClientReview({...clientReview,[key]:e.target.value})} /></label>)}
+                <label className="block space-y-2 text-sm font-medium">Rating<select className="block w-full rounded-lg border bg-white p-3" value={clientReview.rating} onChange={e=>setClientReview({...clientReview,rating:Number(e.target.value)})}>{[1,2,3,4,5].map(n=><option key={n} value={n}>{n} {n===1?'star':'stars'}</option>)}</select></label>
+              </div>
+              <p className="text-sm font-medium">Client Photo (optional)</p>
+              <ImageUpload onUploadingChange={setReviewUploading} value={clientReview.clientPhoto} onChange={clientPhoto=>setClientReview(prev=>({...prev,clientPhoto}))} />
+              <label className="block space-y-2 text-sm font-medium">Testimonial<textarea rows={5} className="block w-full rounded-lg border bg-white p-3" value={clientReview.testimonial} onChange={e=>setClientReview({...clientReview,testimonial:e.target.value})} /></label>
+            </section>}
             <section className="space-y-4">
               <h4 className="font-semibold">Images</h4>
               <p className="text-sm">Cover image *</p>

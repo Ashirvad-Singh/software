@@ -46,8 +46,7 @@ export default function WhatSetsUsApart() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-900 leading-tight"
+              className="text-fluid-h2 font-bold mb-4 sm:mb-6 text-gray-900"
             >
               What Sets Us <span className="text-primary italic font-serif font-medium">Apart!</span>
             </motion.h2>
@@ -56,8 +55,7 @@ export default function WhatSetsUsApart() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-sm sm:text-base text-gray-600 mb-6 leading-relaxed"
+              className="text-fluid-body text-gray-600 mb-6"
             >
               Our expertise lies in crafting bespoke web solutions, optimizing digital strategies, and delivering measurable results.
             </motion.p>

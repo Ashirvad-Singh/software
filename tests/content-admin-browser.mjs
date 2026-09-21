@@ -1,7 +1,6 @@
 // Run against a local Vite server and Chrome with --remote-debugging-port=9223.
 // All content/database data is intercepted in Chrome; no Firebase writes occur.
 const siteUrl = process.env.CONTENT_TEST_URL || "http://127.0.0.1:5174";
-import fs from 'node:fs/promises';
 const targets=await(await fetch('http://127.0.0.1:9223/json/list')).json();
 const ws=new WebSocket(targets.find(t=>t.type==='page').webSocketDebuggerUrl);await new Promise(r=>ws.addEventListener('open',r,{once:true}));
 let id=0;const pending=new Map();const exceptions=[];
@@ -15,7 +14,7 @@ export async function getDocs(ref){return {docs:Object.entries(store).filter(([k
 export async function updateDoc(ref,data){store[ref.path]={...store[ref.path],...data}};
 export async function runTransaction(db,fn){return fn({get:async ref=>snapshot(ref),set:(ref,data)=>{store[ref.path]={...store[ref.path],...data}},delete:ref=>{delete store[ref.path]}})};
 `;
-ws.addEventListener('message',async e=>{const m=JSON.parse(e.data);if(m.id){const p=pending.get(m.id);pending.delete(m.id);m.error?p?.reject(m.error):p?.resolve(m.result);}if(m.method==='Runtime.exceptionThrown')exceptions.push(m.params.exceptionDetails.text);if(m.method==='Fetch.requestPaused'){const p=m.params;const url=p.request.url;let source=url.includes('/src/App.tsx')?app:url.includes('/src/lib/firebase.ts')?'export const db = {};':firestore;await send('Fetch.fulfillRequest',{requestId:p.requestId,responseCode:200,responseHeaders:[{name:'Content-Type',value:'text/javascript'}],body:Buffer.from(source).toString('base64')});}});
+ws.addEventListener('message',async e=>{const m=JSON.parse(e.data);if(m.id){const p=pending.get(m.id);pending.delete(m.id);if(m.error)p?.reject(m.error);else p?.resolve(m.result);}if(m.method==='Runtime.exceptionThrown')exceptions.push(m.params.exceptionDetails.text);if(m.method==='Fetch.requestPaused'){const p=m.params;const url=p.request.url;let source=url.includes('/src/App.tsx')?app:url.includes('/src/lib/firebase.ts')?'export const db = {};':firestore;await send('Fetch.fulfillRequest',{requestId:p.requestId,responseCode:200,responseHeaders:[{name:'Content-Type',value:'text/javascript'}],body:Buffer.from(source).toString('base64')});}});
 await send('Page.enable');await send('Runtime.enable');await send('Fetch.enable',{patterns:[{urlPattern:'*/src/App.tsx*'},{urlPattern:'*/src/lib/firebase.ts*'},{urlPattern:'*/firebase_firestore.js*'}]});
 const ev=async expression=>(await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true})).result.value;
 async function waitFor(expression){for(let i=0;i<100;i++){if(await ev(expression))return;await new Promise(r=>setTimeout(r,100));}throw Error('Timed out '+expression);}

@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { Mail, MapPin, Loader2, ArrowRight } from "lucide-react";
-import { IconBrandTwitter, IconBrandLinkedin, IconBrandInstagram } from "@tabler/icons-react";
+import CompanyLinks from "@/components/site/CompanyLinks";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
@@ -81,7 +81,7 @@ export default function ContactPage() {
             <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-sky-300/30 blur-3xl pointer-events-none"></div>
             
             <div className="relative z-10">
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 tracking-tight">Contact Information</h3>
+              <h3 className="text-fluid-h3 font-semibold mb-4 tracking-tight">Contact Information</h3>
               <p className="text-sky-100 mb-12 text-sm leading-relaxed">Fill up the form and our Team will get back to you within 24 hours.</p>
 
               <div className="space-y-8">
@@ -99,22 +99,33 @@ export default function ContactPage() {
                     Plot no - ITC -11, Sector -67,<br/>Mohali (India)
                   </span>
                 </div>
+                <div className="flex items-center gap-4 group cursor-pointer">
+                  <div className="site-icon-tile shrink-0 p-3 rounded-full text-sky-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-5 h-5"
+                    >
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                      <rect width="4" height="12" x="2" y="9" />
+                      <circle cx="4" cy="4" r="2" />
+                    </svg>
+                  </div>
+                  <a href="https://www.linkedin.com/company/adatsoftsolutions/" target="_blank" rel="noopener noreferrer" className="min-w-0 break-words text-sky-100 hover:text-white transition-colors">ADAT Soft Solutions</a>
+                </div>
               </div>
             </div>
 
             <div className="mt-16 pt-8 border-t border-white/10 relative z-10">
               <p className="text-xs text-sky-200 font-medium tracking-wider uppercase mb-4">Follow us</p>
-              <div className="flex gap-4">
-                {[
-                  { name: 'Twitter', icon: IconBrandTwitter },
-                  { name: 'LinkedIn', icon: IconBrandLinkedin },
-                  { name: 'Instagram', icon: IconBrandInstagram }
-                ].map(social => (
-                  <div key={social.name} className="site-icon-tile w-10 h-10 rounded-full flex items-center justify-center text-sky-600 hover:scale-110 transition-transform cursor-pointer">
-                    <social.icon className="w-5 h-5" />
-                  </div>
-                ))}
-              </div>
+              <CompanyLinks contact />
             </div>
           </div>
 

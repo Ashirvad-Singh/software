@@ -44,11 +44,11 @@ export default function HomeServicesSection({
               initial={reduceMotion ? false : { opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl text-neutral-900 dark:text-white"
+              className="mt-4 text-fluid-h2 font-extrabold tracking-tight text-neutral-900 dark:text-white"
             >
               Services
             </motion.h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg font-medium leading-relaxed text-neutral-600 dark:text-neutral-400">
+            <p className="mx-auto mt-4 max-w-2xl text-fluid-body font-medium text-neutral-600 dark:text-neutral-400">
               Thoughtful digital solutions designed to help your business stand out, scale faster, and deliver world-class digital experiences.
             </p>
           </div>
@@ -76,14 +76,14 @@ export default function HomeServicesSection({
                   <span className="site-step-number font-mono text-base font-bold tracking-wider text-neutral-400 dark:text-neutral-500">
                     {paddedIndex}
                   </span>
-                  <h3 className="text-2xl font-extrabold tracking-tight text-neutral-900 transition-all duration-300 group-hover:translate-x-2 group-hover:text-primary dark:text-white sm:text-3xl lg:text-4xl">
+                  <h3 className="text-fluid-h3 font-extrabold tracking-tight text-neutral-900 transition-all duration-300 group-hover:translate-x-2 group-hover:text-primary dark:text-white">
                     {service.title}
                   </h3>
                 </div>
 
                 {/* Middle: Rich Description (5 cols) */}
                 <div className="md:col-span-5 lg:col-span-5">
-                  <p className="text-base font-normal leading-relaxed text-neutral-600 transition-colors duration-300 group-hover:text-neutral-900 dark:text-neutral-400 dark:group-hover:text-neutral-200 sm:text-lg">
+                  <p className="text-fluid-body font-normal text-neutral-600 transition-colors duration-300 group-hover:text-neutral-900 dark:text-neutral-400 dark:group-hover:text-neutral-200">
                     {service.description}
                   </p>
                 </div>

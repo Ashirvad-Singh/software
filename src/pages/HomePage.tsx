@@ -15,11 +15,14 @@ const IndustriesSection = lazy(
 const HomeServicesSection = lazy(
   () => import("@/components/site/HomeServicesSection"),
 );
-const ThreeDMarqueeDemo = lazy(() => import("@/components/3d-marquee-demo"));
+const ProductMarquee = lazy(() => import("@/components/site/ProductMarquee"));
 const WhatSetsUsApart = lazy(() => import("@/components/site/WhatSetsUsApart"));
 const Testimonials = lazy(() => import("@/components/site/Testimonials"));
-const HomeCaseStudiesAndBlog = lazy(
-  () => import("@/components/site/HomeCaseStudiesAndBlog"),
+const HomeCaseStudiesSection = lazy(
+  () => import("@/components/site/HomeCaseStudiesSection"),
+);
+const HomeBlogSection = lazy(
+  () => import("@/components/site/HomeBlogSection"),
 );
 const FaqSection = lazy(() => import("@/components/site/FaqSection"));
 export default function HomePage() {
@@ -41,7 +44,12 @@ export default function HomePage() {
               ABOUT ADAT SOLUTIONS
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-neutral-600 dark:text-neutral-300 mb-8 md:mb-12 leading-relaxed max-w-3xl mx-auto">
-              ADAT Soft Solutions is an internationally-recognized brand for the development of sophisticated web &amp; mobile solutions. We specialize in providing premium development and design services that fit the challenging requirements of our enterprise customers across various industries in the US, Canada, Australia, and Europe.
+              ADAT Soft Solutions is an internationally-recognized brand for the
+              development of sophisticated web &amp; mobile solutions. We
+              specialize in providing premium development and design services
+              that fit the challenging requirements of our enterprise customers
+              across various industries in the US, Canada, Australia, and
+              Europe.
             </p>
           </motion.div>
 
@@ -118,20 +126,20 @@ export default function HomePage() {
       </section>
 
       <Suspense fallback={<div className="min-h-[200px]" />}>
-        <HomeCaseStudiesAndBlog caseStudiesOnly />
+        <HomeCaseStudiesSection />
       </Suspense>
 
       <Suspense fallback={<div className="min-h-[200px]" />}>
         <IndustriesSection />
         <HomeServicesSection />
-        <ThreeDMarqueeDemo />
+        <ProductMarquee />
       </Suspense>
 
       <Suspense fallback={<div className="min-h-[200px]" />}>
         <WhatSetsUsApart />
         <Testimonials />
         <FaqSection />
-        <HomeCaseStudiesAndBlog blogOnly />
+        <HomeBlogSection />
       </Suspense>
     </main>
   );

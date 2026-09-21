@@ -30,3 +30,13 @@ Check with the Firebase emulator or a staging project: anonymous users may query
 Listing load-more displays six entries at a time; filtering searches the loaded published collection. For very large catalogs, replace this with indexed server-side search and cursor pagination.
 
 Browser smoke checks are saved as `tests/content-browser.mjs` and `tests/content-admin-browser.mjs`. Run a local Vite server and headless Chrome with remote debugging on port 9223, then run each script with Node (`CONTENT_TEST_URL` defaults to `http://127.0.0.1:5174`). These tests intercept content reads and CMS database calls in Chrome using fixtures; they do not authenticate to or mutate production Firebase. They cover listing filters, load-more, relationships, responsive overflow, error/empty states, draft creation, slug generation, editing, publication, unpublication, deletion, and the separate case study fields. They do not replace the staging/emulator authorization checks above.
+
+## Optional project client reviews
+
+Project Add/Edit now includes a Client Review / Testimonial section. It stores `clientReview` on the existing project document, with enabled, clientName, clientRole, clientCompany, clientPhoto, integer rating (1–5), and testimonial. The existing Cloudinary ImageUpload handles the optional photo. No reviews are seeded; duplicating a project starts with a disabled, empty review.
+
+Only the individual `/work/:slug` project page renders this review, before its CTA, when enabled and nonblank. Listings and case studies do not render it. Legacy projects remain valid. The shared normalizer supplies safe defaults and the save handler validates rating and photo URLs.
+
+The optional-map validation in `docs/content-firestore.rules` must be merged into the deployed project rules using the site's existing administrator authorization predicate. This repository has a rules integration snippet, not a configured Firebase deployment. Client validation is active in the app; server enforcement requires deploying the merged rules.
+
+Regression checks: `node --experimental-strip-types --test tests/client-review.test.mjs` and `node tests/client-review-browser.mjs`. Browser checks mock Firestore, verify create/update/render and legacy records, and check the project review and company links at 390/768/1440px. No test feedback is written to production.

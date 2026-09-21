@@ -12,7 +12,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
-export interface CardData {
+interface CardData {
   id: string | number;
   image: string;
   alt?: string;
@@ -28,7 +28,7 @@ export interface CardData {
   tags?: string[];
 }
 
-export interface StickyCard002Props {
+interface CaseStudyStackProps {
   cards: CardData[];
   className?: string;
   containerClassName?: string;
@@ -40,7 +40,7 @@ export interface StickyCard002Props {
   showWave?: boolean;
 }
 
-export const StickyCard002: React.FC<StickyCard002Props> = ({
+const CaseStudyStack: React.FC<CaseStudyStackProps> = ({
   cards,
   className,
   containerClassName,
@@ -188,7 +188,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
           </div>
           <h2
             className={cn(
-              "mt-2.5 text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl",
+              "mt-2.5 text-fluid-h2 font-extrabold tracking-tight",
               isDark ? "text-white" : "text-neutral-900"
             )}
           >
@@ -197,7 +197,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
           {subtitle && (
             <p
               className={cn(
-                "mt-2 max-w-xl mx-auto text-xs sm:text-sm md:text-base font-medium leading-normal",
+                "mt-2 max-w-xl mx-auto text-fluid-body font-medium",
                 isDark ? "text-neutral-400" : "text-neutral-600"
               )}
             >
@@ -210,7 +210,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
         <div
           {...cardSwipe}
           ref={cardFrameRef}
-          className="relative z-10 w-full max-w-6xl h-[614px] sm:h-[614px] md:h-[640px] lg:h-[660px] mx-auto overflow-hidden rounded-3xl"
+          className="relative z-10 w-full max-w-6xl h-[520px] sm:h-[560px] md:h-[640px] lg:h-[660px] mx-auto overflow-hidden rounded-3xl"
         >
           {cards.map((card, i) => {
             const cardSlug = card.slug || `case-study-${card.id}`;
@@ -242,7 +242,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                   {/* LEFT SIDE: Image Preview (5 cols) */}
                   <div
                     className={cn(
-                      "md:col-span-5 relative w-full h-44 sm:h-52 md:h-full overflow-hidden rounded-2xl border group shadow-sm shrink-0",
+                      "md:col-span-5 relative w-full h-56 sm:h-64 md:h-full overflow-hidden rounded-2xl border group shadow-sm shrink-0",
                       isDark
                         ? "border-white/10 bg-neutral-950"
                         : "border-neutral-200 bg-neutral-100"
@@ -295,7 +295,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                       {/* Case Study Title */}
                       <h3
                         className={cn(
-                          "text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight leading-tight break-words line-clamp-3",
+                          "text-fluid-h3 font-extrabold tracking-tight break-words line-clamp-3",
                           isDark ? "text-white" : "text-neutral-900"
                         )}
                       >
@@ -310,7 +310,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                           </p>
                           <p
                             className={cn(
-                              "text-xs sm:text-sm lg:text-base leading-relaxed font-normal line-clamp-2",
+                              "text-fluid-body font-normal line-clamp-2",
                               isDark ? "text-neutral-300" : "text-neutral-700"
                             )}
                           >
@@ -327,7 +327,7 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
                           </p>
                           <p
                             className={cn(
-                              "text-xs sm:text-sm lg:text-base leading-relaxed font-normal line-clamp-2",
+                              "text-fluid-body font-normal line-clamp-2",
                               isDark ? "text-neutral-300" : "text-neutral-700"
                             )}
                           >
@@ -411,5 +411,5 @@ export const StickyCard002: React.FC<StickyCard002Props> = ({
   );
 };
 
-export default StickyCard002;
+export default CaseStudyStack;
 

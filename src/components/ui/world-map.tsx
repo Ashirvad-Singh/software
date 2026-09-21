@@ -1,6 +1,4 @@
-"use client";
-
-import { useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import DottedMap from "dotted-map";
 import { useTheme } from "@/components/ThemeProvider";
@@ -17,18 +15,16 @@ export default function WorldMap({
   dots = [],
   lineColor = "#0ea5e9",
 }: MapProps) {
-  const svgRef = useRef<SVGSVGElement>(null);
-  const map = new DottedMap({ height: 100, grid: "diagonal" });
   const [hoveredPoint, setHoveredPoint] = useState<{ x: number; y: number; label: string } | null>(null);
 
   const { theme } = useTheme();
 
-  const svgMap = map.getSVG({
+  const svgMap = useMemo(() => new DottedMap({ height: 100, grid: "diagonal" }).getSVG({
     radius: 0.22,
     color: theme === "dark" ? "#FFFFFF40" : "#00000040",
     shape: "circle",
-    backgroundColor: theme === "dark" ? "transparent" : "transparent",
-  });
+    backgroundColor: "transparent",
+  }), [theme]);
 
   const projectPoint = (lat: number, lng: number) => {
     const x = (lng + 180) * (800 / 360);
@@ -56,7 +52,6 @@ export default function WorldMap({
         draggable={false}
       />
       <svg
-        ref={svgRef}
         viewBox="0 0 800 400"
         className="w-full h-full absolute inset-0 pointer-events-none select-none"
       >

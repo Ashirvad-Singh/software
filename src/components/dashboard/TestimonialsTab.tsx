@@ -8,7 +8,7 @@ import { Loader2, Plus, Trash2, Edit2, X, Star } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ImageUpload } from "@/components/ui/image-upload";
 
-export interface Testimonial {
+interface Testimonial {
   id?: string;
   name: string;
   role: string;

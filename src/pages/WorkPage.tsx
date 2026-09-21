@@ -65,7 +65,7 @@ export default function WorkPage() {
                     </div>
                     <div className="work-caption">
                       <h3>{entry.description || entry.title}</h3>
-                      <span className="work-open site-button site-button-icon" aria-hidden="true"><ArrowUpRight size={19} /></span>
+                      <span className="work-open" aria-hidden="true"><ArrowUpRight size={19} /></span>
                     </div>
                     <div className="work-project-meta"><span>{entry.industry || entry.category || "Digital experience"}</span>{entry.featured && <span className="work-featured-label">Featured</span>}</div>
                   </Link>

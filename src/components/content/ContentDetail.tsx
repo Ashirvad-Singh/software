@@ -3,7 +3,8 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import SEO from "@/components/site/SEO";
 import { useContent } from "@/lib/content/useContent";
 import type { ContentKind } from "@/lib/content/model";
-import { ContentCard } from "./ContentListing";
+import { ContentCard } from "./ContentCard";
+import ProjectClientReview from "./ProjectClientReview";
 import ImageGallery from "./ImageGallery";
 export default function ContentDetail({ kind }: { kind: ContentKind }) {
   const { slug } = useParams();
@@ -281,6 +282,7 @@ export default function ContentDetail({ kind }: { kind: ContentKind }) {
             )}
           </aside>
         </div>
+        {!story && <ProjectClientReview review={entry.clientReview} />}
         <section className="mt-16 rounded-2xl bg-secondary p-8 text-center md:p-12">
           <h2 className="text-3xl font-semibold">
             {(story && entry.ctaTitle) || "Let’s build your next chapter."}

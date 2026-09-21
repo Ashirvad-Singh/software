@@ -116,7 +116,7 @@ export default function TeamShowcaseScroll({
         <p className="mb-4 text-sm font-bold uppercase tracking-widest text-primary">
           Build with us
         </p>
-        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white sm:text-3xl md:text-4xl lg:text-5xl">
+        <h2 className="text-fluid-h2 font-bold text-neutral-900 dark:text-white">
           Great work starts with great people.
         </h2>
         <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-neutral-500 dark:text-neutral-400 sm:text-base">

@@ -6,8 +6,7 @@ import {
   updateDoc,
   deleteDoc,
   doc,
-  query,
-  orderBy,
+  runTransaction,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
@@ -16,12 +15,15 @@ import { toast } from "sonner";
 import { Loader2, Plus, Pencil, Trash2, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { staticCategories } from "@/data/technologyCatalog";
+import { technologyIconColor } from "@/data/technologyIconColors";
 import TechnologyPageEditor from "./TechnologyPageEditor";
-import { defaultTechnologyPage, technologySlug, type TechnologyDetail } from "@/data/technologyDetails";
+import { defaultTechnologyPage, initializeTechnology, technologySlug, type TechnologyDetail } from "@/data/technologyDetails";
 import * as TablerIcons from "@tabler/icons-react";
 import * as LucideIcons from "lucide-react";
 
 export interface TechTechnology {
+  starterVersion?: number;
   slug?: string;
   page?: TechnologyDetail;
   name: string;
@@ -29,7 +31,7 @@ export interface TechTechnology {
   iconType: "library" | "custom";
 }
 
-export interface TechCategory {
+interface TechCategory {
   id?: string;
   title: string;
   description: string;
@@ -203,9 +205,34 @@ const STARTER_TECH_STACK: Omit<TechCategory, "id" | "createdAt">[] = [
   },
 ];
 
+// Reuse the public catalog as well as the existing admin starters, without aliases duplicating records.
+const technologyIdentity = (name: string) => technologySlug(name).replace(/development$/, "").replace(/^reactjs$/, "react").replace(/^shopifyplus$/, "shopify");
+const starterNames = new Set(STARTER_TECH_STACK.flatMap(category => category.technologies.map(tech => technologyIdentity(tech.name))));
+for (const category of staticCategories) {
+  const technologies: TechTechnology[] = (category.technologies || []).filter(tech => !starterNames.has(technologyIdentity(tech.name))).map(tech => ({...tech, iconType:"library"}));
+  technologies.forEach(tech => starterNames.add(technologyIdentity(tech.name)));
+  if (!technologies.length) continue;
+  const target = STARTER_TECH_STACK.find(item => item.categoryIcon === category.categoryIcon || (item.categoryIcon === "Code" && category.categoryIcon === "Code2") || (item.categoryIcon === "ShoppingCart" && category.categoryIcon === "ShoppingBag"));
+  if (target) target.technologies.push(...technologies);
+  else STARTER_TECH_STACK.push({title:category.title,description:category.description,categoryIcon:category.categoryIcon,themeColor:"blue",technologies});
+}
+
+async function seedStarterCategories() {
+  const snapshot = await getDocs(collection(db, "tech_stack"));
+  const existingNames = new Set(snapshot.docs.flatMap(record => (record.data().technologies || []).map((tech: TechTechnology) => technologyIdentity(tech.name))));
+  const starters = STARTER_TECH_STACK.filter(category => !snapshot.docs.some(record => record.data().title === category.title)).map(category => ({...category, technologies:category.technologies.filter(tech => !existingNames.has(technologyIdentity(tech.name))).map(tech => initializeTechnology(tech, category.title))})).filter(category => category.technologies.length);
+  await runTransaction(db, async transaction => {
+    const records = await Promise.all(starters.map(category => transaction.get(doc(db,"tech_stack",`starter-${technologySlug(category.title)}`))));
+    starters.forEach((category,index) => {
+      if (!records[index].exists()) transaction.set(doc(db,"tech_stack",`starter-${technologySlug(category.title)}`), {...category,createdAt:Date.now()+index});
+    });
+  });
+}
+
 export default function TechStackTab() {
   const [techStack, setTechStack] = useState<TechCategory[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -221,20 +248,31 @@ export default function TechStackTab() {
 
   const fetchTechStack = async () => {
     setLoading(true);
+    setLoadError("");
     try {
-      const q = query(
-        collection(db, "tech_stack"),
-        orderBy("createdAt", "desc"),
-      );
-      const snapshot = await getDocs(q);
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as TechCategory[];
-      setTechStack(data);
+      let snapshot = await getDocs(collection(db, "tech_stack"));
+      if (!snapshot.docs.length) {
+        await seedStarterCategories();
+        snapshot = await getDocs(collection(db, "tech_stack"));
+      }
+      // Show existing records immediately. A failed initialization must never hide them.
+      setTechStack(snapshot.docs.map(record => ({...record.data(),id:record.id})) as TechCategory[]);
+      const data = await Promise.all(snapshot.docs.map(async record => {
+        if ((record.data().technologies || []).every((tech:TechTechnology) => tech.starterVersion === 1)) return {...record.data(),id:record.id} as TechCategory;
+        return runTransaction(db, async transaction => {
+          const current = await transaction.get(doc(db, "tech_stack", record.id));
+          if (!current.exists()) return null;
+          const raw = current.data() as TechCategory;
+          const technologies = (raw.technologies || []).map(tech => initializeTechnology(tech, raw.title));
+          if (JSON.stringify(technologies) !== JSON.stringify(raw.technologies || [])) transaction.update(doc(db, "tech_stack", record.id), {technologies});
+          return {...raw,id:record.id,technologies};
+        });
+      }));
+      setTechStack(data.filter((category):category is TechCategory => !!category));
     } catch (error) {
       console.error(error);
-      toast.error("Failed to fetch tech stack");
+      const code = (error as {code?:string}).code;
+      setLoadError(code === "permission-denied" ? "Firestore denied access. Your administrator account needs read and write access to tech_stack. Existing data has not been removed." : "Could not load or initialize technology content. Check your connection and retry.");
     } finally {
       setLoading(false);
     }
@@ -242,32 +280,13 @@ export default function TechStackTab() {
 
   const addStarterTechStack = async () => {
     setLoading(true);
+    setLoadError("");
     try {
-      const existingTitles = new Set(
-        techStack.map((category) => category.title),
-      );
-      const categoriesToAdd = STARTER_TECH_STACK.filter(
-        (category) => !existingTitles.has(category.title),
-      );
-
-      await Promise.all(
-        categoriesToAdd.map((category, index) =>
-          addDoc(collection(db, "tech_stack"), {
-            ...category,
-            createdAt: Date.now() + index,
-          }),
-        ),
-      );
-
-      toast.success(
-        categoriesToAdd.length > 0
-          ? `${categoriesToAdd.length} technology categories added`
-          : "Starter technology content is already added",
-      );
+      await seedStarterCategories();
       await fetchTechStack();
     } catch (error) {
       console.error(error);
-      toast.error("Failed to add starter technology content");
+      setLoadError("Could not save starter categories. Check your administrator's Firestore write access and retry.");
       setLoading(false);
     }
   };
@@ -293,6 +312,7 @@ export default function TechStackTab() {
     setFormData((prev) => {
       const newTech = [...prev.technologies];
       newTech[index] = { ...newTech[index], [field]: value };
+      if (field === "page") newTech[index].starterVersion = 1;
       if (field === "iconType") {
         newTech[index].iconUrl = value === "library" ? "IconBrandReact" : "";
       }
@@ -329,11 +349,12 @@ export default function TechStackTab() {
         taken.add(slug);
       }
       if (editingId) {
-        await updateDoc(doc(db, "tech_stack", editingId), { ...formData });
+        await updateDoc(doc(db, "tech_stack", editingId), { ...formData, technologies: formData.technologies.map(tech => initializeTechnology(tech, formData.title)) });
         toast.success("Tech stack category updated");
       } else {
         await addDoc(collection(db, "tech_stack"), {
           ...formData,
+          technologies: formData.technologies.map(tech => initializeTechnology(tech, formData.title)),
           createdAt: Date.now(),
         });
         toast.success("Tech stack category added");
@@ -369,7 +390,7 @@ export default function TechStackTab() {
       description: category.description || "",
       categoryIcon: category.categoryIcon || "Code",
       themeColor: category.themeColor || "blue",
-      technologies: category.technologies || [],
+      technologies: (category.technologies || []).map(tech => initializeTechnology(tech, category.title)),
     });
     setIsFormOpen(true);
   };
@@ -395,7 +416,7 @@ export default function TechStackTab() {
     const IconComponent = (TablerIcons as any)[iconValue];
     if (IconComponent) {
       return (
-        <IconComponent className="w-8 h-8 text-neutral-700" stroke={1.5} />
+        <IconComponent className={`w-8 h-8 ${technologyIconColor(iconValue)}`} stroke={1.5} />
       );
     }
     return <div className="w-8 h-8 bg-neutral-200 rounded-md" />;
@@ -435,6 +456,8 @@ export default function TechStackTab() {
         </div>
       </div>
 
+      {loading && <p role="status" className="mb-4 flex items-center gap-2 text-sm text-sky-700"><Loader2 className="h-4 w-4 animate-spin" />Loading and preparing editable technology content…</p>}
+      {loadError && <div role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">{loadError}<button type="button" onClick={fetchTechStack} disabled={loading} className="ml-3 font-semibold underline disabled:opacity-50">Retry</button></div>}
       <AnimatePresence>
         {isFormOpen && (
           <motion.div
@@ -670,7 +693,7 @@ export default function TechStackTab() {
             {techStack.length === 0 ? (
               <tr>
                 <td colSpan={4} className="p-8 text-center text-neutral-500">
-                  No tech stack categories found.
+                  {loading ? "Preparing technology categories…" : loadError ? "Technology content is currently unavailable. See the error above." : "No tech stack categories found."}
                 </td>
               </tr>
             ) : (

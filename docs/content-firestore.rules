@@ -5,12 +5,26 @@
 function isContentAdmin() {
   return request.auth != null && request.auth.token.admin == true;
 }
+function validClientReview(data) {
+  return !('clientReview' in data) || data.clientReview == null || (
+    data.clientReview is map
+    && data.clientReview.enabled is bool
+    && data.clientReview.clientName is string
+    && data.clientReview.clientRole is string
+    && data.clientReview.clientCompany is string
+    && data.clientReview.clientPhoto is string
+    && data.clientReview.testimonial is string
+    && data.clientReview.rating is int
+    && data.clientReview.rating >= 1 && data.clientReview.rating <= 5
+  );
+}
 match /projects/{entryId} {
   allow read: if isContentAdmin() || resource.data.status == 'published';
   allow create, update: if isContentAdmin()
     && request.resource.data.status in ['draft', 'published']
     && request.resource.data.slug is string
-    && request.resource.data.title is string;
+    && request.resource.data.title is string
+    && validClientReview(request.resource.data);
   allow delete: if isContentAdmin();
 }
 match /case_studies/{entryId} {

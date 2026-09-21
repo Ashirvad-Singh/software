@@ -8,6 +8,7 @@ interface HeroServiceCardProps {
   description: string;
   destination: string;
   index: number;
+  image?: string;
 }
 
 export default function HeroServiceCard({
@@ -23,7 +24,8 @@ export default function HeroServiceCard({
       className={`adat-flip-card adat-flip-card-${index}${flipped ? " is-flipped" : ""}`}
       onMouseLeave={() => setFlipped(false)}
       onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setFlipped(false);
+        if (!event.currentTarget.contains(event.relatedTarget))
+          setFlipped(false);
       }}
       onKeyDown={(event) => {
         if (event.key === "Escape") setFlipped(false);
@@ -39,7 +41,9 @@ export default function HeroServiceCard({
         >
           <CardVisual variant={index} title={title} />
         </button>
-        <div className={`adat-hero-card adat-flip-back adat-hero-card-${index}`}>
+        <div
+          className={`adat-hero-card adat-flip-back adat-hero-card-${index}`}
+        >
           <h3>{title}</h3>
           <p>{description}</p>
           <div className="adat-flip-actions">
@@ -52,7 +56,8 @@ export default function HeroServiceCard({
               <RotateCcw size={16} />
             </button>
             <Link to={destination} className="adat-hero-card-link">
-              {index === 4 ? "Let's talk" : "Explore services"} <ArrowRight size={16} />
+              {index === 4 ? "Let's talk" : "Explore services"}{" "}
+              <ArrowRight size={16} />
             </Link>
           </div>
         </div>

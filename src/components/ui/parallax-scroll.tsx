@@ -1,4 +1,3 @@
-"use client";
 import { useSwipe } from "@/hooks/useSwipe";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";

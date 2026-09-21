@@ -202,11 +202,11 @@ export default function IndustriesSection() {
             <p className="mb-1.5 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary">
               What we build
             </p>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 text-balance">
+            <h2 className="text-fluid-h2 font-bold text-neutral-900 text-balance">
               Use Cases &amp; Industry Applications
             </h2>
           </motion.div>
-          <p className="hidden mx-auto mt-2 max-w-2xl text-xs sm:text-sm md:text-base leading-relaxed text-neutral-500 md:block">
+          <p className="hidden mx-auto mt-2 max-w-2xl text-fluid-body text-neutral-500 md:block">
             From first sketch to global scale, we pair product thinking with
             engineering that creates measurable momentum.
           </p>

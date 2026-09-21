@@ -145,11 +145,11 @@ export default function Testimonials() {
   return (
     <section className="py-10 md:py-16 bg-[#fafafa] w-full overflow-hidden font-sans">
       
-      <div className="text-center mb-8 relative z-20 px-8">
-        <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-5 tracking-tight text-balance">
+      <div className="text-center mb-8 relative z-20 px-4 sm:px-8">
+        <h2 className="text-fluid-h2 font-bold text-neutral-900 mb-4 tracking-tight text-balance">
           Trusted in production, not just in demos.
         </h2>
-        <p className="text-neutral-600 font-medium max-w-2xl mx-auto text-sm md:text-base">
+        <p className="text-fluid-body text-neutral-600 font-medium max-w-2xl mx-auto">
           Short notes from teams who ship with the same polish they show customers.
         </p>
       </div>

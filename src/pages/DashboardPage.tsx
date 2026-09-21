@@ -50,7 +50,6 @@ import GalleryTab from "@/components/dashboard/GalleryTab";
 import TeamTab from "@/components/dashboard/TeamTab";
 import TestimonialsTab from "@/components/dashboard/TestimonialsTab";
 import ProjectsTab from "@/components/dashboard/ProjectsTab";
-import CaseStudiesTab from "@/components/dashboard/CaseStudiesTab";
 
 interface ContactSubmission {
   id: string;
@@ -600,7 +599,7 @@ export default function DashboardPage() {
             >
               {activeTab === "services" && <ServicesTab />}
               {activeTab === "projects" && <ProjectsTab />}
-              {activeTab === "case_studies" && <CaseStudiesTab />}
+              {activeTab === "case_studies" && <ProjectsTab collectionName="case_studies" heading="Manage Case Studies" />}
               {activeTab === "tech_stack" && <TechStackTab />}
               {activeTab === "blogs" && <BlogsTab />}
               {activeTab === "jobs" && <JobsTab />}

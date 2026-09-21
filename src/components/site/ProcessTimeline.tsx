@@ -47,7 +47,7 @@ export default function ProcessTimeline({ hideHeader = false }: { hideHeader?: b
             <h2 className="text-xs sm:text-sm font-bold text-sky-600 dark:text-sky-400 tracking-widest uppercase mb-3">
               How We Work
             </h2>
-            <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            <h3 className="text-fluid-h2 font-bold tracking-tight text-neutral-900 dark:text-white">
               Our Process
             </h3>
           </div>
@@ -57,11 +57,11 @@ export default function ProcessTimeline({ hideHeader = false }: { hideHeader?: b
           {/* Left Column */}
           <div className="lg:col-span-5 flex flex-col justify-between h-full">
             <div>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-900 dark:text-white leading-tight">
+              <h3 className="text-fluid-h1 font-extrabold tracking-tight text-neutral-900 dark:text-white">
                 Your Path <br className="hidden sm:inline" />
                 to Success
               </h3>
-              <p className="mt-5 text-sm sm:text-base leading-relaxed text-neutral-600 dark:text-sky-200/70 max-w-md font-normal">
+              <p className="mt-5 text-fluid-body text-neutral-600 dark:text-sky-200/70 max-w-md font-normal">
                 ADAT Soft Solutions offers a structured engineering approach to scaling your business, ensuring you have the right strategies, architecture, and continuous execution.
               </p>
             </div>

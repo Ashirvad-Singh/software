@@ -41,6 +41,7 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { technologyIconColor } from "@/data/technologyIconColors";
 import * as TablerIcons from "@tabler/icons-react";
 
 const navLinks = [
@@ -311,7 +312,7 @@ const TechnologyMenuItem = ({ technology }: { technology: any }) => {
         <img src={logoUrl} alt="" className="h-7 w-7 object-contain" />
       ) : SavedBrandIcon ? (
         <SavedBrandIcon
-          className="h-7 w-7 text-neutral-500 transition-colors group-hover:text-primary"
+          className={`h-7 w-7 shrink-0 ${technologyIconColor(technology.iconUrl)}`}
           stroke={1.6}
         />
       ) : (
