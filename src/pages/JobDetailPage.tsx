@@ -1,11 +1,10 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Loader2, MapPin, Briefcase, IndianRupee, Clock } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Loader2, MapPin, Briefcase, IndianRupee, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import type { JobPost } from "@/components/dashboard/JobsTab";
-import { motion } from "framer-motion";
 import SEO from "@/components/site/SEO";
 import JobApplicationForm from "@/components/site/JobApplicationForm";
 
@@ -72,6 +71,8 @@ function renderFormattedList(content: string, jobTitle?: string) {
   return <div className="space-y-1">{elements}</div>;
 }
 
+import InnerPageHero from "@/components/site/InnerPageHero";
+
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -127,31 +128,19 @@ export default function JobDetailPage() {
   }
 
   return (
-    <main className="bg-white dark:bg-neutral-950 min-h-screen pt-28 sm:pt-32 md:">
+    <main className="bg-white dark:bg-neutral-950 min-h-screen">
       <SEO title={`${job.title} Careers`} description={job.description} />
-      <div className="container mx-auto px-4 max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Link to="/careers" className="inline-flex items-center text-sm font-medium text-neutral-500 hover:text-primary transition-colors mb-6">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Careers
-          </Link>
-
-          <div className="mb-4 flex flex-wrap items-center gap-2.5">
-            <span className="px-3.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider">
-              {job.department}
-            </span>
-            <span className="px-3.5 py-1 rounded-full bg-neutral-100 text-neutral-700 text-xs font-bold uppercase tracking-wider">
-              {job.type}
-            </span>
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 tracking-tight mb-8">
-            {job.title}
-          </h1>
+      <InnerPageHero
+        eyebrow={`CAREERS / ${(job.department || "OPEN ROLE").toUpperCase()}`}
+        title={job.title}
+        description={job.description}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Careers", href: "/careers" },
+          { label: job.title },
+        ]}
+      />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10">
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-10 md:mb-12 py-6 border-y border-neutral-200">
             <div className="flex flex-col gap-1">
@@ -174,34 +163,32 @@ export default function JobDetailPage() {
 
           <a href="#job-application" className="site-button mb-10 inline-flex rounded-full bg-primary px-7 py-3 font-semibold text-primary-foreground">Apply for this job</a>
           <div className="space-y-10 text-neutral-600 mb-12">
-            {[["Job description", job.description], ["About the role", job.role]].map(([heading, content]) => content?.trim() && <section key={heading}><h2 className="mb-4 text-2xl font-bold text-neutral-900">{heading}</h2><p className="whitespace-pre-wrap break-words leading-relaxed">{content}</p></section>)}
+            {[["Job description", job.description], ["About the role", job.role]].map(([heading, content]) => content?.trim() && <section key={heading}><h2 className="mb-4 text-section-subtitle font-bold text-neutral-900">{heading}</h2><p className="whitespace-pre-wrap break-words leading-relaxed text-body">{content}</p></section>)}
             {job.responsibilities?.trim() && (
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-neutral-900">Responsibilities</h2>
+                <h2 className="mb-4 text-section-subtitle font-bold text-neutral-900">Responsibilities</h2>
                 {renderFormattedList(job.responsibilities, job.title)}
               </section>
             )}
             {job.requirements?.trim() && (
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-neutral-900">Requirements</h2>
+                <h2 className="mb-4 text-section-subtitle font-bold text-neutral-900">Requirements</h2>
                 {renderFormattedList(job.requirements, job.title)}
               </section>
             )}
             {job.benefits?.trim() && (
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-neutral-900">Benefits</h2>
+                <h2 className="mb-4 text-section-subtitle font-bold text-neutral-900">Benefits</h2>
                 {renderFormattedList(job.benefits, job.title)}
               </section>
             )}
           </div>
 
-          <div id="job-application" className="scroll-mt-28 bg-neutral-50 p-4 sm:p-8 rounded-2xl border border-neutral-200 mt-16">
-            <h3 className="text-2xl font-bold text-neutral-900 mb-2">Apply for this Role</h3>
-            <p className="text-neutral-600 mb-8">Please fill out the form below to apply for the {job.title} position.</p>
-            <JobApplicationForm key={job.id} jobId={job.id} defaultPosition={job.title} readOnlyPosition={true} />
+          <div id="job-application" className="scroll-mt-28 bg-neutral-50 dark:bg-neutral-900 p-4 sm:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800 mt-16">
+            <h3 className="text-section-subtitle font-bold text-neutral-900 dark:text-white mb-2">Apply for this Role</h3>
+            <JobApplicationForm jobId={job.id} defaultPosition={job.title} readOnlyPosition />
           </div>
-        </motion.div>
-      </div>
+        </div>
     </main>
   );
 }

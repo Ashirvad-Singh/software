@@ -1,10 +1,12 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, User, Loader2 } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMemo } from "react";
 import { useCatalog } from "@/lib/content/useCatalog";
 import { prepareArticle } from "@/lib/content/article";
 import CatalogState from "@/components/content/CatalogState";
+import InnerPageHero from "@/components/site/InnerPageHero";
+
 export default function BlogPostPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -32,29 +34,16 @@ export default function BlogPostPage() {
 
   return (
     <main className="bg-white dark:bg-neutral-950 min-h-screen">
-      {/* Hero Section */}
-      <div className="w-full bg-gradient-to-r from-blue-500 to-sky-600 pt-28 sm:pt-32 md:pt-36 pb-10 md:pb-16">
-        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
-          <Link to="/blog" className="inline-flex items-center text-white/90 hover:text-white mb-6 transition-colors text-sm font-medium">
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back to main blog
-          </Link>
-          
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold text-white mb-8 leading-[1.15] tracking-tight max-w-4xl">
-            {postData.title}
-          </h1>
-          
-          <div className="flex flex-wrap items-center gap-3 text-white/90 text-sm font-medium">
-            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
-               <User className="w-5 h-5 text-white" />
-            </div>
-            <span>{postData.author}</span>
-            <span className="w-1 h-1 rounded-full bg-white/50 mx-1" />
-            <span>{postData.date}</span>
-            <span className="w-1 h-1 rounded-full bg-white/50 mx-1" />
-            <span>{postData.readTime}</span>
-          </div>
-        </div>
-      </div>
+      <InnerPageHero
+        eyebrow="ARTICLE / INSIGHTS"
+        title={postData.title}
+        description={`By ${postData.author || "ADAT Soft Solutions"} • ${postData.date || ""} • ${postData.readTime || ""}`}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Blog", href: "/blog" },
+          { label: postData.title },
+        ]}
+      />
 
       {/* Content Section */}
       <div className="container mx-auto px-4 md:px-6 max-w-6xl py-10 md:py-16 flex flex-col lg:flex-row gap-10 lg:gap-16">

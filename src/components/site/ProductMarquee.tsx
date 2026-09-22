@@ -24,7 +24,7 @@ export default function ProductMarquee() {
 
   return (
     <div className="relative w-full flex flex-col items-center justify-center overflow-hidden bg-neutral-50 dark:bg-neutral-900 border-y border-neutral-200 py-10 md:py-12">
-      <h2 className="relative z-20 mx-auto max-w-4xl text-center text-fluid-h2 font-bold text-balance text-black dark:text-white px-4 tracking-tight">
+      <h2 className="relative z-20 mx-auto max-w-4xl text-center text-3xl sm:text-4xl md:text-5xl font-extrabold text-balance text-black dark:text-white px-4 tracking-tight leading-[1.15]">
         Build digital products that redefine your{" "}
         <span className="relative z-20 inline-block rounded-2xl bg-primary/10 px-4 py-2 text-primary underline decoration-primary/40 decoration-[4px] underline-offset-[12px] backdrop-blur-sm">
           Industry

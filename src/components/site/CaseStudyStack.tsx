@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { ArrowUpRight, Sparkles, ExternalLink, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight, ExternalLink, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import ParticleWave from "@/components/ui/particle-wave";
@@ -45,7 +45,7 @@ const CaseStudyStack: React.FC<CaseStudyStackProps> = ({
   className,
   containerClassName,
   imageClassName,
-  badge = "Selected Case Studies",
+  badge: _badge,
   title = "Impactful Solutions & Case Studies",
   subtitle = "Explore detailed outcomes and modern engineering from our selected client projects.",
   isDark = false,
@@ -175,29 +175,27 @@ const CaseStudyStack: React.FC<CaseStudyStackProps> = ({
       <div className="flex flex-col justify-center items-center w-full px-4 md:px-8 max-w-7xl mx-auto my-auto">
         {/* Header content */}
         <div className="relative z-20 mx-auto max-w-3xl text-center mb-5 md:mb-7 shrink-0">
-          <div
-            className={cn(
-              "inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest shadow-sm border",
-              isDark
-                ? "border-primary/30 bg-primary/10 text-primary"
-                : "border-primary/20 bg-primary/10 text-primary"
-            )}
-          >
-            <Sparkles className="h-4 w-4" />
-            {badge}
-          </div>
           <h2
             className={cn(
-              "mt-2.5 text-fluid-h2 font-extrabold tracking-tight",
+              "text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.15]",
               isDark ? "text-white" : "text-neutral-900"
             )}
           >
-            {title}
+            {typeof title === "string" && title.toLowerCase().includes("case studies") ? (
+              <>
+                Case Studies{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-sky-400">
+                  That Drive Growth
+                </span>
+              </>
+            ) : (
+              title
+            )}
           </h2>
           {subtitle && (
             <p
               className={cn(
-                "mt-2 max-w-xl mx-auto text-fluid-body font-medium",
+                "mt-2.5 max-w-xl mx-auto text-fluid-body font-medium",
                 isDark ? "text-neutral-400" : "text-neutral-600"
               )}
             >

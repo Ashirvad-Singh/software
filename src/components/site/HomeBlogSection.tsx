@@ -27,8 +27,8 @@ export default function HomeBlogSection() {
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
               From the journal
             </p>
-            <h2 className="mt-3 text-fluid-h2 font-bold tracking-tight text-foreground">
-              Ideas for building better digital products.
+            <h2 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-white leading-[1.15]">
+              Ideas for building <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-sky-400">better digital products</span>
             </h2>
           </div>
           <Link

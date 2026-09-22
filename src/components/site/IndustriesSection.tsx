@@ -1,6 +1,6 @@
 import { useSwipe } from "@/hooks/useSwipe";
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useMotionValue, useMotionValueEvent, useInView, animate } from "framer-motion";
+import { motion, useReducedMotion, useMotionValue, useInView, animate } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play, Heart, DollarSign, Utensils, ShoppingCart, Layers, GraduationCap, Truck, House, Share2, Plane, Sprout, Shield } from "lucide-react";
 
@@ -85,225 +85,294 @@ export default function IndustriesSection() {
   const [visibleGroup, setVisibleGroup] = useState(0);
   const reduceMotion = useReducedMotion();
   const galleryRef = useRef<HTMLDivElement>(null);
-  const isVisible = useInView(galleryRef, { amount: 0.5 });
-  const [autoIndex, setAutoIndex] = useState(0);
+  const isVisible = useInView(galleryRef, { amount: 0.3 });
   const [isPaused, setIsPaused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [isCompact, setIsCompact] = useState(() =>
-    typeof window === "undefined" ||
-    window.matchMedia("(max-width: 1279px), (pointer: coarse)").matches,
-  );
+
+  const [cardsPerGroup, setCardsPerGroup] = useState<number>(() => {
+    if (typeof window === "undefined") return 3;
+    const w = window.innerWidth;
+    if (w >= 1024) return 3;
+    if (w >= 640) return 2;
+    return 1;
+  });
 
   useEffect(() => {
-    const media = window.matchMedia("(max-width: 1279px), (pointer: coarse)");
-    const update = () => setIsCompact(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
+    const updateCards = () => {
+      const w = window.innerWidth;
+      if (w >= 1024) {
+        setCardsPerGroup(3);
+      } else if (w >= 640) {
+        setCardsPerGroup(2);
+      } else {
+        setCardsPerGroup(1);
+      }
+    };
+    updateCards();
+    window.addEventListener("resize", updateCards);
+    return () => window.removeEventListener("resize", updateCards);
   }, []);
-  const cardsPerGroup = isCompact ? 1 : 3;
-  const groupCount = industries.length / cardsPerGroup;
-  const trackGroups = groupCount + 1;
+
+  const groupCount = Math.ceil(industries.length / cardsPerGroup);
+  const trackGroups = groupCount;
   const slideAnimation = useRef<{ stop: () => void } | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
+  const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const x = useMotionValue("0%");
 
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (isCompact) return;
-    const position = Math.max(0, Math.min(1, (progress - 0.1) / 0.8));
-    const group = Math.round(position * (groupCount - 1));
-    slideAnimation.current?.stop();
-    x.set(`${position * (groupCount - 1) * (-100 / trackGroups)}%`);
-    setVisibleGroup(group);
-    setCurrentGroup(group);
-    setAutoIndex((index) => Math.floor(index / cardsPerGroup) === group ? index : group * cardsPerGroup);
-  });
+  const currentGroupRef = useRef(currentGroup);
+  currentGroupRef.current = currentGroup;
+
+  const groupCountRef = useRef(groupCount);
+  groupCountRef.current = groupCount;
+
+  useEffect(() => {
+    setCurrentGroup(0);
+    setVisibleGroup(0);
+    x.set("0%");
+  }, [cardsPerGroup, x]);
 
   useEffect(() => {
     if (!isVisible || reduceMotion || isPaused || isHovered || isFocused) return;
     const timer = window.setInterval(() => {
       if (document.hidden) return;
-      const nextIndex = (autoIndex + 1) % industries.length;
-      const nextGroup = Math.floor(nextIndex / cardsPerGroup);
-      // Slide forward into a matching copy of the first group at the loop boundary.
-      const targetGroup = nextIndex === 0 ? groupCount : nextGroup;
-      setVisibleGroup(targetGroup);
-      setAutoIndex(nextIndex);
+      const nextGroup = (currentGroup + 1) % groupCount;
       setCurrentGroup(nextGroup);
+      setVisibleGroup(nextGroup);
       slideAnimation.current?.stop();
-      slideAnimation.current = animate(x, `${targetGroup * (-100 / trackGroups)}%`, {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-        onComplete: () => {
-          if (targetGroup === groupCount) {
-            // Both groups have identical content, so this reset is invisible.
-            x.set("0%");
-            setVisibleGroup(0);
-          }
-        },
+      slideAnimation.current = animate(x, `${nextGroup * (-100 / groupCount)}%`, {
+        duration: 0.75,
+        ease: [0.25, 1, 0.5, 1],
       });
-    }, 3000);
+    }, 4500);
     return () => window.clearInterval(timer);
-  }, [autoIndex, isVisible, reduceMotion, isPaused, isHovered, isFocused, x, cardsPerGroup, groupCount, trackGroups]);
+  }, [currentGroup, isVisible, reduceMotion, isPaused, isHovered, isFocused, x, groupCount]);
 
   useEffect(() => {
-    const progress = isCompact ? 0 : scrollYProgress.get();
-    const position = Math.max(0, Math.min(1, (progress - 0.1) / 0.8));
-    const group = Math.round(position * (groupCount - 1));
-    slideAnimation.current?.stop();
-    x.set(`${position * (groupCount - 1) * (-100 / trackGroups)}%`);
-    setCurrentGroup(group);
-    setVisibleGroup(group);
-    setAutoIndex(group * cardsPerGroup);
-  }, [isCompact, cardsPerGroup, groupCount, trackGroups, scrollYProgress, x]);
-
-  useEffect(() => () => slideAnimation.current?.stop(), []);
+    return () => {
+      slideAnimation.current?.stop();
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    };
+  }, []);
 
   const selectAdjacent = (direction: number) => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const group = Math.max(0, Math.min(groupCount - 1, currentGroup + direction));
-    if (isCompact) {
-      setIsPaused(true);
-      setCurrentGroup(group);
-      setVisibleGroup(group);
-      setAutoIndex(group * cardsPerGroup);
-      slideAnimation.current?.stop();
-      slideAnimation.current = animate(x, `${group * (-100 / trackGroups)}%`, {
-        duration: reduceMotion ? 0 : 0.4,
-      });
-      return;
-    }
-    const start = section.getBoundingClientRect().top + window.scrollY;
-    const distance = section.offsetHeight - window.innerHeight;
-    window.scrollTo({
-      top: start + distance * (0.1 + (group / (groupCount - 1)) * 0.8),
-      behavior: reduceMotion ? "instant" : "smooth",
+    const nextGroup = (currentGroupRef.current + direction + groupCountRef.current) % groupCountRef.current;
+    setIsPaused(true);
+
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    pauseTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 6000);
+
+    setCurrentGroup(nextGroup);
+    setVisibleGroup(nextGroup);
+    slideAnimation.current?.stop();
+    slideAnimation.current = animate(x, `${nextGroup * (-100 / groupCountRef.current)}%`, {
+      duration: reduceMotion ? 0 : 0.65,
+      ease: [0.25, 1, 0.5, 1],
     });
   };
+
+  const wheelCooldown = useRef(false);
+
+  // Page-pinning Wheel Listener: Pins vertical page scroll to step through carousel slides first
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const handleNativeWheel = (e: WheelEvent) => {
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (Math.abs(delta) < 15) return;
+
+      const isScrollingDown = delta > 0;
+      const isScrollingUp = delta < 0;
+      const curr = currentGroupRef.current;
+      const count = groupCountRef.current;
+
+      const rect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      // Section is active when in visible view
+      const isVisibleInView = rect.top <= windowHeight * 0.4 && rect.bottom >= windowHeight * 0.6;
+
+      if (isVisibleInView) {
+        if (isScrollingDown && curr < count - 1) {
+          e.preventDefault();
+          if (wheelCooldown.current) return;
+          wheelCooldown.current = true;
+          setTimeout(() => {
+            wheelCooldown.current = false;
+          }, 550);
+          selectAdjacent(1);
+        } else if (isScrollingUp && curr > 0) {
+          e.preventDefault();
+          if (wheelCooldown.current) return;
+          wheelCooldown.current = true;
+          setTimeout(() => {
+            wheelCooldown.current = false;
+          }, 550);
+          selectAdjacent(-1);
+        }
+      }
+    };
+
+    section.addEventListener("wheel", handleNativeWheel, { passive: false });
+    return () => {
+      section.removeEventListener("wheel", handleNativeWheel);
+    };
+  }, []);
 
   const industrySwipe = useSwipe(selectAdjacent);
 
   return (
-    <section ref={sectionRef} className={`relative bg-[#f7f7f5] font-sans ${isCompact ? "py-10 sm:py-14" : "h-[280svh]"}`}>
-      <div className={isCompact ? "overflow-hidden" : "sticky top-0 flex h-svh items-center overflow-hidden pt-14 md:pt-16 pb-6"}>
-      <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 sm:px-8 flex flex-col justify-between h-full max-h-svh py-2">
-        <div className="mb-2 text-center md:mb-4">
+    <section ref={sectionRef} className="relative bg-[#f7f7f5] font-sans py-10 sm:py-14 lg:py-20 overflow-hidden">
+      <div className="relative z-10 mx-auto w-full max-w-7xl 2xl:max-w-[1480px] px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="mb-6 sm:mb-8 md:mb-10 text-center">
           <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
           >
             <p className="mb-1.5 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary">
               What we build
             </p>
-            <h2 className="text-fluid-h2 font-bold text-neutral-900 text-balance">
-              Use Cases &amp; Industry Applications
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 text-balance leading-[1.15]">
+              Use Cases &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-sky-400">Industry Applications</span>
             </h2>
           </motion.div>
-          <p className="hidden mx-auto mt-2 max-w-2xl text-fluid-body text-neutral-500 md:block">
-            From first sketch to global scale, we pair product thinking with
-            engineering that creates measurable momentum.
+          <p className="mx-auto mt-2 max-w-2xl text-fluid-body text-neutral-500">
+            From first sketch to global scale, we pair product thinking with engineering that creates measurable momentum.
           </p>
         </div>
 
-        <div className="mb-2 flex items-center justify-end text-xs text-neutral-500">
+        {/* Controls */}
+        <div className="mb-4 flex items-center justify-end text-xs text-neutral-500">
           <div className="flex items-center gap-2">
             {!reduceMotion && (
-              <button type="button" onClick={() => setIsPaused((paused) => !paused)} aria-label={isPaused ? "Play industry slider" : "Pause industry slider"} className="site-button site-button-icon rounded-full border border-neutral-300 p-2 hover:bg-white focus-visible:outline-2 focus-visible:outline-primary">
+              <button
+                type="button"
+                onClick={() => setIsPaused((paused) => !paused)}
+                aria-label={isPaused ? "Play industry slider" : "Pause industry slider"}
+                className="site-button site-button-icon rounded-full border border-neutral-300 p-2 hover:bg-white focus-visible:outline-2 focus-visible:outline-primary"
+              >
                 {isPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
               </button>
             )}
-            <button type="button" onClick={() => selectAdjacent(-1)} disabled={currentGroup === 0} aria-label="Previous industry" className="site-button site-button-icon rounded-full border border-neutral-300 p-2 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-primary">
+            <button
+              type="button"
+              onClick={() => selectAdjacent(-1)}
+              aria-label="Previous industry"
+              className="site-button site-button-icon rounded-full border border-neutral-300 p-2 hover:bg-white focus-visible:outline-2 focus-visible:outline-primary"
+            >
               <ChevronLeft className="h-4 w-4" />
             </button>
-            <button type="button" onClick={() => selectAdjacent(1)} disabled={currentGroup === groupCount - 1} aria-label="Next industry" className="site-button site-button-icon rounded-full border border-neutral-300 p-2 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-primary">
+            <button
+              type="button"
+              onClick={() => selectAdjacent(1)}
+              aria-label="Next industry"
+              className="site-button site-button-icon rounded-full border border-neutral-300 p-2 hover:bg-white focus-visible:outline-2 focus-visible:outline-primary"
+            >
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>
         </div>
 
+        {/* Carousel Track */}
         <div
           {...industrySwipe}
           ref={galleryRef}
-          className="overflow-hidden"
+          className="overflow-hidden rounded-2xl md:rounded-3xl cursor-grab active:cursor-grabbing select-none"
           role="region"
           aria-roledescription="carousel"
           aria-label="Industries gallery"
-          onPointerEnter={(event) => { if (event.pointerType === "mouse") setIsHovered(true); }}
+          onPointerEnter={(event) => {
+            if (event.pointerType === "mouse") setIsHovered(true);
+          }}
           onPointerLeave={() => setIsHovered(false)}
-          onPointerDown={(event) => { if (event.pointerType !== "mouse") setIsPaused(true); }}
+          onPointerDown={(event) => {
+            if (event.pointerType !== "mouse") setIsPaused(true);
+          }}
           onFocusCapture={() => setIsFocused(true)}
-          onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false); }}
+          onBlurCapture={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false);
+          }}
         >
-          <motion.div style={{ x, width: `${trackGroups * 100}%` }} className={`flex ${isCompact ? "h-[380px] sm:h-[440px]" : "h-[clamp(280px,44svh,520px)]"}`}>
+          <motion.div
+            style={{ x, width: `${trackGroups * 100}%` }}
+            className="flex h-[320px] sm:h-[380px] md:h-[440px] lg:h-[490px] xl:h-[540px] 2xl:h-[580px]"
+          >
             {Array.from({ length: trackGroups }, (_, group) => (
               <div
                 key={group}
                 inert={visibleGroup !== group}
                 aria-hidden={visibleGroup !== group}
                 style={{ width: `${100 / trackGroups}%` }}
-                className="flex shrink-0 gap-1 px-0.5 sm:gap-2 lg:gap-3"
+                className="flex shrink-0 gap-3 sm:gap-5 md:gap-6 lg:gap-7 px-1"
               >
-                {industries.slice((group % groupCount) * cardsPerGroup, (group % groupCount + 1) * cardsPerGroup).map((industry) => {
-                  const Icon = industry.icon;
-                  return (
-                    <article
-                      key={industry.name}
-                      className="relative min-h-0 min-w-0 flex-1 overflow-hidden rounded-xl bg-neutral-900"
-                    >
-                      <motion.img
-                        src={industry.image}
-                        alt=""
-                        loading="lazy"
-                        initial={false}
-                        animate={{ scale: 1 }}
-                        transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
-                        className="absolute inset-0 h-full w-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/10" />
-                      
-                      {/* Icon */}
-                      <div className="absolute left-4 top-4 z-20 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-xs">
-                        <Icon className="h-4 w-4" aria-hidden="true" />
-                      </div>
+                {industries
+                  .slice(
+                    (group % groupCount) * cardsPerGroup,
+                    (group % groupCount + 1) * cardsPerGroup
+                  )
+                  .map((industry) => {
+                    const Icon = industry.icon;
+                    return (
+                      <article
+                        key={industry.name}
+                        className="relative min-h-0 min-w-0 flex-1 overflow-hidden rounded-2xl md:rounded-3xl bg-neutral-900 group shadow-lg"
+                      >
+                        <motion.img
+                          src={industry.image}
+                          alt={industry.name}
+                          loading="lazy"
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/10" />
 
-                      {/* All cards keep their content visible. */}
-                      <div className="absolute inset-x-0 bottom-0 z-20 p-3 sm:p-4">
-                        <h3 className="text-base font-bold leading-tight text-white sm:text-lg lg:text-xl">
-                          {industry.name}
-                        </h3>
-                        <p className="mt-1 text-xs leading-snug text-white/80 sm:mt-2 sm:text-xs lg:text-sm">
-                          {industry.description}
-                        </p>
-                        <Link
-                          to="/contact"
-                          aria-label={`Start a ${industry.name} project`}
-                          className="pointer-events-auto mt-2 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold text-neutral-900 transition-colors hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:mt-4 sm:py-2 sm:text-xs"
-                        >
-                          Let's build <ArrowUpRight className="h-3 w-3 shrink-0 text-neutral-900 sm:h-4 sm:w-4" aria-hidden="true" />
-                        </Link>
-                      </div>
-                    </article>
-                  );
-                })}
+                        {/* Icon */}
+                        <div className="absolute left-4 top-4 z-20 flex h-8 w-8 sm:h-9 sm:w-9 lg:h-11 lg:w-11 items-center justify-center rounded-full border border-white/30 bg-black/50 text-white backdrop-blur-sm shadow-md">
+                          <Icon className="h-4 w-4 lg:h-5 lg:w-5" aria-hidden="true" />
+                        </div>
+
+                        {/* Content */}
+                        <div className="absolute inset-x-0 bottom-0 z-20 p-4 sm:p-5 lg:p-7 xl:p-8">
+                          <h3 className="text-base font-bold leading-tight text-white sm:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">
+                            {industry.name}
+                          </h3>
+                          <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm lg:text-base leading-relaxed text-white/85 line-clamp-3 font-normal">
+                            {industry.description}
+                          </p>
+                          <Link
+                            to="/contact"
+                            aria-label={`Start a ${industry.name} project`}
+                            className="pointer-events-auto mt-3.5 inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-neutral-900 transition-colors hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:mt-5 lg:px-5 lg:py-2.5 lg:text-base"
+                          >
+                            Let's build{" "}
+                            <ArrowUpRight
+                              className="h-3.5 w-3.5 shrink-0 text-neutral-900 lg:h-4 lg:w-4"
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </div>
+                      </article>
+                    );
+                  })}
               </div>
             ))}
           </motion.div>
         </div>
 
-        <div className="mt-2.5 flex flex-col gap-2 border-t border-neutral-200 pt-2.5 text-xs sm:text-sm sm:flex-row sm:items-center sm:justify-between shrink-0">
+        {/* Footer Link */}
+        <div className="mt-4 flex flex-col gap-2 border-t border-neutral-200 pt-3 text-xs sm:text-sm sm:flex-row sm:items-center sm:justify-between shrink-0">
           <p className="text-neutral-500">Your next big idea belongs here.</p>
-          <Link to="/contact" className="inline-flex items-center gap-2 font-semibold text-neutral-950 hover:text-primary">
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-2 font-semibold text-neutral-950 hover:text-primary transition-colors"
+          >
             Tell us what you are building <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
-      </div>
       </div>
     </section>
   );

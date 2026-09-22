@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, Clock, User, Loader2 } from "lucide-react";
 import { useCatalog } from "@/lib/content/useCatalog";
 import CatalogState from "@/components/content/CatalogState";
-import SubBanner from "@/components/site/SubBanner";
+import InnerPageHero from "@/components/site/InnerPageHero";
 
 export default function BlogPage() {
   const { entries: displayPosts, loading, error, retry } = useCatalog("blogs");
@@ -10,12 +10,16 @@ export default function BlogPage() {
   const regularPosts = displayPosts.filter(post => post.id !== featuredPost?.id);
 
   return (
-    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen md:">
-      <SubBanner
-        badge="Blog & Articles"
+    <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen">
+      <InnerPageHero
+        eyebrow="INSIGHTS & RESOURCES"
         title="Our Latest"
         highlightTitle="Thinking"
-        subtitle="Thoughts, tutorials, and insights on design, development, and building successful digital products."
+        description="Thoughts, tutorials, and insights on design, development, and building successful digital products."
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Blog" },
+        ]}
       />
 
       <div className="container mx-auto px-4 md:px-6 max-w-7xl pt-6 sm:pt-8 md:pt-10">

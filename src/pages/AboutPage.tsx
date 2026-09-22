@@ -1,20 +1,22 @@
 import AboutSection from "@/components/site/AboutSection"
 import CoreValuesSection from "@/components/site/CoreValuesSection"
-import ProcessTimeline from "@/components/site/ProcessTimeline"
-import SubBanner from "@/components/site/SubBanner"
+import InnerPageHero from "@/components/site/InnerPageHero"
 
 export default function AboutPage() {
   return (
     <main className="bg-background">
-      <SubBanner
-        badge="Who We Are"
-        title="About"
-        highlightTitle="Adat Soft Solutions"
-        subtitle="We connect global businesses with cutting-edge web & mobile technology, empowering brands to scale and succeed."
+      <InnerPageHero
+        eyebrow="ABOUT ADAT"
+        title="Building Digital Experiences"
+        highlightTitle="That Move Businesses Forward"
+        description="We combine technology, strategy and creativity to build digital solutions designed for long-term growth."
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "About" },
+        ]}
       />
       <AboutSection />
       <CoreValuesSection />
-      <ProcessTimeline />
     </main>
   );
 }

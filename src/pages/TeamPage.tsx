@@ -2,7 +2,7 @@ import TeamShowcaseScroll, { type TeamMember } from "@/components/site/TeamShowc
 import { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import SubBanner from "@/components/site/SubBanner";
+import InnerPageHero from "@/components/site/InnerPageHero";
 import { Loader2 } from "lucide-react";
 
 const staticTeamData = [
@@ -65,11 +65,16 @@ export default function TeamPage() {
 
   return (
     <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen font-sans">
-      <SubBanner
-        badge="Our Team"
+      <InnerPageHero
+        eyebrow="OUR TEAM"
         title="Meet the Minds Behind the"
         highlightTitle="Magic"
-        subtitle="We are a collective of passionate designers, developers, and strategists dedicated to crafting exceptional digital experiences."
+        description="We are a collective of passionate designers, developers, and strategists dedicated to crafting exceptional digital experiences."
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "About", href: "/about" },
+          { label: "Our Team" },
+        ]}
       />
 
         {loading ? (

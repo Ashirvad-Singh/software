@@ -164,14 +164,14 @@ export default function CareersPage() {
         <div className="container mx-auto px-4 relative z-10 text-center max-w-4xl">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            className="text-4xl md:text-6xl font-bold text-neutral-900 leading-tight mb-6"
+            className="text-hero-title font-bold text-neutral-900 mb-4"
           >
             Build Systems <br className="hidden md:block" /> With A Team 
           </motion.h1>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-lg md:text-xl text-neutral-600 mb-10 max-w-3xl mx-auto"
+            className="text-body-lg text-neutral-600 mb-8 max-w-3xl mx-auto"
           >
             We solve highly complex problems in commerce platforms for global enterprises. 
             If you want to dive deep into backend architecture, headless storefronts, 
@@ -207,13 +207,13 @@ export default function CareersPage() {
       <section className="py-10 md:py-16 bg-white">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold text-sky-600 tracking-widest uppercase mb-2 block">
+            <span className="text-caption font-bold text-sky-600 tracking-widest uppercase mb-2 block">
               WORK HARD AND BE YOURSELF
             </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-neutral-900 mb-4">
+            <h2 className="text-section-title font-extrabold text-neutral-900 mb-3">
               Pay a visit &amp; have some coffee!
             </h2>
-            <p className="text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto">
+            <p className="text-body-lg text-neutral-600 max-w-2xl mx-auto">
               We empower our team with strong leadership, continuous growth, and an inspiring work environment.
             </p>
           </div>
@@ -260,8 +260,8 @@ export default function CareersPage() {
       <section className="py-10 md:py-16 bg-sky-50">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Teams We Hire For</h2>
-            <p className="text-lg text-neutral-600">Find your dream role across any of our major functions.</p>
+            <h2 className="text-section-title font-bold text-neutral-900 mb-4">Teams We Hire For</h2>
+            <p className="text-body-lg text-neutral-600">Find your dream role across any of our major functions.</p>
           </div>
 
           <div className="flex flex-col lg:flex-row gap-12 items-center">
@@ -311,8 +311,8 @@ export default function CareersPage() {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex flex-col items-center gap-10 md:gap-12">
             <div className="w-full max-w-2xl text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">How We Work</h2>
-              <p className="text-lg text-neutral-600">Our core values inform every decision we make.</p>
+              <h2 className="text-section-title font-bold text-neutral-900 mb-4">How We Work</h2>
+              <p className="text-body-lg text-neutral-600">Our core values inform every decision we make.</p>
             </div>
             
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -338,8 +338,8 @@ export default function CareersPage() {
       {/* 5. What We Look For */}
       <section className="py-10 md:py-16 bg-sky-50 overflow-hidden">
         <div className="container mx-auto px-4 max-w-6xl text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">What We Look For</h2>
-          <p className="text-lg text-neutral-600 mb-16 max-w-2xl mx-auto">Skills can be taught, character cannot. We value those who show up every day with:</p>
+          <h2 className="text-section-title font-bold text-neutral-900 mb-4">What We Look For</h2>
+          <p className="text-body-lg text-neutral-600 mb-16 max-w-2xl mx-auto">Skills can be taught, character cannot. We value those who show up every day with:</p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
             {/* Background Decorative SVG simulating the squiggly lines */}
@@ -378,10 +378,10 @@ export default function CareersPage() {
       {/* 6. Open Roles */}
       <section id="open-roles" className="py-10 md:py-16 bg-white">
         <div className="container mx-auto px-4 max-w-5xl text-center">
-          <span className="text-xs font-bold text-sky-600 tracking-widest uppercase mb-2 block">
+          <span className="text-caption font-bold text-sky-600 tracking-widest uppercase mb-2 block">
             WORK HARD AND BE YOURSELF
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-neutral-900 mb-12">
+          <h2 className="text-section-title font-extrabold text-neutral-900 mb-12">
             Showing current offers and jobs available
           </h2>
           

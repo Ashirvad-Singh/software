@@ -46,9 +46,9 @@ export default function WhatSetsUsApart() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-fluid-h2 font-bold mb-4 sm:mb-6 text-gray-900"
+              className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 text-gray-900 leading-[1.15]"
             >
-              What Sets Us <span className="text-primary italic font-serif font-medium">Apart!</span>
+              What Sets Us <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-sky-400">Apart</span>
             </motion.h2>
             
             <motion.p 

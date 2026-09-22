@@ -146,8 +146,8 @@ export default function Testimonials() {
     <section className="py-10 md:py-16 bg-[#fafafa] w-full overflow-hidden font-sans">
       
       <div className="text-center mb-8 relative z-20 px-4 sm:px-8">
-        <h2 className="text-fluid-h2 font-bold text-neutral-900 mb-4 tracking-tight text-balance">
-          Trusted in production, not just in demos.
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-neutral-900 mb-4 tracking-tight text-balance leading-[1.15]">
+          Trusted in production, <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-sky-400">not just in demos.</span>
         </h2>
         <p className="text-fluid-body text-neutral-600 font-medium max-w-2xl mx-auto">
           Short notes from teams who ship with the same polish they show customers.

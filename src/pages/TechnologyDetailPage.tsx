@@ -16,7 +16,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import SEO from "@/components/site/SEO";
-import SubBanner from "@/components/site/SubBanner";
+import InnerPageHero from "@/components/site/InnerPageHero";
 import { useContent } from "@/lib/content/useContent";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -67,19 +67,22 @@ export default function TechnologyDetailPage() {
         keywords={techDetail.seoKeywords || `${techDetail.name}, Adat Soft Solutions, ${techDetail.category}, custom software development`}
       />
 
-      {/* SubBanner Header */}
-      <SubBanner
-        className="!pb-6 md:!pb-8"
-        backLink={{ to: "/technologies", label: "Back to Technology Stack" }}
-        badge={techDetail.badge}
+      {/* InnerPageHero Header */}
+      <InnerPageHero
+        eyebrow={`TECHNOLOGY / ${(techDetail.category || "STACK").toUpperCase()}`}
         title={techDetail.name}
         highlightTitle={techDetail.category}
-        subtitle={techDetail.tagline}
+        description={techDetail.tagline || techDetail.overview}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Technologies", href: "/technologies" },
+          { label: techDetail.name },
+        ]}
       />
 
       {/* Overview & Key Benefits Section */}
       <section className="pt-6 md:pt-8 bg-white dark:bg-neutral-950">
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-10 items-start mb-10 md:mb-12">
             <div className="space-y-5">
               <span className="inline-flex text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-3.5 py-1.5 rounded-full border border-primary/20">
@@ -92,19 +95,20 @@ export default function TechnologyDetailPage() {
                 {techDetail.overview}
               </p>
 
-              <div className="pt-1 flex flex-wrap gap-3">
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                 <Link
                   to="/contact"
-                  className="site-button bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-bold px-6 py-3.5 rounded-full text-sm hover:scale-105 transition-transform shadow-lg flex items-center gap-2"
+                  className="site-button bg-primary text-white font-bold px-6 py-3 rounded-full text-xs sm:text-sm hover:scale-[1.02] transition-all shadow-md flex items-center justify-center gap-2 text-center"
                 >
-                  <MessageSquare className="w-4 h-4 text-primary" />
-                  Consult {techDetail.name} Team
+                  <MessageSquare className="w-4 h-4 shrink-0" />
+                  <span>Consult Tech Team</span>
                 </Link>
                 <Link
                   to="/work"
-                  className="site-button border border-neutral-300 dark:border-neutral-800 text-neutral-800 dark:text-neutral-200 font-bold px-6 py-3.5 rounded-full text-sm hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors flex items-center gap-2"
+                  className="site-button border border-neutral-300 dark:border-neutral-800 text-neutral-800 dark:text-neutral-200 font-bold px-6 py-3 rounded-full text-xs sm:text-sm hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors flex items-center justify-center gap-2 text-center"
                 >
-                  View Featured Work <ArrowRight className="w-4 h-4" />
+                  <span>View Featured Work</span>
+                  <ArrowRight className="w-4 h-4 shrink-0" />
                 </Link>
               </div>
             </div>
@@ -344,10 +348,10 @@ export default function TechnologyDetailPage() {
             </div>
             <Link
               to="/contact"
-              className="site-button z-10 bg-white hover:bg-neutral-100 text-neutral-900 font-bold px-8 py-4 rounded-full text-sm shrink-0 transition-all shadow-lg hover:scale-105 flex items-center gap-2"
+              className="site-button z-10 bg-white hover:bg-neutral-100 text-neutral-900 font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm shrink-0 transition-all shadow-lg hover:scale-105 flex items-center justify-center gap-2 w-full sm:w-auto text-center"
             >
-              <MessageSquare className="w-4 h-4 text-primary" />
-              {techDetail.ctaLabel || "Discuss Your Project"}
+              <MessageSquare className="w-4 h-4 text-primary shrink-0" />
+              <span>{techDetail.ctaLabel || "Discuss Your Project"}</span>
             </Link>
           </div>
         </div>

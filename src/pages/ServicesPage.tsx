@@ -1,7 +1,7 @@
 import { useCatalog } from "@/lib/content/useCatalog";
 import { listValue } from "@/lib/content/model";
 import HomeServicesSection from "@/components/site/HomeServicesSection";
-import SubBanner from "@/components/site/SubBanner";
+import InnerPageHero from "@/components/site/InnerPageHero";
 import FaqSection from "@/components/site/FaqSection";
 import { motion } from "framer-motion";
 import { Code2, CheckCircle2, ArrowRight } from "lucide-react";
@@ -14,12 +14,15 @@ export default function ServicesPage() {
   }));
   return (
     <main className="min-h-screen bg-white dark:bg-neutral-950">
-      {/* SubBanner Header */}
-      <SubBanner
-        badge="Enterprise Software Capabilities"
+      <InnerPageHero
+        eyebrow="DIGITAL SERVICES"
         title="Custom Digital"
         highlightTitle="Services & Solutions"
-        subtitle="From high-scale Web Platforms and Cross-Platform Mobile Apps to Enterprise AI Systems — we build reliable, future-proof software tailored to your growth."
+        description="From high-scale web platforms and mobile apps to CMS, UI/UX and QA, we build reliable digital solutions tailored to business growth."
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Services" },
+        ]}
       />
 
       {/* Main Interactive Services Accordion */}

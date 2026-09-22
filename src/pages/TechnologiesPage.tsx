@@ -3,7 +3,7 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import * as LucideIcons from "lucide-react";
 import * as TablerIcons from "@tabler/icons-react";
 import { motion, AnimatePresence } from "framer-motion";
-import SubBanner from "@/components/site/SubBanner";
+import InnerPageHero from "@/components/site/InnerPageHero";
 import SEO from "@/components/site/SEO";
 import { FloatingShapes } from "@/components/ui/floating-shapes";
 import { db } from "@/lib/firebase";
@@ -89,8 +89,8 @@ const techFaqs = [
     a: "100% yes. Upon milestone completion, all repository access (GitHub/GitLab), cloud environment credentials, and intellectual property rights are fully transferred to your team.",
   },
   {
-    q: "How do you integrate Custom AI models or LLMs into existing software?",
-    a: "We build custom RAG pipelines over vector databases (Pinecone/Weaviate), integrate OpenAI/Claude APIs, and deploy fine-tuned open-source models (Llama 3, Mistral) on private cloud instances with strict data privacy.",
+    q: "How do you ensure web and mobile applications are optimized for performance?",
+    a: "We conduct code-level profiling, asset optimization, database query tuning, CDN edge caching, and automated load testing to guarantee fast page load times and seamless user experiences across all devices.",
   },
 ];
 
@@ -131,12 +131,16 @@ export default function TechnologiesPage() {
         keywords="Adat Tech Stack, React Development, Next.js Agency, Flutter Mobile Apps, AWS Cloud, Node.js Microservices, Python AI"
       />
 
-      {/* SubBanner Header */}
-      <SubBanner
-        badge="Enterprise Technology Stack"
-        title="Modern Engineering"
-        highlightTitle="Tools & Frameworks"
-        subtitle="We build high-performance web platforms, cross-platform mobile apps, enterprise AI systems, and cloud infrastructure using battle-tested technology."
+      {/* InnerPageHero Header */}
+      <InnerPageHero
+        eyebrow="OUR TECHNOLOGIES"
+        title="Modern Technologies."
+        highlightTitle="Reliable Solutions."
+        description="Explore the technologies and platforms we use to build scalable, secure and high-performing digital products."
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Technologies" },
+        ]}
       />
 
       {/* Value Pillars Strip */}
@@ -177,10 +181,10 @@ export default function TechnologiesPage() {
           {/* Header Section */}
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 gap-8">
             <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-neutral-900 dark:text-white">
+              <h2 className="text-section-title font-extrabold tracking-tight mb-4 text-neutral-900 dark:text-white">
                 Technologies & <span className="text-primary">Capabilities</span>
               </h2>
-              <p className="text-neutral-600 dark:text-neutral-400 text-lg">
+              <p className="text-neutral-600 dark:text-neutral-400 text-body-lg">
                 We use modern technologies and proven tools to build fast, secure, scalable and future-ready digital solutions that help businesses grow.
               </p>
             </div>
@@ -304,8 +308,8 @@ export default function TechnologiesPage() {
             </Link>
 
             <div className="absolute right-4 -bottom-6 opacity-5 pointer-events-none transform -rotate-12 hidden md:block">
-              <span className="font-serif text-5xl font-bold">Right Technology</span><br/>
-              <span className="font-serif text-5xl font-bold ml-8">Bigger Possibilities</span>
+              <span className="font-serif text-section-title font-bold">Right Technology</span><br/>
+              <span className="font-serif text-section-title font-bold ml-8">Bigger Possibilities</span>
             </div>
           </div>
         </div>
@@ -318,10 +322,10 @@ export default function TechnologiesPage() {
             <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-3.5 py-1.5 rounded-full border border-primary/20">
               Engineering Lifecycle
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-4 text-neutral-900 dark:text-white">
+            <h2 className="text-section-title font-bold mt-4 text-neutral-900 dark:text-white">
               Our 5-Step Agile Software Delivery Process
             </h2>
-            <p className="mt-3 text-neutral-600 dark:text-neutral-400 text-sm md:text-base">
+            <p className="mt-3 text-neutral-600 dark:text-neutral-400 text-body">
               From architectural blueprint to continuous cloud deployment — how we ensure high quality, zero downtime, and robust performance.
             </p>
           </div>
@@ -368,7 +372,7 @@ export default function TechnologiesPage() {
               <HelpCircle className="w-4 h-4 text-primary" />
               Technical FAQ
             </div>
-            <h2 className="text-3xl font-bold text-neutral-900 dark:text-white">
+            <h2 className="text-section-subtitle font-bold text-neutral-900 dark:text-white">
               Technology Stack Questions & Answers
             </h2>
           </div>
@@ -416,7 +420,7 @@ export default function TechnologiesPage() {
               <span className="inline-flex items-center gap-1.5 text-xs font-bold text-primary uppercase tracking-wider">
                 <Sparkles className="w-4 h-4" /> Need Technology Consultation?
               </span>
-              <h2 className="text-2xl md:text-4xl font-bold tracking-tight">
+              <h2 className="text-section-title font-bold tracking-tight">
                 Ready to Build Your Digital Product With Our Stack?
               </h2>
               <p className="text-xs sm:text-sm text-neutral-300 dark:text-neutral-400 leading-relaxed">

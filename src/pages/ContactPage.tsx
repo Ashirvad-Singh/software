@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import SubBanner from "@/components/site/SubBanner";
+import InnerPageHero from "@/components/site/InnerPageHero";
 
 const contactSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
@@ -59,11 +59,15 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen relative overflow-x-hidden bg-white md:">
-      <SubBanner
-        badge="Contact Us"
-        title="Get in"
-        highlightTitle="touch"
-        subtitle="Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions."
+      <InnerPageHero
+        eyebrow="GET IN TOUCH"
+        title="Let's Build"
+        highlightTitle="Together."
+        description="Whether you have a project in mind or want to explore potential technical partnerships, our team is ready to help."
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Contact Us" },
+        ]}
       />
 
       <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl relative z-10 pt-4 sm:pt-6 md:pt-8">

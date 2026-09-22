@@ -196,7 +196,7 @@ const MegaMenuContent = () => {
   const itemsToDisplay = entries.slice(0, 4);
 
   return (
-    <div className="w-[640px] sm:w-[720px] max-w-[92vw] p-3 sm:p-4 text-neutral-900 dark:text-white">
+    <div className="w-[min(720px,calc(100vw-2rem))] p-3 sm:p-4 text-neutral-900 dark:text-white">
       <CatalogState loading={loading} error={error} empty={!entries.length} label="services" retry={retry} />
       <div className="grid grid-cols-2 gap-4 sm:gap-6">
         {itemsToDisplay.map((service, idx) => (
@@ -586,6 +586,7 @@ export default function Navbar({ className }: { className?: string }) {
                       setActive={setActive}
                       active={active}
                       item="Industries"
+                      align="center-menu"
                     >
                       <IndustriesMegaMenu />
                     </MenuItem>
@@ -595,6 +596,7 @@ export default function Navbar({ className }: { className?: string }) {
                       setActive={setActive}
                       active={active}
                       item="Services"
+                      align="center-menu"
                     >
                       <MegaMenuContent />
                     </MenuItem>
@@ -604,6 +606,7 @@ export default function Navbar({ className }: { className?: string }) {
                       setActive={setActive}
                       active={active}
                       item="Technologies"
+                      align="center-menu"
                     >
                       <TechnologyMegaMenu />
                     </MenuItem>

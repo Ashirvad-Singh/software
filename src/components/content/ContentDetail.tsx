@@ -1,11 +1,13 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import SEO from "@/components/site/SEO";
 import { useContent } from "@/lib/content/useContent";
 import type { ContentKind } from "@/lib/content/model";
 import { ContentCard } from "./ContentCard";
 import ProjectClientReview from "./ProjectClientReview";
 import ImageGallery from "./ImageGallery";
+import InnerPageHero from "@/components/site/InnerPageHero";
+
 export default function ContentDetail({ kind }: { kind: ContentKind }) {
   const { slug } = useParams();
   const story = kind === "case_studies";
@@ -73,7 +75,7 @@ export default function ContentDetail({ kind }: { kind: ContentKind }) {
     story ? e.id === entry.projectId : e.projectId === entry.id,
   );
   return (
-    <main className="min-h-screen bg-background pt-28 md:pt-36">
+    <main className="min-h-screen bg-background">
       <SEO
         title={entry.seoTitle || entry.title}
         description={
@@ -85,27 +87,17 @@ export default function ContentDetail({ kind }: { kind: ContentKind }) {
         }
         image={entry.image}
       />
-      <div className="mx-auto max-w-6xl px-5 md:px-10">
-
-        <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-          {story ? "Case study" : "Project"} /{" "}
-          {entry.industry || entry.category}
-        </p>
-        <h1 className="mt-4 max-w-5xl text-4xl font-semibold leading-[1.1] tracking-tight md:text-6xl">
-          {entry.title}
-        </h1>
-        {entry.description && (
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            {entry.description}
-          </p>
-        )}
-        <Link
-          to={back}
-          className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
-        >
-          <ArrowLeft size={16} />
-          All {story ? "case studies" : "projects"}
-        </Link>
+      <InnerPageHero
+        eyebrow={`${story ? "CASE STUDY" : "PROJECT"}${entry.industry || entry.category ? ` / ${(entry.industry || entry.category).toUpperCase()}` : ""}`}
+        title={entry.title}
+        description={entry.description || entry.overview || ""}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: story ? "Case Studies" : "Our Work", href: back },
+          { label: entry.title },
+        ]}
+      />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10">
         <img
           src={entry.image || "/adat_hero_ui.webp"}
           alt={entry.title}

@@ -5,6 +5,8 @@ import SEO from "@/components/site/SEO";
 import { useContent } from "@/lib/content/useContent";
 import { ContentCard } from "@/components/content/ContentCard";
 
+import InnerPageHero from "@/components/site/InnerPageHero";
+
 export default function CaseStudiesPage() {
   const { entries, loading, error, retry } = useContent("case_studies");
   const [category, setCategory] = useState("All");
@@ -37,43 +39,22 @@ export default function CaseStudiesPage() {
         .includes(search.toLowerCase()),
   );
   return (
-    <main className="min-h-screen bg-background pt-28 md:pt-36">
+    <main className="min-h-screen bg-background">
       <SEO
         title="Case Studies"
         description="Explore the business challenges, engineering decisions, and outcomes behind our client success stories."
       />
-      <div className="mx-auto max-w-7xl px-5 md:px-10">
-        <nav
-          aria-label="Work sections"
-          className="mb-10 flex gap-6 border-b border-border pb-4 text-sm font-semibold"
-        >
-          <Link
-            to="/work"
-            className="text-muted-foreground"
-          >
-            Projects
-          </Link>
-          <Link
-            to="/case-studies"
-            aria-current="page"
-            className="text-primary"
-          >
-            Case Studies
-          </Link>
-        </nav>
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          Behind the results
-        </p>
-        <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl md:text-7xl">
-          Real challenges.
-          <br />
-          <span className="text-muted-foreground">
-            Thoughtful solutions.
-          </span>
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Detailed success stories: the problem, our approach, and the results achieved together.
-        </p>
+      <InnerPageHero
+        eyebrow="CASE STUDIES"
+        title="Real Challenges."
+        highlightTitle="Thoughtful Solutions."
+        description="Explore the business challenges, engineering decisions, and outcomes behind our client success stories."
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Case Studies" },
+        ]}
+      />
+      <div className="mx-auto max-w-7xl px-5 md:px-10 py-10">
         <div className="mb-8 mt-12 space-y-5">
           <div className="flex flex-wrap items-center gap-4">
             <label className="flex min-w-0 basis-full sm:basis-0 flex-1 items-center gap-3 rounded-xl border border-border px-4 py-3">
@@ -195,7 +176,7 @@ export default function CaseStudiesPage() {
           </>
         )}
         <div className="mt-16 rounded-2xl bg-secondary p-8 md:p-12">
-          <h2 className="text-3xl font-semibold tracking-tight">
+          <h2 className="text-section-title font-semibold">
             Have a project in mind?
           </h2>
           <p className="mt-3 text-muted-foreground">

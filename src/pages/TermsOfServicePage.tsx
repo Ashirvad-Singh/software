@@ -1,8 +1,8 @@
 import { motion } from "framer-motion"
 import { Scale, FileCode2, UserCheck, AlertCircle, Cpu, ShieldAlert, Sparkles } from "lucide-react"
+import InnerPageHero from "@/components/site/InnerPageHero"
 
 export default function TermsOfServicePage() {
-  const lastUpdated = "July 30, 2026"
 
   const terms = [
     {
@@ -25,22 +25,25 @@ export default function TermsOfServicePage() {
       • Company IP: Pre-existing software libraries, proprietary frameworks, internal tools, and open-source components utilized by us remain the property of the Company or their respective licensors.`
     },
     {
-      id: "user-obligations",
-      title: "4. User & Client Responsibilities",
-      icon: Scale,
-      content: `Clients agree to provide timely feedback, required credentials, content assets, and clear requirements necessary for project execution. Users agree not to misuse our website, attempt unauthorized access to server infrastructure, or inject malicious code.`
+      id: "user-responsibilities",
+      title: "4. User Responsibilities & Conduct",
+      icon: AlertCircle,
+      content: `Users agree not to:
+      • Reverse engineer, decompile, or attempt to derive source code from proprietary platforms provided by us.
+      • Use our services to transmit malicious code, launch Denial of Service (DoS) attacks, or violate applicable cyber regulations.
+      • Misrepresent identity or ownership during project consultations.`
     },
     {
       id: "warranties-limitation",
       title: "5. Warranties & Limitation of Liability",
       icon: ShieldAlert,
-      content: `While we build software using industry best practices and modern security standards, all services are provided "as is" unless explicitly backed by a Service Level Agreement (SLA). Adat Soft Solutions shall not be liable for indirect, incidental, or consequential damages resulting from service interruptions or third-party platform failures.`
+      content: `While we maintain strict QA standards and code audits, services are provided "as is" unless specified in a formal SLA. Under no circumstances shall Adat Soft Solutions be liable for indirect, incidental, or consequential damages resulting from third-party server downtime or API deprecations.`
     },
     {
       id: "termination",
-      title: "6. Termination & Project Cancellation",
-      icon: AlertCircle,
-      content: `Either party may terminate an ongoing engagement in accordance with the notice period specified in the project contract. In the event of early termination, the client shall pay for all work completed and expenses incurred up to the date of cancellation.`
+      title: "6. Project Termination",
+      icon: Scale,
+      content: `Either party may terminate an SOW upon written notice if the other party breaches material obligations. Outstanding fees for completed milestones prior to termination remain due and payable.`
     },
     {
       id: "governing-law",
@@ -51,30 +54,17 @@ export default function TermsOfServicePage() {
   ]
 
   return (
-    <main className="md: min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <div className="bg-gradient-to-b from-sky-50/60 via-background to-background border-b border-border/40 pt-28 sm:pt-32 md:pt-36 pb-10 sm:pb-12 md:pb-16">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-100 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 text-sky-700 dark:text-sky-300 font-semibold text-xs mb-6">
-              <Scale className="w-4 h-4" /> Terms &amp; Conditions
-            </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-              Terms of Service
-            </h1>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Please read these terms carefully before engaging our software development or digital consulting services.
-            </p>
-            <p className="text-xs text-muted-foreground mt-4 font-medium">
-              Last Updated: <span className="text-foreground">{lastUpdated}</span>
-            </p>
-          </motion.div>
-        </div>
-      </div>
+    <main className="min-h-screen bg-background text-foreground">
+      <InnerPageHero
+        eyebrow="LEGAL / TERMS"
+        title="Terms of"
+        highlightTitle="Service"
+        description="Please read these terms carefully before engaging our software development or digital consulting services."
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Terms of Service" },
+        ]}
+      />
 
       {/* Content Container */}
       <div className="container mx-auto px-4 max-w-4xl mt-12 md:mt-16">

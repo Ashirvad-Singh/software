@@ -51,16 +51,16 @@ const coreValues = [
 export default function CoreValuesSection() {
   return (
     <section className="py-10 md:py-16 bg-background overflow-hidden w-full border-t border-border/40">
-      <div className="container max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-fluid-h2 font-extrabold tracking-tight text-neutral-900 dark:text-white"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-white leading-[1.15]"
           >
-            Our <span className="text-sky-500 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600">Core Values</span>
+            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-sky-400">Core Values</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

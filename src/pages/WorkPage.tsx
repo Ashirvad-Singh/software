@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Search } from "lucide-react";
 import SEO from "@/components/site/SEO";
-import SubBanner from "@/components/site/SubBanner";
+import InnerPageHero from "@/components/site/InnerPageHero";
 import { useContent } from "@/lib/content/useContent";
 import "./WorkPage.css";
 
@@ -23,12 +23,15 @@ export default function WorkPage() {
   return (
     <main className="work-page">
       <SEO title="Projects & Portfolio" description="Explore websites, online stores, and digital experiences built by Adat Soft Solutions." />
-      <SubBanner
-        badge="Our Portfolio"
+      <InnerPageHero
+        eyebrow="OUR WORK"
         title="Thoughtful Design."
         highlightTitle="Real Work."
-        subtitle="Explore our websites, Shopify and WooCommerce stores, and UI/UX projects—built around each brand and its customers."
-        className="work-sub-banner"
+        description="Explore our websites, e-commerce stores, and custom software projects built around real business goals."
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Our Work" },
+        ]}
       />
       <div className="work-shell">
         <header className="work-header">

@@ -18,14 +18,19 @@ export const MenuItem = ({
   active,
   item,
   children,
+  align = "item",
 }: {
   setActive: (item: string) => void;
   active: string | null;
   item: string;
   children?: React.ReactNode;
+  align?: "item" | "center-menu";
 }) => {
   return (
-    <div onMouseEnter={() => setActive(item)} className="relative ">
+    <div
+      onMouseEnter={() => setActive(item)}
+      className={cn(align === "center-menu" ? "static" : "relative")}
+    >
       <motion.p
         transition={{ duration: 0.3 }}
         className="flex cursor-pointer items-center gap-1 text-black hover:opacity-[0.9] dark:text-white"
@@ -43,7 +48,7 @@ export const MenuItem = ({
           transition={transition}
         >
           {active === item && (
-            <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4">
+            <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4 z-50">
               <motion.div
                 transition={transition}
                 layoutId="active" // layoutId ensures smooth animation
@@ -51,7 +56,7 @@ export const MenuItem = ({
               >
                 <motion.div
                   layout // layout ensures smooth animation
-                  className="w-max h-full p-1.5"
+                  className="w-max max-w-[calc(100vw-2rem)] h-full p-1.5"
                 >
                   {children}
                 </motion.div>

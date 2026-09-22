@@ -6,45 +6,57 @@ import { Link } from "react-router-dom";
 interface FaqItem {
   question: string;
   answer: string;
-  category: "General" | "Security & IP" | "Process" | "Tech & AI";
+  category: string;
 }
 
 const faqs: FaqItem[] = [
   {
-    category: "Process",
+    category: "Web & Mobile",
+    question: "What technologies and frameworks do you use for Web Development?",
+    answer:
+      "We build fast, secure, scalable, and high-performing web solutions tailored to your business goals. Our core web stack includes React, Next.js, TypeScript, Node.js, Python, and cloud-native databases (PostgreSQL, MongoDB, Redis).",
+  },
+  {
+    category: "Web & Mobile",
+    question: "Do you build iOS and Android mobile apps using cross-platform or native frameworks?",
+    answer:
+      "We transform your ideas into powerful, intuitive, and high-performing mobile applications using cross-platform frameworks like Flutter and React Native for unified iOS & Android delivery, as well as native Swift and Kotlin when platform-specific depth is needed.",
+  },
+  {
+    category: "CMS & E-commerce",
+    question: "Which CMS and E-commerce platforms do you build and support?",
+    answer:
+      "We build, manage, and scale powerful websites and online stores with flexible CMS and eCommerce solutions including Headless CMS architectures (Strapi, Sanity), WordPress/WooCommerce, Shopify, and custom eCommerce platforms designed for seamless content management.",
+  },
+  {
+    category: "UI/UX Design",
+    question: "What is included in your UI/UX Design & Prototyping process?",
+    answer:
+      "We create intuitive, engaging, and user-focused digital experiences with user research, wireframes, interactive Figma prototypes, complete design systems, and seamless interactions built around real user needs before any code is written.",
+  },
+  {
+    category: "Email Marketing",
+    question: "How do your Email Marketing services drive customer growth and engagement?",
+    answer:
+      "We build stronger customer relationships and drive measurable growth with targeted email campaigns, smart automation, responsive email templates, audience segmentation, personalized messaging, and performance-driven analytics.",
+  },
+  {
+    category: "QA & Testing",
+    question: "What types of testing do you perform under QA & Software Testing?",
+    answer:
+      "We deliver reliable, secure, and high-performing digital products with comprehensive QA and software testing across web, mobile, and custom applications including automated end-to-end testing, manual functional testing, cross-browser validation, and security auditing.",
+  },
+  {
+    category: "Process & IP",
     question: "How quickly can Adat Soft Solutions initiate a new project?",
     answer:
-      "We can onboard dedicated engineering teams within 48 to 72 hours following requirement discovery and contract alignment. For scoped fixed-price projects, discovery and kickoff begin immediately with a structured 1-week sprint plan.",
+      "We can onboard dedicated engineering teams within 48 to 72 hours following requirement discovery and contract alignment. Scoped fixed-price projects begin immediately with a structured sprint plan.",
   },
   {
-    category: "Security & IP",
+    category: "Process & IP",
     question: "Do clients retain 100% ownership of source code and Intellectual Property (IP)?",
     answer:
-      "Yes, absolutely. Upon project completion and milestone delivery, 100% of the source code, architecture designs, trademarks, and intellectual property rights are legally transferred to your organization. We sign strict Non-Disclosure Agreements (NDAs) prior to any code discussion.",
-  },
-  {
-    category: "Tech & AI",
-    question: "Can you integrate custom AI models (LLMs, RAG, OpenAI, Claude) into existing software?",
-    answer:
-      "Yes! Our AI engineering team specializes in fine-tuning open-source LLMs (Llama 3, Mistral), building Retrieval-Augmented Generation (RAG) pipelines over proprietary enterprise data, and integrating OpenAI, Anthropic Claude, and Gemini APIs directly into web and mobile apps.",
-  },
-  {
-    category: "Security & IP",
-    question: "What security standards and compliance frameworks do you adhere to?",
-    answer:
-      "We follow OWASP Top 10 security guidelines, zero-trust architecture, SOC2 compliance protocols, and end-to-end encryption in transit (TLS 1.3) and at rest (AES-256). All database schema interactions and API endpoints undergo rigorous vulnerability testing.",
-  },
-  {
-    category: "Process",
-    question: "What engagement models do you offer for software development?",
-    answer:
-      "We offer three flexible client engagement models: 1) Dedicated Engineering Squads (Monthly retainer with full agility), 2) Fixed-Price Milestone Deliveries (Strict budget & scope guarantee), and 3) Staff Augmentation (Embedding senior developers directly into your in-house team).",
-  },
-  {
-    category: "Tech & AI",
-    question: "What post-launch SLA, support, and maintenance packages do you provide?",
-    answer:
-      "Every production release includes 30 to 90 days of post-launch warranty support. Beyond launch, we provide SLA-backed maintenance retainer plans featuring 24/7 uptime monitoring, automated cloud backups, security patch updates, and ongoing feature enhancement sprints.",
+      "Yes, absolutely. Upon milestone completion and final delivery, 100% of source code, architecture designs, trademarks, and intellectual property rights are legally transferred to your organization under strict Non-Disclosure Agreements (NDAs).",
   },
 ];
 
@@ -52,7 +64,15 @@ export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
-  const categories = ["All", "Process", "Security & IP", "Tech & AI"];
+  const categories = [
+    "All",
+    "Web & Mobile",
+    "CMS & E-commerce",
+    "UI/UX Design",
+    "Email Marketing",
+    "QA & Testing",
+    "Process & IP",
+  ];
 
   const filteredFaqs =
     selectedCategory === "All"
@@ -79,9 +99,9 @@ export default function FaqSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-fluid-h2 font-bold tracking-tight text-neutral-900 dark:text-white"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-white leading-[1.15]"
           >
-            Frequently Asked Questions
+            Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-sky-400">Questions</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -90,7 +110,7 @@ export default function FaqSection() {
             transition={{ delay: 0.2 }}
             className="mt-4 text-fluid-body text-neutral-600 dark:text-neutral-400"
           >
-            Everything you need to know about our engineering methodology, security standards, intellectual property ownership, and client engagement options.
+            Everything you need to know about our Web & Mobile Development, CMS & E-commerce Solutions, UI/UX Design, Email Marketing, QA Testing, and IP ownership.
           </motion.p>
 
           {/* Category Filter Pills */}
@@ -120,7 +140,7 @@ export default function FaqSection() {
             const isOpen = openIndex === idx;
             return (
               <motion.div
-                key={idx}
+                key={faq.question}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
