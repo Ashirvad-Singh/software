@@ -39,18 +39,18 @@ export default function AboutSection({ hideHeader = false }: { hideHeader?: bool
           <img
             src="/office-workspace.jpg"
             alt="ADAT Soft Solutions Modern Office Infrastructure & Engineering Hub"
-            className="w-full h-auto object-cover max-h-[540px] transition-transform duration-700 group-hover:scale-[1.01]"
+            className="w-full min-h-[250px] sm:min-h-[360px] max-h-[540px] object-cover transition-transform duration-700 group-hover:scale-[1.01]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-          <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-8 text-left text-white z-10">
-            <span className="inline-block px-3 py-1 bg-[#0284c7] text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase rounded-full mb-2 shadow-md">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 inset-x-0 p-3.5 sm:p-6 md:p-8 text-left text-white z-10 flex flex-col justify-end">
+            <span className="self-start inline-block px-2.5 py-0.5 sm:px-3 sm:py-1 bg-[#0284c7] text-white text-[10px] sm:text-xs font-bold tracking-wider uppercase rounded-full mb-1.5 sm:mb-2 shadow-md">
               Our Workspace &amp; Infrastructure
             </span>
-            <h3 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight text-white drop-shadow-md">
+            <h3 className="text-sm sm:text-xl md:text-3xl font-bold tracking-tight text-white drop-shadow-md leading-snug">
               State-of-the-Art Engineering Facility
             </h3>
-            <p className="text-xs sm:text-sm md:text-base text-neutral-200 mt-1 max-w-2xl font-medium drop-shadow-sm">
-              Our Mohali engineering center where developers, designers, and strategist collaborate to engineer world-class web and mobile solutions.
+            <p className="text-[11px] sm:text-sm md:text-base text-neutral-200 mt-1 max-w-2xl font-medium drop-shadow-sm leading-normal">
+              Our Mohali engineering center where developers, designers, and strategists collaborate to engineer world-class web and mobile solutions.
             </p>
           </div>
         </motion.div>

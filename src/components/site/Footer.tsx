@@ -74,9 +74,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-4 text-sm text-muted-foreground">
-            <span>&copy; {new Date().getFullYear()} Adat Soft Solutions. All rights reserved.</span>
+        <div className="pt-8 pb-12 sm:pb-0 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 sm:gap-4 text-sm text-muted-foreground text-center md:text-left">
+            <span className="whitespace-nowrap">&copy; {new Date().getFullYear()} Adat Soft Solutions. All rights reserved.</span>
             <a 
               href="https://www.dmca.com/Protection/Status.aspx?ID=94738ecb-bb55-43fe-b0df-9fb2dba662fc" 
               title="DMCA.com Protection Status" 
@@ -91,9 +91,9 @@ export default function Footer() {
               />
             </a>
           </div>
-          <div className="flex gap-6 text-sm text-muted-foreground">
-            <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
+          <div className="flex items-center gap-6 text-sm text-muted-foreground shrink-0">
+            <Link to="/privacy" className="hover:text-foreground transition-colors whitespace-nowrap">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-foreground transition-colors whitespace-nowrap">Terms of Service</Link>
           </div>
         </div>
       </div>
