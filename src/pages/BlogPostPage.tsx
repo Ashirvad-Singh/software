@@ -6,6 +6,7 @@ import { useCatalog } from "@/lib/content/useCatalog";
 import { prepareArticle } from "@/lib/content/article";
 import CatalogState from "@/components/content/CatalogState";
 import InnerPageHero from "@/components/site/InnerPageHero";
+import DetailThumbnail from "@/components/content/DetailThumbnail";
 
 export default function BlogPostPage() {
   const { slug } = useParams();
@@ -46,11 +47,15 @@ export default function BlogPostPage() {
       />
 
       {/* Content Section */}
-      <div className="container mx-auto px-4 md:px-6 max-w-6xl py-10 md:py-16 flex flex-col lg:flex-row gap-10 lg:gap-16">
+      {postData.image && (
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10">
+          <DetailThumbnail src={postData.image} alt={postData.title} />
+        </div>
+      )}
+      <div className="container mx-auto px-4 md:px-6 max-w-6xl py-10 flex flex-col lg:flex-row gap-10 lg:gap-16">
         
         {/* Article Body */}
         <div className="flex-1 min-w-0">
-          {postData.image && <img src={postData.image} alt={postData.title} className="mb-8 aspect-video w-full rounded-2xl object-cover" />}
           <article 
             className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-p:text-neutral-700 dark:prose-p:text-neutral-300 prose-p:leading-relaxed max-w-none"
             dangerouslySetInnerHTML={{ __html: article.html }}

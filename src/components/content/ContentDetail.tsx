@@ -7,6 +7,7 @@ import { ContentCard } from "./ContentCard";
 import ProjectClientReview from "./ProjectClientReview";
 import ImageGallery from "./ImageGallery";
 import InnerPageHero from "@/components/site/InnerPageHero";
+import DetailThumbnail from "./DetailThumbnail";
 
 export default function ContentDetail({ kind }: { kind: ContentKind }) {
   const { slug } = useParams();
@@ -98,10 +99,9 @@ export default function ContentDetail({ kind }: { kind: ContentKind }) {
         ]}
       />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10">
-        <img
+        <DetailThumbnail
           src={entry.image || "/adat_hero_ui.webp"}
           alt={entry.title}
-          className="mt-10 aspect-video w-full rounded-2xl border border-border object-cover"
         />
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_280px] lg:gap-16">
           <div className="min-w-0 space-y-12">

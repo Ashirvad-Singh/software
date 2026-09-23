@@ -1,3 +1,4 @@
+import { ImageUpload } from "@/components/ui/image-upload";
 import { useState, useEffect } from "react";
 import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -9,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export interface JobPost {
   id?: string;
+  featuredImageUrl?: string;
   title: string;
   department: string;
   location: string;
@@ -26,11 +28,13 @@ export interface JobPost {
 
 export default function JobsTab() {
   const [jobs, setJobs] = useState<JobPost[]>([]);
+  const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<Omit<JobPost, "id" | "createdAt">>({
+    featuredImageUrl: "",
     title: "",
     department: "",
     location: "",
@@ -75,6 +79,7 @@ export default function JobsTab() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading || uploading) return;
     setLoading(true);
     try {
       if (editingId) {
@@ -111,6 +116,7 @@ export default function JobsTab() {
   const handleEdit = (job: JobPost) => {
     setEditingId(job.id!);
     setFormData({
+      featuredImageUrl: job.featuredImageUrl || "",
       title: job.title,
       department: job.department,
       location: job.location,
@@ -129,7 +135,8 @@ export default function JobsTab() {
 
   const resetForm = () => {
     setFormData({
-      title: "",
+      featuredImageUrl: "",
+    title: "",
       department: "",
       location: "",
       type: "Full-time",
@@ -170,6 +177,11 @@ export default function JobsTab() {
               </button>
               <h3 className="font-bold text-lg mb-4">{editingId ? "Edit Job" : "Create New Job"}</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <h4 className="text-sm font-medium">Featured Image</h4>
+                  <p className="text-xs text-neutral-500">Upload or change the main image shown on this job’s detail page.</p>
+                  <ImageUpload value={formData.featuredImageUrl || ""} onChange={url => setFormData(prev => ({ ...prev, featuredImageUrl: url }))} onUploadingChange={setUploading} />
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input placeholder="Job Title" name="title" value={formData.title} onChange={handleInputChange} required />
                   <Input aria-label="Job category / department" placeholder="Category / Department (e.g. Engineering)" name="department" value={formData.department} onChange={handleInputChange} required />
@@ -224,7 +236,7 @@ export default function JobsTab() {
                     <label htmlFor="active" className="text-sm font-medium text-green-700">Active (Visible on Careers Page)</label>
                   </div>
                 </div>
-                <Button type="submit" disabled={loading} className="w-full md:w-auto">
+                <Button type="submit" disabled={loading || uploading} className="w-full md:w-auto">
                   {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                   {editingId ? "Update Job" : "Publish Job"}
                 </Button>

@@ -96,21 +96,21 @@ export function ImageUpload({ value, onChange, multiple = false, onUploadingChan
   const urls = value ? value.split('\n').filter(Boolean) : [];
 
   return (
-    <div className="space-y-4 w-full">
+    <div className="space-y-3 w-full">
       <div className="flex items-center gap-4">
-        <label className="flex-1 cursor-pointer">
-          <div className="flex items-center justify-center w-full h-32 px-4 transition bg-white border-2 border-neutral-300 border-dashed rounded-md appearance-none hover:border-primary hover:bg-neutral-50">
-            <div className="flex flex-col items-center space-y-2">
+        <label className="relative inline-flex cursor-pointer rounded-md focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
+          <div className="inline-flex min-h-10 items-center justify-center px-3 py-2 transition bg-white border border-neutral-300 rounded-md hover:border-primary hover:bg-neutral-50">
+            <div className="flex items-center gap-2 text-sm">
               {isUploading ? (
                 <>
-                  <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                  <Loader2 className="w-4 h-4 animate-spin text-primary" />
                   <span className="font-medium text-neutral-600">Uploading {Math.round(progress)}%...</span>
                 </>
               ) : (
                 <>
-                  <UploadCloud className="w-8 h-8 text-neutral-500" />
+                  <UploadCloud className="w-4 h-4 text-neutral-500" />
                   <span className="font-medium text-neutral-600">
-                    Drop files to attach, or <span className="text-primary underline">browse</span>
+                    {multiple ? "Upload images" : value ? "Change image" : "Upload image"}
                   </span>
                 </>
               )}
@@ -119,7 +119,7 @@ export function ImageUpload({ value, onChange, multiple = false, onUploadingChan
           <input 
             type="file" 
             name="file_upload" 
-            className="hidden" 
+            className="absolute inset-0 h-full w-full cursor-pointer opacity-0 disabled:cursor-wait" 
             accept="image/*" 
             multiple={multiple} 
             onChange={handleUpload} 
@@ -129,9 +129,9 @@ export function ImageUpload({ value, onChange, multiple = false, onUploadingChan
       </div>
 
       {urls.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+        <div className="flex flex-wrap gap-3">
           {urls.map((url, index) => (
-            <div key={index} className="relative group rounded-md overflow-hidden border border-neutral-200 aspect-video">
+            <div key={index} className="relative group w-32 sm:w-40 shrink-0 rounded-md overflow-hidden border border-neutral-200 aspect-video">
               <img src={url} alt={`Uploaded ${index + 1}`} className="w-full h-full object-cover" />
               <button
                 type="button"
@@ -141,7 +141,7 @@ export function ImageUpload({ value, onChange, multiple = false, onUploadingChan
                   const newUrls = urls.filter((_, i) => i !== index);
                   onChange(newUrls.join('\n'));
                 }}
-                className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <X className="w-3 h-3" />
               </button>

@@ -39,6 +39,7 @@ import {
   AnimatePresence,
   useScroll,
   useMotionValueEvent,
+  useReducedMotion,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { technologyIconColor } from "@/data/technologyIconColors";
@@ -193,13 +194,12 @@ const defaultThumbnails = [
 
 const MegaMenuContent = () => {
   const { entries, loading, error, retry } = useCatalog("services");
-  const itemsToDisplay = entries.slice(0, 4);
 
   return (
     <div className="w-[min(720px,calc(100vw-2rem))] p-3 sm:p-4 text-neutral-900 dark:text-white">
       <CatalogState loading={loading} error={error} empty={!entries.length} label="services" retry={retry} />
-      <div className="grid grid-cols-2 gap-4 sm:gap-6">
-        {itemsToDisplay.map((service, idx) => (
+      <div className="grid max-h-[calc(100dvh-14rem)] grid-cols-2 gap-4 overflow-y-auto overscroll-contain p-1 sm:gap-6" data-lenis-prevent>
+        {entries.map((service, idx) => (
           <ProductItem
             key={service.slug || idx}
             title={service.title}
@@ -493,7 +493,25 @@ export default function Navbar({ className }: { className?: string }) {
   const [isIndustriesOpen, setIsIndustriesOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const [menuOrigin, setMenuOrigin] = useState({ x: 95, y: 5 });
+  const reduceMotion = useReducedMotion();
+  const closedCircle = `circle(0px at ${menuOrigin.x}% ${menuOrigin.y}%)`;
+  const openCircle = `circle(150vmax at ${menuOrigin.x}% ${menuOrigin.y}%)`;
+
+  const openMobileMenu = () => {
+    const bounds = menuButtonRef.current?.getBoundingClientRect();
+    if (bounds) {
+      setMenuOrigin({
+        x: ((bounds.left + bounds.width / 2) / window.innerWidth) * 100,
+        y: ((bounds.top + bounds.height / 2) / window.innerHeight) * 100,
+      });
+    }
+    setIsMobileMenuOpen(true);
+  };
   const location = useLocation();
+
+  useEffect(() => { setActive(null); }, [location.pathname, location.hash]);
 
   useEffect(() => {
     if (!isMobileMenuOpen) return;
@@ -543,7 +561,7 @@ export default function Navbar({ className }: { className?: string }) {
           visible: { y: 0 },
           hidden: { y: "-150%" },
         }}
-        animate={hidden ? "hidden" : "visible"}
+        animate={hidden && !isMobileMenuOpen && !active ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
         className={cn(
           "fixed top-4 inset-x-0 max-w-7xl mx-auto z-50 flex items-center justify-center px-4 sm:px-6 xl:px-0 w-full",
@@ -559,7 +577,7 @@ export default function Navbar({ className }: { className?: string }) {
               className="h-6 sm:h-8 md:h-10 w-auto"
             />
           </Link>
-          <button type="button" aria-label="Open navigation" aria-expanded={isMobileMenuOpen} className="flex h-11 w-11 items-center justify-center" onClick={() => setIsMobileMenuOpen(true)}>
+          <button ref={menuButtonRef} type="button" aria-controls="mobile-navigation" aria-label="Open navigation" aria-expanded={isMobileMenuOpen} className="flex h-11 w-11 items-center justify-center" onClick={openMobileMenu}>
             <MenuIcon className="w-6 h-6" />
           </button>
         </div>
@@ -668,15 +686,16 @@ export default function Navbar({ className }: { className?: string }) {
         {isMobileMenuOpen && (
           <motion.div
             ref={menuRef}
+            id="mobile-navigation"
             data-lenis-prevent
             role="dialog"
             aria-modal="true"
             aria-label="Site navigation"
-            className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-background/95 backdrop-blur-xl px-6 py-20"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-background px-6 py-20"
+            initial={{ clipPath: reduceMotion ? openCircle : closedCircle }}
+            animate={{ clipPath: openCircle }}
+            exit={{ clipPath: reduceMotion ? openCircle : closedCircle, transition: { duration: reduceMotion ? 0 : 0.45, delay: reduceMotion ? 0 : 0.12, ease: [0.76, 0, 0.24, 1] } }}
+            transition={{ duration: reduceMotion ? 0 : 0.6, ease: [0.76, 0, 0.24, 1] }}
           >
             <button
               aria-label="Close navigation"
@@ -685,16 +704,21 @@ export default function Navbar({ className }: { className?: string }) {
             >
               <X className="w-8 h-8" />
             </button>
-            <div className="mx-auto flex min-h-full max-w-lg flex-col items-center justify-center gap-5">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: reduceMotion ? 0 : 0.5, duration: reduceMotion ? 0 : 0.15 } }}
+              exit={{ opacity: 0, transition: { duration: reduceMotion ? 0 : 0.12 } }}
+              className="mx-auto flex min-h-full max-w-lg flex-col items-center justify-center gap-5"
+            >
               {navLinks.map((link, i) => {
                 const isActive = location.pathname === link.href;
                 if (link.name === "Industries") {
                   return (
                     <motion.div
                       key={link.name}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 * i, duration: 0.4 }}
+                      transition={{ delay: reduceMotion ? 0 : 0.55 + 0.04 * i, duration: reduceMotion ? 0 : 0.3 }}
                       className="flex flex-col items-center"
                     >
                       <button
@@ -728,9 +752,9 @@ export default function Navbar({ className }: { className?: string }) {
                   return (
                     <motion.div
                       key={link.name}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 * i, duration: 0.4 }}
+                      transition={{ delay: reduceMotion ? 0 : 0.55 + 0.04 * i, duration: reduceMotion ? 0 : 0.3 }}
                       className="flex flex-col items-center"
                     >
                       <button
@@ -789,9 +813,9 @@ export default function Navbar({ className }: { className?: string }) {
                   return (
                     <motion.div
                       key={link.name}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 * i, duration: 0.4 }}
+                      transition={{ delay: reduceMotion ? 0 : 0.55 + 0.04 * i, duration: reduceMotion ? 0 : 0.3 }}
                       className="flex flex-col items-center"
                     >
                       <button
@@ -828,9 +852,9 @@ export default function Navbar({ className }: { className?: string }) {
                 return (
                   <motion.div
                     key={link.name}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 * i, duration: 0.4 }}
+                    transition={{ delay: reduceMotion ? 0 : 0.55 + 0.04 * i, duration: reduceMotion ? 0 : 0.3 }}
                   >
                     <Link
                       to={link.href}
@@ -843,9 +867,9 @@ export default function Navbar({ className }: { className?: string }) {
                 );
               })}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * navLinks.length, duration: 0.4 }}
+                transition={{ delay: reduceMotion ? 0 : 0.55 + 0.04 * navLinks.length, duration: reduceMotion ? 0 : 0.3 }}
                 className="mt-4"
               >
                 <Button
@@ -857,7 +881,7 @@ export default function Navbar({ className }: { className?: string }) {
                   <Link to="/contact">Get a Quote</Link>
                 </Button>
               </motion.div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

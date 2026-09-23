@@ -5,6 +5,7 @@ import { useCatalog } from "@/lib/content/useCatalog";
 import { listValue } from "@/lib/content/model";
 import CatalogState from "@/components/content/CatalogState";
 import InnerPageHero from "@/components/site/InnerPageHero";
+import DetailThumbnail from "@/components/content/DetailThumbnail";
 
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -36,6 +37,8 @@ export default function ServiceDetailPage() {
     );
   }
 
+  const featuredImage = service.featuredImageUrl || (slug === "web-development" ? "/images/web-development-landscape.png" : service.thumbnailUrl || "");
+
   return (
     <main className="bg-white dark:bg-neutral-950 min-h-screen">
       <InnerPageHero
@@ -51,10 +54,18 @@ export default function ServiceDetailPage() {
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10">
-        {service.thumbnailUrl && <img src={service.thumbnailUrl} alt={service.title} className="mb-6 aspect-video max-w-3xl mx-auto w-full rounded-2xl object-cover sm:mb-10" />}
-        <div className="prose prose-base dark:prose-invert max-w-none mb-12">
+        <div className="prose prose-base dark:prose-invert max-w-none mb-6 sm:mb-10">
           <p className="text-base leading-relaxed text-foreground/80">{service.longDescription}</p>
         </div>
+        {featuredImage && (
+          <div className="mb-6 sm:mb-10">
+            <DetailThumbnail
+              src={featuredImage}
+              alt={service.title}
+              landscape={Boolean(service.featuredImageUrl) || slug === "web-development"}
+            />
+          </div>
+        )}
 
         {/* Key Benefits */}
         <div className="mb-16">

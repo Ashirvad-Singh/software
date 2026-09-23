@@ -21,6 +21,7 @@ export interface ServiceItem {
   features: string; // comma separated
   visualType?: "default" | "globe" | "image";
   thumbnailUrl?: string;
+  featuredImageUrl?: string;
   createdAt: number;
 }
 
@@ -28,6 +29,7 @@ export default function ServicesTab() {
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [featuredUploading, setFeaturedUploading] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -42,6 +44,7 @@ export default function ServicesTab() {
     features: "",
     visualType: "default",
     thumbnailUrl: "",
+    featuredImageUrl: "",
   });
 
   const fetchServices = async () => {
@@ -70,7 +73,7 @@ export default function ServicesTab() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (loading || uploading) return;
+    if (loading || uploading || featuredUploading) return;
     setLoading(true);
     try {
       const slug = await validateCatalogSlug("services", formData.slug, editingId);
@@ -118,6 +121,7 @@ export default function ServicesTab() {
       features: service.features || "",
       visualType: service.visualType || "default",
       thumbnailUrl: service.thumbnailUrl || "",
+      featuredImageUrl: service.featuredImageUrl || "",
     });
     setIsFormOpen(true);
   };
@@ -134,6 +138,7 @@ export default function ServicesTab() {
       features: "",
       visualType: "default",
       thumbnailUrl: "",
+      featuredImageUrl: "",
     });
   };
 
@@ -198,6 +203,17 @@ export default function ServicesTab() {
 
 
                   <div className="md:col-span-2 space-y-2">
+                    <h4 className="text-sm font-medium text-neutral-700">Featured Image</h4>
+                    <p className="text-xs text-neutral-500">Upload the main image for this service’s detail page. Leave empty to use the existing default image or thumbnail.</p>
+                    <ImageUpload
+                      value={formData.featuredImageUrl || ""}
+                      onChange={(url) => setFormData(prev => ({ ...prev, featuredImageUrl: url }))}
+                      multiple={false}
+                      onUploadingChange={setFeaturedUploading}
+                    />
+                  </div>
+
+                  <div className="md:col-span-2 space-y-2">
                     <label className="text-sm font-medium text-neutral-700">Service Thumbnail Image (for Navbar & Cards)</label>
                     <ImageUpload 
                       value={formData.thumbnailUrl || ""} 
@@ -222,7 +238,7 @@ export default function ServicesTab() {
                     className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm md:col-span-2"
                   />
                 </div>
-                <Button type="submit" disabled={loading || uploading} className="w-full md:w-auto">
+                <Button type="submit" disabled={loading || uploading || featuredUploading} className="w-full md:w-auto">
                   {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                   {editingId ? "Update Service" : "Publish Service"}
                 </Button>

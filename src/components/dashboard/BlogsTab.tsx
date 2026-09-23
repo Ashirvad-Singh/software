@@ -176,7 +176,7 @@ export default function BlogsTab() {
                   <Input placeholder="Read Time (e.g. 5 min read)" name="readTime" value={formData.readTime} onChange={handleInputChange} required />
                   
                   <div className="md:col-span-2 space-y-2">
-                    <label className="text-sm font-medium text-neutral-700">Cover Image</label>
+                    <label className="text-sm font-medium text-neutral-700">Featured Image</label>
                     <ImageUpload 
                       value={formData.image} 
                       onChange={(url) => setFormData(prev => ({ ...prev, image: url }))} 

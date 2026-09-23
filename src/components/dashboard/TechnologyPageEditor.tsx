@@ -1,3 +1,4 @@
+import { ImageUpload } from "@/components/ui/image-upload";
 import type { TechnologyDetail } from "@/data/technologyDetails";
 
 const textFields = [
@@ -16,9 +17,14 @@ const collections = [
 ] as const;
 const fieldLabels: Record<string,string> = {title:"Title",desc:"Description",icon:"Icon",step:"Step number",q:"Question",a:"Answer"};
 const inputClass = "mt-2 w-full rounded-lg border border-neutral-300 bg-white p-3 text-sm font-normal";
-export default function TechnologyPageEditor({value, onChange}: {value:TechnologyDetail; onChange:(value:TechnologyDetail)=>void}) {
+export default function TechnologyPageEditor({value, onChange, onUploadingChange}: {value:TechnologyDetail; onChange:(value:TechnologyDetail)=>void; onUploadingChange:(uploading:boolean)=>void}) {
   return <div className="mt-4 space-y-6 border-t border-neutral-200 pt-5">
     <p className="text-sm text-neutral-500">Edit this technology’s detail page below. Save the category to publish your changes. Remove rows to hide unused sections.</p>
+    <div className="space-y-2">
+      <h4 className="text-sm font-medium">Featured Image</h4>
+      <p className="text-xs text-neutral-500">Upload or change the main image shown on this technology’s detail page.</p>
+      <ImageUpload value={value.featuredImageUrl || ""} onChange={url => onChange({...value, featuredImageUrl:url})} onUploadingChange={onUploadingChange} />
+    </div>
     <div className="grid gap-4 md:grid-cols-2">{textFields.map(([key,label]) => <label key={key} className={`text-sm font-medium ${["overview","ctaDescription","seoDescription"].includes(key) ? "md:col-span-2" : ""}`}>{label}
       {["overview","ctaDescription","seoDescription"].includes(key) ? <textarea rows={4} className={inputClass} value={value[key] || ""} onChange={event=>onChange({...value,[key]:event.target.value})} /> : <input className={inputClass} value={value[key] || ""} onChange={event=>onChange({...value,[key]:event.target.value})} />}
     </label>)}</div>

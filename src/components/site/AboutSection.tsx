@@ -115,51 +115,6 @@ export default function AboutSection({ hideHeader = false }: { hideHeader?: bool
           </div>
         </motion.div>
 
-        {/* Company Facts */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-12 sm:mt-16 lg:mt-20 max-w-5xl mx-auto text-left"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-            <div className="bg-neutral-50 dark:bg-neutral-900 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800">
-              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Founded</h4>
-              <p className="text-xl font-bold text-primary">2017</p>
-            </div>
-            <div className="bg-neutral-50 dark:bg-neutral-900 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800">
-              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Company Size</h4>
-              <p className="text-xl font-bold text-primary">11-50 employees</p>
-            </div>
-            <div className="bg-neutral-50 dark:bg-neutral-900 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800">
-              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Headquarters</h4>
-              <p className="text-xl font-bold text-primary">Mohali, Punjab</p>
-            </div>
-            <div className="bg-neutral-50 dark:bg-neutral-900 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800">
-              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Industry</h4>
-              <p className="text-xl font-bold text-primary">Software Development</p>
-            </div>
-            <div className="bg-neutral-50 dark:bg-neutral-900 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800">
-              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Type</h4>
-              <p className="text-xl font-bold text-primary">Partnership</p>
-            </div>
-            <div className="bg-neutral-50 dark:bg-neutral-900 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800">
-              <h4 className="text-sm font-bold text-muted-foreground uppercase mb-1">Website</h4>
-              <a href="https://www.adatsolutions.com" target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-sky-500 hover:underline">www.adatsolutions.com</a>
-            </div>
-          </div>
-          <div className="mt-4 sm:mt-6 bg-neutral-50 dark:bg-neutral-900 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800">
-            <h4 className="text-sm font-bold text-muted-foreground uppercase mb-2">Specialties</h4>
-            <div className="flex flex-wrap gap-2">
-              {["Web Development", "Design & UI", "Quality Assurance", "E-Commerce Systems", "Product Management"].map((spec) => (
-                <span key={spec} className="px-4 py-2 bg-white dark:bg-neutral-800 rounded-full text-sm font-medium border border-neutral-200 dark:border-neutral-700 shadow-sm text-neutral-700 dark:text-neutral-300">
-                  {spec}
-                </span>
-              ))}
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   )

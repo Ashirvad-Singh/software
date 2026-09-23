@@ -1,3 +1,4 @@
+import DetailThumbnail from "@/components/content/DetailThumbnail";
 import { useParams, useNavigate } from "react-router-dom";
 import { Loader2, MapPin, Briefcase, IndianRupee, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -141,6 +142,7 @@ export default function JobDetailPage() {
         ]}
       />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10">
+        {job.featuredImageUrl && <div className="mb-10"><DetailThumbnail src={job.featuredImageUrl} alt={job.title} landscape /></div>}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-10 md:mb-12 py-6 border-y border-neutral-200">
             <div className="flex flex-col gap-1">

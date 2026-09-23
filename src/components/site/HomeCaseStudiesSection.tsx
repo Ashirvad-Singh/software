@@ -8,7 +8,6 @@ export default function HomeCaseStudiesSection() {
 
   return (
     <CaseStudyStack
-      showWave
       cards={caseStudies.map((cs) => ({
         id: cs.id || cs.slug,
         image: cs.image,

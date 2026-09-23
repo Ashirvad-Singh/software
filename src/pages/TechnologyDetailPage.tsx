@@ -1,3 +1,4 @@
+import DetailThumbnail from "@/components/content/DetailThumbnail";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
@@ -79,6 +80,8 @@ export default function TechnologyDetailPage() {
           { label: techDetail.name },
         ]}
       />
+
+      {techDetail.featuredImageUrl && <div className="container mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"><DetailThumbnail src={techDetail.featuredImageUrl} alt={techDetail.name} landscape /></div>}
 
       {/* Overview & Key Benefits Section */}
       <section className="pt-6 md:pt-8 bg-white dark:bg-neutral-950">

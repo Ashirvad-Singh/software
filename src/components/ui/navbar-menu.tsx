@@ -4,15 +4,6 @@ import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 
-const transition = {
-  type: "spring" as const,
-  mass: 0.5,
-  damping: 11.5,
-  stiffness: 100,
-  restDelta: 0.001,
-  restSpeed: 0.001,
-};
-
 export const MenuItem = ({
   setActive,
   active,
@@ -41,29 +32,19 @@ export const MenuItem = ({
           aria-hidden="true"
         />
       </motion.p>
-      {active !== null && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={transition}
-        >
-          {active === item && (
-            <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4 z-50">
-              <motion.div
-                transition={transition}
-                layoutId="active" // layoutId ensures smooth animation
-                className="bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl"
-              >
-                <motion.div
-                  layout // layout ensures smooth animation
-                  className="w-max max-w-[calc(100vw-2rem)] h-full p-1.5"
-                >
-                  {children}
-                </motion.div>
-              </motion.div>
+      {active === item && (
+        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 z-50">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.15 }}
+            className="bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl"
+          >
+            <div className="w-max max-w-[calc(100vw-2rem)] h-full p-1.5">
+              {children}
             </div>
-          )}
-        </motion.div>
+          </motion.div>
+        </div>
       )}
     </div>
   );
@@ -76,9 +57,30 @@ export const Menu = ({
   setActive: (item: string | null) => void;
   children: React.ReactNode;
 }) => {
+  const closeTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cancelClose = () => {
+    if (closeTimer.current !== null) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+  React.useEffect(() => () => {
+    if (closeTimer.current !== null) clearTimeout(closeTimer.current);
+  }, []);
+
   return (
     <nav
-      onMouseLeave={() => setActive(null)} // resets the state
+      onMouseEnter={cancelClose}
+      onMouseLeave={() => {
+        cancelClose();
+        closeTimer.current = setTimeout(() => setActive(null), 200);
+      }}
+      onKeyDown={event => {
+        if (event.key === "Escape") {
+          cancelClose();
+          setActive(null);
+        }
+      }}
       className="relative rounded-full border border-transparent dark:bg-black dark:border-white/[0.2] bg-white shadow-input flex items-center justify-center space-x-4 px-8 py-3 "
     >
       {children}

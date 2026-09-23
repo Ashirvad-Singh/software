@@ -1,5 +1,6 @@
 import { technologyProfiles, technologyUseCases } from "./technologyProfiles.ts";
 export interface TechnologyDetail {
+  featuredImageUrl?: string;
   slug: string;
   name: string;
   category: string;

@@ -136,6 +136,8 @@ export default function ProjectsTab({
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<Record<string, string>>(emptyForm);
+  const [imageUploading, setImageUploading] = useState(false);
+  const [galleryUploading, setGalleryUploading] = useState(false);
   const [reviewUploading, setReviewUploading] = useState(false);
   const [clientReview, setClientReview] = useState(emptyClientReview);
   const [status, setStatus] = useState("draft");
@@ -214,7 +216,7 @@ export default function ProjectsTab({
   }
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    if (reviewUploading) { toast.error("Wait for the client photo upload to finish."); return; }
+    if (reviewUploading || imageUploading || galleryUploading) { toast.error("Wait for image uploads to finish."); return; }
     const reviewError = !story && validateClientReview(clientReview);
     if (reviewError) { toast.error(reviewError); return; }
     const slug = slugify(form.slug);
@@ -228,7 +230,7 @@ export default function ProjectsTab({
       );
       if (required.some((f) => !form[f.key]?.trim()) || !form.image.trim()) {
         toast.error(
-          "Complete the required fields and cover image before publishing.",
+          "Complete the required fields and featured image before publishing.",
         );
         return;
       }
@@ -444,7 +446,7 @@ export default function ProjectsTab({
               </button>
             </div>
             <p className="text-sm text-neutral-500">
-              Drafts can be incomplete. Fields marked * and a cover image are
+              Drafts can be incomplete. Fields marked * and a featured image are
               required to publish. Existing entries without a status are drafts
               until reviewed.
             </p>
@@ -532,13 +534,14 @@ export default function ProjectsTab({
             </section>}
             <section className="space-y-4">
               <h4 className="font-semibold">Images</h4>
-              <p className="text-sm">Cover image *</p>
+              <p className="text-sm">Featured Image *</p>
               <ImageUpload
                 value={form.image}
+                onUploadingChange={setImageUploading}
                 onChange={(v) => change("image", v)}
               />
               <label className="block text-sm">
-                Cover image URL
+                Featured Image URL
                 <input
                   value={form.image}
                   onChange={(e) => change("image", e.target.value)}
@@ -549,6 +552,7 @@ export default function ProjectsTab({
               <ImageUpload
                 multiple
                 value={form.gallery}
+                onUploadingChange={setGalleryUploading}
                 onChange={(v) => change("gallery", v)}
               />
               <label className="block text-sm">
@@ -587,7 +591,7 @@ export default function ProjectsTab({
                 Featured (prioritize on listings and homepage)
               </label>
             </div>
-            <Button type="submit">
+            <Button type="submit" disabled={reviewUploading || imageUploading || galleryUploading}>
               {saving
                 ? "Saving…"
                 : `Save ${status === "published" ? "& publish" : "draft"}`}

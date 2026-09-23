@@ -231,6 +231,7 @@ async function seedStarterCategories() {
 
 export default function TechStackTab() {
   const [techStack, setTechStack] = useState<TechCategory[]>([]);
+  const [activeUploads, setActiveUploads] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -339,6 +340,7 @@ export default function TechStackTab() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading || activeUploads > 0) return;
     setLoading(true);
     try {
       const snapshot = await getDocs(collection(db, "tech_stack"));
@@ -440,7 +442,7 @@ export default function TechStackTab() {
           <Button
             variant="outline"
             onClick={addStarterTechStack}
-            disabled={loading}
+            disabled={loading || activeUploads > 0}
           >
             Add Starter Content
           </Button>
@@ -457,7 +459,7 @@ export default function TechStackTab() {
       </div>
 
       {loading && <p role="status" className="mb-4 flex items-center gap-2 text-sm text-sky-700"><Loader2 className="h-4 w-4 animate-spin" />Loading and preparing editable technology content…</p>}
-      {loadError && <div role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">{loadError}<button type="button" onClick={fetchTechStack} disabled={loading} className="ml-3 font-semibold underline disabled:opacity-50">Retry</button></div>}
+      {loadError && <div role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">{loadError}<button type="button" onClick={fetchTechStack} disabled={loading || activeUploads > 0} className="ml-3 font-semibold underline disabled:opacity-50">Retry</button></div>}
       <AnimatePresence>
         {isFormOpen && (
           <motion.div
@@ -649,7 +651,7 @@ export default function TechStackTab() {
                             <Input className="mt-2" value={tech.slug ?? technologySlug(tech.name)} onChange={event => handleTechChange(index, "slug", technologySlug(event.target.value))} />
                           </label>
                           <p className="mt-2 text-xs text-neutral-500">/technologies/{tech.slug || technologySlug(tech.name)}</p>
-                          <TechnologyPageEditor value={tech.page || defaultTechnologyPage(tech.name, formData.title)} onChange={page => handleTechChange(index, "page", page)} />
+                          <TechnologyPageEditor onUploadingChange={uploading => setActiveUploads(count => Math.max(0, count + (uploading ? 1 : -1)))} value={tech.page || defaultTechnologyPage(tech.name, formData.title)} onChange={page => handleTechChange(index, "page", page)} />
                         </details>
                       </div>
                     ))}
@@ -664,7 +666,7 @@ export default function TechStackTab() {
                 <div className="pt-4">
                   <Button
                     type="submit"
-                    disabled={loading}
+                    disabled={loading || activeUploads > 0}
                     className="w-full md:w-auto"
                   >
                     {loading ? (
