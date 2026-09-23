@@ -1,8 +1,20 @@
+import { useEffect } from "react"
 import { Mail, MapPin } from "lucide-react"
 import CompanyLinks from "./CompanyLinks"
 import { Link } from "react-router-dom"
 
 export default function Footer() {
+  useEffect(() => {
+    const scriptId = "dmca-badge-helper"
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script")
+      script.id = scriptId
+      script.src = "https://images.dmca.com/Badges/DMCABadgeHelper.min.js"
+      script.async = true
+      document.body.appendChild(script)
+    }
+  }, [])
+
   return (
     <footer className="border-t border-border/50 bg-white relative overflow-hidden">
       
@@ -35,7 +47,6 @@ export default function Footer() {
             </ul>
           </div>
 
-
           {/* Services */}
           <div>
             <h3 className="font-semibold text-lg mb-4">Services</h3>
@@ -63,10 +74,23 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-border/50 flex flex-col lg:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Adat Soft Solutions. All rights reserved.
-          </p>
+        <div className="pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-4 text-sm text-muted-foreground">
+            <span>&copy; {new Date().getFullYear()} Adat Soft Solutions. All rights reserved.</span>
+            <a 
+              href="https://www.dmca.com/Protection/Status.aspx?ID=94738ecb-bb55-43fe-b0df-9fb2dba662fc" 
+              title="DMCA.com Protection Status" 
+              className="dmca-badge inline-flex items-center hover:opacity-90 transition-opacity"
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <img 
+                src="https://images.dmca.com/Badges/dmca-badge-w100-5x1-07.png?ID=94738ecb-bb55-43fe-b0df-9fb2dba662fc" 
+                alt="DMCA.com Protection Status" 
+                className="h-6 w-auto"
+              />
+            </a>
+          </div>
           <div className="flex gap-6 text-sm text-muted-foreground">
             <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
