@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { Code2, CheckCircle2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import SEO from "@/components/site/SEO";
+
 export default function ServicesPage() {
   const { entries } = useCatalog("services");
   const serviceCapabilities = entries.filter(service => service.benefits || service.features).map(service => ({
@@ -14,6 +16,10 @@ export default function ServicesPage() {
   }));
   return (
     <main className="min-h-screen bg-white dark:bg-neutral-950">
+      <SEO
+        title="Custom Digital Services & Software Engineering"
+        description="From high-scale web platforms and mobile apps to CMS, UI/UX and QA, we build reliable digital solutions tailored to business growth."
+      />
       <InnerPageHero
         eyebrow="DIGITAL SERVICES"
         title="Custom Digital"

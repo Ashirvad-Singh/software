@@ -2,8 +2,20 @@ import { useEffect } from "react"
 import { Mail, MapPin } from "lucide-react"
 import CompanyLinks from "./CompanyLinks"
 import { Link } from "react-router-dom"
+import { useCatalog } from "@/lib/content/useCatalog"
 
 export default function Footer() {
+  const { entries: services } = useCatalog("services")
+
+  const defaultServices = [
+    { title: "CMS & E-commerce", slug: "cms-ecommerce-development" },
+    { title: "Web Development", slug: "web-development" },
+    { title: "Mobile Apps", slug: "mobile-app-development" },
+    { title: "UI/UX Design", slug: "ui-ux-design" },
+  ]
+
+  const displayServices = services && services.length > 0 ? services : defaultServices
+
   useEffect(() => {
     const scriptId = "dmca-badge-helper"
     if (!document.getElementById(scriptId)) {
@@ -50,11 +62,17 @@ export default function Footer() {
           {/* Services */}
           <div>
             <h3 className="font-semibold text-lg mb-4">Services</h3>
-            <ul className="space-y-3">
-              <li><Link to="/services" className="text-muted-foreground hover:text-foreground transition-colors">Web Development</Link></li>
-              <li><Link to="/services" className="text-muted-foreground hover:text-foreground transition-colors">Mobile Apps</Link></li>
-              <li><Link to="/services" className="text-muted-foreground hover:text-foreground transition-colors">UI/UX Design</Link></li>
-              <li><Link to="/services" className="text-muted-foreground hover:text-foreground transition-colors">E-commerce</Link></li>
+            <ul className="space-y-2.5 text-sm">
+              {displayServices.map((service, idx) => (
+                <li key={service.slug || idx}>
+                  <Link 
+                    to={`/services/${service.slug}`} 
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {service.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

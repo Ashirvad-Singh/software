@@ -7,6 +7,8 @@ import CatalogState from "@/components/content/CatalogState";
 import InnerPageHero from "@/components/site/InnerPageHero";
 import DetailThumbnail from "@/components/content/DetailThumbnail";
 
+import SEO from "@/components/site/SEO";
+
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ export default function ServiceDetailPage() {
   if (!service) {
     return (
       <main className="bg-white dark:bg-neutral-950 min-h-screen flex flex-col items-center justify-center pt-24 pb-20">
+        <SEO title="Service Not Found" />
         <h1 className="text-2xl font-bold mb-4">Service not found</h1>
         <button onClick={() => navigate("/services")} className="site-button bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium">Back to Services</button>
       </main>
@@ -41,6 +44,10 @@ export default function ServiceDetailPage() {
 
   return (
     <main className="bg-white dark:bg-neutral-950 min-h-screen">
+      <SEO
+        title={service.title}
+        description={service.description}
+      />
       <InnerPageHero
         eyebrow="SERVICE DETAIL"
         title="Engineering Services:"

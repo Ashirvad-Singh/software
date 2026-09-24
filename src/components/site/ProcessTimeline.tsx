@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Compass, Palette, Code2, ShieldCheck, Rocket, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Compass, Palette, Code2, ShieldCheck, Rocket, CheckCircle2 } from "lucide-react";
 
 interface StepItem {
   num: string;
@@ -146,7 +146,7 @@ export default function ProcessTimeline({ hideHeader = false }: { hideHeader?: b
                       </span>
                     ))}
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
             );
           })}

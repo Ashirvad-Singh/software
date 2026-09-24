@@ -25,9 +25,15 @@ const HomeBlogSection = lazy(
   () => import("@/components/site/HomeBlogSection"),
 );
 const FaqSection = lazy(() => import("@/components/site/FaqSection"));
+import SEO from "@/components/site/SEO";
+
 export default function HomePage() {
   return (
     <main>
+      <SEO
+        title="Adat Soft Solutions | Web, Mobile App & AI Development Agency"
+        description="Adat Soft Solutions is an internationally-recognized software engineering agency building custom web apps, mobile applications, enterprise AI, and cloud software solutions."
+      />
       <HeroModern />
 
       {/* Mini About Section */}

@@ -14,6 +14,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 import HomePage from "@/pages/HomePage";
 import ScrollToTop from "@/components/ScrollToTop";
+import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 const ServicesPage = lazy(() => import("@/pages/ServicesPage"));
 const TechnologiesPage = lazy(() => import("@/pages/TechnologiesPage"));
 const TechnologyDetailPage = lazy(() => import("@/pages/TechnologyDetailPage"));
@@ -86,6 +87,7 @@ function App() {
           {!isDashboard && <CTASection />}
           {!isDashboard && <Footer />}
           {!isDashboard && <WebsiteAssistant />}
+          {!isDashboard && <ScrollToTopButton />}
 
           <Toaster position="bottom-right" theme="system" />
         </div>

@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import InnerPageHero from "@/components/site/InnerPageHero";
+import SEO from "@/components/site/SEO";
 
 const contactSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
@@ -59,6 +60,10 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen relative overflow-x-hidden bg-white md:">
+      <SEO
+        title="Contact Us"
+        description="Whether you have a project in mind or want to explore potential technical partnerships, our team is ready to help."
+      />
       <InnerPageHero
         eyebrow="GET IN TOUCH"
         title="Let's Build"
