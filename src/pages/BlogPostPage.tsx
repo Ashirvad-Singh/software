@@ -39,7 +39,7 @@ export default function BlogPostPage() {
     <main className="bg-white dark:bg-neutral-950 min-h-screen">
       <SEO
         title={postData.title}
-        description={postData.seoDescription || postData.content?.slice(0, 160) || ""}
+        description={postData.excerpt || postData.content?.slice(0, 160) || ""}
       />
       <InnerPageHero
         eyebrow="ARTICLE / INSIGHTS"
