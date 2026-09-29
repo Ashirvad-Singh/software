@@ -1,6 +1,7 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, Loader2, Users, Search, Target, Layout, PenTool, PlayCircle, Rocket } from "lucide-react";
+import { ArrowRight, CheckCircle2, Users, Search, Target, Layout, PenTool, PlayCircle, Rocket } from "lucide-react";
 import { useCatalog } from "@/lib/content/useCatalog";
 import { listValue } from "@/lib/content/model";
 import CatalogState from "@/components/content/CatalogState";
@@ -22,13 +23,7 @@ export default function ServiceDetailPage() {
 
   if (error) return <main className="min-h-screen pt-32"><CatalogState loading={false} error empty={false} label="this service" retry={retry} /></main>;
 
-  if (loading) {
-    return (
-      <main className="bg-white dark:bg-neutral-950 min-h-screen flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </main>
-    );
-  }
+  if (loading) return <main className="min-h-screen"><ContentSkeleton variant="detail" label="service" /></main>;
 
   if (!service) {
     return (

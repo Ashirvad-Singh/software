@@ -1,10 +1,10 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import { ParallaxScroll } from "@/components/ui/parallax-scroll";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import SubBanner from "@/components/site/SubBanner";
-import { Loader2 } from "lucide-react";
 
 const staticImages = [
   "https://images.unsplash.com/photo-1554080353-a576cf803bda?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
@@ -88,9 +88,7 @@ export default function GalleryPage() {
       />
 
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <Loader2 className="w-8 h-8 animate-spin text-primary" />
-        </div>
+        <ContentSkeleton label="gallery" variant="gallery" className="mx-auto max-w-7xl px-5 py-10" />
       ) : isMobile ? (
         <MobileGallery images={images} />
       ) : (

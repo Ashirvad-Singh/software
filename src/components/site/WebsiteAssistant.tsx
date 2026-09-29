@@ -1,3 +1,4 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { IconBrandFacebook, IconBrandLinkedin } from "@tabler/icons-react";
@@ -28,7 +29,7 @@ function ChatJobs({ onNavigate }: { onNavigate: () => void }) {
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, [attempt]);
-  if (loading) return <p role="status" className="mt-3 text-xs text-sky-700">Loading current openings…</p>;
+  if (loading) return <ContentSkeleton label="current openings" variant="list" count={2} className="mt-3" />;
   if (error) return <div className="mt-3 text-sm"><p>Job openings couldn’t load.</p><button type="button" onClick={() => setAttempt(value => value + 1)} className="mt-2 font-semibold text-sky-700">Try again</button></div>;
   if (!jobs.length) return <p className="mt-3 text-sm">There are no open roles right now. Check back soon for new opportunities.</p>;
   return <div className="mt-4 space-y-3">{jobs.map(job => (
@@ -44,7 +45,7 @@ function ChatJobs({ onNavigate }: { onNavigate: () => void }) {
 
 function ChatServices({ onNavigate }: { onNavigate: () => void }) {
   const { entries, loading, error, retry } = useCatalog("services");
-  if (loading) return <p role="status" className="mt-3 text-xs text-sky-700">Loading our services…</p>;
+  if (loading) return <ContentSkeleton label="our services" variant="list" count={2} className="mt-3" />;
   if (error) return <div className="mt-3 text-sm"><p>Services couldn’t load. Please try again.</p><button type="button" onClick={retry} className="mt-2 font-semibold text-sky-700">Try again</button></div>;
   if (!entries.length) return <p className="mt-3 text-sm">Our service list is being updated. Please check again shortly.</p>;
   return <div className="mt-4 space-y-3">

@@ -1,9 +1,11 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import { useContent } from "@/lib/content/useContent";
 import CaseStudyStack from "@/components/site/CaseStudyStack";
 
 export default function HomeCaseStudiesSection() {
-  const { entries } = useContent("case_studies");
+  const { entries, loading } = useContent("case_studies");
   const caseStudies = entries.slice(0, 5);
+  if (loading) return <ContentSkeleton label="case studies" className="mx-auto max-w-7xl px-5 py-16" />;
   if (!caseStudies.length) return null;
 
   return (

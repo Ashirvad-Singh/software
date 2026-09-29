@@ -1,6 +1,7 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import DetailThumbnail from "@/components/content/DetailThumbnail";
 import { useParams, useNavigate } from "react-router-dom";
-import { Loader2, MapPin, Briefcase, IndianRupee, Clock } from "lucide-react";
+import { MapPin, Briefcase, IndianRupee, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
@@ -109,13 +110,7 @@ export default function JobDetailPage() {
     return () => { active = false; };
   }, [id, attempt]);
 
-  if (loading) {
-    return (
-      <main className="bg-white dark:bg-neutral-950 min-h-screen flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </main>
-    );
-  }
+  if (loading) return <main className="min-h-screen"><ContentSkeleton variant="detail" label="job" /></main>;
 
   if (error) return <main className="min-h-screen px-5 pt-36 text-center"><h1 className="text-2xl font-bold">Unable to load this job</h1><Button className="mt-6" onClick={() => setAttempt(value => value + 1)}>Try again</Button></main>;
 

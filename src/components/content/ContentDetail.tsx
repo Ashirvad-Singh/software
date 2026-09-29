@@ -1,3 +1,4 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import { Link, useParams } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import SEO from "@/components/site/SEO";
@@ -16,27 +17,22 @@ export default function ContentDetail({ kind }: { kind: ContentKind }) {
   const linked = useContent(story ? "projects" : "case_studies");
   const entry = entries.find((e) => e.slug === slug);
   const back = story ? "/case-studies" : "/work";
-  if (loading || error || !entry)
+  if (loading) return <main className="min-h-screen"><ContentSkeleton variant="detail" label={story ? "case study" : "project"} /></main>;
+  if (error || !entry)
     return (
       <main className="min-h-screen px-5 pt-36 text-center">
         <SEO
           title={
-            loading
-              ? "Loading"
-              : error
-                ? "Content unavailable"
-                : "Page not found"
+            error ? "Content unavailable" : "Page not found"
           }
         />
         <h1
           className="text-3xl font-semibold"
           role={error ? "alert" : "status"}
         >
-          {loading
-            ? "Loading…"
-            : error
-              ? "We couldn’t load this page."
-              : `${story ? "Case study" : "Project"} not found`}
+          {error
+            ? "We couldn’t load this page."
+            : `${story ? "Case study" : "Project"} not found`}
         </h1>
         {error && (
           <button

@@ -1,3 +1,4 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import DetailThumbnail from "@/components/content/DetailThumbnail";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
@@ -52,7 +53,7 @@ export default function TechnologyDetailPage() {
     }).catch(() => { if(active) setPageState({slug:slug || "",detail:null,error:true}); });
     return () => { active = false; };
   }, [slug, attempt]);
-  if (!pageState || pageState.slug !== slug) return <main className="min-h-screen pt-36 text-center" role="status">Loading technology…</main>;
+  if (!pageState || pageState.slug !== slug) return <main className="min-h-screen"><ContentSkeleton variant="detail" label="technology" /></main>;
   if (pageState.error) return <main className="min-h-screen pt-36 text-center"><h1 className="text-2xl font-bold">Unable to load technology</h1><button className="mt-4 text-primary underline" onClick={() => {setPageState(null);setAttempt(value=>value+1);}}>Try again</button></main>;
   const techDetail = pageState.detail;
   if (!techDetail) return <main className="min-h-screen pt-36 text-center"><h1 className="text-2xl font-bold">Technology not found</h1><Link to="/technologies" className="mt-4 inline-block text-primary">Explore our technology stack</Link></main>;

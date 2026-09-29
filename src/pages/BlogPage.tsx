@@ -1,5 +1,6 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import { Link } from "react-router-dom";
-import { ArrowRight, Calendar, Clock, User, Loader2 } from "lucide-react";
+import { ArrowRight, Calendar, Clock, User } from "lucide-react";
 import { useCatalog } from "@/lib/content/useCatalog";
 import CatalogState from "@/components/content/CatalogState";
 import InnerPageHero from "@/components/site/InnerPageHero";
@@ -31,9 +32,7 @@ export default function BlogPage() {
 
         <CatalogState loading={false} error={error} empty={!loading && !displayPosts.length} label="articles" retry={retry} />
         {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          </div>
+          <ContentSkeleton label="articles" variant="cards" className="mx-auto max-w-7xl px-5 py-10" />
         ) : (
           <>
             {/* Featured Post */}

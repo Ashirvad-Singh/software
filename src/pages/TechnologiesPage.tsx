@@ -1,3 +1,4 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import { useEffect, useState } from "react";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import * as LucideIcons from "lucide-react";
@@ -95,6 +96,7 @@ const techFaqs = [
 ];
 
 export default function TechnologiesPage() {
+  const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<TechCategory[]>(staticCategories);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -116,6 +118,8 @@ export default function TechnologiesPage() {
         }
       } catch (error) {
         console.error("Error fetching tech stack:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -209,7 +213,7 @@ export default function TechnologiesPage() {
           </div>
 
           {/* 3-Column Main Layout */}
-          <div className="flex flex-col lg:flex-row gap-6 mb-12 items-stretch">
+          {loading ? <ContentSkeleton label="technologies" variant="list" className="mb-12" /> : <div className="flex flex-col lg:flex-row gap-6 mb-12 items-stretch">
             
             {/* Left Sidebar (Categories) */}
             <div className="w-full lg:w-[300px] shrink-0 flex flex-col gap-2">
@@ -289,7 +293,7 @@ export default function TechnologiesPage() {
               </AnimatePresence>
             </div>
 
-          </div>
+          </div>}
 
           {/* Final CTA Strip */}
           <div className="bg-gradient-to-r from-neutral-100 to-neutral-50 dark:from-neutral-900 dark:to-neutral-900/50 rounded-3xl p-6 md:p-8 border border-neutral-200 dark:border-neutral-800 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">

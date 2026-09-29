@@ -1,5 +1,5 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import { useEffect, useState } from "react"
-import { Loader2 } from "lucide-react"
 import { collection, getDocs, query, orderBy } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import useEmblaCarousel from "embla-carousel-react"
@@ -128,7 +128,7 @@ export default function Testimonials() {
   if (loading) {
     return (
       <section className="py-10 md:py-16 flex justify-center items-center bg-[#fafafa] min-h-[200px]">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <ContentSkeleton label="testimonials" variant="list" className="mx-auto max-w-6xl px-5" />
       </section>
     )
   }

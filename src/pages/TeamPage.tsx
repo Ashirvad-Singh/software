@@ -1,9 +1,9 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import TeamShowcaseScroll, { type TeamMember } from "@/components/site/TeamShowcaseScroll";
 import { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import InnerPageHero from "@/components/site/InnerPageHero";
-import { Loader2 } from "lucide-react";
 
 const staticTeamData = [
   { 
@@ -84,10 +84,7 @@ export default function TeamPage() {
       />
 
         {loading ? (
-          <div role="status" className="flex justify-center items-center h-64">
-            <span className="sr-only">Loading our team</span>
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          </div>
+          <ContentSkeleton label="our team" variant="team" className="mx-auto max-w-7xl px-5 py-10" />
         ) : (
           <TeamShowcaseScroll members={teamMembers} />
         )}

@@ -1,3 +1,4 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Search } from "lucide-react";
@@ -102,9 +103,7 @@ export default function CaseStudiesPage() {
           </div>
         </div>
         {loading ? (
-          <p role="status" className="py-16 text-center text-muted-foreground">
-            Loading case studies…
-          </p>
+          <ContentSkeleton label="case studies" />
         ) : error ? (
           <div
             role="alert"

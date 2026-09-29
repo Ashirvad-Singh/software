@@ -1,3 +1,4 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
@@ -407,7 +408,7 @@ export default function CareersPage() {
           {/* Job List */}
           <div className="space-y-4 text-left">
             <AnimatePresence>
-              {filteredJobs.length > 0 ? filteredJobs.map((job, idx) => (
+              {jobsLoading ? <ContentSkeleton key="jobs-loading" label="open roles" variant="list" /> : filteredJobs.length > 0 ? filteredJobs.map((job, idx) => (
                 <motion.div 
                   initial={reduceMotion ? false : { opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -435,7 +436,7 @@ export default function CareersPage() {
                 </motion.div>
               )) : (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12 text-neutral-600">
-                  {jobsLoading ? "Loading open roles…" : "No open roles in this category right now. Check back later!"}
+                  No open roles in this category right now. Check back later!
                 </motion.div>
               )}
             </AnimatePresence>

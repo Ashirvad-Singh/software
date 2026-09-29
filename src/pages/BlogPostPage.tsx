@@ -1,5 +1,5 @@
+import ContentSkeleton from "@/components/content/ContentSkeleton";
 import { useParams, useNavigate } from "react-router-dom";
-import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMemo } from "react";
 import { useCatalog } from "@/lib/content/useCatalog";
@@ -17,13 +17,7 @@ export default function BlogPostPage() {
   const article = useMemo(() => prepareArticle(postData?.content || ""), [postData?.content]);
   if (error) return <main className="min-h-screen pt-32"><CatalogState loading={false} error empty={false} label="this article" retry={retry} /></main>;
 
-  if (loading) {
-    return (
-      <main className="bg-white dark:bg-neutral-950 min-h-screen flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </main>
-    );
-  }
+  if (loading) return <main className="min-h-screen"><ContentSkeleton variant="detail" label="article" /></main>;
 
   if (!postData) {
     return (
