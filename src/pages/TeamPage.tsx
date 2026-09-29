@@ -38,6 +38,8 @@ const staticTeamData = [
   },
 ];
 
+import SEO from "@/components/site/SEO";
+
 export default function TeamPage() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
@@ -65,6 +67,10 @@ export default function TeamPage() {
 
   return (
     <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen font-sans">
+      <SEO
+        title="Our Team"
+        description="Meet the passionate engineers, designers, and strategists at Adat Soft Solutions behind our digital innovations."
+      />
       <InnerPageHero
         eyebrow="OUR TEAM"
         title="Meet the Minds Behind the"

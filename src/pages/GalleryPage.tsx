@@ -38,6 +38,8 @@ const MobileGallery = ({ images }: { images: string[] }) => (
   </div>
 );
 
+import SEO from "@/components/site/SEO";
+
 export default function GalleryPage() {
   const [images, setImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -74,6 +76,10 @@ export default function GalleryPage() {
 
   return (
     <main className="min-h-screen bg-background">
+      <SEO
+        title="Gallery & Office Culture"
+        description="Explore our workspace, team events, and the amazing web and mobile software we build."
+      />
       <SubBanner
         badge="Showcase"
         title="Our"

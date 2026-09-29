@@ -110,9 +110,8 @@ export default function HeroModern() {
     duration: reducedMotion ? 0 : 35,
   });
   const [selected, setSelected] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
+  const [paused, setPaused] = useState<boolean | null>(null);
+  const autoplayPaused = paused ?? Boolean(reducedMotion);
   const syncSlide = useCallback(() => {
     if (embla) setSelected(embla.selectedScrollSnap());
   }, [embla]);
@@ -127,24 +126,22 @@ export default function HeroModern() {
   }, [embla, syncSlide]);
 
   useEffect(() => {
-    if (!embla || paused || hovered || focused || reducedMotion) return;
+    if (!embla || autoplayPaused) return;
     const timer = window.setInterval(() => {
       if (!document.hidden) embla.scrollNext();
     }, 7000);
     return () => window.clearInterval(timer);
-  }, [embla, paused, hovered, focused, reducedMotion]);
+  }, [embla, autoplayPaused]);
 
   return (
     <section
       className={`adat-hero${selected === 0 ? " adat-hero-simple" : ""}`}
       aria-label="Discover ADAT"
       aria-roledescription="carousel"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocusCapture={() => setFocused(true)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget))
-          setFocused(false);
+      onFocusCapture={(event) => {
+        // Keep slide content still while navigating with the keyboard.
+        // The playback control must remain able to resume while focused.
+        if (!event.target.closest("[data-slideshow-toggle]")) setPaused(true);
       }}
       onKeyDown={(event) => {
         if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
@@ -261,15 +258,14 @@ export default function HeroModern() {
           ))}
         </div>
         <div className="adat-hero-arrows">
-          {!reducedMotion && (
-            <button
-              className="site-button site-button-icon"
-              aria-label={paused ? "Play slideshow" : "Pause slideshow"}
-              onClick={() => setPaused(!paused)}
-            >
-              {paused ? <Play size={15} /> : <Pause size={15} />}
-            </button>
-          )}
+          <button
+            className="site-button site-button-icon"
+            data-slideshow-toggle
+            aria-label={autoplayPaused ? "Play slideshow" : "Pause slideshow"}
+            onClick={() => setPaused(!autoplayPaused)}
+          >
+            {autoplayPaused ? <Play size={15} /> : <Pause size={15} />}
+          </button>
           <button
             className="site-button site-button-icon"
             aria-label="Previous slide"

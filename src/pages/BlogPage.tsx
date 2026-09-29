@@ -3,6 +3,7 @@ import { ArrowRight, Calendar, Clock, User, Loader2 } from "lucide-react";
 import { useCatalog } from "@/lib/content/useCatalog";
 import CatalogState from "@/components/content/CatalogState";
 import InnerPageHero from "@/components/site/InnerPageHero";
+import SEO from "@/components/site/SEO";
 
 export default function BlogPage() {
   const { entries: displayPosts, loading, error, retry } = useCatalog("blogs");
@@ -11,6 +12,10 @@ export default function BlogPage() {
 
   return (
     <main className="bg-neutral-50 dark:bg-neutral-950 min-h-screen">
+      <SEO
+        title="Blog & Insights"
+        description="Thoughts, tutorials, and insights on web development, mobile apps, design, and building successful digital products."
+      />
       <InnerPageHero
         eyebrow="INSIGHTS & RESOURCES"
         title="Our Latest"

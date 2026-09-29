@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import { Scale, FileCode2, UserCheck, AlertCircle, Cpu, ShieldAlert, Sparkles } from "lucide-react"
 import InnerPageHero from "@/components/site/InnerPageHero"
+import SEO from "@/components/site/SEO"
 
 export default function TermsOfServicePage() {
 
@@ -55,6 +56,10 @@ export default function TermsOfServicePage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Terms of Service"
+        description="Please read these terms carefully before engaging Adat Soft Solutions' software development or digital consulting services."
+      />
       <InnerPageHero
         eyebrow="LEGAL / TERMS"
         title="Terms of"

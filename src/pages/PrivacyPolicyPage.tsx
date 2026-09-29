@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import { ShieldCheck, Lock, Eye, FileText, Bell, CheckCircle2, RefreshCw } from "lucide-react"
+import SEO from "@/components/site/SEO"
 
 export default function PrivacyPolicyPage() {
   const lastUpdated = "July 30, 2026"
@@ -55,6 +56,10 @@ export default function PrivacyPolicyPage() {
 
   return (
     <main className="md: min-h-screen bg-background text-foreground">
+      <SEO
+        title="Privacy Policy"
+        description="Read the privacy policy of Adat Soft Solutions regarding data protection, usage, and user rights."
+      />
       {/* Header */}
       <div className="bg-gradient-to-b from-sky-50/60 via-background to-background border-b border-border/40 pt-28 sm:pt-32 md:pt-36 pb-10 sm:pb-12 md:pb-16">
         <div className="container mx-auto px-4 max-w-4xl text-center">

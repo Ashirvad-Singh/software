@@ -42,7 +42,7 @@ function ChatJobs({ onNavigate }: { onNavigate: () => void }) {
   ))}</div>;
 }
 
-function ChatServices() {
+function ChatServices({ onNavigate }: { onNavigate: () => void }) {
   const { entries, loading, error, retry } = useCatalog("services");
   if (loading) return <p role="status" className="mt-3 text-xs text-sky-700">Loading our services…</p>;
   if (error) return <div className="mt-3 text-sm"><p>Services couldn’t load. Please try again.</p><button type="button" onClick={retry} className="mt-2 font-semibold text-sky-700">Try again</button></div>;
@@ -54,10 +54,9 @@ function ChatServices() {
           <span className="mr-2 text-xs text-sky-500">{String(index + 1).padStart(2, "0")}</span>{service.title}
         </h4>
         <p className="mt-2 whitespace-pre-line text-xs leading-relaxed text-neutral-600">{service.description || "More details will be available soon."}</p>
-        {service.longDescription && service.longDescription !== service.description && <details className="mt-2">
-          <summary className="cursor-pointer text-xs font-semibold text-sky-700">More details</summary>
-          <p className="mt-2 whitespace-pre-line text-xs leading-relaxed text-neutral-600">{service.longDescription}</p>
-        </details>}
+        <Link to={`/services/${service.slug}`} onClick={onNavigate} aria-label={`More details about ${service.title}`} className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-sky-700 hover:underline">
+          More details <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+        </Link>
       </div>
     ))}
   </div>;
@@ -142,7 +141,7 @@ export default function WebsiteAssistant() {
                 <div className={`adat-chat-message max-w-[90%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${message.role === "user" ? "rounded-br-sm bg-sky-600 text-white" : "rounded-bl-sm border border-sky-100 bg-white text-neutral-700 shadow-sm"}`}>
                   <span className="sr-only">{message.role === "user" ? "You: " : "Assistant: "}</span>
                   <p className="whitespace-pre-wrap break-words">{message.text}</p>
-                  {message.showServices && <ChatServices />}
+                  {message.showServices && <ChatServices onNavigate={close} />}
                   {message.showJobs && <ChatJobs onNavigate={close} />}
                   {message.externalLink && <a href={message.externalLink.href} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-sky-700 hover:underline">{message.externalLink.label}<ArrowUpRight aria-hidden="true" className="h-4 w-4" /><span className="sr-only"> (opens in a new tab)</span></a>}
                   {message.pages && <div className="mt-3 grid gap-2">{message.pages.map(page => <Link key={page.to} to={page.to} onClick={close} className="flex items-center justify-between gap-3 rounded-xl border border-sky-100 bg-sky-50 px-3 py-2.5 text-sm font-semibold text-sky-700 transition-colors hover:bg-sky-100">{page.label}<ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0" /></Link>)}</div>}

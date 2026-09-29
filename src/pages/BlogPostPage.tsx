@@ -7,6 +7,7 @@ import { prepareArticle } from "@/lib/content/article";
 import CatalogState from "@/components/content/CatalogState";
 import InnerPageHero from "@/components/site/InnerPageHero";
 import DetailThumbnail from "@/components/content/DetailThumbnail";
+import SEO from "@/components/site/SEO";
 
 export default function BlogPostPage() {
   const { slug } = useParams();
@@ -27,6 +28,7 @@ export default function BlogPostPage() {
   if (!postData) {
     return (
       <main className="bg-white dark:bg-neutral-950 min-h-screen flex flex-col items-center justify-center">
+        <SEO title="Article Not Found" />
         <h1 className="text-2xl font-bold mb-4">Post not found</h1>
         <Button onClick={() => navigate("/blog")}>Back to Blog</Button>
       </main>
@@ -35,6 +37,10 @@ export default function BlogPostPage() {
 
   return (
     <main className="bg-white dark:bg-neutral-950 min-h-screen">
+      <SEO
+        title={postData.title}
+        description={postData.seoDescription || postData.content?.slice(0, 160) || ""}
+      />
       <InnerPageHero
         eyebrow="ARTICLE / INSIGHTS"
         title={postData.title}
